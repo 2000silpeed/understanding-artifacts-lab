@@ -1,0 +1,155 @@
+{
+  "hash": "e123e1b997bfd7fb",
+  "id": "temperature",
+  "duration": 7.953,
+  "words": [
+    {
+      "text": "Temperature",
+      "spoken": "Temperature",
+      "start": 0,
+      "end": 0.3,
+      "matched": true
+    },
+    {
+      "text": "changes",
+      "spoken": "changes",
+      "start": 0.3,
+      "end": 0.78,
+      "matched": true
+    },
+    {
+      "text": "distribution",
+      "spoken": "distribution",
+      "start": 0.78,
+      "end": 1.2,
+      "matched": true
+    },
+    {
+      "text": "shape.",
+      "spoken": "shape.",
+      "start": 1.2,
+      "end": 1.78,
+      "matched": true
+    },
+    {
+      "text": "Lower",
+      "spoken": "Lower",
+      "start": 2.223,
+      "end": 2.463,
+      "matched": true
+    },
+    {
+      "text": "temperature",
+      "spoken": "temperature",
+      "start": 2.463,
+      "end": 2.783,
+      "matched": true
+    },
+    {
+      "text": "sharpens",
+      "spoken": "sharpens",
+      "start": 2.783,
+      "end": 3.363,
+      "matched": true
+    },
+    {
+      "text": "it.",
+      "spoken": "it.",
+      "start": 3.363,
+      "end": 3.583,
+      "matched": true
+    },
+    {
+      "text": "Higher",
+      "spoken": "Higher",
+      "start": 3.906,
+      "end": 4.146,
+      "matched": true
+    },
+    {
+      "text": "temperature",
+      "spoken": "temperature",
+      "start": 4.146,
+      "end": 4.446,
+      "matched": true
+    },
+    {
+      "text": "flattens",
+      "spoken": "flattens",
+      "start": 4.446,
+      "end": 5.006,
+      "matched": true
+    },
+    {
+      "text": "it.",
+      "spoken": "it.",
+      "start": 5.006,
+      "end": 5.146,
+      "matched": true
+    },
+    {
+      "text": "Temperature",
+      "spoken": "Temperature",
+      "start": 5.548,
+      "end": 5.888,
+      "matched": true
+    },
+    {
+      "text": "changes",
+      "spoken": "changes",
+      "start": 5.888,
+      "end": 6.248,
+      "matched": true
+    },
+    {
+      "text": "variety,",
+      "spoken": "variety,",
+      "start": 6.248,
+      "end": 6.548,
+      "matched": true
+    },
+    {
+      "text": "not",
+      "spoken": "not",
+      "start": 7.068,
+      "end": 7.208,
+      "matched": true
+    },
+    {
+      "text": "correctness.",
+      "spoken": "correctness.",
+      "start": 7.208,
+      "end": 7.528,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "sharp": 2.223,
+    "flat": 3.906
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 1.945,
+      "text": "Temperature changes distribution shape."
+    },
+    {
+      "start": 2.223,
+      "end": 3.628,
+      "text": "Lower temperature sharpens it."
+    },
+    {
+      "start": 3.906,
+      "end": 5.271,
+      "text": "Higher temperature flattens it."
+    },
+    {
+      "start": 5.548,
+      "end": 7.953,
+      "text": "Temperature changes variety, not correctness."
+    }
+  ],
+  "transcript": "Temperature changes distribution shape. Lower temperature sharpens it. Higher temperature flattens it. Temperature changes variety, not correctness.",
+  "matchRate": 1,
+  "unmatched": []
+}

@@ -1,0 +1,264 @@
+{
+  "generated_at": "2026-10-03T00:03:45.876Z",
+  "scope": "Independent parent checks; illustrative inputs",
+  "passed": true,
+  "checks": [
+    {
+      "name": "python_oracle_25_cases",
+      "passed": true,
+      "cases": [
+        {
+          "t": 0.2,
+          "p": 0.05,
+          "pass": true
+        },
+        {
+          "t": 0.2,
+          "p": 0.6,
+          "pass": true
+        },
+        {
+          "t": 0.2,
+          "p": 0.8,
+          "pass": true
+        },
+        {
+          "t": 0.2,
+          "p": 0.95,
+          "pass": true
+        },
+        {
+          "t": 0.2,
+          "p": 1,
+          "pass": true
+        },
+        {
+          "t": 0.5,
+          "p": 0.05,
+          "pass": true
+        },
+        {
+          "t": 0.5,
+          "p": 0.6,
+          "pass": true
+        },
+        {
+          "t": 0.5,
+          "p": 0.8,
+          "pass": true
+        },
+        {
+          "t": 0.5,
+          "p": 0.95,
+          "pass": true
+        },
+        {
+          "t": 0.5,
+          "p": 1,
+          "pass": true
+        },
+        {
+          "t": 1,
+          "p": 0.05,
+          "pass": true
+        },
+        {
+          "t": 1,
+          "p": 0.6,
+          "pass": true
+        },
+        {
+          "t": 1,
+          "p": 0.8,
+          "pass": true
+        },
+        {
+          "t": 1,
+          "p": 0.95,
+          "pass": true
+        },
+        {
+          "t": 1,
+          "p": 1,
+          "pass": true
+        },
+        {
+          "t": 1.5,
+          "p": 0.05,
+          "pass": true
+        },
+        {
+          "t": 1.5,
+          "p": 0.6,
+          "pass": true
+        },
+        {
+          "t": 1.5,
+          "p": 0.8,
+          "pass": true
+        },
+        {
+          "t": 1.5,
+          "p": 0.95,
+          "pass": true
+        },
+        {
+          "t": 1.5,
+          "p": 1,
+          "pass": true
+        },
+        {
+          "t": 2,
+          "p": 0.05,
+          "pass": true
+        },
+        {
+          "t": 2,
+          "p": 0.6,
+          "pass": true
+        },
+        {
+          "t": 2,
+          "p": 0.8,
+          "pass": true
+        },
+        {
+          "t": 2,
+          "p": 0.95,
+          "pass": true
+        },
+        {
+          "t": 2,
+          "p": 1,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "extreme_logits_and_ties",
+      "passed": true,
+      "actual": {
+        "extreme": [
+          0.7310585786300049,
+          0.2689414213699951,
+          0
+        ],
+        "ties": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "name": "seeded_sampling_smoke_10000",
+      "passed": true,
+      "actual": {
+        "n": 10000,
+        "counts": [
+          7291,
+          2709,
+          0,
+          0
+        ],
+        "expected": [
+          0.7310585786300049,
+          0.2689414213699951,
+          0,
+          0
+        ]
+      },
+      "limit": "Deterministic PRNG smoke, not statistical proof of correctness"
+    },
+    {
+      "name": "visible_kept_probability_bars",
+      "passed": true,
+      "actual": [
+        {
+          "w": 429.859375,
+          "h": 20,
+          "prob": 73.1059
+        },
+        {
+          "w": 158.125,
+          "h": 20,
+          "prob": 26.8941
+        },
+        {
+          "w": 0,
+          "h": 20,
+          "prob": 0
+        },
+        {
+          "w": 0,
+          "h": 20,
+          "prob": 0
+        }
+      ]
+    },
+    {
+      "name": "four_modes_visible_mobile",
+      "passed": true,
+      "actual": [
+        {
+          "mode": "lab",
+          "left": 23,
+          "right": 191
+        },
+        {
+          "mode": "diagram",
+          "left": 199,
+          "right": 367
+        },
+        {
+          "mode": "writing",
+          "left": 23,
+          "right": 191
+        },
+        {
+          "mode": "video",
+          "left": 199,
+          "right": 367
+        }
+      ]
+    },
+    {
+      "name": "offline_Korean_font_loaded",
+      "passed": true,
+      "actual": [
+        {
+          "family": "NextTokenLabSubset",
+          "status": "loaded"
+        }
+      ]
+    },
+    {
+      "name": "sampling_marker_on_normalized_distribution",
+      "passed": true,
+      "actual": {
+        "sampleMarker": 0.601104,
+        "expectedDraw": 0.6011037519201636
+      }
+    },
+    {
+      "name": "dynamic_retained_set_legend",
+      "passed": true
+    },
+    {
+      "name": "keyboard_range_control",
+      "passed": true
+    },
+    {
+      "name": "reduced_motion_and_selected_mode",
+      "passed": true
+    },
+    {
+      "name": "actual_MP4_browser_playback",
+      "passed": true,
+      "actual": {
+        "duration": 81.666667,
+        "width": 1920,
+        "height": 1080
+      }
+    }
+  ]
+}

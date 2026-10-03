@@ -1,0 +1,57 @@
+{
+  "file": "video/source/out/video.mp4",
+  "duration": 81.67,
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "30/1",
+    "codec": "h264"
+  },
+  "audio": {
+    "codec": "aac",
+    "sampleRate": 48000,
+    "channels": 2
+  },
+  "loudness": {
+    "integrated": -14,
+    "range": 2.2,
+    "truePeak": -1.4
+  },
+  "blackSegments": [],
+  "silences": [],
+  "speech": {
+    "matchRate": 0.991,
+    "transcript": "After reading context, an LLM scores possible next tokens and chooses one. A token can be a word, part of a word or punctuation. Toy context, the cat sat on the. Four illustrative logits are matte 2.0, the floor token 1.0, sofa 0.3, and roof minus 0.4. These are educational values, not measured model output. Logits become probabilities through Softmax. It exponentiates shifted scores and normalizes them. A temperature one, matte is 60.9%, floor 22.4, sofa 11.1, and roof 5.5. Temperature changes distribution shape. Lower temperature sharpens it. Higher temperature flattens it. Temperature changes variety, not correctness. Top P sorts probabilities and keeps the smallest prefix reaching its mass. At P equal to 0.80, matte and floor retain 83.3%. They stay and the rest are removed. This is a mass rule. Sampling draws a uniform number across cumulative probability. Here u equals 0.82, so it selects floor from the filtered intervals. The token joins context, and the model recomputs the next step. This toy shows one step. The loop is context, logits, probabilities, filtering, and sampling. These estimates predict a next token. They do not verify real-world truth.",
+    "scenes": [
+      {
+        "id": "hook",
+        "matchRate": 1
+      },
+      {
+        "id": "logits",
+        "matchRate": 1
+      },
+      {
+        "id": "softmax",
+        "matchRate": 0.971
+      },
+      {
+        "id": "temperature",
+        "matchRate": 1
+      },
+      {
+        "id": "topp",
+        "matchRate": 0.975
+      },
+      {
+        "id": "sample",
+        "matchRate": 1
+      },
+      {
+        "id": "outro",
+        "matchRate": 1
+      }
+    ]
+  },
+  "issues": []
+}

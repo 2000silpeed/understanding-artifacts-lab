@@ -1,0 +1,177 @@
+{
+  "hash": "b92b9e415ddfb2f6",
+  "id": "outro",
+  "duration": 7.601,
+  "words": [
+    {
+      "text": "The",
+      "spoken": "The",
+      "start": 0,
+      "end": 0.06,
+      "matched": true
+    },
+    {
+      "text": "loop",
+      "spoken": "loop",
+      "start": 0.06,
+      "end": 0.22,
+      "matched": true
+    },
+    {
+      "text": "is",
+      "spoken": "is",
+      "start": 0.22,
+      "end": 0.34,
+      "matched": true
+    },
+    {
+      "text": "context,",
+      "spoken": "context,",
+      "start": 0.34,
+      "end": 0.76,
+      "matched": true
+    },
+    {
+      "text": "logits,",
+      "spoken": "logits,",
+      "start": 1.2,
+      "end": 1.56,
+      "matched": true
+    },
+    {
+      "text": "probabilities,",
+      "spoken": "probabilities,",
+      "start": 1.66,
+      "end": 1.96,
+      "matched": true
+    },
+    {
+      "text": "filtering,",
+      "spoken": "filtering,",
+      "start": 1.96,
+      "end": 2.62,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 2.62,
+      "end": 2.86,
+      "matched": true
+    },
+    {
+      "text": "sampling.",
+      "spoken": "sampling.",
+      "start": 2.86,
+      "end": 3.18,
+      "matched": true
+    },
+    {
+      "text": "These",
+      "spoken": "These",
+      "start": 3.663,
+      "end": 3.823,
+      "matched": true
+    },
+    {
+      "text": "estimates",
+      "spoken": "estimates",
+      "start": 3.823,
+      "end": 4.143,
+      "matched": true
+    },
+    {
+      "text": "predict",
+      "spoken": "predict",
+      "start": 4.143,
+      "end": 4.623,
+      "matched": true
+    },
+    {
+      "text": "a",
+      "spoken": "a",
+      "start": 4.623,
+      "end": 4.803,
+      "matched": true
+    },
+    {
+      "text": "next",
+      "spoken": "next",
+      "start": 4.803,
+      "end": 4.963,
+      "matched": true
+    },
+    {
+      "text": "token.",
+      "spoken": "token.",
+      "start": 4.963,
+      "end": 5.263,
+      "matched": true
+    },
+    {
+      "text": "They",
+      "spoken": "They",
+      "start": 5.796,
+      "end": 5.896,
+      "matched": true
+    },
+    {
+      "text": "do",
+      "spoken": "do",
+      "start": 5.896,
+      "end": 5.976,
+      "matched": true
+    },
+    {
+      "text": "not",
+      "spoken": "not",
+      "start": 5.976,
+      "end": 6.116,
+      "matched": true
+    },
+    {
+      "text": "verify",
+      "spoken": "verify",
+      "start": 6.116,
+      "end": 6.316,
+      "matched": true
+    },
+    {
+      "text": "real-world",
+      "spoken": "real-world",
+      "start": 6.316,
+      "end": 7.076,
+      "matched": true
+    },
+    {
+      "text": "truth.",
+      "spoken": "truth.",
+      "start": 7.076,
+      "end": 7.376,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "caveat": 3.663
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 3.385,
+      "text": "The loop is context, logits, probabilities, filtering, and sampling."
+    },
+    {
+      "start": 3.663,
+      "end": 5.518,
+      "text": "These estimates predict a next token."
+    },
+    {
+      "start": 5.796,
+      "end": 7.601,
+      "text": "They do not verify real-world truth."
+    }
+  ],
+  "transcript": "The loop is context, logits, probabilities, filtering, and sampling. These estimates predict a next token. They do not verify real world truth.",
+  "matchRate": 1,
+  "unmatched": []
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "Synthetic regression fixtures, not actual artifact or learning measurements",
+  "tests_run": 15,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true
+}

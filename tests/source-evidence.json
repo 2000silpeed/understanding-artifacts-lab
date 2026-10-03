@@ -1,0 +1,32 @@
+{
+  "retrieved_at": "2026-10-02T23:05:05.210238+00:00",
+  "method": "curl -fLsS direct HTTPS; normalized page text excerpts",
+  "sources": [
+    {
+      "url": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "http_status": 200,
+      "sha256": "a4abc099a64470eabdc7c319cec9bfa54e63ca1731ff183f83e5b15263810182",
+      "excerpts": [
+        "recompilation. Parameters for manipulation of the model output logits temperature ( float , optional ) — The value used to module the next token probabilities. This value is set in a model’s generation_config.json file. If it isn’t set, the default value is 1.0 top_k ( int , optional ) — The number of highest probability ",
+        "lue is 50. top_p ( float , optional ) — If set to float < 1, only the smallest set of most probable tokens with probabilities that add up to top_p or higher are kept for generation. This value is set in a model’s generation_config.json file. If it isn’t set, the default value is 1.0 min_p ( float , optional ) — Minimum token probability,",
+        " set to float < 1, only the smallest set of most probable tokens with probabilities that add up to top_p or higher are kept for generation. This value is set in a model’s generation_config.json file. If it isn’t set, the default value is 1.0 min_p ( float , optional ) — Minimum token probability, which will be scaled by the probabili"
+      ]
+    },
+    {
+      "url": "https://huggingface.co/learn/llm-course/en/chapter6/1",
+      "http_status": 200,
+      "sha256": "e51599ba3a3be62f58a7572222cbff0534652524637b882a3e7743bd72dea46e",
+      "excerpts": [
+        "al features of fast tokenizers The differences between the three main subword tokenization algorithms used in NLP today How to build a tokenizer from scratch with the 🤗 Tokenizers library and train it on some data The techniques introduced in this chapter will prepare you for the section in Chapter 7 where we look a"
+      ]
+    },
+    {
+      "url": "https://www.asd-ste100.org/",
+      "http_status": 200,
+      "sha256": "0e997146306e32212f7b055615e1e9ed0a1e5c13f3274304aedff1bfb806dd63",
+      "excerpts": [
+        "dited STE trainers Tools Downloads Issue 9 Change Form FAQ ASD-STE100 Simplified Technical English Standard for Technical Documentation European Union Trade Mark No. 017966390 ASD-STE100 Simplified Technical English Issue 9 - January 15, 2025 Request your free official copy Welcome to the STEMG website The official page of the ASD Simpl"
+      ]
+    }
+  ]
+}

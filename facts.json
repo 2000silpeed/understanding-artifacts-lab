@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "topic": "how an LLM selects the next token",
+  "question": "LLM은 다음 토큰을 어떤 분포에서, 어떤 규칙으로 고를까?",
+  "context": "The cat sat on the",
+  "candidates": [" mat", " floor", " sofa", " roof"],
+  "logits": [2.0, 1.0, 0.3, -0.4],
+  "colors": {"mat":"#66e3c4","floor":"#6faaff","sofa":"#ffc66b","roof":"#bc9cff"},
+  "default": {"temperature": 1.0, "top_p": 0.8, "mode": "sample", "seed": 42},
+  "formula": "p_i = exp((z_i - max(z))/T) / sum_j exp((z_j - max(z))/T)",
+  "temperature_one_probabilities": [0.6092802205399673,0.2241416670490563,0.11130545782386861,0.05527265458710771],
+  "top_p_080": {"kept_indices":[0,1],"original_mass":0.8334218875890236,"renormalized_probabilities":[0.7310585786300049,0.2689414213699951,0,0]},
+  "glossary": {"token":"모델이 처리하는 텍스트 단위. 단어, 단어 일부, 문장부호일 수 있다.","logit":"확률로 정규화하기 전 점수","top-p":"높은 확률 순으로 누적 질량이 p 이상이 되는 최소 접두 집합"},
+  "caveats": ["실제 모델의 측정값 아님","전체 vocabulary 중 네 후보만 나타낸 교육용 예제","후보 레이블은 실제 tokenizer 경계 증명이 아님","다음 단계 logits 재계산은 개념적으로만 설명","확률은 현실의 사실성이나 정답을 보장하지 않음"],
+  "artifacts": {"web":"index.html","diagram":"diagram.svg","writing":"writing.md","video":"video/video.mp4"}
+}

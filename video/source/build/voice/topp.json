@@ -1,0 +1,274 @@
+{
+  "hash": "372649e75dd8392d",
+  "id": "topp",
+  "duration": 12.218,
+  "words": [
+    {
+      "text": "Top-p",
+      "spoken": "Top-p",
+      "start": 0,
+      "end": 0.2,
+      "matched": true
+    },
+    {
+      "text": "sorts",
+      "spoken": "sorts",
+      "start": 0.2,
+      "end": 0.54,
+      "matched": true
+    },
+    {
+      "text": "probabilities",
+      "spoken": "probabilities",
+      "start": 0.54,
+      "end": 0.96,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 0.96,
+      "end": 1.7,
+      "matched": true
+    },
+    {
+      "text": "keeps",
+      "spoken": "keeps",
+      "start": 1.7,
+      "end": 1.88,
+      "matched": true
+    },
+    {
+      "text": "the",
+      "spoken": "the",
+      "start": 1.88,
+      "end": 2.1,
+      "matched": true
+    },
+    {
+      "text": "smallest",
+      "spoken": "smallest",
+      "start": 2.1,
+      "end": 2.42,
+      "matched": true
+    },
+    {
+      "text": "prefix",
+      "spoken": "prefix",
+      "start": 2.42,
+      "end": 2.7,
+      "matched": true
+    },
+    {
+      "text": "reaching",
+      "spoken": "reaching",
+      "start": 2.7,
+      "end": 3.24,
+      "matched": true
+    },
+    {
+      "text": "its",
+      "spoken": "its",
+      "start": 3.24,
+      "end": 3.44,
+      "matched": true
+    },
+    {
+      "text": "mass.",
+      "spoken": "mass.",
+      "start": 3.44,
+      "end": 3.62,
+      "matched": true
+    },
+    {
+      "text": "At",
+      "spoken": "At",
+      "start": 4.158,
+      "end": 4.258,
+      "matched": true
+    },
+    {
+      "text": "p",
+      "spoken": "p",
+      "start": 4.258,
+      "end": 4.398,
+      "matched": true
+    },
+    {
+      "text": "equal",
+      "spoken": "equal",
+      "start": 4.398,
+      "end": 4.758,
+      "matched": true
+    },
+    {
+      "text": "to",
+      "spoken": "to",
+      "start": 4.758,
+      "end": 4.938,
+      "matched": true
+    },
+    {
+      "text": "0.80,",
+      "spoken": "0.80,",
+      "start": 4.938,
+      "end": 5.758,
+      "matched": true
+    },
+    {
+      "text": "mat",
+      "spoken": "mat",
+      "start": 6.478,
+      "end": 6.678,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 6.678,
+      "end": 6.838,
+      "matched": true
+    },
+    {
+      "text": "floor",
+      "spoken": "floor",
+      "start": 6.838,
+      "end": 7.058,
+      "matched": true
+    },
+    {
+      "text": "retain",
+      "spoken": "retain",
+      "start": 7.058,
+      "end": 7.358,
+      "matched": true
+    },
+    {
+      "text": "83.3",
+      "spoken": "83.3",
+      "start": 7.358,
+      "end": 8.286,
+      "matched": true
+    },
+    {
+      "text": "percent.",
+      "spoken": "percent.",
+      "start": 8.286,
+      "end": 8.518,
+      "matched": true
+    },
+    {
+      "text": "They",
+      "spoken": "They",
+      "start": 9.291,
+      "end": 9.411,
+      "matched": true
+    },
+    {
+      "text": "stay,",
+      "spoken": "stay,",
+      "start": 9.411,
+      "end": 9.611,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 9.611,
+      "end": 9.971,
+      "matched": true
+    },
+    {
+      "text": "the",
+      "spoken": "the",
+      "start": 9.971,
+      "end": 10.091,
+      "matched": true
+    },
+    {
+      "text": "rest",
+      "spoken": "rest",
+      "start": 10.091,
+      "end": 10.231,
+      "matched": true
+    },
+    {
+      "text": "are",
+      "spoken": "are",
+      "start": 10.231,
+      "end": 10.431,
+      "matched": true
+    },
+    {
+      "text": "removed.",
+      "spoken": "removed.",
+      "start": 10.431,
+      "end": 10.731,
+      "matched": true
+    },
+    {
+      "text": "This",
+      "spoken": "This",
+      "start": 11.253,
+      "end": 11.393,
+      "matched": true
+    },
+    {
+      "text": "is",
+      "spoken": "is",
+      "start": 11.393,
+      "end": 11.493,
+      "matched": true
+    },
+    {
+      "text": "a",
+      "spoken": "a",
+      "start": 11.493,
+      "end": 11.613,
+      "matched": true
+    },
+    {
+      "text": "mass",
+      "spoken": "mass",
+      "start": 11.613,
+      "end": 11.753,
+      "matched": true
+    },
+    {
+      "text": "rule.",
+      "spoken": "rule.",
+      "start": 11.753,
+      "end": 12.033,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "sort": 4.158,
+    "keep": 9.291
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 3.88,
+      "text": "Top-p sorts probabilities and keeps the smallest prefix reaching its mass."
+    },
+    {
+      "start": 4.158,
+      "end": 9.013,
+      "text": "At p equal to 0.80, mat and floor retain 83.3 percent."
+    },
+    {
+      "start": 9.291,
+      "end": 10.976,
+      "text": "They stay, and the rest are removed."
+    },
+    {
+      "start": 11.253,
+      "end": 12.218,
+      "text": "This is a mass rule."
+    }
+  ],
+  "transcript": "Top P sorts probabilities and keeps the smallest prefix reaching its mass. At P equal to 0.80, mat and floor retain 83.3%. They stay and the rest are removed. This is a mass rule.",
+  "matchRate": 1,
+  "unmatched": []
+}

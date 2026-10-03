@@ -1,0 +1,13 @@
+{
+  "name": "output-understanding-lab",
+  "private": true,
+  "description": "Offline next-token explanation lab",
+  "scripts": {
+    "test:web": "node test_web.js",
+    "verify:parent": "node ops/verify_parent.cjs",
+    "audit": "python3 skill/understanding-artifacts/scripts/audit_bundle.py . --report bundle-audit.json"
+  },
+  "devDependencies": {
+    "playwright": "1.58.2"
+  }
+}

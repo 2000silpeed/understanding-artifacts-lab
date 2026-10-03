@@ -1,0 +1,212 @@
+{
+  "hash": "b6f56b9a84d65b8c",
+  "id": "softmax",
+  "duration": 12.711,
+  "words": [
+    {
+      "text": "Logits",
+      "spoken": "Logits",
+      "start": 0,
+      "end": 0.36,
+      "matched": true
+    },
+    {
+      "text": "become",
+      "spoken": "become",
+      "start": 0.36,
+      "end": 0.62,
+      "matched": true
+    },
+    {
+      "text": "probabilities",
+      "spoken": "probabilities",
+      "start": 0.62,
+      "end": 0.96,
+      "matched": true
+    },
+    {
+      "text": "through",
+      "spoken": "through",
+      "start": 0.96,
+      "end": 1.48,
+      "matched": true
+    },
+    {
+      "text": "softmax.",
+      "spoken": "softmax.",
+      "start": 1.48,
+      "end": 1.94,
+      "matched": true
+    },
+    {
+      "text": "It",
+      "spoken": "It",
+      "start": 2.453,
+      "end": 2.553,
+      "matched": true
+    },
+    {
+      "text": "exponentiates",
+      "spoken": "exponentiates",
+      "start": 2.553,
+      "end": 3.193,
+      "matched": true
+    },
+    {
+      "text": "shifted",
+      "spoken": "shifted",
+      "start": 3.193,
+      "end": 3.433,
+      "matched": true
+    },
+    {
+      "text": "scores",
+      "spoken": "scores",
+      "start": 3.433,
+      "end": 3.833,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 3.833,
+      "end": 4.333,
+      "matched": true
+    },
+    {
+      "text": "normalizes",
+      "spoken": "normalizes",
+      "start": 4.333,
+      "end": 4.893,
+      "matched": true
+    },
+    {
+      "text": "them.",
+      "spoken": "them.",
+      "start": 4.893,
+      "end": 5.113,
+      "matched": true
+    },
+    {
+      "text": "At",
+      "spoken": "At",
+      "start": 5.516,
+      "end": 5.616,
+      "matched": true
+    },
+    {
+      "text": "temperature",
+      "spoken": "temperature",
+      "start": 5.616,
+      "end": 5.856,
+      "matched": true
+    },
+    {
+      "text": "one,",
+      "spoken": "one,",
+      "start": 5.856,
+      "end": 6.256,
+      "matched": true
+    },
+    {
+      "text": "mat",
+      "spoken": "mat",
+      "start": 6.476,
+      "end": 6.616,
+      "matched": true
+    },
+    {
+      "text": "is",
+      "spoken": "is",
+      "start": 6.616,
+      "end": 6.796,
+      "matched": true
+    },
+    {
+      "text": "60.9",
+      "spoken": "60.9",
+      "start": 6.796,
+      "end": 7.426,
+      "matched": true
+    },
+    {
+      "text": "percent,",
+      "spoken": "percent,",
+      "start": 7.426,
+      "end": 7.636,
+      "matched": true
+    },
+    {
+      "text": "floor",
+      "spoken": "floor",
+      "start": 8.216,
+      "end": 8.596,
+      "matched": true
+    },
+    {
+      "text": "22.4,",
+      "spoken": "22.4,",
+      "start": 8.596,
+      "end": 9.556,
+      "matched": true
+    },
+    {
+      "text": "sofa",
+      "spoken": "sofa",
+      "start": 9.996,
+      "end": 10.176,
+      "matched": true
+    },
+    {
+      "text": "11.1,",
+      "spoken": "11.1,",
+      "start": 10.176,
+      "end": 11.056,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 11.376,
+      "end": 11.476,
+      "matched": true
+    },
+    {
+      "text": "roof",
+      "spoken": "roof",
+      "start": 11.476,
+      "end": 11.716,
+      "matched": true
+    },
+    {
+      "text": "5.5.",
+      "spoken": "5.5.",
+      "start": 11.716,
+      "end": 12.516,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "formula": 2.453
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 2.175,
+      "text": "Logits become probabilities through softmax."
+    },
+    {
+      "start": 2.453,
+      "end": 5.238,
+      "text": "It exponentiates shifted scores and normalizes them."
+    },
+    {
+      "start": 5.516,
+      "end": 12.711,
+      "text": "At temperature one, mat is 60.9 percent, floor 22.4, sofa 11.1, and roof 5.5."
+    }
+  ],
+  "transcript": "Logits become probabilities through Softmax. It exponentiates shifted scores and normalizes them. At temperature 1, MAT is 60.9%, FLOR 22.4, SOFA 11.1, and ROOF 5.5.",
+  "matchRate": 1,
+  "unmatched": []
+}

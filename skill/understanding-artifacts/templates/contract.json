@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "question": "Replace with the learner's concrete question",
+  "audience": "Replace with audience and prerequisites",
+  "language": {"writing": "ko", "screen": "ko", "narration": "en"},
+  "learning_check": {"question": "A prediction or decision that tests the idea", "expected_reasoning": "Source-backed explanation; not a measured learning gain"},
+  "glossary": [],
+  "claims": [],
+  "example": {"evidence_type": "illustrative", "values": {}, "caveats": []},
+  "visual_beats": [],
+  "artifacts": {
+    "writing": "writing.md",
+    "diagram": "diagram.svg",
+    "web": "index.html",
+    "video": "video/video.mp4",
+    "transcript": "video/script.md",
+    "sources": "sources.md",
+    "tests": "test-report.json"
+  },
+  "limits": ["Replace these placeholders before delivery. Never claim certification or learning improvement from file checks."]
+}

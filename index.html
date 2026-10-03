@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Offline next-token lab: logits, softmax, temperature, top-p, and seeded sampling.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2366e3c4'/%3E%3Ctext x='12' y='48' font-size='44'%3E%E2%86%92%3C/text%3E%3C/svg%3E">
+  <title>Next-token lab — 출력이 만들어지는 순간</title>
+  <style>
+    @font-face { font-family:NextTokenLabSubset; src:url('assets/next-token-lab.woff') format('woff'); font-display:swap; font-style:normal; font-weight:400; }
+    :root {
+      --navy:#0b1020; --navy-2:#10172b; --panel:#121b31; --panel-2:#18233d;
+      --ink:#f4f7ff; --muted:#a4b1ca; --dim:#6f7d99; --line:#2a3959;
+      --mint:#66e3c4; --blue:#6faaff; --amber:#ffc66b; --violet:#bc9cff; --red:#ff8d9d;
+      --shadow:0 16px 48px rgba(0,0,0,.28); --radius:18px;
+      font-family: NextTokenLabSubset, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK KR", sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-width:320px; color:var(--ink); background:var(--navy); line-height:1.55; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.27; background-image:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:48px 48px; mask-image:linear-gradient(to bottom, #000, transparent 78%); }
+    a { color:inherit; }
+    button, input { font:inherit; }
+    button { color:inherit; }
+    :focus-visible { outline:3px solid var(--mint); outline-offset:3px; }
+    .shell { max-width:1220px; margin:0 auto; padding:26px 24px 70px; position:relative; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:42px; }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:-.03em; }
+    .brand-mark { width:36px; height:36px; border-radius:11px; display:grid; place-items:center; background:linear-gradient(145deg,var(--mint),var(--blue)); color:var(--navy); font-weight:950; box-shadow:0 0 24px rgba(102,227,196,.25); }
+    .brand small { display:block; color:var(--muted); font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; }
+    .top-note { color:var(--muted); font-size:12px; text-align:right; }
+    .top-note b { color:var(--mint); }
+    .hero { display:grid; grid-template-columns:1.28fr .72fr; gap:28px; align-items:end; margin-bottom:30px; }
+    .eyebrow { color:var(--mint); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { font-size:clamp(36px,5.8vw,76px); line-height:.98; letter-spacing:-.065em; max-width:790px; margin-bottom:20px; }
+    h1 em { color:var(--mint); font-style:normal; }
+    .hero-lede { color:var(--muted); font-size:17px; max-width:680px; margin-bottom:22px; }
+    .hero-equation { justify-self:end; width:min(100%,330px); color:var(--ink); background:rgba(18,27,49,.85); border:1px solid var(--line); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow); }
+    .hero-equation .eq { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; color:var(--amber); white-space:nowrap; margin-bottom:12px; }
+    .hero-equation p { color:var(--muted); font-size:12px; margin:0; }
+    .modebar { display:flex; flex-wrap:wrap; gap:8px; padding:8px; background:rgba(16,23,43,.76); border:1px solid var(--line); border-radius:15px; margin-bottom:24px; position:sticky; top:10px; z-index:10; backdrop-filter:blur(16px); }
+    .mode-btn { border:0; background:transparent; padding:10px 14px; border-radius:10px; cursor:pointer; color:var(--muted); font-weight:750; font-size:13px; }
+    .mode-btn[aria-current="page"] { background:var(--mint); color:var(--navy); }
+    .mode-btn .key { font-size:10px; opacity:.65; margin-left:5px; }
+    .mode-section { display:none; animation:rise .35s ease both; }
+    .mode-section.active { display:block; }
+    @keyframes rise { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+    .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+    .card { background:linear-gradient(145deg,rgba(18,27,49,.96),rgba(13,20,38,.96)); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; position:relative; overflow:hidden; }
+    .card::after { content:""; position:absolute; width:160px; height:160px; right:-90px; top:-100px; border-radius:50%; background:rgba(102,227,196,.08); pointer-events:none; }
+    .span-12 { grid-column:span 12; } .span-8 { grid-column:span 8; } .span-7 { grid-column:span 7; } .span-6 { grid-column:span 6; } .span-5 { grid-column:span 5; } .span-4 { grid-column:span 4; }
+    .card-kicker { color:var(--dim); font-size:11px; letter-spacing:.13em; text-transform:uppercase; font-weight:800; margin-bottom:8px; }
+    .card h2 { font-size:22px; letter-spacing:-.04em; margin-bottom:8px; }
+    .card h3 { font-size:16px; letter-spacing:-.025em; margin-bottom:6px; }
+    .muted { color:var(--muted); }
+    .fine { color:var(--dim); font-size:12px; }
+    .warning { border:1px solid rgba(255,198,107,.36); background:rgba(255,198,107,.08); border-radius:12px; padding:12px 14px; color:#ffe7b4; font-size:12px; }
+    .context-line { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:20px 0 10px; }
+    .context-line code, .token { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    .context-line code { padding:8px 11px; border-radius:9px; background:#0b1224; border:1px solid var(--line); color:var(--mint); }
+    .arrow { color:var(--dim); font-weight:900; }
+    .candidate-list { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:14px; }
+    .candidate { border:1px solid var(--line); background:#0e162a; border-radius:12px; padding:12px; min-width:0; }
+    .candidate .token { display:block; font-size:15px; font-weight:800; margin-bottom:5px; }
+    .candidate .logit { color:var(--muted); font-size:11px; }
+    .candidate[data-c="0"] .token { color:var(--mint); } .candidate[data-c="1"] .token { color:var(--blue); } .candidate[data-c="2"] .token { color:var(--amber); } .candidate[data-c="3"] .token { color:var(--violet); }
+    .control-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px; }
+    .control { padding:14px; border:1px solid var(--line); border-radius:14px; background:rgba(11,18,36,.62); }
+    .control label { display:flex; justify-content:space-between; gap:12px; font-size:12px; color:var(--muted); font-weight:750; margin-bottom:9px; }
+    .control output { color:var(--mint); font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+    input[type="range"] { width:100%; accent-color:var(--mint); cursor:pointer; }
+    input[type="number"] { width:92px; padding:7px 8px; border-radius:7px; color:var(--ink); background:#0a1020; border:1px solid var(--line); }
+    .switches { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    .choice { cursor:pointer; border:1px solid var(--line); background:#0d1528; border-radius:10px; padding:9px 12px; font-size:12px; font-weight:750; color:var(--muted); }
+    .choice[aria-pressed="true"] { border-color:var(--mint); color:var(--navy); background:var(--mint); }
+    .primary { cursor:pointer; border:0; border-radius:11px; padding:11px 15px; background:var(--mint); color:var(--navy); font-weight:900; box-shadow:0 5px 18px rgba(102,227,196,.17); }
+    .ghost { cursor:pointer; border:1px solid var(--line); border-radius:11px; padding:10px 14px; background:transparent; color:var(--muted); font-weight:800; }
+    .action-row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:16px; }
+    .status { min-height:22px; color:var(--amber); font-size:12px; }
+    .bar-list { margin-top:18px; display:grid; gap:12px; }
+    .bar-row { display:grid; grid-template-columns:68px 1fr 52px; align-items:center; gap:10px; font-size:12px; }
+    .bar-row .bar-label { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted); }
+    .bar-track { height:22px; border-radius:6px; background:#0a1122; overflow:hidden; border:1px solid #223152; }
+    .bar-fill { display:block; height:100%; border-radius:5px; transform-origin:left; transition:width .25s ease,opacity .25s ease; }
+    .bar-fill[data-c="0"] { background:var(--mint); } .bar-fill[data-c="1"] { background:var(--blue); } .bar-fill[data-c="2"] { background:var(--amber); } .bar-fill[data-c="3"] { background:var(--violet); }
+    .bar-row.removed { opacity:.43; } .bar-row.removed .bar-fill { background:var(--dim); }
+    .bar-value { text-align:right; color:var(--ink); font-variant-numeric:tabular-nums; }
+    .ribbon { margin-top:22px; }
+    .ribbon-track { position:relative; height:26px; display:flex; overflow:hidden; border:1px solid var(--line); border-radius:7px; background:#0a1122; }
+    .ribbon-segment { height:100%; transition:width .25s ease; }
+    .ribbon-segment[data-c="0"] { background:var(--mint); } .ribbon-segment[data-c="1"] { background:var(--blue); } .ribbon-segment[data-c="2"] { background:var(--amber); } .ribbon-segment[data-c="3"] { background:var(--violet); }
+    .ribbon-marker { position:absolute; top:-7px; height:40px; width:2px; background:var(--ink); opacity:.8; }
+    .ribbon-marker::before { content:"p"; position:absolute; top:-14px; left:-4px; font-size:10px; color:var(--ink); }
+    .ribbon-legend { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:11px; margin-top:8px; }
+    .draw-readout { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+    .draw-readout strong { color:var(--mint); font-size:28px; letter-spacing:-.05em; }
+    .draw-readout code { color:var(--amber); }
+    .metric-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .metric { flex:1; min-width:120px; border-left:2px solid var(--mint); padding:8px 10px; background:rgba(102,227,196,.05); }
+    .metric b { display:block; font-size:18px; } .metric span { color:var(--dim); font-size:11px; }
+    .diagram-wrap { background:#0b1224; border:1px solid var(--line); border-radius:14px; padding:8px; margin-top:18px; overflow:auto; }
+    .diagram-wrap svg { min-width:760px; width:100%; height:auto; display:block; }
+    .diagram-notes { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; }
+    .diagram-note { padding:12px; border-radius:12px; background:#0d1528; border:1px solid var(--line); font-size:12px; color:var(--muted); }
+    .diagram-note b { display:block; color:var(--ink); margin-bottom:4px; }
+    .writing-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .writing-copy { padding:18px; border-radius:14px; background:#0d1528; border:1px solid var(--line); }
+    .writing-copy h3 { color:var(--mint); }
+    .writing-copy p { color:var(--muted); font-size:14px; }
+    .writing-copy ul { margin:0; padding-left:18px; color:var(--muted); font-size:13px; }
+    .video-frame { aspect-ratio:16/9; border:1px solid var(--line); border-radius:15px; background:radial-gradient(circle at 62% 36%,rgba(102,227,196,.12),transparent 25%),#0b1224; display:grid; place-items:center; overflow:hidden; position:relative; }
+    .video-frame video { width:100%; height:100%; object-fit:cover; }
+    .video-fallback { text-align:center; max-width:340px; padding:20px; color:var(--muted); }
+    .video-fallback strong { display:block; color:var(--mint); font-size:18px; margin-bottom:6px; }
+    .video-fallback code { color:var(--amber); font-size:12px; }
+    .video-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .pill { display:inline-flex; align-items:center; gap:6px; padding:7px 10px; border:1px solid var(--line); border-radius:999px; font-size:11px; color:var(--muted); }
+    .pill::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--mint); }
+    .footer { margin-top:26px; padding-top:20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; color:var(--dim); font-size:11px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media (max-width:850px) { .hero { grid-template-columns:1fr; } .hero-equation { justify-self:start; } .span-8,.span-7,.span-6,.span-5,.span-4 { grid-column:span 12; } .diagram-notes { grid-template-columns:1fr 1fr; } }
+    .ribbon-caption { margin:15px 0 7px; color:var(--muted); font-size:12px; }
+    #sample-ribbon .ribbon-marker { background:var(--amber); width:3px; }
+    @media (max-width:560px) { .shell { padding:18px 14px 52px; } .topbar { align-items:flex-start; margin-bottom:30px; } .top-note { display:none; } h1 { font-size:45px; } .hero-lede { font-size:15px; } .modebar { top:4px; display:grid; grid-template-columns:1fr 1fr; } .mode-btn { min-width:0; padding:9px 6px; font-size:12px; text-align:left; } .card { padding:17px; border-radius:15px; } .candidate-list { grid-template-columns:1fr 1fr; } .control-grid,.writing-grid { grid-template-columns:1fr; } .diagram-notes { grid-template-columns:1fr; } .bar-row { grid-template-columns:54px 1fr 46px; gap:7px; } .hero-equation .eq { font-size:12px; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.001ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">→</span><div><small>Output understanding lab</small>다음 토큰의 한 걸음</div></div>
+      <div class="top-note"><b>OFFLINE / TOY MODEL</b><br>한 번의 분포를 천천히 읽습니다</div>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Logit → probability → choice</p>
+        <h1 id="page-title">다음 <em>토큰</em>은<br>어떻게 고를까?</h1>
+        <p class="hero-lede">후보의 점수를 확률로 바꾸고, 그 분포에서 하나를 고릅니다. 온도와 top-p를 직접 바꾸며, 후보가 남고 선택되는 과정을 따라가 보세요.</p>
+        <div class="warning"><strong>교육용 예제</strong> · 아래 점수는 설명을 위해 직접 골랐습니다. 실제 모델을 실행하지 않으며, 전체 어휘는 네 후보로 줄였습니다. 후보 문자열이 실제 토크나이저에서 한 토큰이라는 뜻은 아닙니다.</div>
+      </div>
+      <div class="hero-equation" aria-label="핵심 수식">
+        <div class="eq">pᵢ = softmax((zᵢ − max z) / T)</div>
+        <p>온도는 분포의 모양을 바꿉니다. top-p는 확률이 큰 후보부터 더해, 합이 p 이상이 되는 순간까지 남깁니다.</p>
+      </div>
+    </section>
+
+    <nav class="modebar" aria-label="설명 모드">
+      <button class="mode-btn" data-mode="lab" aria-current="page"><span class="key">01</span> 인터랙티브 랩</button>
+      <button class="mode-btn" data-mode="diagram"><span class="key">02</span> 인과 다이어그램</button>
+      <button class="mode-btn" data-mode="writing"><span class="key">03</span> Writing / 쓰기</button>
+      <button class="mode-btn" data-mode="video"><span class="key">04</span> Motion video</button>
+    </nav>
+
+    <section id="mode-lab" class="mode-section active" aria-labelledby="lab-title">
+      <div class="grid">
+        <article class="card span-7">
+          <div class="card-kicker">01 / context window</div>
+          <h2 id="lab-title">문맥이 다음 슬롯을 만든다</h2>
+          <p class="muted">마지막 위치의 hidden state를 읽었다고 상상해 보세요. 여기서 모델은 후보마다 <strong>logit</strong>이라는 점수를 냅니다.</p>
+          <div class="context-line" aria-label="문맥과 후보 흐름"><code>The cat sat on the</code><span class="arrow">→</span><span class="token" style="color:var(--mint)">next token?</span></div>
+          <div class="candidate-list" aria-label="교육용 후보 토큰과 logits">
+            <div class="candidate" data-c="0"><span class="token">␠mat</span><span class="logit">z₀ = 2.0</span></div>
+            <div class="candidate" data-c="1"><span class="token">␠floor</span><span class="logit">z₁ = 1.0</span></div>
+            <div class="candidate" data-c="2"><span class="token">␠sofa</span><span class="logit">z₂ = 0.3</span></div>
+            <div class="candidate" data-c="3"><span class="token">␠roof</span><span class="logit">z₃ = −0.4</span></div>
+          </div>
+          <p class="fine" style="margin:14px 0 0">␠는 앞 공백을 시각화한 표기입니다. 실제 tokenizer에서 이 문자열이 항상 한 토큰이라는 뜻은 아닙니다.</p>
+        </article>
+
+        <article class="card span-5">
+          <div class="card-kicker">02 / controls</div>
+          <h2>분포를 조절하기</h2>
+          <div class="control-grid">
+            <div class="control"><label for="temperature">Temperature <output id="temperature-value">1.00</output></label><input id="temperature" type="range" min="0.2" max="2" step="0.05" value="1" aria-describedby="temperature-help"><div id="temperature-help" class="fine">낮을수록 뾰족 · 높을수록 평평</div></div>
+            <div class="control"><label for="top-p">Top-p <output id="top-p-value">0.80</output></label><input id="top-p" type="range" min="0.05" max="1" step="0.05" value="0.8" aria-describedby="top-p-help"><div id="top-p-help" class="fine">누적 질량으로 접두사 유지</div></div>
+          </div>
+          <div class="switches" role="group" aria-label="선택 규칙"><button class="choice" data-choice="sample" aria-pressed="true">Seeded sample</button><button class="choice" data-choice="greedy" aria-pressed="false">Greedy argmax</button></div>
+          <div class="control" style="margin-top:16px"><label for="seed">Seeded draw <span class="fine">재현 가능한 균등 난수</span></label><input id="seed" type="number" min="0" max="4294967295" step="1" value="42" aria-label="샘플 seed"></div>
+          <div class="action-row"><button class="primary" id="draw">다시 뽑기 <span aria-hidden="true">↻</span></button><button class="ghost" id="reset">기본값</button><span class="status" id="status" role="status" aria-live="polite"></span></div>
+        </article>
+
+        <article class="card span-8">
+          <div class="card-kicker">03 / probability field</div>
+          <h2>필터 뒤, 실제로 뽑는 분포</h2>
+          <p class="muted">막대는 <span class="token">top-p</span> 필터 뒤 합이 1이 되도록 다시 나눈 확률입니다. 회색 후보는 이번 추출에서 제외됩니다. greedy는 이 분포에서 뽑지 않고 가장 큰 점수를 고릅니다.</p>
+          <div class="bar-list" id="bars" aria-label="후보별 확률 막대"></div>
+          <div class="metric-row"><div class="metric"><b id="mass-metric">83.3%</b><span>필터 전 유지 질량</span></div><div class="metric"><b id="sum-metric">1.000</b><span>최종 확률 합</span></div><div class="metric"><b id="kept-metric">2 / 4</b><span>남은 후보</span></div></div>
+        </article>
+
+        <article class="card span-4">
+          <div class="card-kicker">04 / cumulative ribbon</div>
+          <h2>남기는 구간과 뽑는 구간</h2>
+          <p class="muted">top-p는 개별 후보의 확률 하한이 아닙니다. 큰 확률부터 더해 임계값에 닿는 후보까지 남깁니다.</p>
+          <p class="ribbon-caption">① 원래 분포 · 흰 선은 top-p 임계값</p>
+          <div class="ribbon" id="ribbon" aria-label="누적 확률 리본"></div>
+          <p class="ribbon-caption">② 필터 뒤, 다시 정규화한 분포 · 주황 선에서 선택</p>
+          <div class="ribbon" id="sample-ribbon" aria-label="재정규화된 샘플링 확률과 난수 위치"></div>
+          <div class="draw-readout"><div><span class="fine">이번 선택</span><strong id="selected-token">␠mat</strong></div><code id="draw-value">u = 0.2523</code></div>
+          <p class="fine" id="selection-note" style="margin:12px 0 0">seed 42의 draw가 누적 구간 안으로 들어갑니다.</p>
+        </article>
+
+        <article class="card span-12">
+          <div class="card-kicker">05 / one step, not a fake rollout</div>
+          <h2>선택 뒤에는 다시 계산한다</h2>
+          <div class="context-line"><code>The cat sat on the</code><span class="arrow">+</span><code id="context-choice">␠mat</code><span class="arrow">→</span><span class="token" style="color:var(--blue)">new hidden state → new logits</span></div>
+          <p class="muted" style="max-width:760px;margin-bottom:0">실제 생성에서는 선택한 토큰을 문맥에 붙이고 모델이 다음 위치의 logits를 <em>다시</em> 계산합니다. 이 랩은 그 재계산을 흉내 내지 않고, 한 번의 선택 규칙만 투명하게 보여줍니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="mode-diagram" class="mode-section" aria-labelledby="diagram-title">
+      <div class="grid">
+        <article class="card span-12">
+          <div class="card-kicker">causal map / 원인과 결과</div>
+          <h2 id="diagram-title">출력은 한 번의 변환 사슬이다</h2>
+          <p class="muted">상자 목록이 아니라, 앞 단계의 값이 다음 단계의 입력이 되는 흐름으로 읽어 보세요. 선택된 토큰은 다시 문맥으로 돌아갑니다.</p>
+          <div class="diagram-wrap" aria-label="문맥에서 선택까지의 인과 SVG 다이어그램">
+            <svg viewBox="0 0 1120 420" role="img" aria-labelledby="svg-title svg-desc">
+              <title id="svg-title">Context to next-token selection causal diagram</title><desc id="svg-desc">Context flows to logits, stable softmax, temperature and top-p filters, then seeded sampling or greedy selection, and returns to context for another step.</desc>
+              <defs><linearGradient id="g-mint" x1="0" x2="1"><stop stop-color="#66e3c4"/><stop offset="1" stop-color="#6faaff"/></linearGradient><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#66e3c4"/></marker></defs>
+              <rect width="1120" height="420" rx="16" fill="#0b1224"/>
+              <text x="562" y="65" fill="#ffc66b" font-size="13" text-anchor="middle">T = 1 · lower T sharpens · higher T flattens</text>
+              <path d="M205 151 H260 M425 151 H480 M645 151 H700 M865 151 H920" stroke="#66e3c4" stroke-width="3" marker-end="url(#arrow)"/>
+              <path d="M1010 215 V333 H110 V255" stroke="#6faaff" stroke-width="2.4" stroke-dasharray="7 7" marker-end="url(#arrow)" fill="none"/>
+              <g font-family="NextTokenLabSubset, system-ui, sans-serif">
+                <g transform="translate(30,92)"><rect width="175" height="118" rx="14" fill="#121b31" stroke="#66e3c4"/><text x="18" y="29" fill="#66e3c4" font-size="11" font-weight="800">CONTEXT</text><text x="18" y="58" fill="#f4f7ff" font-size="15" font-family="monospace">The cat sat</text><text x="18" y="80" fill="#f4f7ff" font-size="15" font-family="monospace">on the ▯</text><text x="18" y="103" fill="#a4b1ca" font-size="11">context → next logits</text></g>
+                <g transform="translate(260,92)"><rect width="165" height="118" rx="14" fill="#121b31" stroke="#6faaff"/><text x="18" y="29" fill="#6faaff" font-size="11" font-weight="800">LOGITS z</text><text x="18" y="58" fill="#f4f7ff" font-size="16" font-family="monospace">2.0  1.0  0.3</text><text x="18" y="80" fill="#f4f7ff" font-size="16" font-family="monospace">−0.4</text><text x="18" y="103" fill="#a4b1ca" font-size="11">scores, not probabilities</text></g>
+                <g transform="translate(480,92)"><rect width="165" height="118" rx="14" fill="#121b31" stroke="#ffc66b"/><text x="18" y="29" fill="#ffc66b" font-size="11" font-weight="800">SOFTMAX</text><text x="18" y="58" fill="#f4f7ff" font-size="16" font-family="monospace">60.9%  22.4%</text><text x="18" y="80" fill="#f4f7ff" font-size="16" font-family="monospace">11.1%  5.5%</text><text x="18" y="103" fill="#a4b1ca" font-size="11">stable exp((z−max)/T)</text></g>
+                <g transform="translate(700,92)"><rect width="165" height="118" rx="14" fill="#121b31" stroke="#bc9cff"/><text x="18" y="29" fill="#bc9cff" font-size="11" font-weight="800">FILTER</text><text x="18" y="58" fill="#f4f7ff" font-size="16" font-family="monospace">top-p = .80</text><text x="18" y="80" fill="#f4f7ff" font-size="16" font-family="monospace">.609 + .224</text><text x="18" y="103" fill="#a4b1ca" font-size="11">keep until ≥ threshold</text></g>
+                <g transform="translate(920,92)"><rect width="170" height="118" rx="14" fill="#17283a" stroke="url(#g-mint)"/><text x="18" y="29" fill="#66e3c4" font-size="11" font-weight="800">CHOICE</text><text x="18" y="59" fill="#f4f7ff" font-size="13" font-family="monospace">seed 42 / greedy</text><text x="18" y="82" fill="#ffc66b" font-size="16" font-family="monospace">␠mat</text><text x="18" y="103" fill="#a4b1ca" font-size="11">one token exits</text></g>
+                <text x="90" y="365" fill="#6faaff" font-size="13" font-weight="700">feedback: append chosen token, then recalculate logits</text><text x="90" y="388" fill="#6f7d99" font-size="11">This lab stops before the next forward pass. No constant-logit rollout is implied.</text>
+              </g>
+            </svg>
+          </div>
+          <div class="diagram-notes"><div class="diagram-note"><b>Score ≠ probability</b>Logits can be any real values. Softmax turns relative scores into a normalized distribution.</div><div class="diagram-note"><b>Top-p is a prefix</b>Sort by probability, add from the front, and include the threshold-crossing token before renormalizing.</div><div class="diagram-note"><b>Choice is stochastic or strict</b>Sampling can choose a non-max token; greedy always chooses the largest remaining score.</div></div>
+          <p class="fine" style="margin:16px 0 0">같은 도식은 <a href="diagram.svg">standalone diagram.svg</a>로도 제공됩니다. 색상: mat / mint, floor / blue, sofa / amber, roof / violet.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="mode-writing" class="mode-section" aria-labelledby="writing-title">
+      <div class="grid">
+        <article class="card span-12">
+          <div class="card-kicker">clear writing / 설명의 두 언어</div>
+          <h2 id="writing-title">같은 설명을 짧고 정확하게</h2>
+          <p class="muted">영어는 STE-inspired 원칙으로 짧게 썼고, 한국어는 같은 조건과 caveat를 자연스럽게 풀었습니다. 이는 ASD-STE100 인증 문서가 아닙니다.</p>
+          <div class="writing-grid">
+            <div class="writing-copy"><h3>English · plain technical version</h3><p>Given the context <code>The cat sat on the</code>, the model assigns a score, called a logit, to each possible next token. In this toy example, the scores are 2.0, 1.0, 0.3, and −0.4.</p><p>Softmax converts the scores into probabilities. At temperature 1, the probabilities are about 60.9%, 22.4%, 11.1%, and 5.5%. A lower temperature makes the distribution sharper. A higher temperature makes it flatter.</p><p>Top-p keeps the smallest high-probability prefix whose cumulative mass reaches p. At p = 0.8, <code>mat</code> and <code>floor</code> stay. Their original mass is about 83.3%, so the two values are renormalized to 73.1% and 26.9%.</p><p>Greedy decoding selects the largest score. Sampling draws a uniform number from the cumulative intervals. It can select a token that is not the most likely token. After the choice, a real model adds the token to the context and calculates new scores.</p><p class="fine">These values are illustrative. The full vocabulary is not shown. The labels do not prove real tokenizer boundaries. This page does not run model inference or measure truth.</p></div>
+            <div class="writing-copy"><h3>한국어 · 같은 내용을 자연스럽게</h3><p><code>The cat sat on the</code>라는 문맥이 주어지면, 모델은 가능한 다음 토큰마다 <strong>logit</strong>이라는 점수를 매깁니다. 이 toy 예제에서 점수는 2.0, 1.0, 0.3, −0.4입니다.</p><p>softmax는 점수를 확률로 바꿉니다. T=1이면 대략 60.9%, 22.4%, 11.1%, 5.5%입니다. 온도를 낮추면 분포가 더 뾰족해지고, 높이면 더 평평해집니다.</p><p>top-p는 높은 확률부터 더해 누적 질량이 p에 처음 도달하는 최소 접두사를 남깁니다. p=.8이면 <code>mat</code>과 <code>floor</code>가 남습니다. 원래 질량은 약 83.3%이므로 둘을 다시 정규화해 73.1%, 26.9%로 만듭니다.</p><p>greedy는 가장 큰 점수 하나를 고릅니다. sampling은 누적 구간에서 균등 난수를 뽑으므로 가장 높은 후보가 아닌 토큰도 선택할 수 있습니다. 실제 모델은 선택한 토큰을 문맥에 붙인 뒤 새 점수를 다시 계산합니다.</p><p class="fine">여기 값은 설명을 위한 예시입니다. 전체 vocabulary는 생략했고, 후보 문자열이 실제 tokenizer 경계를 증명하지 않습니다. 이 페이지는 모델 추론을 실행하지 않으며 사실성을 측정하지도 않습니다.</p></div>
+          </div>
+          <div class="warning" style="margin-top:16px"><strong>한 줄 요약</strong> · 현재 문맥에서 다음 토큰의 분포를 만들고, 선택 규칙에 따라 하나를 고릅니다. 그 토큰의 예측 확률은 내용의 사실성을 보증하지 않습니다.</div>
+          <details style="margin-top:20px"><summary>생각해 보기: T = 1, top-p = 0.8이면 floor는 후보로 남을까요?</summary><p class="muted">남습니다. mat만으로는 60.9%로 부족하지만, floor까지 더하면 83.3%가 되어 80%를 넘습니다. top-p는 개별 후보의 확률 하한이 아니라 앞에서부터 더한 합을 기준으로 합니다.</p></details>
+          <p><a href="writing.md">더 짧은 문장으로 쓴 전체 설명과 한계</a> · <a href="sources.md">출처 확인</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="mode-video" class="mode-section" aria-labelledby="video-title">
+      <div class="grid">
+        <article class="card span-8">
+          <div class="card-kicker">motion explainer / local asset</div>
+          <h2 id="video-title">한 번의 선택을 움직임으로</h2>
+          <p class="muted">같은 네 후보가 점수에서 확률로, 필터를 지나 선택으로 이어집니다. 한국어 화면과 영어 내레이션으로 설명합니다. 재생은 직접 눌러 주세요.</p>
+          <div class="video-frame"><video controls preload="metadata" src="video/video.mp4" aria-label="next-token explainer video"><span class="video-fallback"><strong>영상 슬롯</strong><code>video/video.mp4</code><br>아직 로컬 MP4가 없으면 이 안내가 보입니다.</span></video></div>
+          <div class="video-meta"><span class="pill">context → logits</span><span class="pill">temperature / top-p</span><span class="pill">seeded sample</span><span class="pill">feedback loop</span></div>
+        </article>
+        <article class="card span-4"><div class="card-kicker">transcript / limits</div><h2>영상에서 확인할 것</h2><p class="muted">top-p = 0.8에서는 mat과 floor가 남습니다. 다시 정규화하면 73.1%와 26.9%입니다. 영상의 u = 0.82는 floor 구간에 들어갑니다. 웹의 기본 시드와 다른, 명시적인 추출 예제입니다.</p><p class="fine">선택한 토큰을 붙인 뒤 실제 모델은 점수를 다시 계산합니다. 여기서는 한 번의 선택만 설명합니다. 토큰 확률이 높다고 내용이 사실이라는 뜻은 아닙니다.</p><p><a href="video/script.md">영어 내레이션 원문</a> · <a href="sources.md">출처와 한계</a></p></article>
+      </div>
+    </section>
+
+    <footer class="footer"><span>Next-token lab · offline bundle</span><span>toy logits / full vocabulary omitted / no actual model inference</span></footer>
+  </main>
+<script>
+(() => {
+  'use strict';
+  const TOKENS = [' mat',' floor',' sofa',' roof'];
+  const LOGITS = [2.0, 1.0, 0.3, -0.4];
+  const COLORS = ['mint','blue','amber','violet'];
+
+  /**
+   * Pure numeric API exposed for tests and reuse.
+   * Lab.softmax(logits, temperature) -> normalized probabilities.
+   * Lab.topP(probabilities, threshold) -> {keep, mass, probabilities}.
+   * Lab.greedyIndex(logits) -> index of the first maximum.
+   * Lab.seededUniform(seed) -> deterministic uniform in [0, 1).
+   * Lab.sampleIndex(probabilities, seed) -> {index, draw, cumulative}.
+   * Lab.cumulative(probabilities) -> cumulative sums.
+   */
+  function softmax(logits, temperature) {
+    if (!Array.isArray(logits) || !logits.length || !Number.isFinite(temperature) || temperature <= 0) throw new Error('temperature must be finite and positive');
+    const peak = Math.max(...logits);
+    const weights = logits.map(z => Math.exp((z - peak) / temperature));
+    const sum = weights.reduce((a,b) => a+b, 0);
+    return weights.map(w => w / sum);
+  }
+  function topP(probabilities, threshold) {
+    if (!Array.isArray(probabilities) || !probabilities.length || !Number.isFinite(threshold) || threshold <= 0 || threshold > 1) throw new Error('threshold must be in (0,1]');
+    const order = probabilities.map((p,i) => i).sort((a,b) => probabilities[b] - probabilities[a] || a - b);
+    const keep = []; let mass = 0;
+    for (const i of order) { keep.push(i); mass += probabilities[i]; if (mass >= threshold) break; }
+    const kept = new Set(keep);
+    return { keep, mass, probabilities: probabilities.map((p,i) => kept.has(i) ? p / mass : 0) };
+  }
+  function greedyIndex(logits) { return logits.reduce((best, value, i) => value > logits[best] ? i : best, 0); }
+  function seededUniform(seed) { let x = (Number(seed) >>> 0); x = (x + 0x6D2B79F5) >>> 0; x = Math.imul(x ^ (x >>> 15), x | 1); x ^= x + Math.imul(x ^ (x >>> 7), x | 61); return ((x ^ (x >>> 14)) >>> 0) / 4294967296; }
+  function cumulative(probabilities) { let sum = 0; return probabilities.map(p => sum += p); }
+  function sampleIndex(probabilities, seed) { const draw = seededUniform(seed); const cum = cumulative(probabilities); let index = cum.findIndex(x => draw < x); if (index < 0) index = probabilities.length - 1; return { index, draw, cumulative: cum }; }
+  window.Lab = { softmax, topP, greedyIndex, seededUniform, cumulative, sampleIndex, TOKENS:[...TOKENS], LOGITS:[...LOGITS], COLORS:[...COLORS] };
+
+  const $ = id => document.getElementById(id);
+  const state = { temperature:1, topP:.8, choice:'sample', seed:42 };
+  function pct(n) { return `${(n * 100).toFixed(1)}%`; }
+  function render() {
+    const base = softmax(LOGITS, state.temperature);
+    const filtered = topP(base, state.topP);
+    const sample = sampleIndex(filtered.probabilities, state.seed);
+    const index = state.choice === 'greedy' ? greedyIndex(LOGITS) : sample.index;
+    const cum = cumulative(base);
+    $('temperature-value').textContent = state.temperature.toFixed(2);
+    $('top-p-value').textContent = state.topP.toFixed(2);
+    const bars = $('bars'); bars.innerHTML = '';
+    TOKENS.forEach((token, i) => {
+      const row = document.createElement('div'); row.className = `bar-row ${filtered.keep.includes(i) ? '' : 'removed'}`;
+      row.innerHTML = `<span class="bar-label">${token.replace(' ','␠')}</span><span class="bar-track"><span class="bar-fill" data-c="${i}" style="width:${Math.max(0, filtered.probabilities[i] * 100)}%"></span></span><span class="bar-value">${pct(filtered.probabilities[i])}</span>`;
+      bars.appendChild(row);
+    });
+    const ribbon = $('ribbon'); ribbon.innerHTML = '';
+    const track = document.createElement('div'); track.className = 'ribbon-track';
+    base.forEach((p,i) => { const seg = document.createElement('span'); seg.className='ribbon-segment'; seg.dataset.c=i; seg.style.width=`${p*100}%`; seg.title=`${TOKENS[i]}: ${pct(p)} · cumulative ${pct(cum[i])}`; track.appendChild(seg); });
+    const marker = document.createElement('span'); marker.className='ribbon-marker'; marker.style.left=`${state.topP*100}%`; marker.setAttribute('aria-label',`top-p ${state.topP.toFixed(2)}`); track.appendChild(marker); ribbon.appendChild(track);
+    const legend = document.createElement('div'); legend.className='ribbon-legend'; legend.innerHTML=`<span>0</span><span>남는 후보 ${filtered.keep.map(i=>TOKENS[i].trim()).join(' + ')} · 원래 합 ${pct(filtered.mass)}</span><span>1.0</span>`; ribbon.appendChild(legend);
+    const sr=$('sample-ribbon'); sr.innerHTML=''; const st=document.createElement('div'); st.className='ribbon-track';
+    filtered.probabilities.forEach((p,i)=>{if(p<=0)return;const seg=document.createElement('span');seg.className='ribbon-segment';seg.dataset.c=i;seg.style.width=`${p*100}%`;seg.title=`${TOKENS[i]}: ${pct(p)} after renormalization`;st.appendChild(seg);});
+    if(state.choice==='sample'){const sm=document.createElement('span');sm.className='ribbon-marker';sm.style.left=`${sample.draw*100}%`;sm.setAttribute('aria-label',`u ${sample.draw.toFixed(4)}`);st.appendChild(sm);} sr.appendChild(st);
+    const sl=document.createElement('div');sl.className='ribbon-legend';sl.innerHTML=`<span>0</span><span>${state.choice==='sample'?`u = ${sample.draw.toFixed(4)} · 합 1로 재정규화`:'greedy: 확률 추출을 생략'}</span><span>1.0</span>`;sr.appendChild(sl);
+    $('mass-metric').textContent = pct(filtered.mass); $('sum-metric').textContent = filtered.probabilities.reduce((a,b)=>a+b,0).toFixed(3); $('kept-metric').textContent = `${filtered.keep.length} / ${TOKENS.length}`;
+    $('selected-token').textContent = TOKENS[index].replace(' ','␠'); $('context-choice').textContent = TOKENS[index].replace(' ','␠'); $('draw-value').textContent = state.choice === 'greedy' ? 'argmax z' : `u = ${sample.draw.toFixed(4)}`;
+    const sampleCum=cumulative(filtered.probabilities); const lower=index===0?0:sampleCum[index-1];
+    $('selection-note').textContent = state.choice === 'greedy' ? 'greedy는 확률 구간에서 뽑지 않고 가장 큰 logit을 선택합니다.' : `seed ${state.seed}: u=${sample.draw.toFixed(4)}가 [${lower.toFixed(3)}, ${sampleCum[index].toFixed(3)}) 구간에 들어가 ${TOKENS[index].trim()}을 고릅니다.`;
+    $('status').textContent = state.choice === 'greedy' ? 'argmax 고정' : `seed ${state.seed} · ${pct(filtered.mass)} mass retained`;
+    document.querySelectorAll('[data-choice]').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.choice === state.choice)));
+  }
+  function reset() { state.temperature=1; state.topP=.8; state.choice='sample'; state.seed=42; $('temperature').value=1; $('top-p').value=.8; $('seed').value=42; render(); }
+  $('temperature').addEventListener('input', e => { state.temperature=Number(e.target.value); render(); });
+  $('top-p').addEventListener('input', e => { state.topP=Number(e.target.value); render(); });
+  $('seed').addEventListener('input', e => { state.seed=Math.max(0, Number(e.target.value)||0); render(); });
+  $('draw').addEventListener('click', () => { state.seed = (state.seed + 1) >>> 0; $('seed').value=state.seed; render(); });
+  $('reset').addEventListener('click', reset);
+  document.querySelectorAll('[data-choice]').forEach(btn => btn.addEventListener('click', () => { state.choice=btn.dataset.choice; render(); }));
+  document.querySelectorAll('[data-mode]').forEach((btn, i) => btn.addEventListener('click', () => { document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-current', b===btn?'page':'false')); document.querySelectorAll('.mode-section').forEach(s=>s.classList.toggle('active', s.id === `mode-${btn.dataset.mode}`)); document.getElementById(`mode-${btn.dataset.mode}`).scrollIntoView({block:'start', behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'}); }));
+  document.addEventListener('keydown', e => { if (e.target.matches('input,button')) return; const modes=['lab','diagram','writing','video']; const i=modes.indexOf(document.querySelector('.mode-section.active').id.replace('mode-','')); if (e.key==='ArrowRight') document.querySelector(`[data-mode="${modes[(i+1)%modes.length]}"]`).click(); if (e.key==='ArrowLeft') document.querySelector(`[data-mode="${modes[(i-1+modes.length)%modes.length]}"]`).click(); });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-03T00:04:41.811463+00:00",
+  "scope": "Packaging, static HTML resource references and media metadata only. Dynamic/offline browser network, factual correctness, audio quality, accessibility and learning are separate checks.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "contract_parse",
+      "passed": true,
+      "detail": "contract.json"
+    },
+    {
+      "name": "required_modes",
+      "passed": true,
+      "detail": "Required artifact keys; semantic contract completeness is not checked"
+    },
+    {
+      "name": "asset_writing",
+      "passed": true,
+      "detail": "writing.md"
+    },
+    {
+      "name": "asset_diagram",
+      "passed": true,
+      "detail": "diagram.svg"
+    },
+    {
+      "name": "asset_web",
+      "passed": true,
+      "detail": "index.html"
+    },
+    {
+      "name": "asset_video",
+      "passed": true,
+      "detail": "video/video.mp4"
+    },
+    {
+      "name": "asset_transcript",
+      "passed": true,
+      "detail": "video/script.md"
+    },
+    {
+      "name": "asset_sources",
+      "passed": true,
+      "detail": "sources.md"
+    },
+    {
+      "name": "asset_tests",
+      "passed": true,
+      "detail": "test-report.json"
+    },
+    {
+      "name": "web_parse",
+      "passed": true,
+      "detail": "UTF-8 HTML parsed"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "diagram.svg"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "writing.md"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "sources.md"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "video/video.mp4"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "video/script.md"
+    },
+    {
+      "name": "local_link",
+      "passed": true,
+      "detail": "sources.md"
+    },
+    {
+      "name": "static_network_literal_check",
+      "passed": true,
+      "detail": "No supported literal remote loads found; not a dynamic network guarantee"
+    },
+    {
+      "name": "ffprobe_available",
+      "passed": true,
+      "detail": "ffprobe"
+    },
+    {
+      "name": "video_probe",
+      "passed": true,
+      "detail": {
+        "command": "ffprobe -show_format -show_streams -of json <video>",
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "video_stream",
+      "passed": true,
+      "detail": "Decoded metadata"
+    },
+    {
+      "name": "video_compatibility",
+      "passed": true,
+      "detail": {
+        "codec_name": "h264",
+        "pix_fmt": "yuv420p",
+        "width": 1920,
+        "height": 1080,
+        "duration": "81.666667",
+        "nb_frames": "2450"
+      }
+    },
+    {
+      "name": "audio_stream_present",
+      "passed": true,
+      "detail": [
+        {
+          "codec_name": "aac",
+          "duration": "81.666000",
+          "sample_rate": "48000",
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "name": "positive_duration",
+      "passed": true,
+      "detail": "81.666667"
+    },
+    {
+      "name": "mp4_faststart",
+      "passed": true,
+      "detail": "Unfragmented MP4: moov before mdat"
+    }
+  ],
+  "files": {
+    "writing": {
+      "path": "writing.md",
+      "bytes": 4206,
+      "sha256": "92b40e1c6db7fada84c52977ce3149e47b512ce45336280096a06a203a84d0aa"
+    },
+    "diagram": {
+      "path": "diagram.svg",
+      "bytes": 3720,
+      "sha256": "4896164f01cc1f82e35809898d613236af7089d4250f5279fdc66d48114f9502"
+    },
+    "web": {
+      "path": "index.html",
+      "bytes": 41169,
+      "sha256": "7a861f01cd255e5982a4f09d83a9ff5fda51fa842ececde3cae47bc6ec93c4f6"
+    },
+    "video": {
+      "path": "video/video.mp4",
+      "bytes": 7349969,
+      "sha256": "ffd24dfe12c596eb797b36d8cfe10274c80f95e7fa340185b75eb9fe11189506",
+      "probe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1920,
+            "height": 1080,
+            "coded_width": 1920,
+            "coded_height": 1080,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 2,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "16:9",
+            "pix_fmt": "yuv420p",
+            "level": 50,
+            "color_range": "tv",
+            "color_space": "bt470bg",
+            "chroma_location": "center",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/15360",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 1254400,
+            "duration": "81.666667",
+            "bit_rate": "535914",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "2450",
+            "extradata_size": 51,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc60.31.102 libx264"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "initial_padding": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 3919968,
+            "duration": "81.666000",
+            "bit_rate": "175635",
+            "nb_frames": "3830",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "non_diegetic": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler",
+              "vendor_id": "[0][0][0][0]"
+            }
+          }
+        ],
+        "format": {
+          "filename": "video/video.mp4",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "81.666667",
+          "size": "7349969",
+          "bit_rate": "719996",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "encoder": "Lavf60.16.100"
+          }
+        }
+      }
+    },
+    "transcript": {
+      "path": "video/script.md",
+      "bytes": 1488,
+      "sha256": "8249c6f67bb91b587e9ed9edcf1e4625338c8adc7c028da81c44d6d55632085d"
+    },
+    "sources": {
+      "path": "sources.md",
+      "bytes": 2335,
+      "sha256": "ad1c0cceb8e85c12b8a808b6da488640f96dde801371dd9ced0100e69adfed78"
+    },
+    "tests": {
+      "path": "test-report.json",
+      "bytes": 10232,
+      "sha256": "a232c2f2bb98370da79b42804ef7f46cd47a7c18b9b13706c19959a7854e1821"
+    }
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "hash": "8020ac48e13687cf",
+  "id": "hook",
+  "duration": 7.363,
+  "words": [
+    {
+      "text": "After",
+      "spoken": "After",
+      "start": 0,
+      "end": 0.22,
+      "matched": true
+    },
+    {
+      "text": "reading",
+      "spoken": "reading",
+      "start": 0.22,
+      "end": 0.38,
+      "matched": true
+    },
+    {
+      "text": "context,",
+      "spoken": "context,",
+      "start": 0.38,
+      "end": 0.84,
+      "matched": true
+    },
+    {
+      "text": "an",
+      "spoken": "an",
+      "start": 1.38,
+      "end": 1.43,
+      "matched": true
+    },
+    {
+      "text": "LLM",
+      "spoken": "LLM",
+      "start": 1.42,
+      "end": 1.94,
+      "matched": true
+    },
+    {
+      "text": "scores",
+      "spoken": "scores",
+      "start": 1.94,
+      "end": 2.12,
+      "matched": true
+    },
+    {
+      "text": "possible",
+      "spoken": "possible",
+      "start": 2.12,
+      "end": 2.66,
+      "matched": true
+    },
+    {
+      "text": "next",
+      "spoken": "next",
+      "start": 2.66,
+      "end": 2.9,
+      "matched": true
+    },
+    {
+      "text": "tokens",
+      "spoken": "tokens",
+      "start": 2.9,
+      "end": 3.3,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 3.3,
+      "end": 3.56,
+      "matched": true
+    },
+    {
+      "text": "chooses",
+      "spoken": "chooses",
+      "start": 3.56,
+      "end": 3.86,
+      "matched": true
+    },
+    {
+      "text": "one.",
+      "spoken": "one.",
+      "start": 3.86,
+      "end": 4.16,
+      "matched": true
+    },
+    {
+      "text": "A",
+      "spoken": "A",
+      "start": 4.543,
+      "end": 4.623,
+      "matched": true
+    },
+    {
+      "text": "token",
+      "spoken": "token",
+      "start": 4.623,
+      "end": 4.823,
+      "matched": true
+    },
+    {
+      "text": "can",
+      "spoken": "can",
+      "start": 4.823,
+      "end": 5.083,
+      "matched": true
+    },
+    {
+      "text": "be",
+      "spoken": "be",
+      "start": 5.083,
+      "end": 5.223,
+      "matched": true
+    },
+    {
+      "text": "a",
+      "spoken": "a",
+      "start": 5.223,
+      "end": 5.283,
+      "matched": true
+    },
+    {
+      "text": "word,",
+      "spoken": "word,",
+      "start": 5.283,
+      "end": 5.523,
+      "matched": true
+    },
+    {
+      "text": "part",
+      "spoken": "part",
+      "start": 5.843,
+      "end": 5.943,
+      "matched": true
+    },
+    {
+      "text": "of",
+      "spoken": "of",
+      "start": 5.943,
+      "end": 6.083,
+      "matched": true
+    },
+    {
+      "text": "a",
+      "spoken": "a",
+      "start": 6.083,
+      "end": 6.143,
+      "matched": true
+    },
+    {
+      "text": "word,",
+      "spoken": "word,",
+      "start": 6.143,
+      "end": 6.383,
+      "matched": true
+    },
+    {
+      "text": "or",
+      "spoken": "or",
+      "start": 6.383,
+      "end": 6.603,
+      "matched": true
+    },
+    {
+      "text": "punctuation.",
+      "spoken": "punctuation.",
+      "start": 6.603,
+      "end": 7.183,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "context": 4.543
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 4.265,
+      "text": "After reading context, an LLM scores possible next tokens and chooses one."
+    },
+    {
+      "start": 4.543,
+      "end": 7.363,
+      "text": "A token can be a word, part of a word, or punctuation."
+    }
+  ],
+  "transcript": "After reading context, an LLM scores possible next tokens and chooses one. A token can be a word, part of a word or punctuation.",
+  "matchRate": 1,
+  "unmatched": []
+}

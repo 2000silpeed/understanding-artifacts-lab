@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "checks": 10,
+  "failures": 0,
+  "report": "./tests/web-latest.json",
+  "screenshots": [
+    "screenshots/lab-desktop.png",
+    "screenshots/diagram-desktop.png",
+    "screenshots/lab-mobile-390.png"
+  ]
+}

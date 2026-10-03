@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "started": "2026-10-03T00:01:47.710Z",
+  "finished": "2026-10-03T00:01:52.086Z",
+  "url": "http://127.0.0.1:4173/index.html",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "artifact files",
+      "pass": true,
+      "detail": "index.html, diagram.svg, writing.md, facts.json, package.json present"
+    },
+    {
+      "name": "facts.json shared inputs",
+      "pass": true,
+      "detail": "context, four candidates, logits, caveats loaded"
+    },
+    {
+      "name": "offline page load",
+      "pass": true,
+      "detail": "loaded over local HTTP with no external dependency requests"
+    },
+    {
+      "name": "window.Lab numerical oracle",
+      "pass": true,
+      "detail": "stable softmax, prefix threshold, renormalization, greedy, seeded draw all pass"
+    },
+    {
+      "name": "initial lab UI",
+      "pass": true,
+      "detail": "default T=1, top-p=.8, seeded sample renders"
+    },
+    {
+      "name": "live controls",
+      "pass": true,
+      "detail": "top-p and temperature update the bars and metrics"
+    },
+    {
+      "name": "greedy and reset",
+      "pass": true,
+      "detail": "greedy is separate from sampling and reset restores defaults"
+    },
+    {
+      "name": "four modes",
+      "pass": true,
+      "detail": "lab, causal diagram, writing comparison, and relative video slot are navigable"
+    },
+    {
+      "name": "responsive and reduced motion",
+      "pass": true,
+      "detail": "390px layout has no page overflow (390px)"
+    },
+    {
+      "name": "runtime health",
+      "pass": true,
+      "detail": "zero console/page errors and zero external requests"
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    "screenshots/lab-desktop.png",
+    "screenshots/diagram-desktop.png",
+    "screenshots/lab-mobile-390.png"
+  ],
+  "notes": [
+    "Deterministic invariants are asserted. No comprehension or factual-accuracy claim is made.",
+    "Final test requires actual MP4 presence and tolerates zero console errors. Separate parent checks exercise media playback and fonts."
+  ]
+}

@@ -1,0 +1,288 @@
+{
+  "hash": "c868f1a6815bd008",
+  "id": "sample",
+  "duration": 13.158,
+  "words": [
+    {
+      "text": "Sampling",
+      "spoken": "Sampling",
+      "start": 0,
+      "end": 0.34,
+      "matched": true
+    },
+    {
+      "text": "draws",
+      "spoken": "draws",
+      "start": 0.34,
+      "end": 0.6,
+      "matched": true
+    },
+    {
+      "text": "a",
+      "spoken": "a",
+      "start": 0.6,
+      "end": 0.86,
+      "matched": true
+    },
+    {
+      "text": "uniform",
+      "spoken": "uniform",
+      "start": 0.86,
+      "end": 1.02,
+      "matched": true
+    },
+    {
+      "text": "number",
+      "spoken": "number",
+      "start": 1.02,
+      "end": 1.5,
+      "matched": true
+    },
+    {
+      "text": "across",
+      "spoken": "across",
+      "start": 1.5,
+      "end": 1.94,
+      "matched": true
+    },
+    {
+      "text": "cumulative",
+      "spoken": "cumulative",
+      "start": 1.94,
+      "end": 2.32,
+      "matched": true
+    },
+    {
+      "text": "probability.",
+      "spoken": "probability.",
+      "start": 2.32,
+      "end": 3,
+      "matched": true
+    },
+    {
+      "text": "Here",
+      "spoken": "Here",
+      "start": 3.618,
+      "end": 3.778,
+      "matched": true
+    },
+    {
+      "text": "u",
+      "spoken": "u",
+      "start": 3.778,
+      "end": 3.918,
+      "matched": true
+    },
+    {
+      "text": "equals",
+      "spoken": "equals",
+      "start": 3.918,
+      "end": 4.298,
+      "matched": true
+    },
+    {
+      "text": "0.82,",
+      "spoken": "0.82,",
+      "start": 4.298,
+      "end": 5.238,
+      "matched": true
+    },
+    {
+      "text": "so",
+      "spoken": "so",
+      "start": 5.718,
+      "end": 5.898,
+      "matched": true
+    },
+    {
+      "text": "it",
+      "spoken": "it",
+      "start": 5.898,
+      "end": 5.978,
+      "matched": true
+    },
+    {
+      "text": "selects",
+      "spoken": "selects",
+      "start": 5.978,
+      "end": 6.238,
+      "matched": true
+    },
+    {
+      "text": "floor",
+      "spoken": "floor",
+      "start": 6.238,
+      "end": 6.578,
+      "matched": true
+    },
+    {
+      "text": "from",
+      "spoken": "from",
+      "start": 6.578,
+      "end": 6.838,
+      "matched": true
+    },
+    {
+      "text": "the",
+      "spoken": "the",
+      "start": 6.838,
+      "end": 6.918,
+      "matched": true
+    },
+    {
+      "text": "filtered",
+      "spoken": "filtered",
+      "start": 6.918,
+      "end": 7.158,
+      "matched": true
+    },
+    {
+      "text": "intervals.",
+      "spoken": "intervals.",
+      "start": 7.158,
+      "end": 7.498,
+      "matched": true
+    },
+    {
+      "text": "The",
+      "spoken": "The",
+      "start": 8.101,
+      "end": 8.181,
+      "matched": true
+    },
+    {
+      "text": "token",
+      "spoken": "token",
+      "start": 8.181,
+      "end": 8.461,
+      "matched": true
+    },
+    {
+      "text": "joins",
+      "spoken": "joins",
+      "start": 8.461,
+      "end": 8.821,
+      "matched": true
+    },
+    {
+      "text": "context,",
+      "spoken": "context,",
+      "start": 8.821,
+      "end": 9.181,
+      "matched": true
+    },
+    {
+      "text": "and",
+      "spoken": "and",
+      "start": 9.741,
+      "end": 9.861,
+      "matched": true
+    },
+    {
+      "text": "the",
+      "spoken": "the",
+      "start": 9.861,
+      "end": 9.961,
+      "matched": true
+    },
+    {
+      "text": "model",
+      "spoken": "model",
+      "start": 9.961,
+      "end": 10.201,
+      "matched": true
+    },
+    {
+      "text": "recomputes",
+      "spoken": "recomputes",
+      "start": 10.201,
+      "end": 10.821,
+      "matched": true
+    },
+    {
+      "text": "the",
+      "spoken": "the",
+      "start": 10.821,
+      "end": 10.941,
+      "matched": true
+    },
+    {
+      "text": "next",
+      "spoken": "next",
+      "start": 10.941,
+      "end": 11.101,
+      "matched": true
+    },
+    {
+      "text": "step.",
+      "spoken": "step.",
+      "start": 11.101,
+      "end": 11.441,
+      "matched": true
+    },
+    {
+      "text": "This",
+      "spoken": "This",
+      "start": 11.878,
+      "end": 11.998,
+      "matched": true
+    },
+    {
+      "text": "toy",
+      "spoken": "toy",
+      "start": 11.998,
+      "end": 12.178,
+      "matched": true
+    },
+    {
+      "text": "shows",
+      "spoken": "shows",
+      "start": 12.178,
+      "end": 12.438,
+      "matched": true
+    },
+    {
+      "text": "one",
+      "spoken": "one",
+      "start": 12.438,
+      "end": 12.658,
+      "matched": true
+    },
+    {
+      "text": "step.",
+      "spoken": "step.",
+      "start": 12.658,
+      "end": 12.978,
+      "matched": true
+    }
+  ],
+  "marks": {
+    "draw": 3.618,
+    "feedback": 8.101
+  },
+  "chunks": [
+    {
+      "start": 0,
+      "end": 3.34,
+      "text": "Sampling draws a uniform number across cumulative probability."
+    },
+    {
+      "start": 3.618,
+      "end": 7.823,
+      "text": "Here u equals 0.82, so it selects floor from the filtered intervals."
+    },
+    {
+      "start": 8.101,
+      "end": 11.601,
+      "text": "The token joins context, and the model recomputes the next step."
+    },
+    {
+      "start": 11.878,
+      "end": 13.158,
+      "text": "This toy shows one step."
+    }
+  ],
+  "transcript": "Sampling draws a uniform number across cumulative probability. Here u equals 0.82, so it selects floor from the filtered intervals. The token joins context, and the model recomputes the next step. This toy shows one step.",
+  "matchRate": 1,
+  "unmatched": []
+}
