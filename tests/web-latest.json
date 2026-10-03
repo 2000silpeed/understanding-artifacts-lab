@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "started": "2026-10-03T00:01:47.710Z",
-  "finished": "2026-10-03T00:01:52.086Z",
+  "started": "2026-10-03T09:41:51.321Z",
+  "finished": "2026-10-03T09:41:55.702Z",
   "url": "http://127.0.0.1:4173/index.html",
   "status": "passed",
   "checks": [

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상관관계 ≠ 인과관계 | Understanding Lab</title>
+<style>
+:root{--ink:#102a43;--muted:#52606d;--line:#d9e2ec;--paper:#fbfaf4;--card:#fff;--teal:#0f766e;--amber:#b45309;--blue:#0284c7;--green:#16a34a;--red:#b91c1c;--shadow:0 12px 30px rgba(16,42,67,.10)}
+*{box-sizing:border-box} body{margin:0;background:linear-gradient(145deg,#f8fafc 0%,var(--paper) 55%,#f0fdfa 100%);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans CJK KR","Malgun Gothic",sans-serif;line-height:1.55} main{max-width:1180px;margin:auto;padding:28px 20px 56px} header{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px} h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.05;margin:.15em 0;color:var(--ink);letter-spacing:-.04em} h2{font-size:1.35rem;margin:.15rem 0 .55rem} h3{margin:.15rem 0 .4rem;font-size:1.05rem}.eyebrow{letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--teal);font-size:.8rem}.lead{max-width:710px;font-size:1.15rem;color:var(--muted);margin:0}.badge{white-space:nowrap;border:1px solid #99f6e4;color:#115e59;background:#f0fdfa;border-radius:999px;padding:.45rem .8rem;font-size:.82rem;font-weight:700}.card{background:rgba(255,255,255,.88);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:20px}.controls{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;align-items:end;margin-bottom:18px}.control-group label{display:block;font-weight:800;font-size:.92rem;margin-bottom:6px}.mode-row{display:flex;gap:8px;flex-wrap:wrap}.mode-row button,.reset{font:inherit;border:1px solid #9fb3c8;border-radius:12px;background:#fff;color:var(--ink);padding:10px 12px;cursor:pointer;font-weight:700}.mode-row button[aria-pressed=true]{background:var(--teal);color:#fff;border-color:var(--teal)}button:focus-visible,input:focus-visible{outline:4px solid #fbbf24;outline-offset:2px}.range-wrap{display:flex;gap:12px;align-items:center}.range-wrap input{width:100%;accent-color:var(--amber)}.range-value{font-family:ui-monospace,monospace;font-weight:800;min-width:58px}.note{font-size:.86rem;color:var(--muted);margin:.7rem 0 0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.stat{border-radius:14px;background:#f8fafc;padding:10px 12px;border:1px solid #e5e7eb}.stat strong{display:block;font-size:1.45rem;color:var(--teal);font-family:ui-monospace,monospace}.stat span{font-size:.78rem;color:var(--muted)}.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.chart-card{padding:14px}.chart-title{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.chart-title small{color:var(--muted);font-weight:600}.chart{width:100%;height:auto;display:block;background:#fff;border:1px solid #e5e7eb;border-radius:14px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin:.65rem 0 0;color:var(--muted);font-size:.82rem}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.dag{width:100%;border-radius:14px;border:1px solid var(--line);background:#fbfaf4}.callout{border-left:5px solid var(--amber);background:#fff7ed;padding:12px 14px;border-radius:8px;margin-top:12px}.callout strong{color:#9a3412}.video-card video{display:block;width:100%;border-radius:14px;background:#111;max-height:540px}.video-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.video-actions a{color:#075985;font-weight:700}.transcript{max-height:190px;overflow:auto;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:10px;font-size:.9rem}.transcript p{margin:.25rem 0}.footer-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px;font-size:.9rem}.footer-links a{color:#075985;font-weight:700}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:800px){header{display:block}.badge{display:inline-block;margin-top:12px}.controls,.charts,.two-col{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr 1fr}main{padding:20px 14px 42px}.card{padding:15px}.chart-title{display:block}.chart-title small{display:block;margin-top:4px}}@media(max-width:460px){.stats{grid-template-columns:1fr}.mode-row button{width:100%;text-align:left}.lead{font-size:1rem}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+<style>@font-face{font-family:TransferLab;src:url(assets/noto-study.woff) format("woff");font-display:swap}body{font-family:TransferLab,system-ui,sans-serif!important}</style></head>
+<body>
+<main>
+<header><div><div class="eyebrow">Understanding Lab · transfer case</div><h1>상관관계 ≠ 인과관계</h1><p class="lead">아이스크림 판매량과 수영·사고위험 대표값이 함께 움직여도, 공통 원인을 먼저 확인해야 합니다.</p></div><div class="badge">합성 교육용 시뮬레이션</div></header>
+<section class="card" aria-labelledby="controls-title">
+<h2 id="controls-title">무엇을 바꾸고 무엇을 고정했나요?</h2>
+<div class="controls">
+<div class="control-group"><label>보기</label><div class="mode-row" role="group" aria-label="데이터 보기 선택"><button id="confoundedBtn" type="button" aria-pressed="true">교란 포함 · 온도별 관찰</button><button id="unconfoundedBtn" type="button" aria-pressed="false">온도 고정 · X 개입 연습</button></div></div>
+<div class="control-group"><label for="temperature">선택 기온 T (시뮬레이션 변수)</label><div class="range-wrap"><input id="temperature" type="range" min="10" max="34" step="4" value="22"><output id="temperatureValue" class="range-value" for="temperature">22°C</output></div></div>
+<div class="control-group"><button id="resetBtn" class="reset" type="button">기본값으로 초기화</button><p class="note">실제 기온·실제 인구·실제 사고 자료가 아닙니다.</p></div>
+</div>
+<div id="interpretation" class="callout" role="status" aria-live="polite"></div>
+<div class="stats" aria-label="현재 계산 요약"><div class="stat"><strong id="allR">—</strong><span>전체 점의 Pearson r</span></div><div class="stat"><strong id="groupR">—</strong><span id="groupLabel">선택 T 그룹의 r</span></div><div class="stat"><strong id="groupN">—</strong><span>오른쪽 패널의 점 수</span></div></div>
+</section>
+<section class="charts" aria-label="두 산점도 비교"><article class="card chart-card"><div class="chart-title"><h2>전체 온도를 섞은 관찰</h2><small>점 색상 = 기온 그룹</small></div><canvas id="aggregateChart" class="chart" width="900" height="560" aria-label="전체 합성 데이터 산점도"></canvas><div class="legend"><span><i class="dot" style="background:#0284c7"></i>X 아이스크림 판매</span><span><i class="dot" style="background:#b45309"></i>선택 T 강조</span></div></article>
+<article class="card chart-card"><div class="chart-title"><h2 id="groupTitle">같은 T 그룹만 보기</h2><small id="groupSubtitle">T를 고정해 교란을 가려 봅니다</small></div><canvas id="groupChart" class="chart" width="900" height="560" aria-label="선택된 기온 그룹 산점도"></canvas><div class="legend"><span><i class="dot" style="background:#0f766e"></i>선택된 점</span><span id="modeLegend">관찰된 점</span></div></article></section>
+<section class="two-col"><article class="card"><h2>구조를 그림으로 읽기</h2><img class="dag" src="diagram.svg" alt="기온 T에서 아이스크림 판매 X와 수영·사고위험 대표값 Y로 화살표가 뻗는 인과 다이어그램"><p class="note">화살표는 이 합성 모델이 선언한 방향입니다. 데이터만으로 참이라고 증명한 구조가 아닙니다.</p></article><article class="card"><h2>두 질문은 다릅니다</h2><div class="callout"><strong>관찰</strong><br>“X가 큰 행에서 Y도 큰가?”<br><span class="note">이미 기록된 값의 동행을 읽습니다.</span></div><div class="callout"><strong>개입</strong><br>“조건을 정한 뒤 X를 바꾸면 Y가 달라지는가?”<br><span class="note">무엇을 고정했는지와 가정을 밝혀야 합니다.</span></div><p class="note">확인 질문: 기온을 22도로 고정해도 X→Y를 말할 수 있을까요? 이 사례에서는 아니요.</p></article></section>
+<section class="card video-card" style="margin-top:18px"><h2>영어 내레이션 + 한국어 전체 자막</h2><video id="video" controls preload="metadata" playsinline aria-label="상관관계와 인과관계를 설명하는 영어 내레이션 영상"><source src="video/video-master.mp4" type="video/mp4"><track id="captionTrack" kind="subtitles" srclang="ko" label="한국어" default></video><div class="video-actions"><a href="video/video-ko.mp4">자막 포함 MP4</a><a href="video/video-master.mp4">무자막 master MP4</a><a href="video/video-ko.srt">SRT</a><a href="video/video-ko.vtt">WebVTT</a></div><div class="transcript" id="transcript" aria-label="한국어 자막 전사"><p>자막은 영상과 함께 로드됩니다.</p></div></section>
+<div class="footer-links"><a href="writing.md">한국어 글</a><a href="diagram.svg">causal SVG</a><a href="sources.md">출처와 계산 경계</a><a href="contract.json">설명 계약</a><a href="test-report.json">검증 보고서</a></div>
+</main>
+<script src="data-model.js"></script>
+<script>
+(function(){
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const state = { mode: 'confounded', temperature: 22 };
+  const palette = ['#0284c7','#0f766e','#7c3aed','#db2777','#b45309','#16a34a','#475569'];
+  const CAPTION_VTT = "WEBVTT\n\n00:00:00.350 --> 00:00:04.750\n아이스크림 판매와 수영장 방문이 함께 늘면, 하나가 다른\n쪽의 원인일까요?\n\n00:00:05.235 --> 00:00:06.375\n이 자료는 합성 데이터예요.\n\n00:00:07.750 --> 00:00:10.850\n더운 날과 서늘한 날을 섞으면 두 값이 함께 올라요.\n\n00:00:11.485 --> 00:00:14.965\n직접 원인이 없어도 차트에는 상관관계가 보일 수 있어요.\n\n00:00:16.317 --> 00:00:17.977\n기온이 공통 원인이에요.\n\n00:00:18.592 --> 00:00:22.512\n기온에서 아이스크림 판매, 수영장 방문과 사고 위험으로\n화살표가 이어져요.\n\n00:00:23.717 --> 00:00:25.537\n그래프에는 기온에서 나가는 화살표 두 개가 있어요.\n\n00:00:26.237 --> 00:00:28.517\n판매에서 결과로 가는 화살표는 없어요.\n\n00:00:28.997 --> 00:00:30.937\n관찰만으로 그 화살표를 추가할 수 없어요.\n\n00:00:32.217 --> 00:00:34.197\n기온을 22도로 고정해요.\n\n00:00:34.847 --> 00:00:37.987\n오른쪽 차트에는 한 그룹만 남아, 상승하는 점들의 모양이\n약해져요.\n\n00:00:39.450 --> 00:00:42.650\n이제 기온을 고정한 채 아이스크림 판매를 바꿔봐요.\n\n00:00:43.195 --> 00:00:44.675\n결과를 만드는 규칙은 별개로 유지돼요.\n\n00:00:45.225 --> 00:00:47.665\n실제 사람이 아니라 시뮬레이션이에요.\n\n00:00:48.983 --> 00:00:52.883\n관찰은 판매가 큰 곳에 결과도 크게 나타나는지 물어요.\n\n00:00:53.503 --> 00:00:58.423\n개입은 정해진 조건에서 판매를 바꾸면 결과가 바뀌는지\n물어요.\n\n00:00:59.098 --> 00:01:00.238\n두 질문에는 서로 다른 근거가 필요해요.\n\n00:01:01.717 --> 00:01:03.637\n화면을 바꾸고 예시를 초기화해 보세요.\n\n00:01:04.212 --> 00:01:05.672\n여기서 기온은 시뮬레이션 값이에요.\n\n00:01:06.392 --> 00:01:10.832\n상관관계는 질문의 시작이지만, 인과관계에는 설계와 가정이\n필요해요.\n";
+  function fmt(value){ return Number.isFinite(value) ? value.toFixed(2) : '—'; }
+  function plot(canvas, rows, selectedTemperature, aggregate){
+    const ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
+    ctx.clearRect(0,0,w,h); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,w,h);
+    const pad={l:72,r:24,t:28,b:58}, pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+    const xs=rows.map(d=>d.x), ys=rows.map(d=>d.y), xmin=Math.min(0,...xs)-4, xmax=Math.max(70,...xs)+4, ymin=Math.min(0,...ys)-5, ymax=Math.max(70,...ys)+5;
+    const X=x=>pad.l+(x-xmin)/(xmax-xmin)*pw, Y=y=>h-pad.b-(y-ymin)/(ymax-ymin)*ph;
+    ctx.strokeStyle='#e5e7eb'; ctx.lineWidth=2; ctx.font='20px system-ui'; ctx.fillStyle='#52606d';
+    for(let i=0;i<=4;i++){const xv=xmin+(xmax-xmin)*i/4, yv=ymin+(ymax-ymin)*i/4; ctx.beginPath();ctx.moveTo(X(xv),pad.t);ctx.lineTo(X(xv),h-pad.b);ctx.stroke();ctx.beginPath();ctx.moveTo(pad.l,Y(yv));ctx.lineTo(w-pad.r,Y(yv));ctx.stroke();ctx.fillText(Math.round(xv),X(xv)-10,h-pad.b+32);ctx.fillText(Math.round(yv),12,Y(yv)+7)}
+    ctx.strokeStyle='#52606d';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,h-pad.b);ctx.lineTo(w-pad.r,h-pad.b);ctx.stroke();
+    ctx.fillStyle='#102a43';ctx.font='700 22px system-ui';ctx.fillText('X 아이스크림 판매',w/2-100,h-14);ctx.save();ctx.translate(20,h/2+100);ctx.rotate(-Math.PI/2);ctx.fillText('Y 수영·사고위험 대표값',0,0);ctx.restore();
+    rows.forEach(d=>{const selected=aggregate && d.temperature===selectedTemperature;ctx.beginPath();ctx.arc(X(d.x),Y(d.y),selected?10:7,0,Math.PI*2);ctx.fillStyle=aggregate?(selected?'#b45309':palette[window.CausalLab.TEMPERATURES.indexOf(d.temperature)]):'#0f766e';ctx.globalAlpha=selected||!aggregate?0.88:0.35;ctx.fill();ctx.globalAlpha=1; if(selected){ctx.strokeStyle='#7c2d12';ctx.lineWidth=2;ctx.stroke()}});
+    if(!aggregate){ctx.strokeStyle='#b45309';ctx.setLineDash([8,8]);ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X(0),Y(3 + 1.72 * selectedTemperature));ctx.lineTo(X(70),Y(3 + 1.72 * selectedTemperature));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#9a3412';ctx.font='18px system-ui';ctx.fillText('Y는 X에 따라 정해지지 않음',X(4),Y(3 + 1.72 * selectedTemperature)-12)}
+  }
+  function update(){
+    const summary=window.CausalLab.summarize(state.mode,state.temperature), all=window.CausalLab.generateData(state.mode,state.temperature), group=state.mode==='unconfounded'?all:window.CausalLab.selectedGroup(all,state.temperature);
+    $('temperature').value=state.temperature; $('temperatureValue').value=state.temperature+'°C'; $('temperatureValue').textContent=state.temperature+'°C';
+    $('allR').textContent=fmt(summary.all.r); $('groupR').textContent=fmt(summary.group.r); $('groupN').textContent=summary.nGroup;
+    $('groupLabel').textContent=state.mode==='unconfounded'?'온도 고정 개입 연습의 r':`T=${state.temperature}°C 그룹의 r`;
+    $('groupTitle').textContent=state.mode==='unconfounded'?'T를 고정하고 X를 바꾼 개입':'같은 T 그룹만 보기';
+    $('groupSubtitle').textContent=state.mode==='unconfounded'?'X를 바꿔도 Y 생성식은 그대로':'T를 고정해 공통 원인의 층을 나눔';
+    $('modeLegend').textContent=state.mode==='unconfounded'?'T 고정, X 개입 점':'관찰된 점';
+    $('confoundedBtn').setAttribute('aria-pressed',state.mode==='confounded'); $('unconfoundedBtn').setAttribute('aria-pressed',state.mode==='unconfounded');
+    $('interpretation').innerHTML=state.mode==='confounded'?`<strong>읽는 법:</strong> 전체에서 높은 r=${fmt(summary.all.r)}가 보여도, 합성 규칙은 <code>T → X</code>와 <code>T → Y</code>만 포함합니다. 선택한 T=${state.temperature}°C 그룹에서는 r=${fmt(summary.group.r)}입니다.`:`<strong>읽는 법:</strong> T=${state.temperature}°C를 고정하고 X만 시뮬레이션으로 바꿨습니다. Y는 X의 함수가 아니므로, 이 장치에서도 X→Y 효과를 주장하지 않습니다.`;
+    plot($('aggregateChart'),all,state.temperature,true); plot($('groupChart'),group,state.temperature,false);
+  }
+  $('temperature').addEventListener('input',e=>{state.temperature=Number(e.target.value);update()});
+  $('confoundedBtn').addEventListener('click',()=>{state.mode='confounded';update()}); $('unconfoundedBtn').addEventListener('click',()=>{state.mode='unconfounded';update()}); $('resetBtn').addEventListener('click',()=>{state.mode='confounded';state.temperature=22;update()});
+  const track=$('captionTrack'), blob=URL.createObjectURL(new Blob([CAPTION_VTT],{type:'text/vtt'})); track.src=blob;
+  const video=$('video'); video.addEventListener('loadedmetadata',()=>{video.textTracks[0].mode='showing'});
+  function parseVtt(vtt){return vtt.split(/\n\n+/).filter(b=>/^\d\d:\d/.test(b.split('\n')[0])).map(b=>{const lines=b.split('\n');return {time:lines[0],text:lines.slice(1).join(' ')}})}
+  const cues=parseVtt(CAPTION_VTT); if(cues.length){$('transcript').innerHTML=cues.map(c=>`<p><strong>${c.time.split(' --> ')[0]}</strong> ${c.text}</p>`).join('')}
+  window.CausalLabUI={state,update,parseVtt}; update();
+})();
+</script>
+<!-- publication navigation --><script src="assets/study-lock.js"></script></body>
+</html>

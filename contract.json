@@ -1,13 +1,125 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "question": "LLM은 다음 토큰을 어떤 분포에서, 어떤 규칙으로 고를까?",
   "audience": "LLM을 사용하는 한국어 기술 학습자; softmax 사전 지식 불필요",
-  "language": {"writing":"ko/en", "screen":"ko", "narration":"en"},
-  "learning_check": {"question":"T=1, top-p=0.8일 때 floor는 남는가? 그 이유는 무엇인가?", "expected_reasoning":"mat의 누적 질량 약 0.609가 0.8 미만이므로 floor까지 포함하고, 약 0.833 질량을 다시 정규화한다."},
-  "glossary": [{"term":"token","definition":"모델이 처리하는 텍스트 단위. 단어, 단어 일부, 문장부호일 수 있다."},{"term":"logit","definition":"확률로 정규화하기 전 점수"},{"term":"top-p","definition":"높은 확률 순으로 누적 질량이 p 이상이 되는 최소 접두 집합"}],
-  "claims": [{"id":"c1","text":"토큰은 반드시 단어 하나가 아니다.","source":"https://huggingface.co/learn/llm-course/en/chapter6/1"},{"id":"c2","text":"temperature는 next-token 분포를 조정한다.","source":"https://huggingface.co/docs/transformers/en/main_classes/text_generation"},{"id":"c3","text":"top-p는 개별 토큰 확률의 하한이 아닌 누적 질량 기준이다.","source":"https://huggingface.co/docs/transformers/en/main_classes/text_generation"}],
-  "example": {"evidence_type":"illustrative", "values":{"context":"The cat sat on the", "candidates":[" mat"," floor"," sofa"," roof"],"logits":[2.0,1.0,0.3,-0.4],"temperature":1.0,"top_p":0.8}, "caveats":["실제 모델의 측정값 아님","전체 어휘 중 네 후보만 나타낸 교육용 예제","후보 레이블은 실제 tokenizer 경계 증명이 아님","다음 단계 logits 재계산은 개념적으로만 설명"]},
-  "visual_beats": ["문맥과 후보의 연결","점수에서 확률로 변환","temperature 개입에 따른 분포 변화","top-p 누적 구간과 교차 후보 포함","균등 난수의 누적 구간 선택","선택 토큰 추가와 모델 재계산 설명"],
-  "artifacts": {"writing":"writing.md","diagram":"diagram.svg","web":"index.html","video":"video/video.mp4","transcript":"video/script.md","sources":"sources.md","tests":"test-report.json"},
-  "limits": ["ASD-STE100-inspired 영어 문체이며 인증 아님","사람 대상 이해도 실험 없음","계산·브라우저·미디어 검증과 시각 검토는 별도 증거"]
+  "language": {
+    "writing": "ko/en",
+    "screen": "ko",
+    "narration": "en",
+    "subtitles": "ko"
+  },
+  "learning_check": {
+    "question": "T=1, top-p=0.8일 때 floor는 남는가? 그 이유는 무엇인가?",
+    "expected_reasoning": "mat의 누적 질량 약 0.609가 0.8 미만이므로 floor까지 포함하고, 약 0.833 질량을 다시 정규화한다."
+  },
+  "glossary": [
+    {
+      "term": "token",
+      "definition": "모델이 처리하는 텍스트 단위. 단어, 단어 일부, 문장부호일 수 있다."
+    },
+    {
+      "term": "logit",
+      "definition": "확률로 정규화하기 전 점수"
+    },
+    {
+      "term": "top-p",
+      "definition": "높은 확률 순으로 누적 질량이 p 이상이 되는 최소 접두 집합"
+    }
+  ],
+  "claims": [
+    {
+      "id": "c1",
+      "text": "토큰은 반드시 단어 하나가 아니다.",
+      "source": "https://huggingface.co/learn/llm-course/en/chapter6/1"
+    },
+    {
+      "id": "c2",
+      "text": "temperature는 next-token 분포를 조정한다.",
+      "source": "https://huggingface.co/docs/transformers/en/main_classes/text_generation"
+    },
+    {
+      "id": "c3",
+      "text": "top-p는 개별 토큰 확률의 하한이 아닌 누적 질량 기준이다.",
+      "source": "https://huggingface.co/docs/transformers/en/main_classes/text_generation"
+    }
+  ],
+  "example": {
+    "evidence_type": "illustrative",
+    "values": {
+      "context": "The cat sat on the",
+      "candidates": [
+        " mat",
+        " floor",
+        " sofa",
+        " roof"
+      ],
+      "logits": [
+        2.0,
+        1.0,
+        0.3,
+        -0.4
+      ],
+      "temperature": 1.0,
+      "top_p": 0.8
+    },
+    "caveats": [
+      "실제 모델의 측정값 아님",
+      "전체 어휘 중 네 후보만 나타낸 교육용 예제",
+      "후보 레이블은 실제 tokenizer 경계 증명이 아님",
+      "다음 단계 logits 재계산은 개념적으로만 설명"
+    ]
+  },
+  "visual_beats": [
+    "문맥과 후보의 연결",
+    "점수에서 확률로 변환",
+    "temperature 개입에 따른 분포 변화",
+    "top-p 누적 구간과 교차 후보 포함",
+    "균등 난수의 누적 구간 선택",
+    "선택 토큰 추가와 모델 재계산 설명"
+  ],
+  "artifacts": {
+    "writing": "writing.md",
+    "diagram": "diagram.svg",
+    "web": "index.html",
+    "video": "video/video-ko.mp4",
+    "transcript": "video/script.md",
+    "sources": "sources.md",
+    "tests": "test-report.json",
+    "video_master": "video/video-master.mp4",
+    "captions_srt": "video/video-ko.srt",
+    "captions_vtt": "video/video-ko.vtt",
+    "caption_alignment": "video/caption-alignment.json",
+    "caption_timeline": "video/timeline.json",
+    "original_video": "video/video.mp4"
+  },
+  "limits": [
+    "ASD-STE100-inspired 영어 문체이며 인증 아님",
+    "사람 대상 이해도 실험 없음",
+    "계산·브라우저·미디어 검증과 시각 검토는 별도 증거"
+  ],
+  "subtitles": {
+    "required": true,
+    "language": "ko",
+    "max_lines": 2,
+    "max_chars_per_line": 32,
+    "min_duration": 1.0,
+    "max_cps": 20,
+    "max_sync_error": 0.12,
+    "max_end_hold": 1.0,
+    "require_media_binding": true
+  },
+  "test_coverage": {
+    "writing": "not_run",
+    "diagram": "not_run",
+    "web": "not_run",
+    "video": "not_run",
+    "captions": "not_run",
+    "fresh_topic_transfer": "not_run",
+    "human_learning": "not_run"
+  },
+  "video_requirements": {
+    "max_duration": 80,
+    "width": 1920,
+    "height": 1080
+  }
 }

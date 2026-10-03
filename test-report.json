@@ -1,410 +1,66 @@
 {
-  "schema_version": 1,
-  "evidence_scope": "technical/functional checks, not measured learning gains",
-  "passed": true,
-  "web": {
-    "schema_version": 1,
-    "started": "2026-10-03T00:01:47.710Z",
-    "finished": "2026-10-03T00:01:52.086Z",
-    "url": "http://127.0.0.1:4173/index.html",
-    "status": "passed",
-    "checks": [
-      {
-        "name": "artifact files",
-        "pass": true,
-        "detail": "index.html, diagram.svg, writing.md, facts.json, package.json present"
-      },
-      {
-        "name": "facts.json shared inputs",
-        "pass": true,
-        "detail": "context, four candidates, logits, caveats loaded"
-      },
-      {
-        "name": "offline page load",
-        "pass": true,
-        "detail": "loaded over local HTTP with no external dependency requests"
-      },
-      {
-        "name": "window.Lab numerical oracle",
-        "pass": true,
-        "detail": "stable softmax, prefix threshold, renormalization, greedy, seeded draw all pass"
-      },
-      {
-        "name": "initial lab UI",
-        "pass": true,
-        "detail": "default T=1, top-p=.8, seeded sample renders"
-      },
-      {
-        "name": "live controls",
-        "pass": true,
-        "detail": "top-p and temperature update the bars and metrics"
-      },
-      {
-        "name": "greedy and reset",
-        "pass": true,
-        "detail": "greedy is separate from sampling and reset restores defaults"
-      },
-      {
-        "name": "four modes",
-        "pass": true,
-        "detail": "lab, causal diagram, writing comparison, and relative video slot are navigable"
-      },
-      {
-        "name": "responsive and reduced motion",
-        "pass": true,
-        "detail": "390px layout has no page overflow (390px)"
-      },
-      {
-        "name": "runtime health",
-        "pass": true,
-        "detail": "zero console/page errors and zero external requests"
-      }
-    ],
-    "failures": [],
-    "screenshots": [
-      "screenshots/lab-desktop.png",
-      "screenshots/diagram-desktop.png",
-      "screenshots/lab-mobile-390.png"
-    ],
-    "notes": [
-      "Deterministic invariants are asserted. No comprehension or factual-accuracy claim is made.",
-      "Final test requires actual MP4 presence and tolerates zero console errors. Separate parent checks exercise media playback and fonts."
-    ]
-  },
-  "parent": {
-    "generated_at": "2026-10-03T00:03:45.876Z",
-    "scope": "Independent parent checks; illustrative inputs",
-    "passed": true,
-    "checks": [
-      {
-        "name": "python_oracle_25_cases",
-        "passed": true,
-        "cases": [
-          {
-            "t": 0.2,
-            "p": 0.05,
-            "pass": true
-          },
-          {
-            "t": 0.2,
-            "p": 0.6,
-            "pass": true
-          },
-          {
-            "t": 0.2,
-            "p": 0.8,
-            "pass": true
-          },
-          {
-            "t": 0.2,
-            "p": 0.95,
-            "pass": true
-          },
-          {
-            "t": 0.2,
-            "p": 1,
-            "pass": true
-          },
-          {
-            "t": 0.5,
-            "p": 0.05,
-            "pass": true
-          },
-          {
-            "t": 0.5,
-            "p": 0.6,
-            "pass": true
-          },
-          {
-            "t": 0.5,
-            "p": 0.8,
-            "pass": true
-          },
-          {
-            "t": 0.5,
-            "p": 0.95,
-            "pass": true
-          },
-          {
-            "t": 0.5,
-            "p": 1,
-            "pass": true
-          },
-          {
-            "t": 1,
-            "p": 0.05,
-            "pass": true
-          },
-          {
-            "t": 1,
-            "p": 0.6,
-            "pass": true
-          },
-          {
-            "t": 1,
-            "p": 0.8,
-            "pass": true
-          },
-          {
-            "t": 1,
-            "p": 0.95,
-            "pass": true
-          },
-          {
-            "t": 1,
-            "p": 1,
-            "pass": true
-          },
-          {
-            "t": 1.5,
-            "p": 0.05,
-            "pass": true
-          },
-          {
-            "t": 1.5,
-            "p": 0.6,
-            "pass": true
-          },
-          {
-            "t": 1.5,
-            "p": 0.8,
-            "pass": true
-          },
-          {
-            "t": 1.5,
-            "p": 0.95,
-            "pass": true
-          },
-          {
-            "t": 1.5,
-            "p": 1,
-            "pass": true
-          },
-          {
-            "t": 2,
-            "p": 0.05,
-            "pass": true
-          },
-          {
-            "t": 2,
-            "p": 0.6,
-            "pass": true
-          },
-          {
-            "t": 2,
-            "p": 0.8,
-            "pass": true
-          },
-          {
-            "t": 2,
-            "p": 0.95,
-            "pass": true
-          },
-          {
-            "t": 2,
-            "p": 1,
-            "pass": true
-          }
-        ]
-      },
-      {
-        "name": "extreme_logits_and_ties",
-        "passed": true,
-        "actual": {
-          "extreme": [
-            0.7310585786300049,
-            0.2689414213699951,
-            0
-          ],
-          "ties": [
-            0,
-            1
-          ]
-        }
-      },
-      {
-        "name": "seeded_sampling_smoke_10000",
-        "passed": true,
-        "actual": {
-          "n": 10000,
-          "counts": [
-            7291,
-            2709,
-            0,
-            0
-          ],
-          "expected": [
-            0.7310585786300049,
-            0.2689414213699951,
-            0,
-            0
-          ]
-        },
-        "limit": "Deterministic PRNG smoke, not statistical proof of correctness"
-      },
-      {
-        "name": "visible_kept_probability_bars",
-        "passed": true,
-        "actual": [
-          {
-            "w": 429.859375,
-            "h": 20,
-            "prob": 73.1059
-          },
-          {
-            "w": 158.125,
-            "h": 20,
-            "prob": 26.8941
-          },
-          {
-            "w": 0,
-            "h": 20,
-            "prob": 0
-          },
-          {
-            "w": 0,
-            "h": 20,
-            "prob": 0
-          }
-        ]
-      },
-      {
-        "name": "four_modes_visible_mobile",
-        "passed": true,
-        "actual": [
-          {
-            "mode": "lab",
-            "left": 23,
-            "right": 191
-          },
-          {
-            "mode": "diagram",
-            "left": 199,
-            "right": 367
-          },
-          {
-            "mode": "writing",
-            "left": 23,
-            "right": 191
-          },
-          {
-            "mode": "video",
-            "left": 199,
-            "right": 367
-          }
-        ]
-      },
-      {
-        "name": "offline_Korean_font_loaded",
-        "passed": true,
-        "actual": [
-          {
-            "family": "NextTokenLabSubset",
-            "status": "loaded"
-          }
-        ]
-      },
-      {
-        "name": "sampling_marker_on_normalized_distribution",
-        "passed": true,
-        "actual": {
-          "sampleMarker": 0.601104,
-          "expectedDraw": 0.6011037519201636
-        }
-      },
-      {
-        "name": "dynamic_retained_set_legend",
-        "passed": true
-      },
-      {
-        "name": "keyboard_range_control",
-        "passed": true
-      },
-      {
-        "name": "reduced_motion_and_selected_mode",
-        "passed": true
-      },
-      {
-        "name": "actual_MP4_browser_playback",
-        "passed": true,
-        "actual": {
-          "duration": 81.666667,
-          "width": 1920,
-          "height": 1080
-        }
-      }
-    ]
-  },
-  "media": {
-    "file": "video/source/out/video.mp4",
-    "duration": 81.67,
-    "video": {
-      "width": 1920,
-      "height": 1080,
-      "fps": "30/1",
-      "codec": "h264"
+  "scope": "Local revised four-format case. No publication or human learning/listening certification.",
+  "passed_technical": true,
+  "commands": [
+    {
+      "command": "python3 scripts/test_audit_captions.py",
+      "scope": "Synthetic caption regression",
+      "exit": 0,
+      "tests": 31
     },
-    "audio": {
-      "codec": "aac",
-      "sampleRate": 48000,
-      "channels": 2
+    {
+      "command": "python3 scripts/test_audit_bundle.py --report regression.json",
+      "scope": "Synthetic bundle regression",
+      "exit": 0,
+      "tests": 16
     },
-    "loudness": {
-      "integrated": -14,
-      "range": 2.2,
-      "truePeak": -1.4
+    {
+      "command": "node ops/verify_caption_player.cjs",
+      "scope": "HTTP desktop/mobile + file:// offline actual native TextTracks, 25 seeks, playback advancement and keyboard toggle",
+      "exit": 0
     },
-    "blackSegments": [],
-    "silences": [],
-    "speech": {
-      "matchRate": 0.991,
-      "transcript": "After reading context, an LLM scores possible next tokens and chooses one. A token can be a word, part of a word or punctuation. Toy context, the cat sat on the. Four illustrative logits are matte 2.0, the floor token 1.0, sofa 0.3, and roof minus 0.4. These are educational values, not measured model output. Logits become probabilities through Softmax. It exponentiates shifted scores and normalizes them. A temperature one, matte is 60.9%, floor 22.4, sofa 11.1, and roof 5.5. Temperature changes distribution shape. Lower temperature sharpens it. Higher temperature flattens it. Temperature changes variety, not correctness. Top P sorts probabilities and keeps the smallest prefix reaching its mass. At P equal to 0.80, matte and floor retain 83.3%. They stay and the rest are removed. This is a mass rule. Sampling draws a uniform number across cumulative probability. Here u equals 0.82, so it selects floor from the filtered intervals. The token joins context, and the model recomputs the next step. This toy shows one step. The loop is context, logits, probabilities, filtering, and sampling. These estimates predict a next token. They do not verify real-world truth.",
-      "scenes": [
-        {
-          "id": "hook",
-          "matchRate": 1
-        },
-        {
-          "id": "logits",
-          "matchRate": 1
-        },
-        {
-          "id": "softmax",
-          "matchRate": 0.971
-        },
-        {
-          "id": "temperature",
-          "matchRate": 1
-        },
-        {
-          "id": "topp",
-          "matchRate": 0.975
-        },
-        {
-          "id": "sample",
-          "matchRate": 1
-        },
-        {
-          "id": "outro",
-          "matchRate": 1
-        }
-      ]
+    {
+      "command": "python3 scripts/audit_bundle.py caption-v1 --report bundle-audit.json",
+      "scope": "Packaging/media/caption gate",
+      "exit": 0,
+      "checks": 34
     },
-    "issues": []
+    {
+      "command": "ffmpeg -v error -i video/video-ko.mp4 -f null -",
+      "scope": "Full final-video decode",
+      "exit": 0
+    }
+  ],
+  "video": {
+    "duration": 79.333333,
+    "width": 1920,
+    "height": 1080,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "loudness_input_lufs": -14.04,
+    "true_peak_dbfs": -1.39,
+    "master_final_audio_bitstream_identical": true
   },
-  "layout": {
-    "issues": [],
-    "duration": 81.66666666666667,
-    "scenes": 7
+  "captions": {
+    "cue_count": 25,
+    "covered_source_words": 189,
+    "total_source_words": 189,
+    "max_cps": 15.918,
+    "max_start_error": 0
   },
-  "skill_regression": {
-    "scope": "Synthetic regression fixtures, not actual artifact or learning measurements",
-    "tests_run": 15,
-    "failures": 0,
-    "errors": 0,
-    "skipped": 0,
-    "passed": true
+  "unchanged_baseline": {
+    "writing.md": true,
+    "diagram.svg": true,
+    "sources.md": true,
+    "web_core_js_unchanged": true
   },
-  "independent_review": "independent-current-review.md",
-  "human_comprehension_test": "not_performed"
+  "semantic_review": "Independent draft review identified 2 mandatory and 2 minor wording issues. Parent applied all and re-rendered/revalidated; see subtitle-review-resolution.md. No new independent final-media certification.",
+  "visual_review": "Parent inspected final decoded two-line Korean captions and final mobile player; no clipping/diagram overlap at inspected frames. Small inline phone diagrams need fullscreen.",
+  "not_run": [
+    "Human listening/audible synchronization review",
+    "Human randomized comprehension/recall comparison across four formats",
+    "End-to-end four-format transfer/generalization on unrelated topics",
+    "New public deployment / remote release download of this revision"
+  ]
 }

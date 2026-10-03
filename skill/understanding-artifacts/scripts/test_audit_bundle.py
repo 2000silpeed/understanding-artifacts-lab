@@ -46,6 +46,12 @@ class AuditTests(unittest.TestCase):
     def html_failure(self, text):
         (self.root/'index.html').write_text(text)
         self.assertFalse(self.run_audit()['passed'])
+    def test_english_korean_requires_subtitles(self):
+        self.manifest['language'] = {'narration': 'en', 'screen': 'ko'}
+        self.write_contract(self.manifest)
+        report = self.run_audit()
+        self.assertFalse(report['passed'])
+        self.assertTrue(any(c['name'] == 'subtitles_required_audit' and not c['passed'] for c in report['checks']))
     def test_valid_with_actual_video(self):
         report = self.run_audit()
         self.assertTrue(report['passed'], report['checks'])

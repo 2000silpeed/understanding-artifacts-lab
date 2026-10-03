@@ -7,6 +7,11 @@
 4. Accessible: keyboard use, labels, focus, contrast measurement, reduced motion, captions/transcript, responsive layout. Limited checks are not WCAG certification. Audio evidence includes actual loudness/silence/speech check outputs where available; missing checks stay disclosed.
 5. Learning: ask a learner to predict a changed case and explain why, compare outcomes with a baseline only with consent and an appropriate study design. Without people tested, report design intent, not measured comprehension gains.
 
+## Subtitle and coverage gates
+Korean audience + English audio requires synchronized Korean narration subtitles by default. Screen labels alone do not pass. Require SRT/WebVTT, exact source-word→translation alignment, actual captioned MP4 inspection and web track/toggle/seek/offline evidence. Check readability thresholds and numbers/negations/caveats independently. Record caption timing provenance and any tempo/offset transform. Automated word coverage is not audible-sync or translation certification.
+
+Use `references/subtitles-and-coverage.md` for a per-format matrix. Distinguish a single worked example from fresh-topic transfer and consenting-human learning/retention tests. Four output tabs and synthetic fixtures cannot prove those latter results.
+
 ## Report shape
 Use JSON with artifact hashes, commands, timestamps from the system, exit codes, assertions, evidence paths, reviewer findings, fixed issues and remaining limits. Every metric needs a producing command or source. Retain failure reports; don't rename planned tests as passed. Re-run relevant tests after final revisions.
 

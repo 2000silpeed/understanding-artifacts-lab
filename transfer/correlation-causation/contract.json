@@ -1,0 +1,201 @@
+{
+  "schema_version": 2,
+  "question": "왜 같은 데이터에서 두 변수가 함께 움직여도 원인이라고 단정할 수 없을까요?",
+  "audience": "한국어를 읽는 일반 학습자; 평균·산점도·상관의 직관만 있으면 됨",
+  "language": {
+    "writing": "ko",
+    "screen": "ko",
+    "narration": "en",
+    "subtitles": "ko"
+  },
+  "subtitles": {
+    "required": true,
+    "language": "ko",
+    "max_lines": 2,
+    "max_chars_per_line": 32,
+    "min_duration": 1.0,
+    "max_cps": 20,
+    "max_sync_error": 0.12,
+    "max_end_hold": 1.0,
+    "require_media_binding": true
+  },
+  "learning_check": {
+    "question": "기온을 22도로 고정했는데도 이 합성 사례에서 X→Y를 말할 수 있을까요?",
+    "expected_reasoning": "아니요. 생성 규칙에는 X→Y 항이 없고, 관찰된 동행은 공통 원인 T와 관련될 수 있습니다. 실제 인과 결론에는 별도 설계와 가정이 필요합니다."
+  },
+  "glossary": [
+    {
+      "term": "상관관계",
+      "definition": "두 변수의 값이 함께 변하는 통계적 패턴"
+    },
+    {
+      "term": "인과관계",
+      "definition": "한 변수에 개입했을 때 다른 변수의 값이 달라지는 구조"
+    },
+    {
+      "term": "교란변수",
+      "definition": "두 변수 모두에 영향을 주어 둘 사이의 연관을 만드는 변수"
+    },
+    {
+      "term": "DAG",
+      "definition": "방향성 비순환 그래프; 이 자료에서는 합성 구조를 표시"
+    },
+    {
+      "term": "개입",
+      "definition": "조건을 정한 뒤 변수의 값을 바꾸는 질문 또는 조작"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "관찰된 상관관계만으로 인과관계를 단정할 수 없다.",
+      "source": "sources.md#원출처-1",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ],
+      "type": "source_backed_general"
+    },
+    {
+      "id": "C2",
+      "claim": "이 합성 구조는 T→X와 T→Y를 선언하고 X→Y를 선언하지 않는다.",
+      "source": "data-model.js",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ],
+      "type": "illustrative_assumption"
+    },
+    {
+      "id": "C3",
+      "claim": "전체 온도를 섞으면 기본 모드의 Pearson r은 0.9672481779이다.",
+      "source": "data-model.js 실행",
+      "formats": [
+        "writing",
+        "web",
+        "video"
+      ],
+      "type": "computed_educational"
+    },
+    {
+      "id": "C4",
+      "claim": "T=22°C 그룹의 Pearson r은 0.2080952053이다.",
+      "source": "data-model.js 실행",
+      "formats": [
+        "writing",
+        "web",
+        "video"
+      ],
+      "type": "computed_educational"
+    },
+    {
+      "id": "C5",
+      "claim": "T 슬라이더와 온도 고정 모드는 실제 개입이나 실제 모집단 추정이 아니다.",
+      "source": "writing.md, sources.md",
+      "formats": [
+        "writing",
+        "web",
+        "video"
+      ],
+      "type": "limitation"
+    }
+  ],
+  "example": {
+    "evidence_type": "illustrative synthetic data",
+    "values": {
+      "temperature_groups_c": [
+        10,
+        14,
+        18,
+        22,
+        26,
+        30,
+        34
+      ],
+      "repetitions_per_group": 6,
+      "x_formula": "12 + 2.55*T + X_NOISE[rep]*4",
+      "y_formula": "3 + 1.72*T + Y_NOISE[rep]*3",
+      "default_temperature_c": 22,
+      "default_confounded_r": 0.9672481779111594,
+      "default_same_temperature_r": 0.20809520526299863,
+      "intervention_r": -0.21468038799135694
+    },
+    "caveats": [
+      "합성값",
+      "실제 사람·기관·사고 자료 아님",
+      "T는 시뮬레이션 변수",
+      "X→Y 효과 추정 아님"
+    ]
+  },
+  "visual_beats": [
+    {
+      "id": "B1",
+      "description": "X와 Y가 함께 오르는 산점도에 T 색상 그룹을 드러냄",
+      "formats": [
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "B2",
+      "description": "T→X, T→Y DAG와 X→Y 미선언을 함께 보여줌",
+      "formats": [
+        "diagram",
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "B3",
+      "description": "전체 온도와 같은 T 그룹 산점도를 나란히 비교",
+      "formats": [
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "B4",
+      "description": "관찰 질문과 개입 질문을 구분",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ]
+    }
+  ],
+  "artifacts": {
+    "writing": "writing.md",
+    "diagram": "diagram.svg",
+    "web": "index.html",
+    "video": "video/video-ko.mp4",
+    "video_master": "video/video-master.mp4",
+    "transcript": "video/script.md",
+    "captions_srt": "video/video-ko.srt",
+    "captions_vtt": "video/video-ko.vtt",
+    "caption_alignment": "video/caption-alignment.json",
+    "caption_timeline": "video/timeline.json",
+    "sources": "sources.md",
+    "tests": "test-report.json",
+    "original_video": "video/video-original.mp4"
+  },
+  "test_coverage": {
+    "writing": "planned",
+    "diagram": "planned",
+    "web": "planned",
+    "video": "planned",
+    "captions": "planned",
+    "fresh_topic_transfer": "not_run",
+    "human_learning": "not_run"
+  },
+  "limits": [
+    "실제 인과효과 추정이 아님",
+    "합성 교육용 데이터",
+    "사람 대상 학습효과 측정 없음",
+    "자동 검사는 번역 의미와 실제 청취 동기를 인증하지 않음"
+  ]
+}

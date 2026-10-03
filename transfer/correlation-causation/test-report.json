@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "scope": "Technical checks; not human comprehension/listening certification",
+  "desktop_mobile": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "duration": 73.333333,
+      "cues": 20,
+      "errors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "duration": 73.333333,
+      "cues": 20,
+      "errors": []
+    }
+  ],
+  "offline": true,
+  "source_model": "canonical 42/6/7 synthetic rows, undefined constant variance, paired intervention invariance"
+}

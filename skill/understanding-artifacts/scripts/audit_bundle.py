@@ -10,6 +10,7 @@ import re
 import shutil
 import struct
 import subprocess
+import sys
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
@@ -157,6 +158,20 @@ def audit(root, manifest='contract.json'):
                     files['video']['probe'] = info
             except (OSError, subprocess.SubprocessError, ValueError, TypeError) as e:
                 check('video_probe', False, redact(e))
+    subtitles = contract.get('subtitles', {})
+    language = contract.get('language', {})
+    if not isinstance(subtitles, dict) or not isinstance(language, dict):
+        check('subtitle_contract', False, 'Subtitle/language settings must be objects')
+    else:
+        required = subtitles.get('required', language.get('narration') == 'en' and language.get('screen') == 'ko')
+        check('subtitle_requirement_type', isinstance(required, bool), 'Required must be boolean')
+        if required is True:
+            try:
+                run = subprocess.run([sys.executable, '-B', str(Path(__file__).with_name('audit_captions.py')), str(root)], capture_output=True, text=True, timeout=40)
+                caption_report = json.loads(run.stdout)
+                check('subtitles_required_audit', run.returncode == 0 and caption_report.get('passed') is True, caption_report)
+            except (OSError, ValueError, TypeError, AttributeError, subprocess.SubprocessError) as e:
+                check('subtitles_required_audit', False, redact(e))
     return result()
 
 def main():

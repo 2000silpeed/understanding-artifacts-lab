@@ -1,0 +1,45 @@
+name: artifact-quality
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  technical-not-human-efficacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Verify immutable published manifest before tests write outputs
+        run: python3 ops/verify_manifest.py
+      - name: Install pinned browser and media tools
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+          command -v ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Pure validators and study tooling; synthetic regressions only
+        run: |
+          python3 -B skill/understanding-artifacts/scripts/test_audit_bundle.py
+          python3 -B skill/understanding-artifacts/scripts/test_audit_captions.py
+          node ops/test_study_core.cjs
+          python3 -B ops/test_study_analyzer.py
+      - name: Audit all three real caption bundles and decode actual media
+        run: |
+          for dir in . transfer/binary-search transfer/correlation-causation; do
+            python3 -B skill/understanding-artifacts/scripts/audit_bundle.py "$dir" --report /tmp/bundle-report.json
+            python3 -B skill/understanding-artifacts/scripts/audit_captions.py "$dir" --report /tmp/caption-report.json
+            ffmpeg -v error -i "$dir/video/video-ko.mp4" -f null -
+          done
+      - name: Original actual browser regression
+        run: npm run test:web
+      - name: Study flow uses only synthetic QA; never human responses
+        run: node ops/run_study_check.cjs

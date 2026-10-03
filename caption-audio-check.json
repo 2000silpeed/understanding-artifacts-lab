@@ -1,0 +1,16 @@
+{
+  "full_decode_exit": 0,
+  "loudness_input": {
+    "input_i": "-14.04",
+    "input_tp": "-1.39",
+    "input_lra": "2.10",
+    "input_thresh": "-24.60",
+    "output_i": "-13.89",
+    "output_tp": "-1.50",
+    "output_lra": "2.00",
+    "output_thresh": "-24.42",
+    "normalization_type": "dynamic",
+    "target_offset": "-0.11"
+  },
+  "scope": "Actual decoded media and loudness; not human listening or ASR accuracy"
+}

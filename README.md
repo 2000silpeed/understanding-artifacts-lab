@@ -1,58 +1,56 @@
-# Understanding Artifacts Lab · 다음 토큰 선택
+# Understanding Artifacts Lab — v1.1.0
 
-[웹에서 실행](https://2000silpeed.github.io/understanding-artifacts-lab/) · [81.7초 영상](video/video.mp4) · [명료한 글](writing.md) · [인과 도식](diagram.svg) · [검증 보고](test-report.json)
+하나의 개념을 **글 · 도식(SVG) · 인터랙티브 웹 · 설명 영상**으로 표현한, 오프라인에서도 실행할 수 있는 교육용 실험실입니다. Karpathy의 [원문](https://x.com/karpathy/status/2105819303471976479)에서 출발했습니다.
 
-Karpathy의 글 → 도식 → HTML → 맞춤형 설명 영상 제안을 실제 워크플로로 만든 교육용 데모입니다. 같은 질문과 가상 입력을 네 형식으로 설명하고, 사실·수학·동작·미디어 검사를 각각 수행했습니다.
+## 세 가지 사례
 
-## 직접 조작하기
+- [LLM의 다음 토큰 선택](index.html): 같은 가상 logits에서 온도, top-k, top-p가 후보 분포를 어떻게 바꾸는가.
+- [이진 탐색](transfer/binary-search/index.html): 정렬 전제, 0 기반 인덱스, 성공·실패 경로, 일반 검색과 경계 검색의 차이.
+- [상관관계와 인과관계](transfer/correlation-causation/index.html): 같은 합성 생성 규칙으로 공통 원인, 조건부 관찰, 가상 개입을 구분.
 
-ZIP을 풀고 `index.html`을 열면 오프라인으로 작동합니다. 로컬 한국어 글꼴도 포함했습니다. 더 엄격한 브라우저나 영상 자막/미디어 정책에서는 `python3 -m http.server 8000` 후 `http://localhost:8000`을 열어 주세요.
+각 사례에는 `writing.md`, `diagram.svg`, `index.html`, `video/video-ko.mp4`가 있습니다. 영상은 **영어 음성 + 전체 한국어 동기 자막**입니다. 브라우저용 무자막 master와 soft captions, 다운로드용 burned-in MP4, SRT·WebVTT·word alignment도 포함합니다.
 
-온도 T, top-p, seed를 바꾸고 sample/greedy를 비교해 보세요. 필터링 전 확률과 필터링 후 재정규화된 확률을 구분해서 표시합니다. 선택 뒤에는 실제 모델이 문맥을 바탕으로 logits를 다시 계산해야 하며, 이 데모는 실제 모델 추론을 실행하지 않습니다.
+## 실제 사람용 평가 도구
 
-## 네 출력의 관계
+[평가 참여 화면](study/index.html)은 동의·자기 선언 뒤 사전 질문 → 한 형식의 설명 → 사후 질문 → 하루 뒤 회상 질문으로 진행합니다. 자막·청취 평가도 별도 흐름으로 제공합니다.
 
-가상 logits는 `[2, 1, 0.3, -0.4]`입니다. T=1, top-p=.8에서 mat·floor를 보존하고, 다시 정규화하면 73.1%·26.9%입니다. 웹/도식은 기본 seed 42 또는 greedy의 mat를, 영상은 명시적인 u=.82의 floor를 보여 줍니다. 같은 분포에서도 추출값이 다르면 선택은 달라집니다.
+- 답변은 이 기기의 localStorage에만 저장합니다. 자동 업로드·분석 서비스·계정 로그인이 없습니다.
+- 참여자가 JSON을 직접 내보내고 공유해야 분석할 수 있습니다. 기기 내 답변 삭제가 가능합니다.
+- 다른 형식 노출을 기록하며, primary 집계와 오염 집계를 분리합니다.
+- 문항·산출물 SHA-256을 기록하고, 합성 QA는 실제 응답 집계에서 제외합니다.
+- 청취 진행량은 음소거/volume 0 구간을 제외한 미디어 진척일 뿐, 장치의 실제 소리 출력을 인증하지 않습니다.
+- **실제 사람 청취·학습 효과: NOT_MEASURED.** 도구 구현, AI 검토, 회귀 통과는 사람 연구 결과가 아닙니다. 세션 자기 선언은 신원 인증이 아닙니다.
 
-영상: 1920×1080, 30 fps, H.264/yuv420p + AAC, 영어 내레이션, 한국어 화면. 로컬 Kokoro 음성·Whisper 전사 검증을 사용했습니다. 추가 유료 음성 API는 사용하지 않았습니다. [`video/script.md`](video/script.md)는 의도한 원고이고, [`video/qa.json`](video/qa.json)은 실제 최종 오디오의 전사 대조입니다. ASR 일치율은 인간의 이해도 점수가 아닙니다.
+내보낸 JSON을 새 디렉터리에 보관하고 아래 명령으로 재채점합니다. 입력 디렉터리가 없으면 실패하며, QA 파일을 사람 결과로 세지 않습니다.
 
-## 재사용 스킬
-
-[`skill/understanding-artifacts`](skill/understanding-artifacts)에는 주제 계약, 평가 지침, 번들 검사기와 합성 회귀 테스트가 있습니다. 합성 fixture의 통과를 이 데모의 학습효과로 해석하지 않습니다. 계약은 출처의 사실과 설명용 가상 데이터를 구분하도록 요구합니다.
-
-## 검증 다시 실행하기
-
-Python 3.9+, Node 20+, ffmpeg/ffprobe가 필요합니다.
-
-```sh
-npm install
-npx playwright install chromium
-python3 ops/numerical_oracle.py
-npm test
-npm run verify:parent
-npm run audit
-python3 skill/understanding-artifacts/scripts/test_audit_bundle.py
+```bash
+python3 ops/summarize_human_study.py /path/to/submitted-json --report human-summary.json
 ```
 
-영상 소스와 생성 음성 캐시는 [`video/source`](video/source)에 있습니다. explainroo 설치 후 해당 폴더를 프로젝트로 `node bin/explainroo.js check <project>`, `render <project>`, `verify <project>`를 실행할 수 있습니다. 원본의 `build/voice` 캐시를 보존했으므로 이미 생성한 음성을 재사용할 수 있습니다. 한국어 렌더에는 Noto Sans CJK가 필요합니다.
+## 실행과 기술 검사
 
-## 최종 확인
+ZIP을 풀고 `index.html`을 열면 됩니다. `file://`에서 inline WebVTT를 지원합니다. 로컬 HTTP 실행은:
 
-- [최종 독립 영상 검토](final-media-review.md): 실제 MP4 전체 디코드·13개 시점 프레임·음량 재검사, 차단 문제 없음.
-- [공개 사이트 재검증](live-site-verification.json): 실제 HTTPS 페이지 HTTP 200, 한국어 글꼴, 390px 네 모드, 실제 MP4 재생, 콘솔 오류 없음.
+```bash
+node ops/serve_public.cjs . 4184
+# http://127.0.0.1:4184/
+python3 ops/verify_manifest.py
+npm ci --ignore-scripts
+npx playwright install chromium
+npm run test:web
+node ops/run_study_check.cjs
+python3 -B ops/test_study_analyzer.py
+```
 
-## 검증의 한계
+검사는 실제 MP4 decode·파일 해시·자막 전체 word coverage·desktop/mobile/offline 재생, 이진 탐색 5,000개 property case, 합성 평가 UI 흐름을 대상으로 합니다. `.github/workflows/artifact-quality.yml`의 이름도 `technical-not-human-efficacy`입니다. **생성·기술·지각·학습 증거를 혼동하지 않습니다.**
 
-- 실제 모델에서 측정한 logits나 tokenizer 경계가 아니라, 계산을 설명하기 위한 가상 4후보 예제입니다.
-- 글은 **STE-inspired**입니다. ASD-STE100 준수·인증을 주장하지 않습니다.
-- 계산·브라우저 동작·미디어 구조·음성 전사 대조를 검사했습니다. 사람을 대상으로 한 이해도 실험은 수행하지 않았습니다.
-- 높은 생성 확률이나 낮은 온도는 현실의 사실성을 보장하지 않습니다.
+## 제작·한계
 
-원문: https://x.com/karpathy/status/2105819303471976479 · 메커니즘 출처는 [`sources.md`](sources.md).
+- 영상: [explainroo](https://github.com/vincentsch/explainroo), 로컬 Kokoro 음성 합성 및 word timing, FFmpeg, Noto Sans CJK 글꼴.
+- `skill/understanding-artifacts/`: 재사용 가능한 제작·감사 스킬과 사람 평가 지침.
+- STE-inspired 글쓰기이며 정식 STE 인증이 아닙니다. LLM logits 및 상관/인과 수치는 합성 예제입니다.
+- 기존 NEEDS WORK/PENDING 독립 보고서는 보존합니다. 이후 수정·재검토/부모 검증은 별도 보고서로 구분합니다.
+- `baseline-evidence/` 및 이전 릴리스 문서는 과거 버전의 증거입니다. 현재 미디어는 각 `contract.json`, `caption-audit.json`, `MANIFEST.json`으로 식별합니다.
+- 기존 SNS 게시 영상은 자막 개선 이전 버전일 수 있습니다. 이 릴리스의 `video/video-ko.mp4`가 현재 배포본입니다.
 
-코드/원고는 MIT. Noto 기반 서브셋 글꼴은 SIL OFL 1.1이며 assets의 라이선스·출처를 따릅니다.
-
-## 공개 게시
-
-- result: https://x.com/silpeed01/status/2106176651709337871
-- quote: https://x.com/silpeed01/status/2106180043760427399
+[전체 형식 대응표](FORMAT_COVERAGE.md) · [사람 평가 프로토콜](study/protocol.md)

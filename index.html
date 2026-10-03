@@ -127,7 +127,7 @@
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.001ms !important; } }
   </style>
 </head>
-<body>
+<body><!-- publication navigation --><aside id="publicNav" style="max-width:1240px;margin:18px auto;padding:14px 22px;line-height:1.8;border:1px solid #36516c;border-radius:12px;color:#eaf5ff"><strong>추가 사례 · 실제 사람 평가</strong><br><a style="color:#7de5d0;margin-right:16px" href="transfer/binary-search/index.html">이진 탐색</a><a style="color:#7de5d0;margin-right:16px" href="transfer/correlation-causation/index.html">상관관계와 인과관계</a><a style="color:#ffdc91" href="study/index.html">청취·이해도 평가 참여</a><br><small>영어 음성 + 한국어 전체 자막 · 기술 검사와 사람의 학습 효과는 별개입니다.</small></aside>
   <main class="shell">
     <header class="topbar">
       <div class="brand"><span class="brand-mark">→</span><div><small>Output understanding lab</small>다음 토큰의 한 걸음</div></div>
@@ -264,7 +264,9 @@
           <div class="card-kicker">motion explainer / local asset</div>
           <h2 id="video-title">한 번의 선택을 움직임으로</h2>
           <p class="muted">같은 네 후보가 점수에서 확률로, 필터를 지나 선택으로 이어집니다. 한국어 화면과 영어 내레이션으로 설명합니다. 재생은 직접 눌러 주세요.</p>
-          <div class="video-frame"><video controls preload="metadata" src="video/video.mp4" aria-label="next-token explainer video"><span class="video-fallback"><strong>영상 슬롯</strong><code>video/video.mp4</code><br>아직 로컬 MP4가 없으면 이 안내가 보입니다.</span></video></div>
+          <div class="video-frame"><video id="captionVideo" controls preload="metadata" src="video/video-master.mp4" aria-label="영어 내레이션과 한국어 자막 설명 영상"><track kind="subtitles" srclang="ko" label="한국어" default></video></div>
+          <p><button id="captionToggle" class="ghost" type="button" aria-pressed="true">한국어 자막 끄기</button> <a href="video/video-ko.srt" download>한국어 SRT</a> · <a href="video/video-ko.mp4" download>자막 포함 영상</a></p>
+          <script>(function(){const data="WEBVTT\n\n1\n00:00:00.315 --> 00:00:04.353\n문맥을 읽은 LLM은 다음 토큰 후보에\n점수를 매기고 하나를 골라요.\n\n2\n00:00:04.725 --> 00:00:07.288\n토큰은 단어, 단어의 일부,\n문장부호일 수 있어요.\n\n3\n00:00:08.308 --> 00:00:10.017\n예제 문맥:\n“The cat sat on the”\n\n4\n00:00:10.389 --> 00:00:14.486\n네 후보 토큰의 예시 로짓은\nmat 2.0, floor 1.0,\n\n5\n00:00:15.010 --> 00:00:17.981\nsofa 0.3, roof -0.4예요.\n\n6\n00:00:18.406 --> 00:00:20.989\n교육용 수치이며,\n실제 모델의 측정값이 아니에요.\n\n7\n00:00:21.933 --> 00:00:23.816\n소프트맥스가 로짓을\n확률로 바꿔요.\n\n8\n00:00:24.314 --> 00:00:26.897\n점수를 이동시켜 지수값을 구하고,\n합이 1이 되도록 정규화해요.\n\n9\n00:00:27.288 --> 00:00:29.346\n온도가 1일 때,\nmat의 확률은 60.9%예요.\n\n10\n00:00:29.909 --> 00:00:34.084\nfloor 22.4%, sofa 11.1%,\nroof 5.5%예요.\n\n11\n00:00:35.040 --> 00:00:36.768\n온도는 확률 분포의 모양을 바꿔요.\n\n12\n00:00:37.198 --> 00:00:38.518\n온도가 낮으면 분포가 뾰족해져요.\n\n13\n00:00:38.832 --> 00:00:40.036\n온도가 높으면 분포가 평평해져요.\n\n14\n00:00:40.426 --> 00:00:42.348\n온도는 다양성을 바꿔요.\n정확성을 보장하지는 않아요.\n\n15\n00:00:43.519 --> 00:00:47.033\ntop-p는 확률이 큰 후보부터 차례로 남겨요.\n누적 확률이 p 이상이 되는 최소 개수만 남겨요.\n\n16\n00:00:47.555 --> 00:00:51.788\np=0.80이면 mat과 floor가 남아요.\n두 후보의 원래 확률 합은 83.3%예요.\n\n17\n00:00:52.539 --> 00:00:53.937\n두 후보만 남고,\n나머지는 제외돼요.\n\n18\n00:00:54.444 --> 00:00:55.494\n기준은 누적 확률 질량이에요.\n\n19\n00:00:56.140 --> 00:00:59.052\n샘플링은 누적 확률 구간에서\n균등 난수를 뽑아요.\n\n20\n00:00:59.652 --> 00:01:03.419\nu=0.82이므로 필터링된 구간에서\nfloor가 선택돼요.\n\n21\n00:01:04.005 --> 00:01:07.248\n선택한 토큰을 문맥에 붙이고,\n모델이 다음 단계의 점수를 다시 계산해요.\n\n22\n00:01:07.672 --> 00:01:08.740\n이 예제는 한 단계만 보여줘요.\n\n23\n00:01:09.764 --> 00:01:12.852\n문맥 → 로짓 → 확률 → 필터링 → 샘플링\n이 순서를 반복해요.\n\n24\n00:01:13.321 --> 00:01:14.874\n이 추정값은 다음 토큰을 예측해요.\n\n25\n00:01:15.392 --> 00:01:16.926\n현실의 사실 여부를 검증하지는 않아요.\n";document.querySelector('#captionVideo track').src=URL.createObjectURL(new Blob([data],{type:'text/vtt'}));})();document.getElementById('captionToggle').addEventListener('click',function(){const t=document.getElementById('captionVideo').textTracks[0];if(!t)return;const on=t.mode!=='showing';t.mode=on?'showing':'hidden';this.setAttribute('aria-pressed',String(on));this.textContent=on?'한국어 자막 끄기':'한국어 자막 켜기';});</script>
           <div class="video-meta"><span class="pill">context → logits</span><span class="pill">temperature / top-p</span><span class="pill">seeded sample</span><span class="pill">feedback loop</span></div>
         </article>
         <article class="card span-4"><div class="card-kicker">transcript / limits</div><h2>영상에서 확인할 것</h2><p class="muted">top-p = 0.8에서는 mat과 floor가 남습니다. 다시 정규화하면 73.1%와 26.9%입니다. 영상의 u = 0.82는 floor 구간에 들어갑니다. 웹의 기본 시드와 다른, 명시적인 추출 예제입니다.</p><p class="fine">선택한 토큰을 붙인 뒤 실제 모델은 점수를 다시 계산합니다. 여기서는 한 번의 선택만 설명합니다. 토큰 확률이 높다고 내용이 사실이라는 뜻은 아닙니다.</p><p><a href="video/script.md">영어 내레이션 원문</a> · <a href="sources.md">출처와 한계</a></p></article>
@@ -355,5 +357,5 @@
   render();
 })();
 </script>
-</body>
+<!-- publication navigation --><script src="study/lock.js"></script></body>
 </html>

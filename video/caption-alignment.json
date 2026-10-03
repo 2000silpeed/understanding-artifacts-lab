@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "language": "ko",
+  "timing_provenance": "Final explainroo cached ASR/alignment timeline; scene-relative word times plus scene.start exactly once. No second pace/lead adjustment. Captions follow the 1.03x tempo-adjusted master. Not human listening certification.",
+  "timeline_sha256": "adc58c95f42839c79676f0e41fa43db31254dec2133b0fc1890cfa1f25bc8d76",
+  "original_video_sha256": "ffd24dfe12c596eb797b36d8cfe10274c80f95e7fa340185b75eb9fe11189506",
+  "timing_transform": {
+    "scale": 0.970873786407767,
+    "offset": 0
+  },
+  "cues": [
+    {
+      "scene": "hook",
+      "word_start": 0,
+      "word_end": 11,
+      "start": 0.3146350233728874,
+      "end": 4.353469974829198,
+      "source": "After reading context, an LLM scores possible next tokens and chooses one.",
+      "ko": "문맥을 읽은 LLM은 다음 토큰 후보에\n점수를 매기고 하나를 골라요."
+    },
+    {
+      "scene": "hook",
+      "word_start": 12,
+      "word_end": 23,
+      "start": 4.7253146350233735,
+      "end": 7.288421431139878,
+      "source": "A token can be a word, part of a word, or punctuation.",
+      "ko": "토큰은 단어, 단어의 일부,\n문장부호일 수 있어요."
+    },
+    {
+      "scene": "logits",
+      "word_start": 0,
+      "word_end": 6,
+      "start": 8.308162531463502,
+      "end": 10.016900395541171,
+      "source": "Toy context: “The cat sat on the”.",
+      "ko": "예제 문맥:\n“The cat sat on the”"
+    },
+    {
+      "scene": "logits",
+      "word_start": 7,
+      "word_end": 16,
+      "start": 10.388745055735345,
+      "end": 14.485832434376123,
+      "source": "Four illustrative logits are mat 2.0, the floor token 1.0,",
+      "ko": "네 후보 토큰의 예시 로짓은\nmat 2.0, floor 1.0,"
+    },
+    {
+      "scene": "logits",
+      "word_start": 17,
+      "word_end": 22,
+      "start": 15.010104279036316,
+      "end": 17.98097806544408,
+      "source": "sofa 0.3, and roof minus 0.4.",
+      "ko": "sofa 0.3, roof -0.4예요."
+    },
+    {
+      "scene": "logits",
+      "word_start": 23,
+      "word_end": 30,
+      "start": 18.406220783890685,
+      "end": 20.988745055735347,
+      "source": "These are educational values, not measured model output.",
+      "ko": "교육용 수치이며,\n실제 모델의 측정값이 아니에요."
+    },
+    {
+      "scene": "softmax",
+      "word_start": 0,
+      "word_end": 4,
+      "start": 21.932758000719165,
+      "end": 23.816253146350235,
+      "source": "Logits become probabilities through softmax.",
+      "ko": "소프트맥스가 로짓을\n확률로 바꿔요."
+    },
+    {
+      "scene": "softmax",
+      "word_start": 5,
+      "word_end": 11,
+      "start": 24.314311398777416,
+      "end": 26.896835670622078,
+      "source": "It exponentiates shifted scores and normalizes them.",
+      "ko": "점수를 이동시켜 지수값을 구하고,\n합이 1이 되도록 정규화해요."
+    },
+    {
+      "scene": "softmax",
+      "word_start": 12,
+      "word_end": 18,
+      "start": 27.288097806544407,
+      "end": 29.346350233728874,
+      "source": "At temperature one, mat is 60.9 percent,",
+      "ko": "온도가 1일 때,\nmat의 확률은 60.9%예요."
+    },
+    {
+      "scene": "softmax",
+      "word_start": 19,
+      "word_end": 25,
+      "start": 29.909457029845377,
+      "end": 34.084214311398775,
+      "source": "floor 22.4, sofa 11.1, and roof 5.5.",
+      "ko": "floor 22.4%, sofa 11.1%,\nroof 5.5%예요."
+    },
+    {
+      "scene": "temperature",
+      "word_start": 0,
+      "word_end": 3,
+      "start": 35.03955411722402,
+      "end": 36.767709457029845,
+      "source": "Temperature changes distribution shape.",
+      "ko": "온도는 확률 분포의 모양을 바꿔요."
+    },
+    {
+      "scene": "temperature",
+      "word_start": 4,
+      "word_end": 7,
+      "start": 37.197806544408486,
+      "end": 38.51819489392305,
+      "source": "Lower temperature sharpens it.",
+      "ko": "온도가 낮으면 분포가 뾰족해져요."
+    },
+    {
+      "scene": "temperature",
+      "word_start": 8,
+      "word_end": 11,
+      "start": 38.83178712693276,
+      "end": 40.03567062207839,
+      "source": "Higher temperature flattens it.",
+      "ko": "온도가 높으면 분포가 평평해져요."
+    },
+    {
+      "scene": "temperature",
+      "word_start": 12,
+      "word_end": 16,
+      "start": 40.42596188421432,
+      "end": 42.34829198130169,
+      "source": "Temperature changes variety, not correctness.",
+      "ko": "온도는 다양성을 바꿔요.\n정확성을 보장하지는 않아요."
+    },
+    {
+      "scene": "topp",
+      "word_start": 0,
+      "word_end": 10,
+      "start": 43.51851851851852,
+      "end": 47.03308162531464,
+      "source": "Top-p sorts probabilities and keeps the smallest prefix reaching its mass.",
+      "ko": "top-p는 확률이 큰 후보부터 차례로 남겨요.\n누적 확률이 p 이상이 되는 최소 개수만 남겨요."
+    },
+    {
+      "scene": "topp",
+      "word_start": 11,
+      "word_end": 21,
+      "start": 47.55541172240202,
+      "end": 51.78842143113988,
+      "source": "At p equal to 0.80, mat and floor retain 83.3 percent.",
+      "ko": "p=0.80이면 mat과 floor가 남아요.\n두 후보의 원래 확률 합은 83.3%예요."
+    },
+    {
+      "scene": "topp",
+      "word_start": 22,
+      "word_end": 28,
+      "start": 52.53890686803308,
+      "end": 53.936965120460265,
+      "source": "They stay, and the rest are removed.",
+      "ko": "두 후보만 남고,\n나머지는 제외돼요."
+    },
+    {
+      "scene": "topp",
+      "word_start": 29,
+      "word_end": 33,
+      "start": 54.44376123696512,
+      "end": 55.49376123696512,
+      "source": "This is a mass rule.",
+      "ko": "기준은 누적 확률 질량이에요."
+    },
+    {
+      "scene": "sample",
+      "word_start": 0,
+      "word_end": 7,
+      "start": 56.13987774181949,
+      "end": 59.05249910104279,
+      "source": "Sampling draws a uniform number across cumulative probability.",
+      "ko": "샘플링은 누적 확률 구간에서\n균등 난수를 뽑아요."
+    },
+    {
+      "scene": "sample",
+      "word_start": 8,
+      "word_end": 19,
+      "start": 59.652499101042785,
+      "end": 63.41948939230493,
+      "source": "Here u equals 0.82, so it selects floor from the filtered intervals.",
+      "ko": "u=0.82이므로 필터링된 구간에서\nfloor가 선택돼요."
+    },
+    {
+      "scene": "sample",
+      "word_start": 20,
+      "word_end": 30,
+      "start": 64.00492628550882,
+      "end": 67.24764473211076,
+      "source": "The token joins context, and the model recomputes the next step.",
+      "ko": "선택한 토큰을 문맥에 붙이고,\n모델이 다음 단계의 점수를 다시 계산해요."
+    },
+    {
+      "scene": "sample",
+      "word_start": 31,
+      "word_end": 35,
+      "start": 67.67191657677095,
+      "end": 68.73987774181948,
+      "source": "This toy shows one step.",
+      "ko": "이 예제는 한 단계만 보여줘요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 0,
+      "word_end": 8,
+      "start": 69.76447321107516,
+      "end": 72.85185185185185,
+      "source": "The loop is context, logits, probabilities, filtering, and sampling.",
+      "ko": "문맥 → 로짓 → 확률 → 필터링 → 샘플링\n이 순서를 반복해요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 9,
+      "word_end": 14,
+      "start": 73.3207838906868,
+      "end": 74.87418194893924,
+      "source": "These estimates predict a next token.",
+      "ko": "이 추정값은 다음 토큰을 예측해요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 15,
+      "word_end": 20,
+      "start": 75.39165767709457,
+      "end": 76.92563825961885,
+      "source": "They do not verify real-world truth.",
+      "ko": "현실의 사실 여부를 검증하지는 않아요."
+    }
+  ],
+  "media_bindings": [
+    {
+      "artifact": "video",
+      "sha256": "7b1fae31dd339424ce61dc7887d8fbe574f1ae5e72d06d7aef69e648091a78f6"
+    },
+    {
+      "artifact": "video_master",
+      "sha256": "e11284adc357033578a70309c58084bbf7aca4a6c5d5e50da84ac95183a29a72"
+    },
+    {
+      "artifact": "original_video",
+      "sha256": "ffd24dfe12c596eb797b36d8cfe10274c80f95e7fa340185b75eb9fe11189506"
+    }
+  ]
+}

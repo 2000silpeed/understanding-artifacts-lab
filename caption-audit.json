@@ -1,0 +1,1054 @@
+{
+  "passed": true,
+  "scope": "Structure, readability thresholds, timing and source-word coverage; not translation quality, audible sync, visual overlap, WCAG certification or learning effectiveness.",
+  "checks": [
+    {
+      "name": "timeline_sha256",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "original_video_sha256",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_unique_0",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_hash_video",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_unique_1",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_hash_video_master",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_unique_2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "media_binding_hash_original_video",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "required_media_bindings",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "timeline_hash",
+      "passed": true,
+      "detail": "Source timeline SHA-256"
+    },
+    {
+      "name": "cue_count",
+      "passed": true,
+      "detail": {
+        "alignment": 25,
+        "srt": 25,
+        "vtt": 25
+      }
+    },
+    {
+      "name": "cue_0_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_0_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_0_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_0_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_0_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 9.161
+      }
+    },
+    {
+      "name": "cue_0_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_0_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_1_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_1_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_1_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_1_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_1_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 10.534
+      }
+    },
+    {
+      "name": "cue_1_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_1_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_2_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_2_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_2_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_2_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_2_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 15.216
+      }
+    },
+    {
+      "name": "cue_2_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_2_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_3_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_3_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_3_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_3_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_3_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 8.299
+      }
+    },
+    {
+      "name": "cue_3_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_3_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_4_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_4_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_4_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_4_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_4_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 7.405
+      }
+    },
+    {
+      "name": "cue_4_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_4_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_5_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_5_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_5_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_5_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_5_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 10.068
+      }
+    },
+    {
+      "name": "cue_5_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_5_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_6_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_6_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_6_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_6_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_6_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 9.557
+      }
+    },
+    {
+      "name": "cue_6_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_6_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_7_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_7_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_7_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_7_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_7_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 13.165
+      }
+    },
+    {
+      "name": "cue_7_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_7_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_8_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_8_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_8_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_8_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_8_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 12.632
+      }
+    },
+    {
+      "name": "cue_8_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_8_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_9_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_9_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_9_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_9_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_9_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 8.623
+      }
+    },
+    {
+      "name": "cue_9_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_9_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_10_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_10_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_10_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_10_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_10_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 10.994
+      }
+    },
+    {
+      "name": "cue_10_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_10_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_11_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_11_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_11_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_11_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_11_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 13.632
+      }
+    },
+    {
+      "name": "cue_11_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_11_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_12_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_12_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_12_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_12_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_12_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 14.952
+      }
+    },
+    {
+      "name": "cue_12_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_12_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_13_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_13_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_13_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_13_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_13_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 14.566
+      }
+    },
+    {
+      "name": "cue_13_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_13_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_14_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_14_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_14_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_14_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_14_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 15.08
+      }
+    },
+    {
+      "name": "cue_14_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_14_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_15_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_15_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_15_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_15_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_15_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 11.339
+      }
+    },
+    {
+      "name": "cue_15_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_15_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_16_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_16_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_16_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_16_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_16_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 13.59
+      }
+    },
+    {
+      "name": "cue_16_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_16_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_17_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_17_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_17_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_17_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_17_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 15.238
+      }
+    },
+    {
+      "name": "cue_17_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_17_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_18_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_18_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_18_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_18_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_18_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 8.927
+      }
+    },
+    {
+      "name": "cue_18_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_18_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_19_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_19_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_19_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_19_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_19_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 8.229
+      }
+    },
+    {
+      "name": "cue_19_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_19_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_20_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_20_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_20_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_20_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_20_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 12.027
+      }
+    },
+    {
+      "name": "cue_20_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_20_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_21_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_21_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_21_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_21_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_21_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 15.918
+      }
+    },
+    {
+      "name": "cue_21_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_21_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_22_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_22_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_22_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_22_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_22_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 11.336
+      }
+    },
+    {
+      "name": "cue_22_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_22_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_23_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_23_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_23_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_23_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_23_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 12.231
+      }
+    },
+    {
+      "name": "cue_23_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_23_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "cue_24_source",
+      "passed": true,
+      "detail": "Exact source words"
+    },
+    {
+      "name": "cue_24_unique",
+      "passed": true,
+      "detail": "No duplicated source-word assignment"
+    },
+    {
+      "name": "cue_24_sync",
+      "passed": true,
+      "detail": {
+        "start_error_seconds": 0.0
+      }
+    },
+    {
+      "name": "cue_24_time",
+      "passed": true,
+      "detail": "Within video, ordered, no overlap, minimum exposure"
+    },
+    {
+      "name": "cue_24_readable",
+      "passed": true,
+      "detail": {
+        "characters_per_second": 13.69
+      }
+    },
+    {
+      "name": "cue_24_korean",
+      "passed": true,
+      "detail": "Hangul present; translation quality is a separate review"
+    },
+    {
+      "name": "cue_24_sidecars",
+      "passed": true,
+      "detail": "SRT/VTT/translation text and milliseconds agree"
+    },
+    {
+      "name": "source_coverage",
+      "passed": true,
+      "detail": {
+        "covered_timed_words": 189,
+        "total_timed_words": 189
+      }
+    }
+  ],
+  "cue_count": 25,
+  "covered_source_words": 189,
+  "total_source_words": 189,
+  "video_duration": 79.333333,
+  "max_cps": 15.918,
+  "max_start_error": 0
+}

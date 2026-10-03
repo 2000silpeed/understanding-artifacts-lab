@@ -1,0 +1,209 @@
+{
+  "schema_version": 2,
+  "timing_transform": {
+    "scale": 1,
+    "offset": 0
+  },
+  "timeline_sha256": "cfacdb24351ed79e74129e3a994b4cfb8a29942cf3efa554e360115d535e3c62",
+  "original_video_sha256": "81a79bd24863b67196ecf9b7752db415d45a75dc93a71b660d820f5a9df67eb7",
+  "media_bindings": [
+    {
+      "artifact": "video",
+      "sha256": "227b12db12caa7c0a098deab0f247d75e07e2e504733492d3c95328d37c04b79"
+    },
+    {
+      "artifact": "video_master",
+      "sha256": "a5341c034b1475a5a2fbca120a6a74c74d67712fffed595cedcdfde5b39397e8"
+    },
+    {
+      "artifact": "original_video",
+      "sha256": "81a79bd24863b67196ecf9b7752db415d45a75dc93a71b660d820f5a9df67eb7"
+    }
+  ],
+  "cues": [
+    {
+      "scene": "hook",
+      "word_start": 0,
+      "word_end": 13,
+      "start": 0.35,
+      "end": 4.75,
+      "source": "If ice cream sales rise when pool visits rise, did one cause the other?",
+      "ko": "아이스크림 판매와 수영장 방문이 함께 늘면, 하나가 다른\n쪽의 원인일까요?"
+    },
+    {
+      "scene": "hook",
+      "word_start": 14,
+      "word_end": 17,
+      "start": 5.234999999999999,
+      "end": 6.375,
+      "source": "This is synthetic data.",
+      "ko": "이 자료는 합성 데이터예요."
+    },
+    {
+      "scene": "pattern",
+      "word_start": 0,
+      "word_end": 8,
+      "start": 7.75,
+      "end": 10.850000000000001,
+      "source": "Mixing warm and cool days makes both values rise.",
+      "ko": "더운 날과 서늘한 날을 섞으면 두 값이 함께 올라요."
+    },
+    {
+      "scene": "pattern",
+      "word_start": 9,
+      "word_end": 18,
+      "start": 11.485,
+      "end": 14.965,
+      "source": "The chart can show correlation, even without a direct cause.",
+      "ko": "직접 원인이 없어도 차트에는 상관관계가 보일 수 있어요."
+    },
+    {
+      "scene": "dag",
+      "word_start": 0,
+      "word_end": 4,
+      "start": 16.316666666666666,
+      "end": 17.976666666666667,
+      "source": "Temperature is the common cause.",
+      "ko": "기온이 공통 원인이에요."
+    },
+    {
+      "scene": "dag",
+      "word_start": 5,
+      "word_end": 17,
+      "start": 18.59166666666667,
+      "end": 22.511666666666667,
+      "source": "It points to ice cream sales, and to pool visits and accident risk.",
+      "ko": "기온에서 아이스크림 판매, 수영장 방문과 사고 위험으로\n화살표가 이어져요."
+    },
+    {
+      "scene": "missing",
+      "word_start": 0,
+      "word_end": 6,
+      "start": 23.71666666666667,
+      "end": 25.53666666666667,
+      "source": "The graph has two arrows from temperature.",
+      "ko": "그래프에는 기온에서 나가는 화살표 두 개가 있어요."
+    },
+    {
+      "scene": "missing",
+      "word_start": 7,
+      "word_end": 15,
+      "start": 26.236666666666668,
+      "end": 28.516666666666666,
+      "source": "It has no arrow from sales to the outcome.",
+      "ko": "판매에서 결과로 가는 화살표는 없어요."
+    },
+    {
+      "scene": "missing",
+      "word_start": 16,
+      "word_end": 20,
+      "start": 28.996666666666666,
+      "end": 30.936666666666667,
+      "source": "Observation cannot add that arrow.",
+      "ko": "관찰만으로 그 화살표를 추가할 수 없어요."
+    },
+    {
+      "scene": "group",
+      "word_start": 0,
+      "word_end": 5,
+      "start": 32.21666666666667,
+      "end": 34.196666666666665,
+      "source": "Hold temperature at twenty two degrees.",
+      "ko": "기온을 22도로 고정해요."
+    },
+    {
+      "scene": "group",
+      "word_start": 6,
+      "word_end": 16,
+      "start": 34.846666666666664,
+      "end": 37.986666666666665,
+      "source": "The right chart keeps one group, and the rising cloud fades.",
+      "ko": "오른쪽 차트에는 한 그룹만 남아, 상승하는 점들의 모양이\n약해져요."
+    },
+    {
+      "scene": "intervention",
+      "word_start": 0,
+      "word_end": 8,
+      "start": 39.45,
+      "end": 42.65,
+      "source": "Now change ice cream sales while temperature stays fixed.",
+      "ko": "이제 기온을 고정한 채 아이스크림 판매를 바꿔봐요."
+    },
+    {
+      "scene": "intervention",
+      "word_start": 9,
+      "word_end": 13,
+      "start": 43.195,
+      "end": 44.675,
+      "source": "The outcome rule stays separate.",
+      "ko": "결과를 만드는 규칙은 별개로 유지돼요."
+    },
+    {
+      "scene": "intervention",
+      "word_start": 14,
+      "word_end": 20,
+      "start": 45.225,
+      "end": 47.665,
+      "source": "This is a simulation, not real people.",
+      "ko": "실제 사람이 아니라 시뮬레이션이에요."
+    },
+    {
+      "scene": "questions",
+      "word_start": 0,
+      "word_end": 8,
+      "start": 48.983333333333334,
+      "end": 52.88333333333333,
+      "source": "Observation asks whether large sales appear with large outcomes.",
+      "ko": "관찰은 판매가 큰 곳에 결과도 크게 나타나는지 물어요."
+    },
+    {
+      "scene": "questions",
+      "word_start": 9,
+      "word_end": 18,
+      "start": 53.50333333333333,
+      "end": 58.42333333333333,
+      "source": "Intervention asks whether changing sales changes outcomes under stated conditions.",
+      "ko": "개입은 정해진 조건에서 판매를 바꾸면 결과가 바뀌는지\n물어요."
+    },
+    {
+      "scene": "questions",
+      "word_start": 19,
+      "word_end": 22,
+      "start": 59.09833333333333,
+      "end": 60.23833333333333,
+      "source": "They need different evidence.",
+      "ko": "두 질문에는 서로 다른 근거가 필요해요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 0,
+      "word_end": 5,
+      "start": 61.71666666666667,
+      "end": 63.63666666666667,
+      "source": "Switch views and reset the example.",
+      "ko": "화면을 바꾸고 예시를 초기화해 보세요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 6,
+      "word_end": 9,
+      "start": 64.21166666666667,
+      "end": 65.67166666666667,
+      "source": "Temperature here is simulated.",
+      "ko": "여기서 기온은 시뮬레이션 값이에요."
+    },
+    {
+      "scene": "outro",
+      "word_start": 10,
+      "word_end": 20,
+      "start": 66.39166666666667,
+      "end": 70.83166666666666,
+      "source": "Correlation can start a question, but causation needs design and assumptions.",
+      "ko": "상관관계는 질문의 시작이지만, 인과관계에는 설계와 가정이\n필요해요."
+    }
+  ],
+  "limits": [
+    "Machine-readable source/timing coverage; not actual human listening or learning.",
+    "Caption stage only resizes/pads video, keeps narration audio unchanged."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "source": "data-model.js",
+  "sha256": "5d5f26a605392c6bc1bc6991769d95f628bdb04d113b48ce81c45c326ed6d2d3",
+  "counts": {
+    "aggregate": 42,
+    "group22": 6,
+    "intervention": 7
+  },
+  "domain": "Computed educational synthetic data, not real observations"
+}

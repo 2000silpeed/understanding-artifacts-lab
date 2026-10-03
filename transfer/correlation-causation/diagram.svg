@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">합성 사례의 인과 구조: X는 T의 공통 원인에 의해 함께 움직일 수 있다</title>
+  <desc id="desc">기온 T에서 아이스크림 판매 X와 수영장 이용·사고 위험 Y로 화살표가 뻗는다. X에서 Y로 가는 인과 화살표는 선언하지 않는다. 아래에는 관찰과 개입의 질문 차이를 설명한다.</desc>
+  <defs>
+    <marker id="arrow-teal" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#0f766e"/></marker>
+    <marker id="arrow-amber" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#b45309"/></marker>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity=".15"/></filter>
+  </defs>
+  <rect width="1400" height="900" fill="#fbfaf4"/>
+  <text x="700" y="72" text-anchor="middle" font-family="sans-serif" font-size="42" font-weight="700" fill="#102a43">상관관계 ≠ 인과관계</text>
+  <text x="700" y="116" text-anchor="middle" font-family="sans-serif" font-size="23" fill="#52606d">합성 교육용 모델: 공통 원인이 만드는 동행을 DAG로 읽기</text>
+  <rect x="360" y="170" width="680" height="390" rx="28" fill="#ffffff" stroke="#d9e2ec" stroke-width="3" filter="url(#soft)"/>
+  <text x="700" y="215" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="700" fill="#334e68">선언한 구조</text>
+  <g stroke="#0f766e" stroke-width="8" fill="none" marker-end="url(#arrow-teal)">
+    <path d="M700 330 C575 335 510 350 475 390"/>
+    <path d="M700 330 C825 335 890 350 925 390"/>
+  </g>
+  <circle cx="700" cy="300" r="76" fill="#fef3c7" stroke="#b45309" stroke-width="5"/>
+  <text x="700" y="292" text-anchor="middle" font-family="sans-serif" font-size="34" font-weight="700" fill="#78350f">T</text>
+  <text x="700" y="325" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#78350f">기온</text>
+  <rect x="405" y="390" width="250" height="110" rx="20" fill="#e0f2fe" stroke="#0284c7" stroke-width="4"/>
+  <text x="530" y="438" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="700" fill="#075985">X</text>
+  <text x="530" y="472" text-anchor="middle" font-family="sans-serif" font-size="21" fill="#075985">아이스크림 판매</text>
+  <rect x="745" y="390" width="250" height="110" rx="20" fill="#dcfce7" stroke="#16a34a" stroke-width="4"/>
+  <text x="870" y="438" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="700" fill="#166534">Y</text>
+  <text x="870" y="472" text-anchor="middle" font-family="sans-serif" font-size="21" fill="#166534">수영·사고위험 대표값</text>
+  <path d="M650 555 C690 590 710 590 750 555" stroke="#cbd5e1" stroke-width="4" stroke-dasharray="10 10" fill="none"/>
+  <text x="700" y="607" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="700" fill="#b91c1c">X → Y를 선언하지 않음</text>
+  <text x="700" y="642" text-anchor="middle" font-family="sans-serif" font-size="19" fill="#7f1d1d">관찰된 동행만으로 화살표를 추가할 수 없다</text>
+  <rect x="80" y="700" width="570" height="145" rx="20" fill="#f0fdfa" stroke="#0f766e" stroke-width="3"/>
+  <text x="365" y="742" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="#115e59">관찰 질문</text>
+  <text x="365" y="782" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#134e4a">X가 큰 곳에서 Y도 큰가?</text>
+  <text x="365" y="816" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#475569">이미 기록된 값을 읽음</text>
+  <rect x="750" y="700" width="570" height="145" rx="20" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+  <text x="1035" y="742" text-anchor="middle" font-family="sans-serif" font-size="26" font-weight="700" fill="#9a3412">개입 질문</text>
+  <text x="1035" y="782" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#7c2d12">X를 바꾸면 Y가 달라지는가?</text>
+  <text x="1035" y="816" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#475569">조건을 정하고 값을 바꿈</text>
+</svg>

@@ -1,0 +1,6 @@
+(function(root){'use strict';
+ function assign(topics,draw){if(!Number.isInteger(topics)||topics<1||topics>1000000)throw Error('Invalid topic count');const cells=topics*4,limit=4294967296-(4294967296%cells);for(let tries=0;tries<1000;tries++){const u=draw();if(!Number.isInteger(u)||u<0||u>4294967295)throw Error('Invalid random uint32');if(u<limit)return {topic:Math.floor((u%cells)/4),format:u%4};}throw Error('Random generator failed');}
+ function score(questions,answers){if(!Array.isArray(questions)||!questions.length||!Array.isArray(answers)||answers.length!==questions.length)throw Error('Every question needs an answer');let correct=0;questions.forEach((q,i)=>{if(!Number.isInteger(q.answer)||q.answer<0||q.answer>=q.options.length)throw Error('Invalid answer key');if(!Number.isInteger(answers[i])||answers[i]<0||answers[i]>=q.options.length)throw Error('Invalid response');if(answers[i]===q.answer)correct++});return {correct,total:questions.length,fraction:correct/questions.length};}
+ function requireConsent(s){if(s.consent!==true||s.human!==true)throw Error('Consent and human self declaration required');return true;}
+ const api={assign,score,requireConsent};if(typeof module!=='undefined'&&module.exports)module.exports=api;root.StudyCore=api;
+})(typeof window==='undefined'?globalThis:window);

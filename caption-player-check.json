@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "runs": [
+    {
+      "name": "http-desktop",
+      "track": {
+        "language": "ko",
+        "label": "한국어",
+        "mode": "showing",
+        "cues": 25,
+        "width": 1920,
+        "height": 1080,
+        "duration": 79.333333
+      },
+      "playback_advanced": true,
+      "seek_matches": 25,
+      "keyboard_toggle": true,
+      "no_overflow": true,
+      "passed": true,
+      "console_errors": [],
+      "external_requests": []
+    },
+    {
+      "name": "http-mobile",
+      "track": {
+        "language": "ko",
+        "label": "한국어",
+        "mode": "showing",
+        "cues": 25,
+        "width": 1920,
+        "height": 1080,
+        "duration": 79.333333
+      },
+      "playback_advanced": true,
+      "seek_matches": 25,
+      "keyboard_toggle": true,
+      "no_overflow": true,
+      "passed": true,
+      "console_errors": [],
+      "external_requests": []
+    },
+    {
+      "name": "offline-file",
+      "track": {
+        "language": "ko",
+        "label": "한국어",
+        "mode": "showing",
+        "cues": 25,
+        "width": 1920,
+        "height": 1080,
+        "duration": 79.333333
+      },
+      "playback_advanced": true,
+      "seek_matches": 25,
+      "keyboard_toggle": true,
+      "no_overflow": true,
+      "passed": true,
+      "console_errors": [],
+      "external_requests": []
+    }
+  ]
+}

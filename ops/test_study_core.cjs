@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),fs=require('fs'),vm=require('vm'),path=require('path');const ctx={module:{exports:{}}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../study/core.js'),'utf8'),ctx);const c=ctx.module.exports;let n=0;const test=(name,fn)=>{fn();n++;console.log('PASS '+name)};
+test('uniform assignment covers all 12 cells',()=>{for(let i=0;i<12;i++){const r=c.assign(3,()=>i);assert.equal(r.topic,Math.floor(i/4));assert.equal(r.format,i%4)}});
+test('rejection sampling discards biased uint32 tail',()=>{let draws=[4294967295,5];assert.equal(c.assign(3,()=>draws.shift()).topic,1);assert.equal(draws.length,0)});
+test('no empty study',()=>assert.throws(()=>c.assign(0,()=>0)));
+const q=[{options:['A','B'],answer:1},{options:['C','D'],answer:0}];
+test('score all correct',()=>assert.equal(c.score(q,[1,0]).correct,2));
+test('score partial',()=>assert.equal(c.score(q,[0,0]).correct,1));
+test('no fabricated missing answers',()=>assert.throws(()=>c.score(q,[1])));
+test('reject fractional answers',()=>assert.throws(()=>c.score(q,[.5,0])));
+test('reject invalid options',()=>assert.throws(()=>c.score(q,[8,0])));
+test('no empty score',()=>assert.throws(()=>c.score([],[])));
+test('consent required',()=>assert.throws(()=>c.requireConsent({consent:false,human:true})));
+test('human self declaration required',()=>assert.throws(()=>c.requireConsent({consent:true,human:false})));
+test('explicit human declaration accepted, not verified',()=>assert.equal(c.requireConsent({consent:true,human:true}),true));
+console.log(JSON.stringify({passed:true,tests:n,scope:'Synthetic study-tool regression; not human results'}));

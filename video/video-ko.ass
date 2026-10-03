@@ -1,0 +1,38 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Korean,Noto Sans CJK KR,72,&H00FFFFFF,&H00FFFFFF,&H00382017,&H00382017,0,0,0,0,100,100,0,0,3,2,0,2,80,80,20,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.31,0:00:04.35,Korean,,0,0,0,,문맥을 읽은 LLM은 다음 토큰 후보에\N점수를 매기고 하나를 골라요.
+Dialogue: 0,0:00:04.73,0:00:07.29,Korean,,0,0,0,,토큰은 단어, 단어의 일부,\N문장부호일 수 있어요.
+Dialogue: 0,0:00:08.31,0:00:10.02,Korean,,0,0,0,,예제 문맥:\N“The cat sat on the”
+Dialogue: 0,0:00:10.39,0:00:14.49,Korean,,0,0,0,,네 후보 토큰의 예시 로짓은\Nmat 2.0, floor 1.0,
+Dialogue: 0,0:00:15.01,0:00:17.98,Korean,,0,0,0,,sofa 0.3, roof -0.4예요.
+Dialogue: 0,0:00:18.41,0:00:20.99,Korean,,0,0,0,,교육용 수치이며,\N실제 모델의 측정값이 아니에요.
+Dialogue: 0,0:00:21.93,0:00:23.82,Korean,,0,0,0,,소프트맥스가 로짓을\N확률로 바꿔요.
+Dialogue: 0,0:00:24.31,0:00:26.90,Korean,,0,0,0,,점수를 이동시켜 지수값을 구하고,\N합이 1이 되도록 정규화해요.
+Dialogue: 0,0:00:27.29,0:00:29.35,Korean,,0,0,0,,온도가 1일 때,\Nmat의 확률은 60.9%예요.
+Dialogue: 0,0:00:29.91,0:00:34.08,Korean,,0,0,0,,floor 22.4%, sofa 11.1%,\Nroof 5.5%예요.
+Dialogue: 0,0:00:35.04,0:00:36.77,Korean,,0,0,0,,온도는 확률 분포의 모양을 바꿔요.
+Dialogue: 0,0:00:37.20,0:00:38.52,Korean,,0,0,0,,온도가 낮으면 분포가 뾰족해져요.
+Dialogue: 0,0:00:38.83,0:00:40.04,Korean,,0,0,0,,온도가 높으면 분포가 평평해져요.
+Dialogue: 0,0:00:40.43,0:00:42.35,Korean,,0,0,0,,온도는 다양성을 바꿔요.\N정확성을 보장하지는 않아요.
+Dialogue: 0,0:00:43.52,0:00:47.03,Korean,,0,0,0,,top-p는 확률이 큰 후보부터 차례로 남겨요.\N누적 확률이 p 이상이 되는 최소 개수만 남겨요.
+Dialogue: 0,0:00:47.56,0:00:51.79,Korean,,0,0,0,,p=0.80이면 mat과 floor가 남아요.\N두 후보의 원래 확률 합은 83.3%예요.
+Dialogue: 0,0:00:52.54,0:00:53.94,Korean,,0,0,0,,두 후보만 남고,\N나머지는 제외돼요.
+Dialogue: 0,0:00:54.44,0:00:55.49,Korean,,0,0,0,,기준은 누적 확률 질량이에요.
+Dialogue: 0,0:00:56.14,0:00:59.05,Korean,,0,0,0,,샘플링은 누적 확률 구간에서\N균등 난수를 뽑아요.
+Dialogue: 0,0:00:59.65,0:01:03.42,Korean,,0,0,0,,u=0.82이므로 필터링된 구간에서\Nfloor가 선택돼요.
+Dialogue: 0,0:01:04.00,0:01:07.25,Korean,,0,0,0,,선택한 토큰을 문맥에 붙이고,\N모델이 다음 단계의 점수를 다시 계산해요.
+Dialogue: 0,0:01:07.67,0:01:08.74,Korean,,0,0,0,,이 예제는 한 단계만 보여줘요.
+Dialogue: 0,0:01:09.76,0:01:12.85,Korean,,0,0,0,,문맥 → 로짓 → 확률 → 필터링 → 샘플링\N이 순서를 반복해요.
+Dialogue: 0,0:01:13.32,0:01:14.87,Korean,,0,0,0,,이 추정값은 다음 토큰을 예측해요.
+Dialogue: 0,0:01:15.39,0:01:16.93,Korean,,0,0,0,,현실의 사실 여부를 검증하지는 않아요.

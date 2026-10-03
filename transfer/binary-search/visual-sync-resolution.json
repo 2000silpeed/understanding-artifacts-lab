@@ -1,0 +1,9 @@
+{
+  "source": "word-bound caption-alignment.json before correction",
+  "scene_relative_seconds": {
+    "compare23": 7.464333333333336,
+    "foundIndex4": 11.495333333333335,
+    "emptyRange": 8.235333333333337
+  },
+  "scope": "Repair visual transitions only. Speech and caption text not modified."
+}

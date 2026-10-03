@@ -1,0 +1,21 @@
+{
+  "release": "v1.1.0",
+  "evidence_scope": "technical checks and AI independent review, not actual-human listening or learning",
+  "human_learning": "NOT_MEASURED",
+  "human_listening": "NOT_MEASURED",
+  "current_media_sha256": {
+    "next-token": "7b1fae31dd339424ce61dc7887d8fbe574f1ae5e72d06d7aef69e648091a78f6",
+    "binary-search": "a20914b1585af246b63e591ca34a9524aa614f7329b557d5ff2f0d5ad171b83d",
+    "correlation-causation": "227b12db12caa7c0a098deab0f247d75e07e2e504733492d3c95328d37c04b79"
+  },
+  "original_browser": {
+    "status": "passed",
+    "checks": 10
+  },
+  "transfer_review_reports": [
+    "transfer/binary-search/final-rereview.md",
+    "transfer/correlation-causation/final-rereview.md"
+  ],
+  "study_review": "study-final-review.md",
+  "historical_report_note": "Original NEEDS WORK/PENDING reports describe older snapshots. They are preserved; current fixes and artifacts are documented separately."
+}

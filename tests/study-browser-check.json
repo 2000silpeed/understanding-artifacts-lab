@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "scope": "Automated synthetic study-tool QA; no human responses or efficacy evidence",
+  "checks": [
+    {
+      "topic": "next-token",
+      "format": 0,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "next-token",
+      "format": 1,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "next-token",
+      "format": 2,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "next-token",
+      "format": 3,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "binary-search",
+      "format": 0,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "binary-search",
+      "format": 1,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "binary-search",
+      "format": 2,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "binary-search",
+      "format": 3,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "correlation-causation",
+      "format": 0,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "correlation-causation",
+      "format": 1,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "correlation-causation",
+      "format": 2,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "topic": "correlation-causation",
+      "format": 3,
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "kind": "listening",
+      "passed": true,
+      "synthetic": true
+    },
+    {
+      "kind": "offline_start_and_font",
+      "passed": true
+    }
+  ],
+  "uploads": 0,
+  "console_errors": []
+}

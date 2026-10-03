@@ -110,7 +110,8 @@ async function stopServer(server) { if(server){const done=new Promise(resolve=>s
       assert(await page.locator(`#mode-${mode}`).evaluate(el => el.classList.contains('active')), `${mode} mode not active`);
     }
     assert(await page.locator('svg[role="img"]').count() === 1, 'causal SVG missing');
-    assert(await page.locator('video[src="video/video.mp4"]').count() === 1, 'relative video slot missing');
+    assert(await page.locator('video[src="video/video-master.mp4"]').count() === 1, 'relative uncaptioned master video slot missing');
+    assert(await page.locator('video track[kind="subtitles"][srclang="ko"]').count() === 1, 'Korean subtitle track missing');
     pass('four modes', 'lab, causal diagram, writing comparison, and relative video slot are navigable');
 
     await page.screenshot({ path: path.join(screenshotDir, 'lab-desktop.png'), fullPage: true });

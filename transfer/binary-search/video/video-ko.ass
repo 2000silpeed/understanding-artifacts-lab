@@ -1,0 +1,37 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Korean,Noto Sans CJK KR,72,&H00FFFFFF,&H00FFFFFF,&H00101722,&H00101722,0,0,0,0,100,100,0,0,1,3,0,2,80,80,20,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.33,0:00:04.73,Korean,,0,0,0,,정렬된 배열은 비교할 때마다 후보의 절반을 제외할 수\N있어요.
+Dialogue: 0,0:00:05.49,0:00:07.73,Korean,,0,0,0,,순서가 있기 때문에 이 지름길을 안전하게 쓸 수 있어요.
+Dialogue: 0,0:00:09.03,0:00:10.53,Korean,,0,0,0,,이 배열에는 일곱 값이 있어요.
+Dialogue: 0,0:00:11.07,0:00:12.71,Korean,,0,0,0,,첫 값들은 2와 5예요.
+Dialogue: 0,0:00:13.23,0:00:14.87,Korean,,0,0,0,,다음 값들은 8과 12예요.
+Dialogue: 0,0:00:15.44,0:00:16.66,Korean,,0,0,0,,찾는 값은 16이에요.
+Dialogue: 0,0:00:17.32,0:00:19.66,Korean,,0,0,0,,마지막 값들은 23과 38이에요.
+Dialogue: 0,0:00:20.31,0:00:22.85,Korean,,0,0,0,,0부터 시작하는 인덱스로 16을 찾아요.
+Dialogue: 0,0:00:24.37,0:00:27.15,Korean,,0,0,0,,현재 범위는 인덱스 0부터 6까지예요.
+Dialogue: 0,0:00:27.62,0:00:31.90,Korean,,0,0,0,,중간 인덱스는 (0+6)/2의 내림값인 3이에요.
+Dialogue: 0,0:00:32.41,0:00:33.55,Korean,,0,0,0,,중간에 있는 값은 12예요.
+Dialogue: 0,0:00:34.90,0:00:39.16,Korean,,0,0,0,,12는 16보다 작으니 왼쪽 절반에 찾는 값이 있을 수\N없어요.
+Dialogue: 0,0:00:39.69,0:00:41.45,Korean,,0,0,0,,인덱스 4부터 6까지 남겨요.
+Dialogue: 0,0:00:42.03,0:00:45.57,Korean,,0,0,0,,중간 값 23은 너무 크니 인덱스 4만 남겨요.
+Dialogue: 0,0:00:46.06,0:00:47.44,Korean,,0,0,0,,인덱스 4에는 16이 있어요.
+Dialogue: 0,0:00:48.08,0:00:49.09,Korean,,0,0,0,,찾는 값을 발견했어요.
+Dialogue: 0,0:00:50.20,0:00:51.26,Korean,,0,0,0,,이제 7을 찾아봐요.
+Dialogue: 0,0:00:51.80,0:00:55.02,Korean,,0,0,0,,12가 더 크니 인덱스 0부터 2까지 남겨요.
+Dialogue: 0,0:00:55.48,0:00:57.60,Korean,,0,0,0,,5는 더 작으니 인덱스 2를 남겨요.
+Dialogue: 0,0:00:58.10,0:01:01.24,Korean,,0,0,0,,8은 7보다 크고, 남은 범위가 비어요.
+Dialogue: 0,0:01:01.82,0:01:03.08,Korean,,0,0,0,,배열에 7은 없어요.
+Dialogue: 0,0:01:04.40,0:01:06.14,Korean,,0,0,0,,기본 검색은 일치하는 값 하나에서 멈춰요.
+Dialogue: 0,0:01:06.71,0:01:08.75,Korean,,0,0,0,,경곗값 검색은 다른 질문을 해요.
+Dialogue: 0,0:01:09.25,0:01:12.71,Korean,,0,0,0,,lower bound는 찾는 값 이상인 첫 값을 찾아요.
+Dialogue: 0,0:01:13.25,0:01:16.19,Korean,,0,0,0,,upper bound는 찾는 값보다 큰 첫 값을 찾아요.
+Dialogue: 0,0:01:17.43,0:01:21.19,Korean,,0,0,0,,순서가 있어서 비교할 때마다 정보를 얻으니 이진 탐색이\N가능해요.
+Dialogue: 0,0:01:21.90,0:01:24.88,Korean,,0,0,0,,절반을 제외하기 전에 정렬 조건부터 확인하세요.

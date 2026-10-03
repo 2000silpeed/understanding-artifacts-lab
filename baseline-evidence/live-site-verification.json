@@ -1,0 +1,14 @@
+{
+  "url": "https://2000silpeed.github.io/understanding-artifacts-lab/",
+  "status": 200,
+  "font_loaded": true,
+  "modes": 4,
+  "mobile_no_overflow": true,
+  "media": {
+    "width": 1920,
+    "height": 1080,
+    "duration": 81.666667
+  },
+  "console_errors": [],
+  "passed": true
+}

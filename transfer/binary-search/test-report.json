@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "scope": "Technical checks; not human comprehension/listening certification",
+  "property_cases": 5000,
+  "desktop_mobile": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "duration": 87.933333,
+      "cues": 27,
+      "errors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "duration": 87.933333,
+      "cues": 27,
+      "errors": []
+    }
+  ],
+  "offline": true
+}

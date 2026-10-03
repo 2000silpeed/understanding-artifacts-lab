@@ -1,0 +1,171 @@
+{
+  "title": "이진 탐색: 정렬된 범위를 반씩 좁히기",
+  "central_question": "정렬된 배열에서 목표를 찾을 때 왜 중간을 보고 절반을 버릴 수 있는가?",
+  "audience": "한국어로 학습하는 개발 입문자",
+  "languages": {
+    "writing": "ko",
+    "diagram": "ko",
+    "web": "ko",
+    "narration": "en",
+    "subtitles": "ko"
+  },
+  "example": {
+    "array": [
+      2,
+      5,
+      8,
+      12,
+      16,
+      23,
+      38
+    ],
+    "found_target": 16,
+    "missing_target": 7,
+    "index_convention": "zero-based",
+    "range_convention": "inclusive L..U",
+    "mid": "floor((L + U) / 2)"
+  },
+  "glossary": {
+    "L": "현재 후보 범위의 왼쪽 인덱스",
+    "U": "현재 후보 범위의 오른쪽 인덱스",
+    "mid": "L과 U 사이에서 내림한 중간 인덱스",
+    "lower_bound": "목표보다 작지 않은 첫 위치",
+    "upper_bound": "목표보다 큰 첫 위치"
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "claim": "이진 탐색은 정렬된 배열의 순서를 전제로 한다.",
+      "source_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "C2",
+      "claim": "현재 후보 구간에서 중간 값을 비교하고 한쪽 절반을 제거한다.",
+      "source_ids": [],
+      "evidence": "implemented and tested pure function",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "C3",
+      "claim": "mid는 floor((L+U)/2)로 계산한다.",
+      "source_ids": [],
+      "evidence": "fixed educational algorithm definition",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "C4",
+      "claim": "L>U이면 목표가 없다.",
+      "source_ids": [],
+      "evidence": "loop invariant and executable trace",
+      "formats": [
+        "writing",
+        "diagram",
+        "web",
+        "video"
+      ]
+    },
+    {
+      "id": "C5",
+      "claim": "lower_bound와 upper_bound는 서로 다른 경계 질문이다.",
+      "source_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "formats": [
+        "writing",
+        "web",
+        "video"
+      ]
+    }
+  ],
+  "visual_beats": [
+    "정렬된 배열과 sorted prerequisite",
+    "L/U가 감싼 현재 후보 구간",
+    "mid 포인터가 12를 가리킴",
+    "16을 찾는 경로: 0..6 -> 4..6 -> 4..4",
+    "7을 찾지 못하는 경로: 0..6 -> 0..2 -> 2..2 -> empty",
+    "lower/upper 경계를 별도 개념으로 표시"
+  ],
+  "caveats": [
+    "정렬되지 않은 배열에는 이 제거 규칙을 적용할 수 없다.",
+    "중복 값에서 첫 위치가 필요하면 단순히 처음 발견한 위치와 다르다.",
+    "O(log n)은 임의 인덱스 접근이 가능한 배열을 가정한 분석이다.",
+    "자동 검사는 번역 의미나 사람의 이해도를 인증하지 않는다."
+  ],
+  "source_ids": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "verification_scope": "technical artifact and cross-format consistency, not a human learning study",
+  "question": "정렬된 배열에서 목표를 찾을 때 왜 중간을 보고 절반을 버릴 수 있는가?",
+  "schema_version": 2,
+  "limits": [
+    "정렬되지 않은 배열에는 이 제거 규칙을 적용할 수 없다.",
+    "중복 값에서 첫 위치가 필요하면 단순히 처음 발견한 위치와 다르다.",
+    "O(log n)은 임의 인덱스 접근이 가능한 배열을 가정한 분석이다.",
+    "자동 검사는 번역 의미나 사람의 이해도를 인증하지 않는다."
+  ],
+  "language": {
+    "writing": "ko",
+    "screen": "ko",
+    "narration": "en",
+    "subtitles": "ko"
+  },
+  "subtitles": {
+    "required": true,
+    "language": "ko",
+    "max_lines": 2,
+    "max_chars_per_line": 32,
+    "min_duration": 1.0,
+    "max_cps": 20,
+    "max_sync_error": 0.12,
+    "max_end_hold": 1.0,
+    "require_media_binding": true
+  },
+  "artifacts": {
+    "writing": "writing.md",
+    "diagram": "diagram.svg",
+    "web": "index.html",
+    "video": "video/video-ko.mp4",
+    "video_master": "video/video-master.mp4",
+    "transcript": "video/script.md",
+    "captions_srt": "video/video-ko.srt",
+    "captions_vtt": "video/video-ko.vtt",
+    "caption_alignment": "video/caption-alignment.json",
+    "caption_timeline": "video/timeline.json",
+    "sources": "sources.md",
+    "tests": "test-report.json",
+    "original_video": "video/video-original.mp4"
+  },
+  "test_coverage": {
+    "writing": "not_run",
+    "diagram": "not_run",
+    "web": "not_run",
+    "video": "not_run",
+    "captions": "not_run",
+    "fresh_topic_transfer": "not_run",
+    "human_learning": "not_run"
+  }
+}

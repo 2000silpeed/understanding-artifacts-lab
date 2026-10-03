@@ -1,8 +1,9 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "question": "Replace with the learner's concrete question",
   "audience": "Replace with audience and prerequisites",
-  "language": {"writing": "ko", "screen": "ko", "narration": "en"},
+  "language": {"writing": "ko", "screen": "ko", "narration": "en", "subtitles": "ko"},
+  "subtitles": {"required": true, "language": "ko", "max_lines": 2, "max_chars_per_line": 32, "min_duration": 1.0, "max_cps": 20, "max_sync_error": 0.12, "max_end_hold": 1.0, "require_media_binding": true},
   "learning_check": {"question": "A prediction or decision that tests the idea", "expected_reasoning": "Source-backed explanation; not a measured learning gain"},
   "glossary": [],
   "claims": [],
@@ -12,10 +13,16 @@
     "writing": "writing.md",
     "diagram": "diagram.svg",
     "web": "index.html",
-    "video": "video/video.mp4",
+    "video": "video/video-ko.mp4",
+    "video_master": "video/video-master.mp4",
     "transcript": "video/script.md",
+    "captions_srt": "video/video-ko.srt",
+    "captions_vtt": "video/video-ko.vtt",
+    "caption_alignment": "video/caption-alignment.json",
+    "caption_timeline": "video/timeline.json",
     "sources": "sources.md",
     "tests": "test-report.json"
   },
+  "test_coverage": {"writing": "not_run", "diagram": "not_run", "web": "not_run", "video": "not_run", "captions": "not_run", "fresh_topic_transfer": "not_run", "human_learning": "not_run"},
   "limits": ["Replace these placeholders before delivery. Never claim certification or learning improvement from file checks."]
 }

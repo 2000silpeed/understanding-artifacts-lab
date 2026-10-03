@@ -1,0 +1,1052 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration": 73.33333333333333,
+  "frames": 2200,
+  "transitionSeconds": 0.7,
+  "pace": 1,
+  "scenes": [
+    {
+      "id": "hook",
+      "index": 0,
+      "start": 0,
+      "dur": 7.4,
+      "lead": 0.35,
+      "text": "If ice cream sales rise when pool visits rise, did one cause the other? This is synthetic data.",
+      "transition": "none",
+      "voice": {
+        "url": "build/voice/hook.wav",
+        "start": 0.35,
+        "dur": 6.35
+      },
+      "words": [
+        {
+          "text": "If",
+          "start": 0.35,
+          "end": 0.51
+        },
+        {
+          "text": "ice",
+          "start": 0.51,
+          "end": 0.6699999999999999
+        },
+        {
+          "text": "cream",
+          "start": 0.6699999999999999,
+          "end": 0.99
+        },
+        {
+          "text": "sales",
+          "start": 0.99,
+          "end": 1.25
+        },
+        {
+          "text": "rise",
+          "start": 1.25,
+          "end": 1.65
+        },
+        {
+          "text": "when",
+          "start": 1.65,
+          "end": 2.11
+        },
+        {
+          "text": "pool",
+          "start": 2.11,
+          "end": 2.29
+        },
+        {
+          "text": "visits",
+          "start": 2.29,
+          "end": 2.65
+        },
+        {
+          "text": "rise,",
+          "start": 2.65,
+          "end": 3.0500000000000003
+        },
+        {
+          "text": "did",
+          "start": 3.71,
+          "end": 3.87
+        },
+        {
+          "text": "one",
+          "start": 3.87,
+          "end": 4.03
+        },
+        {
+          "text": "cause",
+          "start": 4.03,
+          "end": 4.31
+        },
+        {
+          "text": "the",
+          "start": 4.31,
+          "end": 4.529999999999999
+        },
+        {
+          "text": "other?",
+          "start": 4.529999999999999,
+          "end": 4.75
+        },
+        {
+          "text": "This",
+          "start": 5.234999999999999,
+          "end": 5.435
+        },
+        {
+          "text": "is",
+          "start": 5.435,
+          "end": 5.574999999999999
+        },
+        {
+          "text": "synthetic",
+          "start": 5.574999999999999,
+          "end": 5.994999999999999
+        },
+        {
+          "text": "data.",
+          "start": 5.994999999999999,
+          "end": 6.375
+        }
+      ],
+      "marks": {
+        "question": 3.71
+      },
+      "attrs": {}
+    },
+    {
+      "id": "pattern",
+      "index": 1,
+      "start": 7.4,
+      "dur": 8.566666666666666,
+      "lead": 0.35,
+      "text": "Mixing warm and cool days makes both values rise. The chart can show correlation, even without a direct cause.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/pattern.wav",
+        "start": 7.75,
+        "dur": 7.53
+      },
+      "words": [
+        {
+          "text": "Mixing",
+          "start": 0.35,
+          "end": 0.71
+        },
+        {
+          "text": "warm",
+          "start": 0.71,
+          "end": 0.95
+        },
+        {
+          "text": "and",
+          "start": 0.95,
+          "end": 1.31
+        },
+        {
+          "text": "cool",
+          "start": 1.31,
+          "end": 1.5099999999999998
+        },
+        {
+          "text": "days",
+          "start": 1.5099999999999998,
+          "end": 1.87
+        },
+        {
+          "text": "makes",
+          "start": 1.87,
+          "end": 2.35
+        },
+        {
+          "text": "both",
+          "start": 2.35,
+          "end": 2.63
+        },
+        {
+          "text": "values",
+          "start": 2.63,
+          "end": 3.0900000000000003
+        },
+        {
+          "text": "rise.",
+          "start": 3.0900000000000003,
+          "end": 3.45
+        },
+        {
+          "text": "The",
+          "start": 4.085,
+          "end": 4.205
+        },
+        {
+          "text": "chart",
+          "start": 4.205,
+          "end": 4.465
+        },
+        {
+          "text": "can",
+          "start": 4.465,
+          "end": 4.744999999999999
+        },
+        {
+          "text": "show",
+          "start": 4.744999999999999,
+          "end": 5.005
+        },
+        {
+          "text": "correlation,",
+          "start": 5.005,
+          "end": 5.404999999999999
+        },
+        {
+          "text": "even",
+          "start": 6.165,
+          "end": 6.465
+        },
+        {
+          "text": "without",
+          "start": 6.465,
+          "end": 6.725
+        },
+        {
+          "text": "a",
+          "start": 6.725,
+          "end": 6.864999999999999
+        },
+        {
+          "text": "direct",
+          "start": 6.864999999999999,
+          "end": 7.1049999999999995
+        },
+        {
+          "text": "cause.",
+          "start": 7.1049999999999995,
+          "end": 7.5649999999999995
+        }
+      ],
+      "marks": {
+        "mix": 0.35,
+        "pattern": 4.085
+      },
+      "attrs": {}
+    },
+    {
+      "id": "dag",
+      "index": 2,
+      "start": 15.966666666666667,
+      "dur": 7.4,
+      "lead": 0.35,
+      "text": "Temperature is the common cause. It points to ice cream sales, and to pool visits and accident risk.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/dag.wav",
+        "start": 16.316666666666666,
+        "dur": 6.355
+      },
+      "words": [
+        {
+          "text": "Temperature",
+          "start": 0.35,
+          "end": 0.73
+        },
+        {
+          "text": "is",
+          "start": 0.73,
+          "end": 1.27
+        },
+        {
+          "text": "the",
+          "start": 1.27,
+          "end": 1.37
+        },
+        {
+          "text": "common",
+          "start": 1.37,
+          "end": 1.63
+        },
+        {
+          "text": "cause.",
+          "start": 1.63,
+          "end": 2.01
+        },
+        {
+          "text": "It",
+          "start": 2.625,
+          "end": 2.725
+        },
+        {
+          "text": "points",
+          "start": 2.725,
+          "end": 2.9250000000000003
+        },
+        {
+          "text": "to",
+          "start": 2.9250000000000003,
+          "end": 3.185
+        },
+        {
+          "text": "ice",
+          "start": 3.185,
+          "end": 3.365
+        },
+        {
+          "text": "cream",
+          "start": 3.365,
+          "end": 3.645
+        },
+        {
+          "text": "sales,",
+          "start": 3.645,
+          "end": 3.9650000000000003
+        },
+        {
+          "text": "and",
+          "start": 3.9650000000000003,
+          "end": 4.645
+        },
+        {
+          "text": "to",
+          "start": 4.645,
+          "end": 4.765
+        },
+        {
+          "text": "pool",
+          "start": 4.765,
+          "end": 4.984999999999999
+        },
+        {
+          "text": "visits",
+          "start": 4.984999999999999,
+          "end": 5.345
+        },
+        {
+          "text": "and",
+          "start": 5.345,
+          "end": 5.665
+        },
+        {
+          "text": "accident",
+          "start": 5.665,
+          "end": 6.005
+        },
+        {
+          "text": "risk.",
+          "start": 6.005,
+          "end": 6.545
+        }
+      ],
+      "marks": {
+        "common": 0.35,
+        "arrows": 2.625
+      },
+      "attrs": {}
+    },
+    {
+      "id": "missing",
+      "index": 3,
+      "start": 23.366666666666667,
+      "dur": 8.5,
+      "lead": 0.35,
+      "text": "The graph has two arrows from temperature. It has no arrow from sales to the outcome. Observation cannot add that arrow.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/missing.wav",
+        "start": 23.71666666666667,
+        "dur": 7.44
+      },
+      "words": [
+        {
+          "text": "The",
+          "start": 0.35,
+          "end": 0.44999999999999996
+        },
+        {
+          "text": "graph",
+          "start": 0.44999999999999996,
+          "end": 0.69
+        },
+        {
+          "text": "has",
+          "start": 0.69,
+          "end": 0.9299999999999999
+        },
+        {
+          "text": "two",
+          "start": 0.9299999999999999,
+          "end": 1.15
+        },
+        {
+          "text": "arrows",
+          "start": 1.15,
+          "end": 1.4700000000000002
+        },
+        {
+          "text": "from",
+          "start": 1.4700000000000002,
+          "end": 1.81
+        },
+        {
+          "text": "temperature.",
+          "start": 1.81,
+          "end": 2.17
+        },
+        {
+          "text": "It",
+          "start": 2.87,
+          "end": 2.97
+        },
+        {
+          "text": "has",
+          "start": 2.97,
+          "end": 3.0900000000000003
+        },
+        {
+          "text": "no",
+          "start": 3.0900000000000003,
+          "end": 3.31
+        },
+        {
+          "text": "arrow",
+          "start": 3.31,
+          "end": 3.5700000000000003
+        },
+        {
+          "text": "from",
+          "start": 3.5700000000000003,
+          "end": 3.89
+        },
+        {
+          "text": "sales",
+          "start": 3.89,
+          "end": 4.109999999999999
+        },
+        {
+          "text": "to",
+          "start": 4.109999999999999,
+          "end": 4.59
+        },
+        {
+          "text": "the",
+          "start": 4.59,
+          "end": 4.6899999999999995
+        },
+        {
+          "text": "outcome.",
+          "start": 4.6899999999999995,
+          "end": 5.1499999999999995
+        },
+        {
+          "text": "Observation",
+          "start": 5.63,
+          "end": 6.21
+        },
+        {
+          "text": "cannot",
+          "start": 6.21,
+          "end": 6.6899999999999995
+        },
+        {
+          "text": "add",
+          "start": 6.6899999999999995,
+          "end": 7.09
+        },
+        {
+          "text": "that",
+          "start": 7.09,
+          "end": 7.27
+        },
+        {
+          "text": "arrow.",
+          "start": 7.27,
+          "end": 7.569999999999999
+        }
+      ],
+      "marks": {
+        "graph": 0.35,
+        "missing": 2.87
+      },
+      "attrs": {}
+    },
+    {
+      "id": "group",
+      "index": 4,
+      "start": 31.866666666666667,
+      "dur": 7.233333333333333,
+      "lead": 0.35,
+      "text": "Hold temperature at twenty two degrees. The right chart keeps one group, and the rising cloud fades.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/group.wav",
+        "start": 32.21666666666667,
+        "dur": 6.195
+      },
+      "words": [
+        {
+          "text": "Hold",
+          "start": 0.35,
+          "end": 0.61
+        },
+        {
+          "text": "temperature",
+          "start": 0.61,
+          "end": 0.95
+        },
+        {
+          "text": "at",
+          "start": 0.95,
+          "end": 1.4500000000000002
+        },
+        {
+          "text": "twenty",
+          "start": 1.4500000000000002,
+          "end": 1.6
+        },
+        {
+          "text": "two",
+          "start": 1.6,
+          "end": 1.75
+        },
+        {
+          "text": "degrees.",
+          "start": 1.75,
+          "end": 2.33
+        },
+        {
+          "text": "The",
+          "start": 2.98,
+          "end": 3.08
+        },
+        {
+          "text": "right",
+          "start": 3.08,
+          "end": 3.2800000000000002
+        },
+        {
+          "text": "chart",
+          "start": 3.2800000000000002,
+          "end": 3.56
+        },
+        {
+          "text": "keeps",
+          "start": 3.56,
+          "end": 3.88
+        },
+        {
+          "text": "one",
+          "start": 3.88,
+          "end": 4.16
+        },
+        {
+          "text": "group,",
+          "start": 4.16,
+          "end": 4.42
+        },
+        {
+          "text": "and",
+          "start": 4.42,
+          "end": 4.9799999999999995
+        },
+        {
+          "text": "the",
+          "start": 4.9799999999999995,
+          "end": 5.08
+        },
+        {
+          "text": "rising",
+          "start": 5.08,
+          "end": 5.42
+        },
+        {
+          "text": "cloud",
+          "start": 5.42,
+          "end": 5.72
+        },
+        {
+          "text": "fades.",
+          "start": 5.72,
+          "end": 6.119999999999999
+        }
+      ],
+      "marks": {
+        "hold": 0.35,
+        "group": 2.98
+      },
+      "attrs": {}
+    },
+    {
+      "id": "intervention",
+      "index": 5,
+      "start": 39.1,
+      "dur": 9.533333333333333,
+      "lead": 0.35,
+      "text": "Now change ice cream sales while temperature stays fixed. The outcome rule stays separate. This is a simulation, not real people.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/intervention.wav",
+        "start": 39.45,
+        "dur": 8.475
+      },
+      "words": [
+        {
+          "text": "Now",
+          "start": 0.35,
+          "end": 0.59
+        },
+        {
+          "text": "change",
+          "start": 0.59,
+          "end": 0.9299999999999999
+        },
+        {
+          "text": "ice",
+          "start": 0.9299999999999999,
+          "end": 1.19
+        },
+        {
+          "text": "cream",
+          "start": 1.19,
+          "end": 1.4700000000000002
+        },
+        {
+          "text": "sales",
+          "start": 1.4700000000000002,
+          "end": 1.79
+        },
+        {
+          "text": "while",
+          "start": 1.79,
+          "end": 2.35
+        },
+        {
+          "text": "temperature",
+          "start": 2.35,
+          "end": 2.67
+        },
+        {
+          "text": "stays",
+          "start": 2.67,
+          "end": 3.17
+        },
+        {
+          "text": "fixed.",
+          "start": 3.17,
+          "end": 3.5500000000000003
+        },
+        {
+          "text": "The",
+          "start": 4.095,
+          "end": 4.215
+        },
+        {
+          "text": "outcome",
+          "start": 4.215,
+          "end": 4.515
+        },
+        {
+          "text": "rule",
+          "start": 4.515,
+          "end": 4.8149999999999995
+        },
+        {
+          "text": "stays",
+          "start": 4.8149999999999995,
+          "end": 5.095
+        },
+        {
+          "text": "separate.",
+          "start": 5.095,
+          "end": 5.574999999999999
+        },
+        {
+          "text": "This",
+          "start": 6.125,
+          "end": 6.324999999999999
+        },
+        {
+          "text": "is",
+          "start": 6.324999999999999,
+          "end": 6.444999999999999
+        },
+        {
+          "text": "a",
+          "start": 6.444999999999999,
+          "end": 6.5649999999999995
+        },
+        {
+          "text": "simulation,",
+          "start": 6.5649999999999995,
+          "end": 6.984999999999999
+        },
+        {
+          "text": "not",
+          "start": 7.805,
+          "end": 7.885
+        },
+        {
+          "text": "real",
+          "start": 7.885,
+          "end": 8.105
+        },
+        {
+          "text": "people.",
+          "start": 8.105,
+          "end": 8.565
+        }
+      ],
+      "marks": {
+        "change": 0.35,
+        "outcome": 4.095
+      },
+      "attrs": {}
+    },
+    {
+      "id": "questions",
+      "index": 6,
+      "start": 48.63333333333333,
+      "dur": 12.733333333333333,
+      "lead": 0.35,
+      "text": "Observation asks whether large sales appear with large outcomes. Intervention asks whether changing sales changes outcomes under stated conditions. They need different evidence.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/questions.wav",
+        "start": 48.983333333333334,
+        "dur": 11.7
+      },
+      "words": [
+        {
+          "text": "Observation",
+          "start": 0.35,
+          "end": 0.87
+        },
+        {
+          "text": "asks",
+          "start": 0.87,
+          "end": 1.37
+        },
+        {
+          "text": "whether",
+          "start": 1.83,
+          "end": 1.9700000000000002
+        },
+        {
+          "text": "large",
+          "start": 1.9700000000000002,
+          "end": 2.19
+        },
+        {
+          "text": "sales",
+          "start": 2.19,
+          "end": 2.63
+        },
+        {
+          "text": "appear",
+          "start": 2.63,
+          "end": 3.11
+        },
+        {
+          "text": "with",
+          "start": 3.11,
+          "end": 3.39
+        },
+        {
+          "text": "large",
+          "start": 3.39,
+          "end": 3.5900000000000003
+        },
+        {
+          "text": "outcomes.",
+          "start": 3.5900000000000003,
+          "end": 4.25
+        },
+        {
+          "text": "Intervention",
+          "start": 4.869999999999999,
+          "end": 5.35
+        },
+        {
+          "text": "asks",
+          "start": 5.35,
+          "end": 5.869999999999999
+        },
+        {
+          "text": "whether",
+          "start": 5.869999999999999,
+          "end": 6.2299999999999995
+        },
+        {
+          "text": "changing",
+          "start": 6.2299999999999995,
+          "end": 6.569999999999999
+        },
+        {
+          "text": "sales",
+          "start": 6.569999999999999,
+          "end": 7.069999999999999
+        },
+        {
+          "text": "changes",
+          "start": 7.069999999999999,
+          "end": 7.909999999999999
+        },
+        {
+          "text": "outcomes",
+          "start": 7.909999999999999,
+          "end": 8.33
+        },
+        {
+          "text": "under",
+          "start": 8.33,
+          "end": 8.87
+        },
+        {
+          "text": "stated",
+          "start": 8.87,
+          "end": 9.15
+        },
+        {
+          "text": "conditions.",
+          "start": 9.15,
+          "end": 9.79
+        },
+        {
+          "text": "They",
+          "start": 10.465,
+          "end": 10.625
+        },
+        {
+          "text": "need",
+          "start": 10.625,
+          "end": 10.865
+        },
+        {
+          "text": "different",
+          "start": 10.865,
+          "end": 11.285
+        },
+        {
+          "text": "evidence.",
+          "start": 11.285,
+          "end": 11.605
+        }
+      ],
+      "marks": {
+        "observe": 0.35,
+        "intervene": 4.869999999999999
+      },
+      "attrs": {}
+    },
+    {
+      "id": "outro",
+      "index": 7,
+      "start": 61.36666666666667,
+      "dur": 11.966666666666667,
+      "lead": 0.35,
+      "text": "Switch views and reset the example. Temperature here is simulated. Correlation can start a question, but causation needs design and assumptions.",
+      "transition": "auto",
+      "voice": {
+        "url": "build/voice/outro.wav",
+        "start": 61.71666666666667,
+        "dur": 9.5
+      },
+      "words": [
+        {
+          "text": "Switch",
+          "start": 0.35,
+          "end": 0.59
+        },
+        {
+          "text": "views",
+          "start": 0.59,
+          "end": 0.9299999999999999
+        },
+        {
+          "text": "and",
+          "start": 0.9299999999999999,
+          "end": 1.4500000000000002
+        },
+        {
+          "text": "reset",
+          "start": 1.4500000000000002,
+          "end": 1.6099999999999999
+        },
+        {
+          "text": "the",
+          "start": 1.6099999999999999,
+          "end": 1.8900000000000001
+        },
+        {
+          "text": "example.",
+          "start": 1.8900000000000001,
+          "end": 2.27
+        },
+        {
+          "text": "Temperature",
+          "start": 2.845,
+          "end": 3.165
+        },
+        {
+          "text": "here",
+          "start": 3.165,
+          "end": 3.545
+        },
+        {
+          "text": "is",
+          "start": 3.545,
+          "end": 3.9050000000000002
+        },
+        {
+          "text": "simulated.",
+          "start": 3.9050000000000002,
+          "end": 4.305
+        },
+        {
+          "text": "Correlation",
+          "start": 5.0249999999999995,
+          "end": 5.425
+        },
+        {
+          "text": "can",
+          "start": 5.425,
+          "end": 5.805
+        },
+        {
+          "text": "start",
+          "start": 5.805,
+          "end": 6.045
+        },
+        {
+          "text": "a",
+          "start": 6.045,
+          "end": 6.095
+        },
+        {
+          "text": "question,",
+          "start": 6.045,
+          "end": 6.545
+        },
+        {
+          "text": "but",
+          "start": 7.1049999999999995,
+          "end": 7.244999999999999
+        },
+        {
+          "text": "causation",
+          "start": 7.244999999999999,
+          "end": 7.484999999999999
+        },
+        {
+          "text": "needs",
+          "start": 7.484999999999999,
+          "end": 8.105
+        },
+        {
+          "text": "design",
+          "start": 8.105,
+          "end": 8.645
+        },
+        {
+          "text": "and",
+          "start": 8.645,
+          "end": 9.004999999999999
+        },
+        {
+          "text": "assumptions.",
+          "start": 9.004999999999999,
+          "end": 9.465
+        }
+      ],
+      "marks": {
+        "controls": 0.35,
+        "lesson": 5.0249999999999995
+      },
+      "attrs": {
+        "hold": 0.7
+      }
+    }
+  ],
+  "voiceSpans": [
+    {
+      "start": 0.35,
+      "end": 4.935
+    },
+    {
+      "start": 5.234999999999999,
+      "end": 6.699999999999999
+    },
+    {
+      "start": 7.75,
+      "end": 11.185
+    },
+    {
+      "start": 11.485,
+      "end": 15.280000000000001
+    },
+    {
+      "start": 16.316666666666666,
+      "end": 18.291666666666668
+    },
+    {
+      "start": 18.591666666666665,
+      "end": 22.671666666666667
+    },
+    {
+      "start": 23.71666666666667,
+      "end": 25.936666666666667
+    },
+    {
+      "start": 26.236666666666668,
+      "end": 28.69666666666667
+    },
+    {
+      "start": 28.99666666666667,
+      "end": 31.15666666666667
+    },
+    {
+      "start": 32.21666666666667,
+      "end": 34.54666666666667
+    },
+    {
+      "start": 34.84666666666667,
+      "end": 38.41166666666667
+    },
+    {
+      "start": 39.45,
+      "end": 42.895
+    },
+    {
+      "start": 43.195,
+      "end": 44.925000000000004
+    },
+    {
+      "start": 45.225,
+      "end": 47.925000000000004
+    },
+    {
+      "start": 48.983333333333334,
+      "end": 53.20333333333333
+    },
+    {
+      "start": 53.50333333333333,
+      "end": 58.79833333333333
+    },
+    {
+      "start": 59.098333333333336,
+      "end": 60.68333333333334
+    },
+    {
+      "start": 61.71666666666667,
+      "end": 63.91166666666667
+    },
+    {
+      "start": 64.21166666666667,
+      "end": 66.09166666666667
+    },
+    {
+      "start": 66.39166666666667,
+      "end": 71.21666666666667
+    }
+  ]
+}
