@@ -107,18 +107,13 @@
     },
     {
       "path": "skill/understanding-artifacts/SKILL.md",
-      "bytes": 9118,
-      "sha256": "aa7dcacaa6303df20da9fdbb9e9ee5b5582f816bf718614dc9895063873a1cdb"
+      "bytes": 9464,
+      "sha256": "1a65f8c04966851488216e8c6776994803c2f9d224c8a58e9635d10975cbacaf"
     },
     {
       "path": "skill/understanding-artifacts/references/evaluation.md",
       "bytes": 2494,
       "sha256": "9e7bb6de4d2e447c6ed0c545b1cf8cd5b2ddac27ec07e83475b01fa04897bf5b"
-    },
-    {
-      "path": "skill/understanding-artifacts/scripts/__pycache__/audit_bundle.cpython-311.pyc",
-      "bytes": 17498,
-      "sha256": "7d6576aee10848603bc0f41b758751454647519c59d37e4996a97121e73aa65c"
     },
     {
       "path": "skill/understanding-artifacts/scripts/audit_bundle.py",

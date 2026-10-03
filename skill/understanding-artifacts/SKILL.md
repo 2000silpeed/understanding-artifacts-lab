@@ -34,6 +34,7 @@ Turn a topic, source, codebase or model output into inspectable explanations: cl
 - Font presence alone doesn't prove glyph rendering. Inspect actual Korean screen captures. Ensure no automatic playback overwrites manually inspected frames.
 - A child claiming upload or completion is not proof. Inspect file, ffprobe, final decoded frame and destination page yourself.
 - Unsupported verifier output stays a blocker/limitation. Don't invent speech scores, comprehension gains or paid API usage.
+- Run validators before sealing the distribution, then exclude generated __pycache__/.pyc, VCS data and private operational files from both the archive and its manifest. Compiled bytecode can retain absolute source paths even when the text files pass a privacy scan. Verify the final archive's members and hashes, not only the working directory.
 - Dark themes can trigger black-frame detectors on sparse title-only frames. Inspect actual decoded frames before deciding whether a report is a real blank frame or a detector-density artifact; improve empty beats/contrast and rerun rather than silently filtering warnings.
 - A single browser page can contain both an inline editor and a delayed compose modal. Wait for the intended container and scope editor, media input and submission button to it. Inspect the real preview; correct text in a background editor does not prove the foreground composer is ready. Record submission attempts and never blindly retry an ambiguous result.
 
