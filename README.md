@@ -36,6 +36,11 @@ python3 skill/understanding-artifacts/scripts/test_audit_bundle.py
 
 영상 소스와 생성 음성 캐시는 [`video/source`](video/source)에 있습니다. explainroo 설치 후 해당 폴더를 프로젝트로 `node bin/explainroo.js check <project>`, `render <project>`, `verify <project>`를 실행할 수 있습니다. 원본의 `build/voice` 캐시를 보존했으므로 이미 생성한 음성을 재사용할 수 있습니다. 한국어 렌더에는 Noto Sans CJK가 필요합니다.
 
+## 최종 확인
+
+- [최종 독립 영상 검토](final-media-review.md): 실제 MP4 전체 디코드·13개 시점 프레임·음량 재검사, 차단 문제 없음.
+- [공개 사이트 재검증](live-site-verification.json): 실제 HTTPS 페이지 HTTP 200, 한국어 글꼴, 390px 네 모드, 실제 MP4 재생, 콘솔 오류 없음.
+
 ## 검증의 한계
 
 - 실제 모델에서 측정한 logits나 tokenizer 경계가 아니라, 계산을 설명하기 위한 가상 4후보 예제입니다.
@@ -46,3 +51,8 @@ python3 skill/understanding-artifacts/scripts/test_audit_bundle.py
 원문: https://x.com/karpathy/status/2105819303471976479 · 메커니즘 출처는 [`sources.md`](sources.md).
 
 코드/원고는 MIT. Noto 기반 서브셋 글꼴은 SIL OFL 1.1이며 assets의 라이선스·출처를 따릅니다.
+
+## 공개 게시
+
+- result: https://x.com/silpeed01/status/2106176651709337871
+- quote: https://x.com/silpeed01/status/2106180043760427399

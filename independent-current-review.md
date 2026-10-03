@@ -1,3 +1,5 @@
+> Release note: this is the pre-render semantic/skill review. Its missing-media findings were subsequently resolved. See final-media-review.md, test-report.json and bundle-audit.json for the completed release.
+
 # 현재 이해-artifacts 스킬 및 next-token 산출물 독립 검토
 
 ## 판정 요약
