@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#fbf8f0"/>
+  <style>text{font-family:Arial,'Noto Sans KR',sans-serif;fill:#17202a} .mono{font-family:monospace}</style>
+  <text x="960" y="100" text-anchor="middle" font-size="62" font-weight="700">재귀의 한 사이클</text>
+  <g stroke="#e07a3f" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M300 350 H650"/><path d="M810 350 H1160"/><path d="M1320 350 H1670"/>
+    <path d="M1670 510 C1670 700 250 700 250 510"/>
+  </g>
+  <g fill="#fff" stroke="#2d9d91" stroke-width="6">
+    <rect x="120" y="280" width="380" height="140" rx="24"/>
+    <rect x="630" y="280" width="380" height="140" rx="24"/>
+    <rect x="1140" y="280" width="380" height="140" rx="24"/>
+    <rect x="1650" y="280" width="150" height="140" rx="24"/>
+  </g>
+  <text x="310" y="365" text-anchor="middle" font-size="48" class="mono">sum_to(4)</text>
+  <text x="820" y="365" text-anchor="middle" font-size="48" class="mono">sum_to(3)</text>
+  <text x="1330" y="365" text-anchor="middle" font-size="48" class="mono">sum_to(2)</text>
+  <text x="1725" y="365" text-anchor="middle" font-size="42" class="mono">...0</text>
+  <circle cx="960" cy="700" r="112" fill="#e6f3ee" stroke="#168477" stroke-width="8"/>
+  <text x="960" y="690" text-anchor="middle" font-size="40" font-weight="700">기저 사례</text>
+  <text x="960" y="742" text-anchor="middle" font-size="34" class="mono">n == 0 → 0</text>
+  <text x="960" y="880" text-anchor="middle" font-size="46" class="mono">0 → 1 → 3 → 6 → 10</text>
+  <text x="960" y="960" text-anchor="middle" font-size="32">호출은 작아지고, 반환은 안쪽에서 바깥쪽으로 돌아와요</text>
+</svg>

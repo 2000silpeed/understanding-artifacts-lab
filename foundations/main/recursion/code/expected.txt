@@ -1,0 +1,5 @@
+sum_to(4) = 4 + 3 + 2 + 1 + 0 = 10
+sum_to(0) = 0
+iterative_sum_to(4) = 10
+bounded input: 0 <= n <= 8
+negative input rejected: -1
