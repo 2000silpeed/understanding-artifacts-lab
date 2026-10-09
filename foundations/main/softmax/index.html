@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>점수에서 확률로: stable softmax</title>
+<style>
+:root{--paper:#fbf7ed;--ink:#252525;--teal:#147d80;--teal-soft:#e4f2ef;--orange:#d47724;--orange-soft:#ffe4b8;--line:#d8cdb9;--muted:#777}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.5}main{max-width:1100px;margin:auto;padding:28px 20px 64px}h1{font-size:clamp(32px,5vw,58px);line-height:1.1;margin:0 0 10px}h2{color:var(--teal);font-size:28px;margin:28px 0 8px}.lede{font-size:20px;max-width:850px}.card{background:#fffdf8;border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0;box-shadow:0 5px 0 #eee5d5}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:560px}.cell{padding:10px;text-align:center;border:2px solid var(--teal);border-radius:10px;background:var(--teal-soft);font:700 20px ui-monospace,monospace}.label{font-weight:700;color:var(--teal)}.controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.controls label{display:grid;gap:5px;font-weight:700}.controls input{font:inherit;font-family:ui-monospace,monospace;font-size:18px;padding:9px;border:2px solid var(--teal);border-radius:9px;background:white}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}button{font:inherit;border:2px solid var(--teal);background:var(--teal-soft);color:var(--ink);border-radius:10px;padding:9px 15px;cursor:pointer}button.primary{border-color:var(--orange);background:var(--orange-soft)}button:hover{filter:brightness(.97)}.formula{font:700 20px ui-monospace,monospace;background:#262a2b;color:#fff9ec;border-radius:12px;padding:16px;overflow:auto}.bars{display:grid;gap:12px}.bar-row{display:grid;grid-template-columns:100px 1fr 120px;gap:10px;align-items:center}.track{height:30px;background:#eee5d5;border-radius:8px;overflow:hidden}.bar{height:100%;background:var(--teal);min-width:2px;transition:width .25s}.bar.hot{background:var(--orange)}.value{font:700 18px ui-monospace,monospace}.result{font-size:25px;font-weight:800;color:var(--orange);min-height:38px}.muted{color:var(--muted)}aside{border-left:5px solid var(--orange);padding:8px 14px;background:#fff7e7}pre{background:#262a2b;color:#fff9ec;border-radius:12px;padding:16px;overflow:auto;font-size:14px}@media(max-width:650px){main{padding:22px 14px}.controls,.grid,.grid.two{grid-template-columns:1fr}.bar-row{grid-template-columns:75px 1fr 100px}.cell{font-size:17px}}
+</style>
+<style>@font-face{font-family:NotoCourse;src:url(../assets/noto-kr.woff2) format("woff2");font-display:swap}body{font-family:NotoCourse,system-ui,sans-serif}.lesson-copy p{white-space:pre-wrap;overflow-wrap:anywhere}.lesson-copy pre{overflow-x:auto}.lesson-copy table{display:block;overflow-x:auto}</style></head>
+<body>
+<main><p><a href="../">AI 기본기 연구실 실습 목록</a></p>
+<h1>점수에서 확률로</h1>
+<p class="lede">공개 임베딩 <code>[0, 2]</code>와 손으로 고른 <code>W</code>로 logits를 만들고, max subtraction을 거친 stable softmax를 직접 다시 계산해요. class는 토큰 후보, weight는 exp 뒤의 양수 가중치, shape는 행과 열의 크기예요.</p>
+<section class="card">
+<h2>계약: embedding × W</h2>
+<p>입력은 <code>[0, 2]</code>, <code>W = [[1, 0, −1], [0, 1, 2]]</code>이며 셰이프는 <code>2×3</code>이에요. 이 표는 학습된 모델 가중치가 아닌 toy matrix예요.</p>
+<div class="grid two" aria-label="weight matrix W"><span class="cell label">W</span><span class="cell label">열 0 · 열 1 · 열 2</span><span class="cell">[1, 0, −1]</span><span class="cell">[0, 1, 2]</span></div>
+<p class="result" id="logitOutput" aria-live="polite"></p>
+</section>
+<section class="card" aria-labelledby="controls-title">
+<h2 id="controls-title">logits를 바꿔 보세요</h2>
+<div class="controls">
+<label for="z0">class 0<input id="z0" type="number" step="any" value="0"></label>
+<label for="z1">class 1<input id="z1" type="number" step="any" value="2"></label>
+<label for="z2">class 2<input id="z2" type="number" step="any" value="4"></label>
+</div>
+<div class="buttons"><button id="calculate">stable softmax 계산</button><button id="equal" type="button">같은 logits 세 개</button><button id="reveal" class="primary" type="button">prediction 결과 보기</button></div>
+<p class="formula">pᵢ = exp(zᵢ − max(z)) / Σⱼ exp(zⱼ − max(z))</p>
+<div class="grid" aria-label="calculation trace"><div><p class="label">max</p><p id="maxValue" class="value"></p></div><div><p class="label">shifted scores</p><p id="shiftedValue" class="value"></p></div><div><p class="label">denominator</p><p id="denominator" class="value"></p></div></div>
+<h2>양수 weight</h2><div id="weightBars" class="bars" aria-label="positive exponential weights"></div>
+<h2>정규화된 probabilities</h2><div id="probBars" class="bars" aria-label="normalized probabilities"></div>
+<p id="result" class="result" aria-live="polite">prediction은 아직 숨겨져 있어요.</p>
+<p id="sum" class="muted" aria-live="polite"></p>
+<p class="muted">소수 여섯 자리로 표시한 확률의 합은 반올림 때문에 0.999999가 될 수 있어요. 표시 전 부동소수점 정규화 합과 구분해요.</p>
+</section>
+<section class="card">
+<h2>핵심 코드</h2>
+<pre><code>def stable_softmax(logits):
+    peak = max(logits)
+    shifted = [z - peak for z in logits]
+    weights = [math.exp(z) for z in shifted]
+    denominator = sum(weights)
+    return [w / denominator for w in weights]</code></pre>
+<aside>negative shifted score는 허용되지만 exp 뒤 weight와 probability는 양수예요. max를 빼면 큰 양의 지수 overflow 위험을 줄여요. 이 페이지는 의미 이해나 Transformer 추론을 시연하지 않아요.</aside>
+</section>
+<section class="card lesson-copy"><h2>수업 설명과 코드 내려받기</h2><p><a href="code/example.py" download>Python</a> · <a href="code/example.cpp" download>C++17</a> · <a href="source.zip" download>전체 실습 소스 ZIP</a></p><h1>점수에서 확률로: logit에서 softmax까지</h1>
+<h2>이 수업의 목적</h2>
+<p>앞 수업에서 공개된 임베딩 조회 결과를 입력으로 사용해요. 임베딩은 토큰을 숫자 벡터로 표현한 값이고, 이번 입력은 <code>[0, 2]</code>예요. 오늘은 이 벡터가 가중치 행렬과 곱해져 점수가 되고, 그 점수가 확률로 바뀌는 과정을 초보자도 다시 계산할 수 있도록 설명해요.</p>
+<p>수업이 끝나면 다음을 할 수 있어요.</p>
+<ol>
+<li>입력 벡터 <code>[0, 2]</code>와 가중치 행렬 <code>W</code>의 행과 열을 읽어요.</li>
+<li>행렬 곱으로 세 후보의 점수 <code>logits = [0, 2, 4]</code>를 직접 계산해요.</li>
+<li>가장 큰 점수를 빼는 stable softmax의 이유를 설명해요.</li>
+<li><code>exp</code>가 만드는 양수 가중치, 분모, 확률을 실제 숫자로 확인해요.</li>
+<li>Python과 C++17 코드가 같은 중간값과 결과를 내는지 확인해요.</li>
+<li>표시된 소수의 합과 표시 전 부동소수점 계산의 합을 구분해요.</li>
+</ol>
+<h2>선수 개념과 범위</h2>
+<p>선수 개념은 직전 공개 수업에서 다룬 임베딩 조회예요. 그 수업에서 토큰 하나를 숫자 벡터로 바꾸는 표를 읽고 <code>[0, 2]</code>를 얻었다고 가정해요. 이 lesson은 그 조회 표를 다시 학습하거나 의미를 해석하지 않고, 이미 나온 벡터를 다음 계산에 넣어요.</p>
+<p>이번 예시는 손으로 고른 작은 행렬을 쓰는 toy example이에요. 실제 학습된 모델의 가중치, Transformer 추론, 의미 이해, loss, temperature, top-p를 설명하는 수업이 아니에요. 목적은 점수에서 확률로 가는 숫자 규칙을 투명하게 따라가는 거예요.</p>
+<h2>용어를 먼저 정리해요</h2>
+<ul>
+<li><strong>토큰 후보와 class</strong>: 모델이 고를 수 있는 토큰 후보 하나를 class라고 부를 수 있어요. 여기서는 후보 <code>a</code>, <code>b</code>, <code>c</code> 세 개가 있고, 각 후보에 점수 한 칸씩 있어요.</li>
+<li><strong>logit</strong>: 아직 확률이 아닌 원점수예요. 후보끼리 어느 쪽이 큰지 비교할 때 사용해요.</li>
+<li><strong>가중치와 weight</strong>: 입력 성분을 각 점수에 얼마나 반영할지 정하는 수예요. <code>exp</code> 뒤에 나오는 weight는 항상 양수인 가중치예요.</li>
+<li><strong>셰이프 shape</strong>: 표의 행 개수와 열 개수를 함께 말하는 크기예요. <code>2×3</code>은 행 둘과 열 셋이라는 뜻이에요.</li>
+<li><strong>max</strong>: 여러 값 중 가장 큰 값인 최댓값이에요. stable softmax에서는 이 최댓값을 모든 점수에서 빼요.</li>
+<li><strong>sum</strong>: 값들을 빠짐없이 모두 더한 합이에요. softmax의 분모는 모든 양수 weight의 sum이에요.</li>
+<li><strong>exp</strong>: 자연 지수 함수예요. 입력이 커질수록 값이 빠르게 커지는 함수라서, 점수의 순서를 보존하면서 양수 값을 만들어요.</li>
+<li><strong>정규화</strong>: 여러 양수 값을 그 합으로 나누어 전체가 한 분포가 되도록 만드는 과정이에요.</li>
+</ul>
+<h2>실행 가능한 숫자 계약</h2>
+<p>입력 벡터와 행렬은 다음과 같아요.</p>
+<pre><code class="language-text">x = [0, 2]
+W = [[1, 0, -1],
+     [0, 1,  2]]
+W shape = [2, 3]
+</code></pre>
+<p>행렬의 각 열을 입력 벡터와 곱해 더하면 세 점수가 나와요.</p>
+<pre><code class="language-text">logits = [0×1 + 2×0,
+          0×0 + 2×1,
+          0×(-1) + 2×2]
+       = [0, 2, 4]
+</code></pre>
+<p>가장 큰 점수는 <code>4</code>예요. stable softmax는 큰 양의 수를 그대로 지수화하지 않고 다음처럼 바꿔요.</p>
+<pre><code class="language-text">shifted = logits - max(logits) = [-4, -2, 0]
+weight_i = exp(shifted_i)
+denominator = sum_j exp(shifted_j)
+probability_i = weight_i / denominator
+</code></pre>
+<p>실제 값은 <code>exp(-4)</code>, <code>exp(-2)</code>, <code>exp(0)</code>에서 나온 양수 weight 세 개, 분모 <code>1.153651...</code>, 확률 <code>[0.015876..., 0.117310..., 0.866813...]</code>이에요. 출력은 비교를 위해 소수점 아래 여섯 자리로 표시하지만, 표시된 세 확률을 더하면 <code>0.999999</code>가 돼요. 표시 전 부동소수점 정규화 합은 별도로 출력해요. 따라서 반올림된 표시값의 합을 정확히 <code>1</code>이라고 말하지 않아요.</p>
+<h2>예측과 전이 질문</h2>
+<p>가장 큰 확률을 가진 후보의 위치가 예측이에요. 이 예시에서는 세 번째 후보, 인덱스 <code>2</code>가 선택돼요. 중간에 예측을 먼저 생각하는 구간을 두고, 정답은 reveal cue 뒤에 보여 줘요.</p>
+<p>전이 질문에서는 세 logits가 모두 같다고 가정해요. 그러면 세 <code>exp</code> weight도 같고, 같은 분모로 나누므로 각 확률은 <code>1/3</code>이에요. 이 결론은 표시 소수의 합에서 추측하는 것이 아니라, 세 항이 대칭이라는 이유에서 나와요.</p>
+<h2>산출물과 검증 경계</h2>
+<ul>
+<li><code>script.md</code>: 용어 정의, 계산 과정, 질문과 reveal cue를 포함한 한국어 본편 대본</li>
+<li><code>scenes.js</code>: 위 계약의 중간값을 실제 marker와 단계별 막대로 보여 주는 장면</li>
+<li><code>canonical.py</code>, <code>canonical.cpp</code>: 같은 행렬 곱과 stable softmax를 계산하는 실행 코드</li>
+<li><code>expected.txt</code>: 두 코드가 바이트 단위로 공유하는 stdout</li>
+<li><code>trace.json</code>: 입력, shape, shifted score, 양수 weight, 분모, 확률의 재현 가능한 trace</li>
+<li><code>lesson.html</code>: logits를 바꾸고 stable softmax 중간값과 표시 합을 다시 계산하는 오프라인 실습</li>
+<li><code>diagram.svg</code>, <code>storyboard.md</code>: 같은 숫자 계약을 사용하는 정적 도식과 장면 설계</li>
+<li><code>source-test.mjs</code>: 실제 parser, 실제 scene module, Python, C++17, 수식, alias, code highlighter, HTML 오프라인 조건을 확인하는 검사</li>
+</ul>
+<p>이번 작업은 source-only예요. TTS, 유료 provider, 실제 renderer 실행, browser, 영상 render, publish, human listening은 실행하지 않아요. 학습 효과도 측정하지 않아요.</p></section></main>
+<script>
+const $ = id => document.getElementById(id);
+const fixed = value => Number.isFinite(value) ? value.toFixed(6) : 'invalid';
+function readLogits(){ return ['z0','z1','z2'].map(id => Number($(id).value)); }
+function drawBars(id, values, maxWidth, hotIndex){
+  $(id).innerHTML = values.map((value, index) => {
+    const width = Math.max(0, Math.min(100, value / maxWidth * 100));
+    const hot = index === hotIndex ? ' hot' : '';
+    return `<div class="bar-row"><span class="label">class ${index}</span><span class="track"><span class="bar${hot}" style="width:${width}%"></span></span><span class="value">${fixed(value)}</span></div>`;
+  }).join('');
+}
+function calculate(){
+  const logits = readLogits();
+  if (!logits.every(Number.isFinite)) { $('result').textContent = '세 logits를 유한한 숫자로 입력해 주세요.'; return; }
+  const peak = Math.max(...logits);
+  const shifted = logits.map(value => value - peak);
+  const weights = shifted.map(value => Math.exp(value));
+  const denominator = weights.reduce((sum, value) => sum + value, 0);
+  const probabilities = weights.map(value => value / denominator);
+  $('logitOutput').textContent = `현재 logits: [${logits.map(fixed).join(', ')}]`;
+  $('maxValue').textContent = fixed(peak);
+  $('shiftedValue').textContent = `[${shifted.map(fixed).join(', ')}]`;
+  $('denominator').textContent = fixed(denominator);
+  drawBars('weightBars', weights, Math.max(...weights), -1);
+  const prediction = probabilities.indexOf(Math.max(...probabilities));
+  drawBars('probBars', probabilities, Math.max(...probabilities), prediction);
+  $('result').textContent = 'prediction은 아직 숨겨져 있어요.';
+  const floatingSum = probabilities.reduce((a,b) => a + b, 0);
+  const displayedSum = probabilities.reduce((a,b) => a + Number(fixed(b)), 0);
+  $('sum').textContent = `표시 확률 합: ${fixed(displayedSum)} · 부동소수점 정규화 합(표시 반올림 전): ${fixed(floatingSum)}`;
+  $('reveal').onclick = () => { $('result').textContent = `prediction: class ${prediction}, probability ${fixed(probabilities[prediction])}`; };
+}
+$('calculate').addEventListener('click', calculate);
+$('equal').addEventListener('click', () => { ['z0','z1','z2'].forEach(id => $(id).value = '3'); calculate(); });
+['z0','z1','z2'].forEach(id => $(id).addEventListener('input', calculate));
+calculate();
+</script>
+</body>
+</html>

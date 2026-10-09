@@ -1,0 +1,34 @@
+{
+  "lesson": "logit-to-stable-softmax",
+  "embedding_review": {
+    "source": "public embedding lookup",
+    "vector": [0.0, 2.0],
+    "shape": [2]
+  },
+  "weight_matrix": {
+    "name": "W",
+    "rows": [[1.0, 0.0, -1.0], [0.0, 1.0, 2.0]],
+    "shape": [2, 3],
+    "provenance": "hand-chosen toy matrix; not trained model weights"
+  },
+  "logits": [0.0, 2.0, 4.0],
+  "stable_softmax": {
+    "formula": "exp(z_i - max(z)) / sum_j exp(z_j - max(z))",
+    "max_logit": 4.0,
+    "shifted_scores": [-4.0, -2.0, 0.0],
+    "positive_weights": [0.01831563888873418, 0.1353352832366127, 1.0],
+    "denominator": 1.1536509221253468,
+    "probabilities": [0.015876239976466765, 0.11731042782619838, 0.8668133321973349],
+    "display_probabilities": [0.015876, 0.117310, 0.866813],
+    "display_probability_sum": 0.999999,
+    "floating_normalization_sum": 1.0,
+    "prediction_index": 2
+  },
+  "invariants": {
+    "probabilities_positive": true,
+    "constant_shift_invariant": true,
+    "max_subtraction_avoids_large_exp_overflow": true,
+    "equal_logits_probability": "1/3 exact for each of three classes"
+  },
+  "boundary": "numeric softmax mechanism only; no temperature, top-p, loss, training, Transformer inference, or semantic understanding"
+}

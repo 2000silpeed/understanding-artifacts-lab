@@ -1,0 +1,12 @@
+embedding: [0.000000,2.000000]
+W shape: [2, 3]
+logits: [0.000000,2.000000,4.000000]
+max(logits): 4.000000
+shifted: [-4.000000,-2.000000,0.000000]
+positive weights exp(shifted): [0.018316,0.135335,1.000000]
+denominator: 1.153651
+probabilities: [0.015876,0.117310,0.866813]
+prediction: class 2
+displayed probability sum: 0.999999
+floating normalization sum: 1.000000 (before display rounding)
+equal logits transfer: each probability = 1/3 (exact)

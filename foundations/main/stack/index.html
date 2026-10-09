@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스택, 마지막 값이 먼저 나와요</title>
+<style>
+:root{color-scheme:light;--ink:#14213d;--accent:#e76f51;--teal:#2a9d8f;--paper:#fbf8f1;--line:#d8d0c2}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.6}main{max-width:980px;margin:0 auto;padding:40px 28px 70px}h1{font-size:clamp(2rem,5vw,4rem);line-height:1.15;margin:0 0 12px}h2{margin-top:36px;border-bottom:2px solid var(--line);padding-bottom:8px}p{font-size:1.08rem}.card{border:2px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;background:#fffdf8}.stack{display:flex;gap:12px;align-items:end;min-height:150px}.cell{border:3px solid var(--teal);border-radius:12px;padding:18px 24px;font-size:1.8rem;font-weight:700;background:#effaf7}.top{border-color:var(--accent);background:#fff0eb}.controls{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 16px;background:var(--teal);color:white;cursor:pointer}button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}output{display:block;margin-top:12px;min-height:2em;font-weight:700}code{background:#f0ece4;border-radius:5px;padding:2px 5px}pre{overflow:auto;background:#172033;color:#f6f1e9;padding:18px;border-radius:12px}small{color:#536174}
+</style>
+<style>@font-face{font-family:NotoCourse;src:url(../assets/noto-kr.woff2) format("woff2");font-display:swap}body{font-family:NotoCourse,system-ui,sans-serif}.lesson-copy p{white-space:pre-wrap;overflow-wrap:anywhere}.lesson-copy pre{overflow-x:auto}.lesson-copy table{display:block;overflow-x:auto}</style></head>
+<body><main><p><a href="../">AI 기본기 연구실 실습 목록</a></p>
+<h1>스택, 마지막 값이 먼저 나와요</h1>
+<p>입구 하나를 쓰는 LIFO 자료구조를 실제 상태와 코드로 확인해요.</p>
+<section class="card" aria-labelledby="demo-title"><h2 id="demo-title">작은 실행기</h2><div id="stack" class="stack" aria-live="polite"></div><div class="controls"><button id="push10">10 push</button><button id="push20">20 push</button><button id="push30">30 push</button><button id="pop">pop</button><button id="reset">reset</button></div><output id="readout">스택이 비어 있어요.</output></section>
+<section><h2>계약</h2><p><code>top</code>은 스택의 꼭대기 위치를 가리키는 말이면서 꼭대기 값을 확인하는 메서드 이름이에요. <code>pop</code>은 꼭대기를 제거해요. 빈 스택에서 두 동작을 호출하면 underflow로 처리해요. 논리적인 끝 원소 제거는 O(1)이지만, Python list의 끝 pop은 amortized O(1)인 대신 내부 축소/재할당이 일어나는 한 번의 구현 비용이 O(n)일 수 있어요. C++17 <code>vector&lt;int&gt;::pop_back</code>은 int 하나를 끝에서 제거하고 용량을 줄이지 않아 O(1)이에요.</p></section>
+<section><h2>실행 코드</h2><pre><code>stack = []
+stack.append(10)
+stack.append(20)
+stack.append(30)
+popped = stack.pop()</code></pre></section>
+<small>이 HTML은 외부 script, font, image에 의존하지 않는 오프라인 companion이에요.</small>
+<section class="card lesson-copy"><h2>수업 설명과 코드 내려받기</h2><p><a href="code/example.py" download>Python</a> · <a href="code/example.cpp" download>C++17</a> · <a href="source.zip" download>전체 실습 소스 ZIP</a></p><h1>스택 수업 source package</h1>
+<h2>학습 목표</h2>
+<ul>
+<li>스택과 LIFO를 쉬운 말로 정의하고, push, pop, top을 구분해요.</li>
+<li><code>[10, 20, 30]</code>을 차례로 넣은 뒤 top은 30, pop 뒤 상태는 <code>[10, 20]</code>, 다음 pop 결과는 20임을 계산해요.</li>
+<li>빈 스택의 pop/top을 underflow로 다루고, 첫 push와 마지막 pop 경계를 확인해요.</li>
+<li>Python list와 C++17 vector의 마지막 원소 조작을 실제 코드로 비교해요.</li>
+<li>top의 읽기와 논리적인 끝 pop은 O(1)이지만, Python list의 내부 축소/재할당은 한 번에 O(n)일 수 있음을 구별해요. Python 끝 append/pop의 amortized O(1), C++17 vector<int>::pop_back의 O(1), dynamic-array push의 worst-case O(n)을 함께 비교해요.</li>
+</ul>
+<h2>범위와 한계</h2>
+<p>이 수업의 구현은 동적 배열 기반 스택의 핵심 연산만 다뤄요. 동시성, 디스크 저장, 사용자 정의 예외 타입, 메모리 할당기의 내부 정책은 범위 밖이에요. <code>canonical.py</code>와 <code>canonical.cpp</code>가 직접 실행해 같은 stdout과 trace를 계산하고, 영상 장면은 그 trace의 상태만 그려요.</p>
+<h2>실행 계약</h2>
+<pre><code class="language-bash">python3 canonical.py
+python3 canonical.py --trace
+g++ -std=c++17 -Wall -Wextra -pedantic canonical.cpp -o /tmp/lesson-2026-10-08-ds-canonical
+/tmp/lesson-2026-10-08-ds-canonical
+/tmp/lesson-2026-10-08-ds-canonical --trace
+node source-test.mjs
+</code></pre>
+<p>stdout 계약은 <code>expected.txt</code>와 같아야 해요. 빈 스택에서 <code>pop</code>과 <code>top</code>은 <code>underflow</code>를 발생시키고, <code>trace.json</code>은 실제 메서드 호출 뒤의 상태를 보존해요.</p>
+<h2>핵심 원리</h2>
+<p>스택은 입구를 꼭대기 하나로 제한해 가장 최근 값을 먼저 처리해요. 그래서 되돌리기, 괄호 검사, 호출 기록처럼 최근 작업을 먼저 되돌리는 흐름에 잘 맞아요. 먼저 온 작업부터 처리해야 하는 흐름은 큐가 더 자연스러워요.</p>
+<p>top 메서드의 읽기와 논리적인 끝 원소 제거는 O(1)이에요. Python list의 끝 append/pop은 여러 호출 전체로 보면 amortized O(1)이지만, 끝 pop이 내부 저장 공간 축소/재할당을 일으키면 구현 수준의 한 번 비용은 worst-case O(n)일 수 있어요. 반면 C++17 vector<int>::pop_back은 int 원소 하나를 끝에서 제거하고 capacity를 줄이지 않으므로 O(1)이에요. 동적 배열 push는 공간이 남으면 O(1), resize 순간에는 O(n), 전체로는 amortized O(1)로 분석해요. amortized 분석은 모든 개별 호출이 O(1)이라는 뜻이 아니고, 전체 연산 묶음에 비용을 분산한다는 뜻이에요.</p>
+<h2>검증 경계</h2>
+<p><code>source-test.mjs</code>는 실제 renderer의 <code>parseScript</code>를 import하고, 실제 scene module을 strict proxy로 실행해 unsupported API, 비유한 좌표, 잘못된 cue/marker, caption-safe y 범위를 검사해요. 또한 Python/C++17 실행, stdout, trace, HTML offline 조건, SVG 크기, artifact SHA-256을 확인해요. TTS, render, browser, publish, human listening, learning effectiveness는 실행하지 않아요.</p></section></main>
+<script>
+const state=[];const stackEl=document.querySelector('#stack');const readout=document.querySelector('#readout');
+function render(message){stackEl.replaceChildren(...state.map((v,i)=>{const e=document.createElement('span');e.className='cell'+(i===state.length-1?' top':'');e.textContent=String(v);return e}));readout.textContent=message??(state.length?`top = ${state.at(-1)}`:'스택이 비어 있어요.');}
+function push(v){state.push(v);render(`${v} push: ${JSON.stringify(state)}`)}
+function pop(){if(!state.length){render('underflow: 빈 스택이에요.');return}const v=state.pop();render(`${v} pop: ${JSON.stringify(state)}`)}
+document.querySelector('#push10').onclick=()=>push(10);document.querySelector('#push20').onclick=()=>push(20);document.querySelector('#push30').onclick=()=>push(30);document.querySelector('#pop').onclick=pop;document.querySelector('#reset').onclick=()=>{state.length=0;render()};render();
+</script>
+</body></html>

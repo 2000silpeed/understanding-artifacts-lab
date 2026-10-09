@@ -1,0 +1,6 @@
+STACK after_push=[10,20,30]
+TOP value=30
+POP value=30 remaining=[10,20]
+SECOND_POP value=20 remaining=[10]
+EMPTY pop_error=underflow top_error=underflow
+COST top=O(1) logical_pop=O(1) python_pop_amortized=O(1) python_pop_worst=O(n) cpp_vector_pop_back=O(1)
