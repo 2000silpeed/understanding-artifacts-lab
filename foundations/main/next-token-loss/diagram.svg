@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">타깃 토큰 확률에서 cross-entropy loss까지</title>
+  <desc id="desc">확률 벡터에서 타깃 토큰 ID가 한 확률을 선택하고, 마이너스 자연 로그가 loss를 계산한다. 영 점 칠 타깃 확률은 약 영 점 삼 오 육 육 칠 오, 영 점 일 타깃 확률은 약 이 점 삼 영 이 오 팔 오로 표시된다.</desc>
+  <rect width="1600" height="900" fill="#fbf7ed"/>
+  <text x="800" y="78" text-anchor="middle" font-family="sans-serif" font-size="52" font-weight="700" fill="#252525">target probability → loss</text>
+  <g font-family="monospace" font-size="30" text-anchor="middle">
+    <rect x="80" y="175" width="360" height="150" rx="18" fill="#e4f2ef" stroke="#147d80" stroke-width="4"/>
+    <text x="260" y="230" fill="#147d80">probabilities</text><text x="260" y="285" fill="#252525">[0.1, 0.7, 0.2]</text>
+    <rect x="615" y="175" width="360" height="150" rx="18" fill="#ffe4b8" stroke="#d47724" stroke-width="4"/>
+    <text x="795" y="230" fill="#d47724">target token ID</text><text x="795" y="285" fill="#252525">ID 1 → p = 0.7</text>
+    <rect x="1150" y="175" width="370" height="150" rx="18" fill="#fffdf8" stroke="#147d80" stroke-width="4"/>
+    <text x="1335" y="230" fill="#147d80">one-position loss</text><text x="1335" y="285" fill="#252525">−ln(0.7)</text>
+    <path d="M450 250H600M985 250H1135" stroke="#d47724" stroke-width="8" marker-end="url(#arrow)"/>
+  </g>
+  <g font-family="sans-serif" font-size="29" fill="#252525">
+    <text x="120" y="430">ID 0 → p = 0.1 → loss = 2.302585 (rounded)</text>
+    <text x="120" y="485">ID 1 → p = 0.7 → loss = 0.356675 (rounded)</text>
+    <text x="120" y="540">smaller target probability → larger penalty</text>
+    <text x="120" y="595">mean of these two losses = 1.329630 (rounded)</text>
+  </g>
+  <g transform="translate(120 665)" font-family="monospace" font-size="27">
+    <text x="0" y="0" fill="#147d80">loss = −ln(p_target)</text>
+    <rect x="0" y="30" width="520" height="42" rx="8" fill="#147d80"/><text x="550" y="61" fill="#252525">p = 0.7 · lower loss</text>
+    <rect x="0" y="95" width="1000" height="42" rx="8" fill="#d47724"/><text x="1030" y="126" fill="#252525">p = 0.1 · higher loss</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#d47724"/></marker></defs>
+</svg>

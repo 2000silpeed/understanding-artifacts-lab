@@ -1,0 +1,63 @@
+{
+  "lesson": "next-token-cross-entropy-loss",
+  "prerequisites": {
+    "softmax_recap": "A softmax probability vector has nonnegative entries whose sum is 1.",
+    "embedding_to_logits_to_softmax_public_lesson": "Prior public lesson 3ERAcHlJeGo, Oct 9; recap only, no remake.",
+    "learning_objective": "A one-position loss function maps the target probability to a numeric penalty. Training optimizes loss across examples; optimization is deferred to the next lesson.",
+    "prediction": "A prediction is the selected probability distribution over candidate next tokens.",
+    "transfer": "Transfer means applying the same rule to a new target probability."
+  },
+  "probabilities": [
+    0.1,
+    0.7,
+    0.2
+  ],
+  "probability_sum": 1.0,
+  "candidate_token_ids": [
+    0,
+    1,
+    2
+  ],
+  "primary_example": {
+    "target_token_id": 1,
+    "target_probability": 0.7,
+    "formula": "loss = -ln(p_target)",
+    "natural_log_definition": "exp(x)=e^x; ln is its inverse: ln(exp(x))=x. ln(1)=0; for 0<p<1, ln(p)<0, so -ln(p)>0.",
+    "loss_full": 0.35667494393873245,
+    "loss_display_rounded_6": 0.356675
+  },
+  "comparison_example": {
+    "target_token_id": 0,
+    "target_probability": 0.1,
+    "formula": "loss = -ln(p_target)",
+    "loss_full": 2.3025850929940455,
+    "loss_display_rounded_6": 2.302585
+  },
+  "mean_of_exactly_two_examples": {
+    "formula": "mean_loss = (loss_primary + loss_comparison) / 2",
+    "loss_full": 1.329630018466389,
+    "loss_display_rounded_6": 1.32963
+  },
+  "monotonicity": {
+    "higher_target_probability": 0.7,
+    "higher_probability_loss": 0.35667494393873245,
+    "lower_target_probability": 0.1,
+    "lower_probability_loss": 2.3025850929940455,
+    "claim": "A smaller positive target probability produces a larger loss."
+  },
+  "validation_contract": {
+    "probability_domain": "0 < p_target <= 1",
+    "zero_probability_mathematical_limit": "+infinity",
+    "zero_probability_implementation": "reject clearly rather than return infinity",
+    "p_nonpositive": "reject",
+    "p_above_one": "reject",
+    "invalid_target_id": "reject when target ID is outside the vector"
+  },
+  "display_contract": {
+    "rounded_digits": 6,
+    "full_computation_kept_in_trace_and_code": true,
+    "displayed_probabilities_are_labeled_rounded": true,
+    "displayed_losses_are_labeled_rounded": true
+  },
+  "boundary": "Hand-set toy probabilities only. No training, gradient, autograd, framework, Transformer inference, or claim of semantic understanding."
+}

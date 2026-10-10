@@ -1,0 +1,14 @@
+probabilities: [0.100000,0.700000,0.200000]
+target token ID: 1
+target probability: 0.700000
+loss full: 0.356674943938732
+loss displayed rounded: 0.356675
+comparison target token ID: 0
+comparison target probability: 0.100000
+comparison loss full: 2.302585092994045
+comparison loss displayed rounded: 2.302585
+mean of two losses full: 1.329630018466389
+mean of two losses displayed rounded: 1.329630
+validation: p=0 rejected; mathematical loss limit is +infinity
+validation: p=1.2 rejected; target token ID=3 rejected
+boundary: toy probabilities only; no training, gradient, autograd, framework, or Transformer inference
