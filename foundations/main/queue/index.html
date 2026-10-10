@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>큐, 먼저 온 값이 먼저 나와요</title>
+<style>
+:root{color-scheme:light;--ink:#14213d;--accent:#e76f51;--teal:#2a9d8f;--paper:#fbf8f1;--line:#d8d0c2;--soft:#effaf7}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,"Noto Sans KR",sans-serif;line-height:1.6}main{max-width:1050px;margin:0 auto;padding:40px 28px 70px}h1{font-size:clamp(2rem,5vw,4rem);line-height:1.15;margin:0 0 12px}h2{margin-top:36px;border-bottom:2px solid var(--line);padding-bottom:8px}.card{border:2px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;background:#fffdf8}.queue{display:flex;gap:12px;align-items:center;min-height:128px;overflow:auto;padding:10px}.cell{min-width:112px;text-align:center;border:3px solid var(--teal);border-radius:12px;padding:15px 12px;font-size:1.8rem;font-weight:700;background:var(--soft)}.cell.front{border-color:var(--accent);background:#fff0eb}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 15px;background:var(--teal);color:white;cursor:pointer}button.warn{background:var(--accent)}button.secondary{background:#536174}button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}output{display:block;margin-top:12px;min-height:2em;font-weight:700}code{background:#f0ece4;border-radius:5px;padding:2px 5px}pre{overflow:auto;background:#172033;color:#f6f1e9;padding:18px;border-radius:12px}small{color:#536174}.badge{display:inline-block;border:2px solid var(--accent);border-radius:999px;padding:3px 12px;font-weight:700;color:var(--accent)}
+</style>
+<style>@font-face{font-family:NotoCourse;src:url(../assets/noto-kr.woff2) format("woff2");font-display:swap}body{font-family:NotoCourse,system-ui,sans-serif}.lesson-copy p{white-space:pre-wrap;overflow-wrap:anywhere}.lesson-copy pre{overflow-x:auto}.lesson-copy table{display:block;overflow-x:auto}pre code{background:transparent!important;color:inherit!important}</style></head>
+<body><main><p><a href="../">AI 기본기 연구실 실습 목록</a></p>
+<h1>큐, 먼저 온 값이 먼저 나와요</h1>
+<p><span class="badge">FIFO</span> 앞의 값을 확인하고 제거하는 논리 순서를 직접 조작해요.</p>
+<section class="card" aria-labelledby="demo-title"><h2 id="demo-title">기본 실행기</h2><div id="queue" class="queue" aria-live="polite"></div><div class="controls"><button id="enqueue47">47 enqueue</button><button id="front">front</button><button id="dequeue" class="warn">dequeue</button><button id="reset" class="secondary">reset</button></div><output id="readout">큐를 준비하고 있어요.</output><p>C++ std::queue::pop()의 반환형은 void예요. 먼저 front() 값을 저장하고 pop()으로 제거한 뒤 저장한 값을 반환해요.</p></section>
+<section class="card" aria-labelledby="exercise-title"><h2 id="exercise-title">연습 실행기</h2><p>디큐 직후 상태에서 19를 넣고 한 번 꺼내요.</p><div id="exerciseQueue" class="queue" aria-live="polite"></div><div class="controls"><button id="exerciseEnqueue">19 enqueue</button><button id="exerciseDequeue" class="warn">dequeue</button><button id="exerciseReset" class="secondary">연습 reset</button></div><output id="exerciseReadout">연습 큐가 준비되지 않았어요.</output></section>
+<section><h2>계약과 비용</h2><p><code>enqueue</code>는 뒤에 추가하고, <code>front</code>는 상태를 바꾸지 않으며, <code>dequeue</code>는 앞에서 제거해요. Python <code>collections.deque.popleft</code>는 앞 작업에 맞고, 일반 리스트의 <code>pop(0)</code>은 뒤 원소 이동으로 O(n)이 될 수 있어요. C++17 <code>std::queue</code>의 기본 컨테이너는 <code>std::deque</code>예요. 화면의 가로 배치는 논리 순서를 보여 주는 그림이지, 물리 메모리 배치를 약속하지 않아요.</p></section>
+<section><h2>실행 코드</h2><pre><code>from collections import deque
+q = deque([12, 35, 8])
+q.append(47)
+first = q[0]
+removed = q.popleft()</code></pre><pre><code>std::queue&lt;int&gt; q;
+q.push(12); q.push(35); q.push(8);
+q.push(47);
+int first = q.front();
+q.pop();</code></pre></section>
+<small>이 HTML은 외부 script, font, image에 의존하지 않는 오프라인 companion이에요.</small>
+<section class="card lesson-copy"><h2>수업 설명과 코드 내려받기</h2><p><a href="code/example.py" download>Python</a> · <a href="code/example.cpp" download>C++17</a> · <a href="source.zip" download>전체 실습 소스 ZIP</a></p><h1>큐 수업 source package</h1>
+<h2>학습자와 prerequisites</h2>
+<ul>
+<li>파이썬에서 리스트와 숫자 값을 다뤄 본 초급 학습자를 대상으로 해요.</li>
+<li>값이 순서를 가진 모음으로 표현될 수 있고, 함수 호출이 상태를 바꿀 수 있다는 정도를 전제로 해요.</li>
+<li>C++ 문법은 이 수업에서 필요한 <code>std::queue&lt;int&gt;</code> 선언과 메서드 호출을 코드로 함께 읽어요.</li>
+<li>메모리의 실제 주소나 컨테이너의 내부 칸 배치는 prerequisite가 아니며, 이 수업에서 약속하지 않아요.</li>
+</ul>
+<h2>학습 목표</h2>
+<ul>
+<li>큐를 먼저 들어온 값이 먼저 나오는 자료구조로 정의하고 FIFO를 설명해요.</li>
+<li>enqueue는 뒤에 추가하고, front는 확인만 하며, dequeue는 앞에서 제거한다는 차이를 말해요.</li>
+<li><code>[12, 35, 8]</code>에 47을 enqueue한 뒤 front가 12이고, dequeue 12 뒤 <code>[35, 8, 47]</code>이 되는 과정을 예측해요.</li>
+<li>이어서 19를 enqueue하고 35를 dequeue하면 <code>[8, 47, 19]</code>임을 실제 Python/C++ 실행으로 확인해요.</li>
+<li>빈 큐의 front/dequeue를 정상 숫자로 바꾸지 않고 empty guard로 처리해요.</li>
+<li>Python <code>collections.deque</code>와 C++17 <code>std::queue</code>의 논리 순서를 비교하고, <code>list.pop(0)</code>과 <code>deque.popleft</code>의 비용 차이를 설명해요.</li>
+<li>화면의 가로 배치는 설명용이며, 큐의 논리 순서가 특정 물리 레이아웃을 보장하지 않는다는 점을 구분해요.</li>
+</ul>
+<h2>핵심 용어</h2>
+<ul>
+<li><strong>큐(queue)</strong>: 먼저 들어온 값을 먼저 처리하는 순서 구조예요.</li>
+<li><strong>FIFO</strong>: First In, First Out. 먼저 들어온 값이 먼저 나간다는 규칙이에요.</li>
+<li><strong>enqueue</strong>: 뒤(rear)에 값을 추가해요.</li>
+<li><strong>front</strong>: 앞의 값을 읽고 상태는 바꾸지 않아요.</li>
+<li><strong>dequeue</strong>: 앞의 값을 반환하고 제거해요.</li>
+<li><strong>empty guard</strong>: 값이 없을 때 반환할 숫자를 꾸며내지 않고 빈 상태를 명시적으로 처리하는 경계예요.</li>
+<li><strong>논리 순서</strong>: 앞에서 뒤로 어떤 값이 먼저 처리되는지에 대한 계약이에요. 컨테이너가 메모리에 실제로 일렬 배치된다는 주장과 달라요.</li>
+</ul>
+<h2>실행 예시</h2>
+<p>초기 큐는 <code>[12, 35, 8]</code>이에요. <code>enqueue(47)</code> 뒤에는 <code>[12, 35, 8, 47]</code>이고, <code>front()</code>는 12를 반환하지만 상태를 바꾸지 않아요. 이어서 <code>dequeue()</code>는 12를 반환하고 <code>[35, 8, 47]</code>을 남겨요.</p>
+<p>연습에서는 이 상태에 <code>enqueue(19)</code>를 한 뒤 <code>dequeue()</code>를 실행해요. 35가 반환되고 최종 상태는 <code>[8, 47, 19]</code>이에요. 두 상태와 반환값은 <code>canonical.py</code>와 <code>canonical.cpp</code>의 실제 실행에서 생성돼요.</p>
+<h2>구현과 비용</h2>
+<p>Python 구현은 <code>collections.deque</code>의 <code>append</code>와 <code>popleft</code>를 사용해요. <code>deque.append</code>와 <code>deque.popleft</code>는 양 끝 작업을 위한 O(1) 연산으로 설명해요. 일반 Python 리스트의 <code>pop(0)</code>은 앞 원소 뒤의 값들을 이동시킬 수 있어서 O(n)이 될 수 있어요.</p>
+<p>C++ 구현은 <code>std::queue&lt;int&gt;</code>의 <code>push</code>, <code>front</code>, <code>pop</code> 인터페이스를 사용해요. 표준 <code>std::queue</code>의 기본 컨테이너는 <code>std::deque</code>예요. 따라서 이 수업의 기본 설정에서 push/front/pop의 비용은 O(1)로 적어요. 다만 <code>std::queue</code>는 컨테이너 어댑터이므로 다른 적합한 컨테이너를 선택하면 비용 조건이 달라질 수 있어요. 이 수업은 특정 물리 메모리 배치나 주소를 약속하지 않아요.</p>
+<h2>범위와 한계</h2>
+<p>동시성, 블로킹 작업 큐, 우선순위 큐, 사용자 정의 allocator, 표준 라이브러리의 모든 대체 컨테이너는 범위 밖이에요. <code>std::queue</code>의 내부를 순회하는 대신, 논리적 front/pop 결과를 관찰해요. empty guard는 이 수업의 코드에서 <code>IndexError("empty")</code>와 <code>std::out_of_range("empty")</code>를 잡아 같은 의미로 표현해요.</p>
+<h2>실행 계약</h2>
+<pre><code class="language-bash">python3 canonical.py
+python3 canonical.py --trace
+g++ -std=c++17 -Wall -Wextra -pedantic canonical.cpp -o /tmp/lesson-2026-10-10-ds-canonical
+/tmp/lesson-2026-10-10-ds-canonical
+/tmp/lesson-2026-10-10-ds-canonical --trace
+node source-test.mjs
+</code></pre>
+<p><code>expected.txt</code>는 두 실행의 표준 출력과 같아야 하고, <code>trace.json</code>은 실제 상태와 비용 계약을 보존해요. <code>source-test.mjs</code>는 현재 renderer parser와 실제 <code>Stage</code> 메서드의 cue/lifetime 경로를 사용해요. TTS, 렌더, 브라우저, 네트워크, 게시, 사람의 전체 듣기와 학습 효과 측정은 이 source package 검증 범위가 아니에요.</p>
+<h2>transfer 질문</h2>
+<p>먼저 도착한 작업부터 처리해야 하는가요, 아니면 최근 작업부터 되돌려야 하는가요? 전자면 큐와 FIFO를, 후자면 스택과 LIFO를 선택해요. 답을 외우기보다 다음 입력에서 앞과 뒤 중 어느 쪽이 바뀌는지 설명해 보세요.</p>
+<p>C++ std::queue::pop()의 반환형은 void예요. 먼저 front() 값을 저장하고 pop()으로 제거한 뒤 저장한 값을 반환해요.</p></section></main>
+<script>
+const state=[12,35,8];
+const exerciseState=[35,8,47];
+const queueEl=document.querySelector('#queue');
+const readout=document.querySelector('#readout');
+const exerciseEl=document.querySelector('#exerciseQueue');
+const exerciseReadout=document.querySelector('#exerciseReadout');
+function renderQueue(el,values){el.replaceChildren(...values.map((v,i)=>{const e=document.createElement('span');e.className='cell'+(i===0?' front':'');e.textContent=String(v);return e}));}
+function render(message){renderQueue(queueEl,state);readout.textContent=message??(state.length?`front = ${state[0]}`:'empty guard: 빈 큐예요.');}
+function exerciseRender(message){renderQueue(exerciseEl,exerciseState);exerciseReadout.textContent=message??(exerciseState.length?`front = ${exerciseState[0]}`:'empty guard: 빈 큐예요.');}
+document.querySelector('#enqueue47').onclick=()=>{state.push(47);render(`47 enqueue: [${state.join(', ')}]`)};
+document.querySelector('#front').onclick=()=>{if(!state.length){render('empty guard: front를 읽을 값이 없어요.');return}render(`front = ${state[0]}, 상태는 그대로예요.`)};
+document.querySelector('#dequeue').onclick=()=>{if(!state.length){render('empty guard: dequeue할 값이 없어요.');return}const v=state.shift();render(`${v} dequeue: [${state.join(', ')}]`)};
+document.querySelector('#reset').onclick=()=>{state.length=0;state.push(12,35,8);render()};
+document.querySelector('#exerciseEnqueue').onclick=()=>{if(!exerciseState.includes(19)){exerciseState.push(19);exerciseRender('19 enqueue: [35, 8, 47, 19]')}};
+document.querySelector('#exerciseDequeue').onclick=()=>{if(!exerciseState.length){exerciseRender('empty guard: dequeue할 값이 없어요.');return}const v=exerciseState.shift();exerciseRender(`${v} dequeue: [${exerciseState.join(', ')}]`)};
+document.querySelector('#exerciseReset').onclick=()=>{exerciseState.length=0;exerciseState.push(35,8,47);exerciseRender()};
+render();exerciseRender();
+</script>
+</body></html>

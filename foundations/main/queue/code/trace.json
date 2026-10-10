@@ -1,0 +1,20 @@
+{
+  "initial": [12, 35, 8],
+  "after_enqueue": {"value": 47, "state": [12, 35, 8, 47]},
+  "front": {"value": 12, "state": [12, 35, 8, 47]},
+  "after_dequeue": {"value": 12, "state": [35, 8, 47]},
+  "exercise": {
+    "after_enqueue": {"value": 19, "state": [35, 8, 47, 19]},
+    "after_dequeue": {"value": 35, "state": [8, 47, 19]}
+  },
+  "empty": {"front_guard": "empty", "dequeue_guard": "empty", "state": []},
+  "costs": {
+    "cpp_std_queue_default_deque_front": "O(1)",
+    "cpp_std_queue_default_deque_pop": "O(1)",
+    "cpp_std_queue_default_deque_push": "O(1)",
+    "python_deque_popleft": "O(1)",
+    "python_deque_append": "O(1)",
+    "python_list_pop_zero": "O(n)",
+    "order_note": "logical order only; physical layout unspecified"
+  }
+}

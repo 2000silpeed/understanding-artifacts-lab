@@ -1,0 +1,8 @@
+QUEUE initial=[12,35,8]
+ENQUEUE value=47 state=[12,35,8,47]
+FRONT value=12 state=[12,35,8,47]
+DEQUEUE value=12 remaining=[35,8,47]
+EXERCISE enqueue=19 state=[35,8,47,19]
+EXERCISE dequeue=35 remaining=[8,47,19]
+EMPTY front_guard=empty dequeue_guard=empty
+COST deque_append=O(1) deque_popleft=O(1) list_pop_zero=O(n) std_queue_default_deque=O(1)
