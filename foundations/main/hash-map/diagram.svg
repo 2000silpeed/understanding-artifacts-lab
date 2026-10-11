@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">해시 맵 분리 연결법: 버킷 선택과 키 비교</title><desc id="desc">키 2와 6은 나머지 2로 같은 버킷에 연결된다. 키 6 조회는 키 2와 키 6을 비교한다. 키 2 삭제 후 키 10 조회는 남은 키 6과 다르므로 없음이다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#325d68"/></marker></defs>
+<rect width="1600" height="900" fill="#f7f3e8"/>
+<g font-family="Noto Sans KR,Malgun Gothic,Apple SD Gothic Neo,sans-serif" fill="#252525">
+<text x="70" y="75" font-size="46" font-weight="bold">해시 규칙으로 칸 선택 → 체인에서 정확한 키 비교</text>
+<text x="70" y="140" font-size="32">비음수 정수 키 · 네 고정 버킷 · key % 4는 4로 나눈 나머지</text>
+<g stroke="#325d68" stroke-width="3" fill="#fff">
+<rect x="100" y="200" width="230" height="80" rx="12"/><rect x="100" y="305" width="230" height="80" rx="12"/><rect x="100" y="410" width="230" height="80" rx="12"/><rect x="100" y="515" width="230" height="80" rx="12"/>
+<rect x="530" y="410" width="280" height="80" rx="12"/><rect x="1040" y="410" width="280" height="80" rx="12"/><rect x="530" y="515" width="280" height="80" rx="12"/>
+<path d="M330 450 H520 M810 450 H1030 M330 555 H520" marker-end="url(#arrow)" fill="none"/>
+</g>
+<g font-size="36"><text x="140" y="252">버킷 0</text><text x="140" y="357">버킷 1</text><text x="140" y="462">버킷 2</text><text x="140" y="567">버킷 3</text><text x="570" y="462">2 : 사과</text><text x="1080" y="462">6 : 배</text><text x="570" y="567">3 : 귤</text><text x="530" y="250" fill="#555">비어 있음</text><text x="530" y="355" fill="#555">비어 있음</text></g>
+<text x="920" y="230" font-size="34">2 % 4 = 2</text><text x="920" y="280" font-size="34">6 % 4 = 2</text><text x="920" y="330" font-size="30">다른 키 · 같은 버킷 = 충돌</text>
+<text x="70" y="665" font-size="32">get(6): 2 == 6 → 다름, 6 == 6 → 같음 / 비교 2회 / 배 반환</text>
+<text x="70" y="720" font-size="32">put(6,"포도"): 같은 키 값만 교체 → 2:사과 → 6:포도</text>
+<text x="70" y="775" font-size="32">delete(2): 해당 항목 제거 → 버킷 2에는 6:포도 유지</text>
+<text x="70" y="830" font-size="32">get(10): 10 % 4 = 2, 6 ≠ 10 / 비교 1회 / 없음(null)</text>
+</g></svg>

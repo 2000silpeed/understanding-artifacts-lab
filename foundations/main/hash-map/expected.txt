@@ -1,0 +1,1 @@
+["inserted","inserted","inserted","배","updated",true,null]

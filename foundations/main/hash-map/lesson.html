@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>해시 맵 체인 연습</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f7f3e8;color:#242424;font-family:"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.65}main{max-width:980px;margin:auto;padding:20px}h1{font-size:clamp(24px,4vw,36px)}button,input,select{font:inherit;max-width:100%}button{padding:8px 12px;border:1px solid #566769;border-radius:8px;background:#fff;cursor:pointer}button:disabled{opacity:.5}nav,.controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.bucket{display:flex;gap:10px;align-items:center;padding:12px;border-bottom:1px solid #cbc7bc;overflow-wrap:anywhere;flex-wrap:wrap}.node{border:2px solid #396573;background:#fff;padding:8px;border-radius:8px}.label{min-width:90px;font-weight:bold}label{display:block;margin:8px 0}input{width:110px}pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #ccc;padding:12px}#answer{background:#e7eee7;padding:16px}code{overflow-wrap:anywhere}.muted{color:#525b5b}fieldset{min-width:0;border:1px solid #bbb}#events li{margin:8px 0}
+</style>
+<style id="companion-wrapper-style">
+@font-face{font-family:NotoCourse;src:url("../assets/noto-kr.woff2") format("woff2");font-display:swap}
+body{font-family:NotoCourse,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+.companion-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px;padding:8px 10px;background:#fffdf5;border:1px solid #cbc7bc;border-radius:8px}
+.companion-nav a{color:#174f62}
+.companion-downloads{margin-top:20px;padding:14px;border:1px solid #cbc7bc;border-radius:8px;background:#fffdf5}
+.companion-downloads ul{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 0;padding-left:20px}
+</style><main><nav class="companion-nav" aria-label="실습 자료"><a href="../index.html">실험실 목록</a><span>·</span><a href="source.zip" download>전체 소스 ZIP</a></nav><h1>해시 맵, 같은 바구니에 들어가면 어떻게 찾을까?</h1>
+<p>키는 번호, 값은 과일 이름이에요. 비음수 정수 키만 허용하고 네 버킷을 써요. 나머지는 나눈 뒤 남는 수예요. <code>key % 4</code>로 칸을 고른 다음 체인의 키를 정확히 비교해요. 다른 키의 같은 버킷은 충돌이고, 같은 키의 새 값은 갱신이에요.</p>
+<p class="muted">이 페이지는 실제 Python 실행 기록 전체를 포함해요. 외부 글꼴은 요청하지 않으며 설치된 한국어 대체 글꼴을 사용해요. 표준 dict의 내부 구현을 재현하는 페이지는 아니에요.</p>
+<nav aria-label="연산 바로 선택"><button data-step="0">첫 삽입</button><button data-step="1">충돌</button><button data-step="2">다른 버킷</button><button data-step="3">조회</button><button data-step="4">같은 키 갱신</button><button data-step="5">삭제</button><button data-step="6">실패 조회·전이</button></nav>
+<h2 id="operation"></h2><p id="status" role="status" aria-live="polite"></p><div id="buckets" aria-label="버킷 상태"></div>
+<fieldset id="prediction"><legend>공개 전에 예측해요</legend><label>버킷 번호 <select id="bucket"><option>0</option><option>1</option><option>2</option><option>3</option></select></label><label>키 비교 횟수 <input id="comparisons" type="number" min="0" max="10" value="0"></label><label>결과 <select id="result"><option value="inserted">새 삽입</option><option value="updated">같은 키 갱신</option><option value="배">배</option><option value="true">삭제 성공</option><option value="null">없음</option></select></label><button id="predict">예측 저장</button><p id="saved"></p></fieldset>
+<div class="controls"><button id="reveal">실제 기록 공개</button><button id="next">다음</button><button id="reset">처음부터</button></div>
+<section id="answer" hidden><h2>실제 실행 결과</h2><p id="feedback"></p><ol id="events"></ol><pre id="record"></pre></section>
+<p>끝까지 공개하면 완료 상태를 보여줘요. 실패 조회·실패 삭제는 맵을 바꾸지 않고, 빈 버킷 조회는 키 비교 영 번이에요. 음수는 버킷 계산 전에 거절해요. 평균 상수 조회에는 적절한 분포와 제한된 부하가 필요해요. 네 고정 버킷은 확장 성능을 보장하지 않아요. 전체 상태 복사·기록 출력은 알고리즘 비용과 별도예요.</p>
+<script id="canonical-trace" type="application/json">{"bucket_count":4,"key_domain":"nonnegative_integer","rule":"key%4","initial":[[],[],[],[]],"records":[{"op":"put","key":2,"value":"사과","before":[[],[],[],[]],"bucket":2,"comparisons":[],"events":[{"kind":"select","bucket":2},{"kind":"finish","result":"inserted"}],"result":"inserted","after":[[],[],[{"key":2,"value":"사과"}],[]]},{"op":"put","key":6,"value":"배","before":[[],[],[{"key":2,"value":"사과"}],[]],"bucket":2,"comparisons":[{"stored_key":2,"query_key":6,"equal":false}],"events":[{"kind":"select","bucket":2},{"kind":"compare","stored_key":2,"query_key":6,"equal":false},{"kind":"finish","result":"inserted"}],"result":"inserted","after":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[]]},{"op":"put","key":3,"value":"귤","before":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[]],"bucket":3,"comparisons":[],"events":[{"kind":"select","bucket":3},{"kind":"finish","result":"inserted"}],"result":"inserted","after":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[{"key":3,"value":"귤"}]]},{"op":"get","key":6,"value":null,"before":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[{"key":3,"value":"귤"}]],"bucket":2,"comparisons":[{"stored_key":2,"query_key":6,"equal":false},{"stored_key":6,"query_key":6,"equal":true}],"events":[{"kind":"select","bucket":2},{"kind":"compare","stored_key":2,"query_key":6,"equal":false},{"kind":"compare","stored_key":6,"query_key":6,"equal":true},{"kind":"finish","result":"배"}],"result":"배","after":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[{"key":3,"value":"귤"}]]},{"op":"put","key":6,"value":"포도","before":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"배"}],[{"key":3,"value":"귤"}]],"bucket":2,"comparisons":[{"stored_key":2,"query_key":6,"equal":false},{"stored_key":6,"query_key":6,"equal":true}],"events":[{"kind":"select","bucket":2},{"kind":"compare","stored_key":2,"query_key":6,"equal":false},{"kind":"compare","stored_key":6,"query_key":6,"equal":true},{"kind":"finish","result":"updated"}],"result":"updated","after":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"포도"}],[{"key":3,"value":"귤"}]]},{"op":"delete","key":2,"value":null,"before":[[],[],[{"key":2,"value":"사과"},{"key":6,"value":"포도"}],[{"key":3,"value":"귤"}]],"bucket":2,"comparisons":[{"stored_key":2,"query_key":2,"equal":true}],"events":[{"kind":"select","bucket":2},{"kind":"compare","stored_key":2,"query_key":2,"equal":true},{"kind":"finish","result":true}],"result":true,"after":[[],[],[{"key":6,"value":"포도"}],[{"key":3,"value":"귤"}]]},{"op":"get","key":10,"value":null,"before":[[],[],[{"key":6,"value":"포도"}],[{"key":3,"value":"귤"}]],"bucket":2,"comparisons":[{"stored_key":6,"query_key":10,"equal":false}],"events":[{"kind":"select","bucket":2},{"kind":"compare","stored_key":6,"query_key":10,"equal":false},{"kind":"finish","result":null}],"result":null,"after":[[],[],[{"key":6,"value":"포도"}],[{"key":3,"value":"귤"}]]}]}</script>
+<script>
+// Pure controller shared by offline page and Node source tests.
+function createPractice(trace) {
+ let index=0,revealed=false,completed=false,prediction=null;
+ const view=()=>({index,revealed,completed,prediction,
+   operation:trace.records[index].op,key:trace.records[index].key,value:trace.records[index].value,
+   buckets:completed?trace.records.at(-1).after:(revealed?trace.records[index].after:trace.records[index].before),
+   answer:revealed?trace.records[index]:null});
+ return {
+  view,
+  predict(bucket,comparisons,result){prediction={bucket,comparisons,result};return view();},
+  reveal(){revealed=true;return view();},
+  next(){if(!revealed)return view();if(index===trace.records.length-1){completed=true;return view();}index++;revealed=false;prediction=null;return view();},
+  select(i){if(!Number.isInteger(i)||i<0||i>=trace.records.length)throw Error('invalid index');index=i;revealed=false;completed=false;prediction=null;return view();},
+  reset(){index=0;revealed=false;completed=false;prediction=null;return view();}
+ };
+}
+
+const trace=JSON.parse(document.getElementById('canonical-trace').textContent);
+const practice=createPractice(trace);
+const el=id=>document.getElementById(id);
+const resultText=v=>v===null?'없음(null)':v===true?'삭제 성공(true)':String(v);
+function draw(){
+ const v=practice.view();el('operation').textContent=`${v.index+1} / ${trace.records.length}: ${v.operation}(${v.key}${v.value!==null?',"'+v.value+'"':''})`;
+ el('status').textContent=v.completed?'완료: 모든 실제 상태를 확인했어요.':v.revealed?'공개 후 상태':'실행 전 상태 · 결과는 아직 숨겨져 있어요.';
+ el('buckets').replaceChildren();v.buckets.forEach((chain,b)=>{const row=document.createElement('div');row.className='bucket';const label=document.createElement('span');label.className='label';label.textContent=`버킷 ${b}`;row.append(label);if(!chain.length)row.append('비어 있음');chain.forEach((entry,i)=>{if(i)row.append('→');const node=document.createElement('span');node.className='node';node.textContent=`키 ${entry.key} : ${entry.value}`;row.append(node);});el('buckets').append(row);});
+ el('answer').hidden=!v.revealed;el('prediction').disabled=v.revealed;el('next').disabled=!v.revealed||v.completed;el('reveal').disabled=v.revealed;
+ el('saved').textContent=v.prediction?`예측 저장: 버킷 ${v.prediction.bucket}, 비교 ${v.prediction.comparisons}회, ${v.prediction.result}`:'';
+ if(v.answer){const r=v.answer;const correct=v.prediction&&v.prediction.bucket===r.bucket&&v.prediction.comparisons===r.comparisons.length&&v.prediction.result===String(r.result);
+ el('feedback').textContent=`${v.prediction?(correct?'예측이 맞아요.':'예측과 실제 기록을 비교해 보세요.'):'실제 기록을 확인해요.'} 버킷 ${r.bucket}, 키 비교 ${r.comparisons.length}회, 결과 ${resultText(r.result)}.`;
+ el('events').replaceChildren();r.events.forEach(e=>{const li=document.createElement('li');li.textContent=e.kind==='select'?`${r.key} % 4 = ${e.bucket}: 버킷 선택 (키 비교와 별도)`:e.kind==='compare'?`저장 키 ${e.stored_key} == 요청 키 ${e.query_key} → ${e.equal?'같음':'다름'}`:`종료: ${resultText(e.result)}`;el('events').append(li);});el('record').textContent=JSON.stringify(r,null,2);}
+}
+el('predict').onclick=()=>{practice.predict(Number(el('bucket').value),Number(el('comparisons').value),el('result').value);draw();};
+el('reveal').onclick=()=>{practice.reveal();draw();};el('next').onclick=()=>{practice.next();draw();};el('reset').onclick=()=>{practice.reset();draw();};
+document.querySelectorAll('[data-step]').forEach(button=>button.onclick=()=>{practice.select(Number(button.dataset.step));draw();});draw();
+</script><section class="companion-downloads" aria-label="다운로드"><h2>실행 자료 내려받기</h2><ul>
+<li><a href="canonical.py" download>Python canonical.py</a></li>
+<li><a href="canonical.cpp" download>C++17 canonical.cpp</a></li>
+<li><a href="expected.txt" download>expected.txt</a></li>
+<li><a href="diagram.svg" download>diagram.svg</a></li>
+<li><a href="source.zip" download>source.zip</a></li>
+</ul></section></main></html>
