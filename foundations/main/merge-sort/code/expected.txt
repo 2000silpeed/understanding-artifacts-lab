@@ -1,0 +1,14 @@
+input: [8, 3, 6, 2]
+split root: [8, 3, 6, 2] -> [8, 3] | [6, 2]
+split left: [8, 3] -> [8] | [3]
+split right: [6, 2] -> [6] | [2]
+merge [8] + [3]: compare 8 vs 3 -> take 3; append 8 => [3, 8]
+merge [6] + [2]: compare 6 vs 2 -> take 2; append 6 => [2, 6]
+merge [3, 8] + [2, 6]: compare 3 vs 2 -> take 2
+merge [3, 8] + [2, 6]: compare 3 vs 6 -> take 3
+merge [3, 8] + [2, 6]: compare 8 vs 6 -> take 6; append 8
+sorted: [2, 3, 6, 8]
+comparisons: 5
+duplicate input: [2A, 1X, 2B, 1Y]
+stable duplicate output: [1X, 1Y, 2A, 2B]
+equality rule: left item wins when values are equal

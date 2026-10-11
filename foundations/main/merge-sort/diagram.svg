@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#fbf7ef"/>
+  <g font-family="Inter, sans-serif" fill="#20242b" text-anchor="middle">
+    <text x="960" y="94" font-size="58" font-weight="700">병합정렬: 나누고 앞에서 비교해요</text>
+    <rect x="730" y="150" width="460" height="100" rx="20" fill="#dce9ff" stroke="#365c9a" stroke-width="5"/>
+    <text x="960" y="214" font-size="44">[8, 3, 6, 2]</text>
+    <rect x="250" y="380" width="460" height="100" rx="20" fill="#dce9ff" stroke="#365c9a" stroke-width="5"/>
+    <rect x="1210" y="380" width="460" height="100" rx="20" fill="#d8f1e8" stroke="#27856d" stroke-width="5"/>
+    <text x="480" y="444" font-size="44">[8, 3]</text>
+    <text x="1440" y="444" font-size="44">[6, 2]</text>
+    <rect x="110" y="690" width="260" height="100" rx="20" fill="#d8f1e8" stroke="#27856d" stroke-width="5"/>
+    <rect x="430" y="690" width="260" height="100" rx="20" fill="#d8f1e8" stroke="#27856d" stroke-width="5"/>
+    <rect x="1230" y="690" width="260" height="100" rx="20" fill="#d8f1e8" stroke="#27856d" stroke-width="5"/>
+    <rect x="1550" y="690" width="260" height="100" rx="20" fill="#d8f1e8" stroke="#27856d" stroke-width="5"/>
+    <text x="240" y="754" font-size="42">[8]</text>
+    <text x="560" y="754" font-size="42">[3]</text>
+    <text x="1360" y="754" font-size="42">[6]</text>
+    <text x="1680" y="754" font-size="42">[2]</text>
+    <path d="M880 250 L480 380 M1040 250 L1440 380 M480 480 L240 690 M480 480 L560 690 M1440 480 L1360 690 M1440 480 L1680 690" fill="none" stroke="#e18a37" stroke-width="7" marker-end="url(#arrow)"/>
+    <text x="960" y="860" font-size="42" fill="#d06d2c">기저 사례 → 정렬된 두 구간 → 앞 원소 비교 → 병합</text>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#e18a37"/></marker>
+  </defs>
+</svg>
