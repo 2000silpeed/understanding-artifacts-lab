@@ -1,0 +1,61 @@
+{
+  "lesson": "first-gradient-update-softmax-cross-entropy",
+  "contract": {
+    "logits_are": "directly optimized toy parameters, not transformer weights",
+    "target_id": 1,
+    "stable_softmax": "exp(z_i - max(z)) / sum_j exp(z_j - max(z))",
+    "loss": "-ln(p_target)",
+    "gradient": "p - y",
+    "update": "z_new = z - eta * gradient"
+  },
+  "initial": {
+    "logits": [1.0, 0.0, -0.5],
+    "max_logit": 1.0,
+    "shifted_logits": [0.0, -1.0, -1.5],
+    "exp_shifted": [1.0, 0.36787944117144233, 0.22313016014842982],
+    "denominator": 1.591009601319872,
+    "probabilities": [0.6285317192117624, 0.23122389762214907, 0.14024438316608848],
+    "probability_sum": 1.0,
+    "target_one_hot": [0.0, 1.0, 0.0],
+    "target_probability": 0.23122389762214907,
+    "loss": 1.464368784107945
+  },
+  "finite_difference": {
+    "epsilon": 0.00001,
+    "formula": "(L(z + epsilon e_i) - L(z - epsilon e_i)) / (2 epsilon)",
+    "gradient": [0.6285317192156192, -0.7687761023666971, 0.14024438316218024],
+    "max_abs_error_vs_p_minus_y": 1.1115845371221064e-11
+  },
+  "analytic_gradient": {
+    "formula": "p - y",
+    "gradient": [0.6285317192117624, -0.768776102377851, 0.14024438316608848],
+    "sum": 0.0
+  },
+  "small_update": {
+    "learning_rate": 0.4,
+    "new_logits": [0.7485873123152951, 0.30751044095114044, -0.5560977532664354],
+    "new_shifted_logits": [0.0, -0.44107687136415465, -1.3046850655817305],
+    "new_probabilities": [0.5223019812008441, 0.3360194540665822, 0.14167856473257373],
+    "new_probability_sum": 1.0,
+    "new_target_probability": 0.3360194540665822,
+    "new_loss": 1.0905862216873305,
+    "loss_delta": -0.3737825624206145
+  },
+  "large_learning_rate_caveat": {
+    "learning_rate": 20.0,
+    "new_logits": [-11.570634384235248, 15.37552204755702, -3.3048876633217694],
+    "new_probabilities": [1.983503402596889e-12, 0.9999999922854107, 7.712605886576645e-09],
+    "new_target_probability": 0.9999999922854107,
+    "new_loss": 7.714589330468782e-09,
+    "interpretation": "This one toy step saturates; it is not a universal learning-rate guarantee."
+  },
+  "validation_contract": {
+    "finite_inputs_required": true,
+    "stable_shift_prevents_exp_overflow": true,
+    "probabilities_finite_and_positive": true,
+    "probability_sum_tolerance": 1e-12,
+    "finite_difference_tolerance": 1e-8,
+    "target_id_out_of_range": "reject",
+    "nonfinite_logit": "reject"
+  }
+}

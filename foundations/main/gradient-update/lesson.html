@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>첫 번째 그래디언트 업데이트</title><style>
+*{box-sizing:border-box}body{margin:0;background:#fbf7ed;color:#252525;font-family:system-ui,"Noto Sans CJK KR",sans-serif;line-height:1.7}main{max-width:1060px;margin:auto;padding:24px 18px 70px}h1{font-size:clamp(30px,5vw,52px);line-height:1.3}h2{color:#147d80}.card{padding:20px;background:#fffdf8;border:1px solid #d8cdb9;border-radius:16px;margin:20px 0}.controls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}label{display:grid;gap:5px}input,select,button{font:inherit;min-width:0;padding:9px;border:2px solid #147d80;border-radius:8px}button{cursor:pointer;background:#e4f2ef;margin:4px}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #d47724;outline-offset:2px}.buttons{display:flex;flex-wrap:wrap;margin-top:16px}code,pre{font-family:ui-monospace,monospace}pre{overflow:auto;background:#252525;color:#fff;padding:16px}.row{display:grid;grid-template-columns:70px 1fr 110px;gap:12px;align-items:center}.track{background:#eee5d5;height:24px;border-radius:5px;overflow:hidden}.bar{height:100%;background:#147d80}.hot{background:#d47724}.values{overflow-wrap:anywhere;font-family:ui-monospace,monospace}img{max-width:100%}[hidden]{display:none!important}@media(max-width:680px){.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.row{grid-template-columns:50px 1fr 90px}.card{padding:14px}}
+</style></head><body><style id="companion-wrapper-style">
+@font-face{font-family:NotoCourse;src:url("../assets/noto-kr.woff2") format("woff2");font-display:swap}
+body{font-family:NotoCourse,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+.companion-nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px;padding:8px 10px;background:#fffdf5;border:1px solid #cbc7bc;border-radius:8px}
+.companion-nav a{color:#174f62}
+.companion-downloads{margin-top:20px;padding:14px;border:1px solid #cbc7bc;border-radius:8px;background:#fffdf5}
+.companion-downloads ul{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 0;padding-left:20px}
+</style><main><nav class="companion-nav" aria-label="실습 자료"><a href="../index.html">실험실 목록</a><span>·</span><a href="source.zip" download>전체 소스 ZIP</a></nav>
+<h1>확률에서 바꿀 방향 찾기</h1><p>앞 수업의 <strong>로짓 → 소프트맥스 → 손실</strong>을 복습하고, 로짓을 한 번 직접 바꿔 봐요. 신경망 가중치나 임베딩의 역전파는 아직 구현하지 않아요.</p>
+<section class="card"><h2>용어부터 연결하기</h2><p>로짓 <code>z</code>는 확률로 바꾸기 전의 점수예요. 확률 벡터 <code>p</code>에서 정답 칸만 고른 값이 타깃 확률이에요. <code>y</code>는 정답 칸만 1인 원핫 벡터예요.</p><p>손실 <code>L=−ln(p_target)</code>의 <code>ln</code>은 자연로그예요. 정답 확률이 1이면 손실 0, 작아질수록 손실은 커져요. 이번 손실을 로짓에 대해 미분하면 <code>g=p−y</code>예요. 미분식 유도는 이번 범위 밖이고, 유한 차분으로 결과를 검산해요.</p><p>그래디언트는 로짓 한 칸을 조금 바꿨을 때 손실이 얼마나, 어느 방향으로 변하는지 나타내는 국소 기울기예요. 학습률 <code>η</code>는 이동 크기예요. <code>z_new=z−η×g</code>로 기울기 반대 방향으로 움직여요. 이 실습에서 0은 변화 없음의 경계 사례예요.</p></section>
+<section class="card"><h2>입력 → 예측 → 결과 확인</h2><div class="controls">
+<label>로짓 0<input id="z0" type="number" step="any" value="1"></label><label>로짓 1<input id="z1" type="number" step="any" value="0"></label><label>로짓 2<input id="z2" type="number" step="any" value="-0.5"></label><label>타깃 ID<select id="target"><option>0</option><option selected>1</option><option>2</option></select></label><label>학습률<input id="eta" type="number" min="0" step="any" value="0.4"></label></div>
+<p>업데이트 뒤 <strong>정답 칸의 로짓</strong>은 어떻게 될까요?</p><div class="buttons"><button data-predict="up">올라가요</button><button data-predict="down">내려가요</button><button data-predict="same">그대로예요</button><button id="reveal">결과 확인</button><button id="reset">초기화</button></div><p id="status" role="status" aria-live="polite">먼저 예측을 선택해 주세요.</p>
+<div id="result" hidden><p id="outcome"></p><div id="bars"></div><p id="values" class="values"></p></div></section>
+<section class="card"><h2>동일한 예제의 계산</h2><p>초기 로짓 [1, 0, −0.5], 타깃 ID 1, 학습률 0.4에서 정답 확률은 약 0.231224 → 0.336019, 손실은 약 1.464369 → 1.090586이에요. 화면은 소수 여섯 자리로 반올림하고 내부에서는 배정밀도 숫자로 계산해요.</p><p>학습률 20에서는 이 로짓 직접 최적화 한 걸음의 타깃 확률이 거의 1이에요. 이 예가 큰 학습률의 발산을 보여 주지는 않아요. 전체 신경망의 반복 학습에 대한 보장도 아니에요. 손실은 log-sum-exp 형태로 계산해 확률이 숫자 표현 범위에서 0으로 내려가는 경우도 다뤄요.</p><p>유한하지 않은 숫자, 빈 입력, 범위를 벗어난 타깃, 음수 학습률은 거부해요. 극단적으로 큰 수로 업데이트나 손실이 유한 범위를 벗어나도 오류를 표시해요.</p><img src="diagram.svg" alt="확률, 원핫 정답, 기울기, 로짓 업데이트의 관계"></section>
+<section class="card"><h2>전이 문제</h2><p>학습률을 0으로 바꾸고 예측해 보세요. 결과를 보기 전 새 로짓이 바뀌는지 설명할 수 있나요?</p><details><summary>계산 이유</summary><p>0 곱하기 기울기는 0이므로 세 칸 모두 그대로예요. 기본 예에서는 양수 학습률로 음수 기울기를 빼서 정답 칸의 로짓이 올라가요.</p></details></section>
+<section class="companion-downloads" aria-label="다운로드"><h2>실행 자료 내려받기</h2><ul>
+<li><a href="canonical.py" download>Python canonical.py</a></li>
+<li><a href="canonical.cpp" download>C++17 canonical.cpp</a></li>
+<li><a href="expected.txt" download>expected.txt</a></li>
+<li><a href="diagram.svg" download>diagram.svg</a></li>
+<li><a href="source.zip" download>source.zip</a></li>
+</ul></section></main><script type="module">
+import {createPredictionSession} from './practice.js';
+const $=id=>document.getElementById(id), session=createPredictionSession();
+const fmt=x=>x.toFixed(6);
+function input(){const logits=['z0','z1','z2'].map(id=>{const v=$(id).value;if(v.trim()==='')throw Error('빈 로짓은 사용할 수 없어요.');return Number(v)});if($('eta').value.trim()==='')throw Error('학습률을 입력해 주세요.');return {logits,target:Number($('target').value),eta:Number($('eta').value)}}
+function sync(){try{const v=input();session.set(v.logits,v.target,v.eta);$('result').hidden=true;$('status').textContent='먼저 예측을 선택해 주세요.'}catch(e){$('result').hidden=true;$('status').textContent=e.message}}
+for(const id of ['z0','z1','z2','target','eta'])$(id).addEventListener('input',sync);
+document.querySelectorAll('[data-predict]').forEach(b=>b.onclick=()=>{try{const v=input();session.set(v.logits,v.target,v.eta);session.predict(b.dataset.predict);$('result').hidden=true;$('status').textContent=`예측: ${b.textContent}. 결과를 확인해 주세요.`}catch(e){$('result').hidden=true;$('status').textContent=e.message}});
+$('reveal').onclick=()=>{try{const state=session.reveal(),r=state.result;$('result').hidden=false;$('status').textContent=state.correct?'예측과 같아요. 계산을 확인해 보세요.':'예측과 달라요. 기울기의 부호를 확인해 보세요.';$('outcome').textContent=`정답 로짓 ${fmt(state.input.logits[state.input.targetId])} → ${fmt(r.nextLogits[state.input.targetId])}`;$('values').textContent=`p=[${r.probabilities.map(fmt)}] · y의 정답 칸=1 · g=[${r.gradient.map(fmt)}] · 새 로짓=[${r.nextLogits.map(fmt)}] · 손실 ${fmt(r.loss)} → ${fmt(r.nextLoss)}`;$('bars').innerHTML=r.nextProbabilities.map((p,i)=>`<div class="row"><strong>ID ${i}</strong><div class="track"><div class="bar${i===state.input.targetId?' hot':''}" style="width:${100*p}%"></div></div><code>${fmt(p)}</code></div>`).join('')}catch(e){$('result').hidden=true;$('status').textContent=e.message}};
+$('reset').onclick=()=>{session.reset();['1','0','-0.5'].forEach((v,i)=>$(`z${i}`).value=v);$('target').value='1';$('eta').value='0.4';sync()};
+</script></body></html>

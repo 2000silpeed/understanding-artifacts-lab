@@ -1,0 +1,6 @@
+{
+  "stable_shift_contract": {"input_logits": [1000.0, 999.0, 998.0], "shift": 1000.0, "shifted_logits": [0.0, -1.0, -2.0], "probabilities": [0.6652409557748218, 0.24472847105479764, 0.09003057317038046], "all_finite": true},
+  "finite_difference": {"epsilon": 0.00001, "max_abs_error_allowed": 1e-8},
+  "rejected_inputs": ["nonfinite logit", "empty logits", "target ID outside vector"],
+  "large_learning_rate": {"eta": 20.0, "purpose": "show saturation, not a universal guarantee", "target_probability": 0.9999999922854107}
+}

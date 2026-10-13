@@ -1,0 +1,16 @@
+initial logits: [1.000000, 0.000000, -0.500000]
+initial probabilities: [0.628532, 0.231224, 0.140244]
+target probability: 0.231223897622149
+initial loss: 1.464368784107945
+finite difference gradient: [0.628532, -0.768776, 0.140244]
+p-minus-y gradient: [0.628532, -0.768776, 0.140244]
+gradient sum: -0.000000000000000
+small learning rate: 0.400000
+updated logits: [0.748587, 0.307510, -0.556098]
+updated probabilities: [0.522302, 0.336019, 0.141679]
+updated target probability: 0.336019454066582
+updated loss: 1.090586221687331
+large learning rate: 20.000000
+large-step target probability: 0.999999992285411
+large-step loss: 0.000000007714589
+boundary: stable softmax; toy logits only; no transformer training
