@@ -1,0 +1,6 @@
+graph=undirected stable adjacency
+start=A target=F
+order=A->B->C->D->E->F
+distance(F)=3
+path=A->B->D->F
+unreachable G=true
