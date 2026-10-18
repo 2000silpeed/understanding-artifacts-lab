@@ -1,0 +1,6 @@
+export function stableSoftmax(z){if(!Array.isArray(z)||z.length!==3||!z.every(Number.isFinite))throw new Error('logits');const m=Math.max(...z),e=z.map(v=>Math.exp(v-m)),s=e.reduce((a,b)=>a+b,0);return e.map(v=>v/s)}
+export const outerProduct=(h,g)=>h.map(a=>g.map(b=>a*b));
+export function compute(h,w,target=2,lr=.3){if(!Array.isArray(h)||h.length!==2||!h.every(Number.isFinite)||!Array.isArray(w)||w.length!==2||w.some(r=>!Array.isArray(r)||r.length!==3||!r.every(Number.isFinite))||!Number.isInteger(target)||target<0||target>2||!Number.isFinite(lr)||lr<0)throw new Error('shape/target/finite/lr');const z=[0,1,2].map(j=>h.reduce((a,v,i)=>a+v*w[i][j],0)),p=stableSoftmax(z),g=p.map((v,j)=>v-(j===target?1:0)),dW=outerProduct(h,g),WPrime=w.map((r,i)=>r.map((v,j)=>v-lr*dW[i][j])),zPrime=[0,1,2].map(j=>h.reduce((a,v,i)=>a+v*WPrime[i][j],0)),pPrime=stableSoftmax(zPrime);return {h,W:w,targetId:target,learningRate:lr,z,p,g,dW,WPrime,zPrime,pPrime,loss:-Math.log(p[target]),lossPrime:-Math.log(pPrime[target])};}
+const initial=compute([1,2],[[0,0,0],[0,0,0]]),alternate=compute([1,0],initial.W),transfer=compute([1,0],initial.WPrime);
+export const TRACE={...initial,alternateH:alternate.h,alternateDW:alternate.dW,alternate,transfer,edge:compute([0,0],initial.W)};
+export const fmt=n=>(Math.abs(n)<.0000005?0:n).toFixed(6);
