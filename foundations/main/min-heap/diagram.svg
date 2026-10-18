@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect width="1920" height="1080" fill="#fbf5e9"/>
+<text x="960" y="110" text-anchor="middle" font-family="sans-serif" font-size="58" fill="#28231f">최소 힙: 부모는 자식보다 작거나 같아요</text>
+<g stroke="#6b625b" stroke-width="8" fill="none"><path d="M960 330L650 560M960 330L1270 560M650 560L500 800M650 560L800 800M1270 560L1120 800M1270 560L1420 800"/></g>
+<g font-family="sans-serif" text-anchor="middle" font-size="42" fill="#fff" stroke="#332b25" stroke-width="5">
+<circle cx="960" cy="330" r="72" fill="#d96b45"/><text x="960" y="345" stroke="none">3</text>
+<circle cx="650" cy="560" r="72" fill="#4d83a8"/><text x="650" y="575" stroke="none">9</text>
+<circle cx="1270" cy="560" r="72" fill="#4d83a8"/><text x="1270" y="575" stroke="none">4</text>
+<circle cx="500" cy="800" r="72" fill="#4d83a8"/><text x="500" y="815" stroke="none">15</text>
+<circle cx="800" cy="800" r="72" fill="#4d83a8"/><text x="800" y="815" stroke="none">12</text>
+<circle cx="1120" cy="800" r="72" fill="#4d83a8"/><text x="1120" y="815" stroke="none">10</text>
+<circle cx="1420" cy="800" r="72" fill="#4d83a8"/><text x="1420" y="815" stroke="none">7</text>
+</g></svg>

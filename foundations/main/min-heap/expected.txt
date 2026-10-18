@@ -1,0 +1,7 @@
+initial input: [4, 9, 7, 15, 12, 10]
+heap after pushes: [4, 9, 7, 15, 12, 10]
+push(3) heap: [3, 9, 4, 15, 12, 10, 7]
+pop_min(): 3
+heap after pop_min: [4, 9, 7, 15, 12, 10]
+heap property: true
+pop trace events: 22
