@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">이진 탐색 트리 예시</title><desc id="desc">팔을 루트로 하고 왼쪽은 작은 값, 오른쪽은 큰 값으로 나뉘는 트리</desc>
+<rect width="1200" height="760" fill="#f7f1e5"/>
+<g stroke="#9b9184" stroke-width="3" fill="none"><path d="M600 120L350 270M600 120L850 270M350 320L210 470M350 320L470 470M850 320L970 470M470 520L410 650M470 520L530 650M970 520L910 650"/></g>
+<g font-family="system-ui,sans-serif" text-anchor="middle" font-weight="700" fill="#1f2933">
+<g fill="#dbe7ff" stroke="#2d6cdf" stroke-width="4"><circle cx="600" cy="100" r="42"/><circle cx="350" cy="280" r="42"/><circle cx="850" cy="280" r="42"/><circle cx="210" cy="480" r="42"/><circle cx="470" cy="480" r="42"/><circle cx="970" cy="480" r="42"/><circle cx="410" cy="660" r="42"/><circle cx="530" cy="660" r="42"/><circle cx="910" cy="660" r="42"/></g>
+<g font-size="30"><text x="600" y="110">8</text><text x="350" y="290">3</text><text x="850" y="290">10</text><text x="210" y="490">1</text><text x="470" y="490">6</text><text x="970" y="490">14</text><text x="410" y="670">4</text><text x="530" y="670">7</text><text x="910" y="670">13</text></g>
+<g font-size="24" fill="#d94f70"><text x="350" y="55">왼쪽 부분트리 &lt; 8</text><text x="850" y="55">오른쪽 부분트리 &gt; 8</text></g>
+<g font-size="26" fill="#5d6870"><text x="600" y="735">각 비교가 다음에 확인할 한 방향을 정해요</text></g>
+</g>
+</svg>
