@@ -1,0 +1,7 @@
+DFS explicit-stack contract
+full order: A,B,D,E,F,C
+early target F order: A,B,D,E,F
+unreachable Z order: A,B,D,E,F,C
+cycle from E order: E,B,A,C,D,F
+alternate target S order: P,Q,S
+full events: 19

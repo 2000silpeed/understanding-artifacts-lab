@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">명시적 스택 DFS 그래프와 스택 방향</title>
+  <desc id="desc">A에서 시작해 B, D, E, F, C 순서로 pop하는 고정 그래프와 오른쪽이 스택 꼭대기임을 보여준다.</desc>
+  <rect width="1600" height="900" fill="#fbf7ef"/>
+  <text x="800" y="70" text-anchor="middle" font-family="sans-serif" font-size="42" font-weight="700" fill="#24221e">DFS: push는 역순, pop은 오른쪽 끝</text>
+  <g stroke="#77736b" stroke-width="5" fill="none" marker-start="url(#arrow)" marker-end="url(#arrow)">
+    <path d="M285 370 L545 240"/><path d="M285 370 L545 520"/>
+    <path d="M665 240 L925 170"/><path d="M665 240 L925 370"/>
+    <path d="M665 520 L925 610"/><path d="M985 370 L925 610"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse"><path d="M0 0 L12 6 L0 12 Z" fill="#77736b"/></marker></defs>
+  <g font-family="sans-serif" font-size="34" text-anchor="middle" font-weight="700">
+    <g><circle cx="225" cy="370" r="60" fill="#ffd166" stroke="#a65b00" stroke-width="6"/><text x="225" y="382" fill="#24221e">A</text></g>
+    <g><circle cx="605" cy="240" r="60" fill="#dbeafe" stroke="#2563eb" stroke-width="6"/><text x="605" y="252">B</text></g>
+    <g><circle cx="605" cy="520" r="60" fill="#dbeafe" stroke="#2563eb" stroke-width="6"/><text x="605" y="532">C</text></g>
+    <g><circle cx="985" cy="170" r="60" fill="#ede9fe" stroke="#7c3aed" stroke-width="6"/><text x="985" y="182">D</text></g>
+    <g><circle cx="985" cy="370" r="60" fill="#ede9fe" stroke="#7c3aed" stroke-width="6"/><text x="985" y="382">E</text></g>
+    <g><circle cx="985" cy="610" r="60" fill="#dcfce7" stroke="#16a34a" stroke-width="6"/><text x="985" y="622">F</text></g>
+  </g>
+  <g font-family="sans-serif" fill="#24221e">
+    <text x="1200" y="180" font-size="30" font-weight="700">스택: 바닥 → 꼭대기</text>
+    <rect x="1190" y="250" width="130" height="90" rx="16" fill="#e7e5e4" stroke="#77736b" stroke-width="4"/><text x="1255" y="308" text-anchor="middle" font-size="34">C</text>
+    <rect x="1340" y="250" width="130" height="90" rx="16" fill="#ffd166" stroke="#a65b00" stroke-width="4"/><text x="1405" y="308" text-anchor="middle" font-size="34" font-weight="700">B</text>
+    <text x="1405" y="390" text-anchor="middle" font-size="28">오른쪽을 먼저 pop</text>
+    <text x="1190" y="520" font-size="30">전체 pop 순서</text>
+    <text x="1190" y="575" font-size="34" font-weight="700" fill="#a65b00">A → B → D → E → F → C</text>
+    <text x="1190" y="660" font-size="28">무방향 간선 6쌍 · 인접 항목 12개</text>
+    <text x="1190" y="710" font-size="28">target 성공은 pop 순간</text>
+  </g>
+</svg>
