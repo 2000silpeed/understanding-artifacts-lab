@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>임베딩 입력 행 업데이트</title>
+<style>
+:root{--paper:#f7f2e8;--ink:#20231f;--muted:#697064;--line:#d8d0c0;--teal:#177c78;--orange:#c75b2a;--yellow:#f2d88a;--card:#fffdf7}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;line-height:1.5}main{max-width:1180px;margin:0 auto;padding:30px 22px 70px}h1{font-size:clamp(28px,5vw,52px);line-height:1.1;margin:0 0 10px}h2{font-size:22px;margin:0 0 10px}.subtitle{color:var(--muted);margin:0 0 24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 22px #392e1a12}.matrix{display:grid;gap:5px;margin:12px 0}.row{display:grid;grid-template-columns:86px repeat(3,1fr);gap:5px;align-items:center}.row.e{grid-template-columns:86px repeat(2,1fr)}.cell{padding:8px 4px;text-align:center;border:1px solid var(--line);border-radius:8px;background:#fff}.cell.head{font-weight:700;background:#f2eadb}.cell.sel{outline:3px solid var(--orange);background:#fff2e8}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f1eadc;border-radius:8px;padding:9px;overflow:auto}.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:end}.control{display:grid;gap:4px;font-weight:700}.control select,.control button{font:inherit;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:#fff}.control button{cursor:pointer;background:var(--teal);color:white;border-color:var(--teal)}.control button.secondary{background:#fff;color:var(--ink)}.question{border-left:5px solid var(--orange);padding-left:12px}.answer{min-height:52px;margin-top:12px}.hidden{visibility:hidden}.small{color:var(--muted);font-size:14px}.pill{display:inline-block;padding:3px 9px;border-radius:999px;background:#e5f1ee;color:#12635f;font-weight:700}.warn{color:#8b3c20}.wide{grid-column:1/-1}@media(max-width:560px){main{padding:22px 13px}.row{grid-template-columns:62px repeat(3,1fr);font-size:14px}.row.e{grid-template-columns:62px repeat(2,1fr)}}
+</style>
+<style id="dfs-companion-font-wrapper">@font-face{font-family:NotoCourse;src:url("../assets/noto-kr.woff2") format("woff2");font-display:swap}body{font-family:NotoCourse,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}main,section{box-sizing:border-box;max-width:100%}pre{overflow-wrap:anywhere;word-break:break-word}</style></head>
+<body>
+<main>
+<h1>임베딩 입력 행 업데이트</h1>
+<p class="subtitle">고정된 출력 행렬의 오차가 조회된 임베딩 행 하나로 돌아오는 작은 계산 실습</p>
+<section class="card wide">
+<h2>입력과 정답을 바꿔 보세요</h2>
+<div class="controls">
+<label class="control">입력 token ID<select id="inputId"><option value="0">ID 0</option><option value="1" selected>ID 1</option><option value="2">ID 2</option></select></label>
+<label class="control">target ID<select id="targetId"><option value="0">ID 0</option><option value="1">ID 1</option><option value="2" selected>ID 2</option></select></label>
+<label class="control"><span>경계</span><span><input type="checkbox" id="zeroW"> W = 0</span></label>
+<div class="control"><span>&nbsp;</span><button id="run">계산 실행</button></div>
+<div class="control"><span>&nbsp;</span><button class="secondary" id="reset">기본값</button></div>
+</div>
+<p class="small">ID는 0부터 세며, 선택된 행만 업데이트합니다. 이 실습은 한 샘플 한 단계의 toy 계산입니다.</p>
+</section>
+<div class="grid" style="margin-top:16px">
+<section class="card"><h2>임베딩 표 E</h2><div id="embedding"></div></section>
+<section class="card"><h2>고정 출력 표 W</h2><div id="weights"></div></section>
+<section class="card"><h2>순방향</h2><div id="forward"></div></section>
+<section class="card"><h2>입력 쪽 변화량</h2><div id="gradient"></div></section>
+<section class="card wide"><h2>예측 문제</h2><p class="question">선택된 행의 변화량 부호와 업데이트 결과를 먼저 예상한 뒤 계산을 실행해 보세요.</p><div id="answer" class="answer hidden"></div><button id="reveal" class="secondary">답 공개</button><p id="note" class="small">답은 숨겨져 있습니다. 계산 실행 뒤 공개할 수 있습니다.</p></section>
+</div>
+</main>
+<script>
+const BASE_E=[[0,1],[1,2],[-1,1]];
+const BASE_W=[[-.1,-.1,.2],[-.2,-.2,.4]];
+const $=(id)=>document.getElementById(id);
+const fmt=(x)=>Number(x).toFixed(6);
+const clone=(m)=>m.map((r)=>r.slice());
+function softmax(z){const m=Math.max(...z),e=z.map((x)=>Math.exp(x-m)),s=e.reduce((a,b)=>a+b,0);return e.map((x)=>x/s)}
+function compute(){
+  const inputId=Number($('inputId').value),targetId=Number($('targetId').value);
+  const W=$('zeroW').checked?[[0,0,0],[0,0,0]]:clone(BASE_W),E=clone(BASE_E),h=E[inputId].slice();
+  const z=[0,1,2].map((j)=>h.reduce((a,x,i)=>a+x*W[i][j],0)),p=softmax(z),g=p.map((x,j)=>x-(j===targetId?1:0));
+  const dh=[0,1].map((i)=>[0,1,2].reduce((a,j)=>a+W[i][j]*g[j],0));
+  const Ep=clone(E);Ep[inputId]=Ep[inputId].map((x,i)=>x-.3*dh[i]);
+  const hp=Ep[inputId],zp=[0,1,2].map((j)=>hp.reduce((a,x,i)=>a+x*W[i][j],0)),pp=softmax(zp);
+  return {inputId,targetId,W,E,h,z,p,g,dh,Ep,hp,zp,pp,loss:-Math.log(p[targetId]),lossPrime:-Math.log(pp[targetId])};
+}
+function matrixHtml(m,selected,cols){return '<div class="matrix">'+m.map((r,i)=>'<div class="row '+(r.length===2?'e':'')+'"><div class="cell head">'+(i===selected?'ID '+i+' 선택':'행 '+i)+'</div>'+r.map((x,j)=>'<div class="cell '+(i===selected?'sel':'')+'">'+fmt(x)+'</div>').join('')+'</div>').join('')+'</div><div class="small">열은 '+cols+' 방향입니다.</div>'}
+function render(){const t=compute();$('embedding').innerHTML=matrixHtml(t.E,t.inputId,'임베딩 성분');$('weights').innerHTML=matrixHtml(t.W,-1,'출력 ID');$('forward').innerHTML='<div class="formula">h = ['+t.h.map(fmt).join(', ')+']</div><p>z = ['+t.z.map(fmt).join(', ')+']</p><p>p = ['+t.p.map(fmt).join(', ')+']</p><p>loss = '+fmt(t.loss)+' <span class="pill">target ID '+t.targetId+'</span></p>';$('gradient').innerHTML='<p>g = ['+t.g.map(fmt).join(', ')+']</p><div class="formula">dh = ['+t.dh.map(fmt).join(', ')+']</div><p>선택 행만 E′로 이동합니다.</p>';$('answer').innerHTML='<p><b>계산된 답</b>: dh = ['+t.dh.map(fmt).join(', ')+']</p><p>E′의 선택 행 = ['+t.Ep[t.inputId].map(fmt).join(', ')+']</p><p>새 p = ['+t.pp.map(fmt).join(', ')+'], 새 loss = '+fmt(t.lossPrime)+'</p>';$('answer').classList.add('hidden');$('note').textContent='답은 숨겨져 있습니다. 계산 실행 뒤 공개할 수 있습니다.';}
+$('run').addEventListener('click',render);$('reset').addEventListener('click',()=>{$('inputId').value='1';$('targetId').value='2';$('zeroW').checked=false;render()});$('reveal').addEventListener('click',()=>{$('answer').classList.remove('hidden');$('note').textContent='공개된 값은 현재 선택과 경계 설정에서 다시 계산된 결과입니다.'});render();
+</script>
+</body>
+</html>

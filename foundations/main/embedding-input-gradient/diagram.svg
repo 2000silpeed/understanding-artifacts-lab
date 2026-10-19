@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect width="1920" height="1080" fill="#f7f2e8"/>
+<text x="960" y="92" text-anchor="middle" font-family="sans-serif" font-size="52" font-weight="700" fill="#20231f">임베딩 입력 행 업데이트</text>
+<text x="960" y="145" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#697064">조회된 한 행만, 고정된 W를 거꾸로 통과한 변화량으로 이동합니다</text>
+<g font-family="sans-serif" fill="#20231f">
+<rect x="80" y="270" width="420" height="430" rx="22" fill="#fffdf7" stroke="#d8d0c0" stroke-width="4"/>
+<text x="290" y="330" text-anchor="middle" font-size="38" font-weight="700">임베딩 표 E</text>
+<text x="150" y="405" font-size="30">ID 0</text><text x="330" y="405" text-anchor="middle" font-size="32">[ 0, 1 ]</text>
+<rect x="110" y="440" width="360" height="100" rx="14" fill="#fff2e8" stroke="#c75b2a" stroke-width="6"/>
+<text x="150" y="502" font-size="30" fill="#8b3c20">ID 1 선택</text><text x="410" y="502" text-anchor="end" font-size="32">[ 1, 2 ]</text>
+<text x="150" y="610" font-size="30">ID 2</text><text x="330" y="610" text-anchor="middle" font-size="32">[ −1, 1 ]</text>
+<text x="290" y="660" text-anchor="middle" font-size="25" fill="#697064">h = E[1]</text>
+<rect x="660" y="245" width="470" height="475" rx="22" fill="#fffdf7" stroke="#d8d0c0" stroke-width="4"/>
+<text x="895" y="305" text-anchor="middle" font-size="38" font-weight="700">고정 W</text>
+<text x="730" y="390" font-size="30">입력 0</text><text x="940" y="390" text-anchor="middle" font-size="30">−0.1  −0.1   0.2</text>
+<text x="730" y="500" font-size="30">입력 1</text><text x="940" y="500" text-anchor="middle" font-size="30">−0.2  −0.2   0.4</text>
+<line x1="710" y1="545" x2="1080" y2="545" stroke="#d8d0c0" stroke-width="3"/>
+<text x="895" y="620" text-anchor="middle" font-size="30" fill="#697064">z = hW</text>
+<rect x="1290" y="270" width="490" height="430" rx="22" fill="#fffdf7" stroke="#d8d0c0" stroke-width="4"/>
+<text x="1535" y="330" text-anchor="middle" font-size="38" font-weight="700">오차를 입력 쪽으로</text>
+<text x="1535" y="430" text-anchor="middle" font-size="34">g = p − y</text>
+<text x="1535" y="505" text-anchor="middle" font-size="34">dhᵢ = Σⱼ Wᵢⱼ gⱼ</text>
+<text x="1535" y="600" text-anchor="middle" font-size="31" fill="#c75b2a">dE[1] = dh</text>
+<path d="M510 485 C570 485 600 485 650 485" fill="none" stroke="#177c78" stroke-width="8"/>
+<path d="M1125 485 C1185 485 1220 485 1280 485" fill="none" stroke="#177c78" stroke-width="8"/>
+<path d="M1535 730 C1535 835 900 860 500 770" fill="none" stroke="#c75b2a" stroke-width="8" stroke-dasharray="20 16"/>
+<text x="980" y="880" text-anchor="middle" font-family="sans-serif" font-size="35" fill="#8b3c20">E′[1] = E[1] − 0.3 × dh</text>
+<text x="960" y="980" text-anchor="middle" font-family="sans-serif" font-size="30" fill="#697064">E[0], E[2], W는 이 단계에서 그대로입니다</text>
+</g>
+</svg>
