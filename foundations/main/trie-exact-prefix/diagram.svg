@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+<title id="title">트라이 canonical before and after terminal state</title>
+<desc id="desc">삽입 전과 삽입 후의 동일한 root-c-a-r/t 및 root-d-o-g topology를 terminal flag와 함께 보여 준다</desc>
+<rect width="1600" height="920" fill="#f7f1e5"/>
+<g font-family="system-ui,sans-serif" text-anchor="middle" font-weight="700" fill="#1f2933">
+  <text x="800" y="58" font-size="34" fill="#5d6870">부모 관계는 canonical snapshot에서 읽고, terminal만 ca 삽입으로 바뀝니다</text>
+  <text x="400" y="112" font-size="32">삽입 전 · a terminal = false</text>
+  <text x="1200" y="112" font-size="32">삽입 후 · a terminal = true</text>
+</g>
+<g stroke="#9b9184" stroke-width="4" fill="none">
+  <line data-stage="before" data-parent="0" data-child="1" x1="400" y1="208" x2="270" y2="318"/>
+  <line data-stage="before" data-parent="1" data-child="2" x1="270" y1="378" x2="200" y2="488"/>
+  <line data-stage="before" data-parent="2" data-child="3" x1="200" y1="548" x2="120" y2="668"/>
+  <line data-stage="before" data-parent="2" data-child="4" x1="200" y1="548" x2="280" y2="668"/>
+  <line data-stage="before" data-parent="0" data-child="5" x1="400" y1="208" x2="530" y2="318"/>
+  <line data-stage="before" data-parent="5" data-child="6" x1="530" y1="378" x2="530" y2="488"/>
+  <line data-stage="before" data-parent="6" data-child="7" x1="530" y1="548" x2="530" y2="668"/>
+  <line data-stage="after" data-parent="0" data-child="1" x1="1200" y1="208" x2="1070" y2="318"/>
+  <line data-stage="after" data-parent="1" data-child="2" x1="1070" y1="378" x2="1000" y2="488"/>
+  <line data-stage="after" data-parent="2" data-child="3" x1="1000" y1="548" x2="920" y2="668"/>
+  <line data-stage="after" data-parent="2" data-child="4" x1="1000" y1="548" x2="1080" y2="668"/>
+  <line data-stage="after" data-parent="0" data-child="5" x1="1200" y1="208" x2="1330" y2="318"/>
+  <line data-stage="after" data-parent="5" data-child="6" x1="1330" y1="378" x2="1330" y2="488"/>
+  <line data-stage="after" data-parent="6" data-child="7" x1="1330" y1="548" x2="1330" y2="668"/>
+</g>
+<g stroke="#2d6cdf" stroke-width="4">
+  <g data-stage="before" data-node="0" data-terminal="false"><circle cx="400" cy="180" r="30" fill="#dbe7ff"/><text x="400" y="190" text-anchor="middle" font-size="22">루트</text></g>
+  <g data-stage="before" data-node="1" data-terminal="false"><circle cx="270" cy="348" r="30" fill="#dbe7ff"/><text x="270" y="358" text-anchor="middle" font-size="30">c</text></g>
+  <g data-stage="before" data-node="2" data-terminal="false"><circle cx="200" cy="518" r="30" fill="#dbe7ff"/><text x="200" y="528" text-anchor="middle" font-size="30">a</text></g>
+  <g data-stage="before" data-node="3" data-terminal="true"><circle cx="120" cy="698" r="30" fill="#f5b7c5"/><text x="120" y="708" text-anchor="middle" font-size="30">r</text></g>
+  <g data-stage="before" data-node="4" data-terminal="true"><circle cx="280" cy="698" r="30" fill="#f5b7c5"/><text x="280" y="708" text-anchor="middle" font-size="30">t</text></g>
+  <g data-stage="before" data-node="5" data-terminal="false"><circle cx="530" cy="348" r="30" fill="#dbe7ff"/><text x="530" y="358" text-anchor="middle" font-size="30">d</text></g>
+  <g data-stage="before" data-node="6" data-terminal="false"><circle cx="530" cy="518" r="30" fill="#dbe7ff"/><text x="530" y="528" text-anchor="middle" font-size="30">o</text></g>
+  <g data-stage="before" data-node="7" data-terminal="true"><circle cx="530" cy="698" r="30" fill="#f5b7c5"/><text x="530" y="708" text-anchor="middle" font-size="30">g</text></g>
+  <g data-stage="after" data-node="0" data-terminal="false"><circle cx="1200" cy="180" r="30" fill="#dbe7ff"/><text x="1200" y="190" text-anchor="middle" font-size="22">루트</text></g>
+  <g data-stage="after" data-node="1" data-terminal="false"><circle cx="1070" cy="348" r="30" fill="#dbe7ff"/><text x="1070" y="358" text-anchor="middle" font-size="30">c</text></g>
+  <g data-stage="after" data-node="2" data-terminal="true"><circle cx="1000" cy="518" r="30" fill="#f5b7c5"/><text x="1000" y="528" text-anchor="middle" font-size="30">a</text></g>
+  <g data-stage="after" data-node="3" data-terminal="true"><circle cx="920" cy="698" r="30" fill="#f5b7c5"/><text x="920" y="708" text-anchor="middle" font-size="30">r</text></g>
+  <g data-stage="after" data-node="4" data-terminal="true"><circle cx="1080" cy="698" r="30" fill="#f5b7c5"/><text x="1080" y="708" text-anchor="middle" font-size="30">t</text></g>
+  <g data-stage="after" data-node="5" data-terminal="false"><circle cx="1330" cy="348" r="30" fill="#dbe7ff"/><text x="1330" y="358" text-anchor="middle" font-size="30">d</text></g>
+  <g data-stage="after" data-node="6" data-terminal="false"><circle cx="1330" cy="518" r="30" fill="#dbe7ff"/><text x="1330" y="528" text-anchor="middle" font-size="30">o</text></g>
+  <g data-stage="after" data-node="7" data-terminal="true"><circle cx="1330" cy="698" r="30" fill="#f5b7c5"/><text x="1330" y="708" text-anchor="middle" font-size="30">g</text></g>
+</g>
+<g font-family="system-ui,sans-serif" text-anchor="middle" font-size="24" font-weight="700">
+  <text x="400" y="790" fill="#5d6870">r / t / g만 terminal</text>
+  <text x="1200" y="790" fill="#d94f70">a / r / t / g가 terminal</text>
+  <text x="800" y="870" fill="#5d6870">파란 노드: 경로만 존재 · 분홍 노드: 완성 단어 끝</text>
+</g>
+</svg>

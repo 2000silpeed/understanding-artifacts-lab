@@ -1,0 +1,11 @@
+trie input: ["car","cat","dog"]
+exact car: true
+exact ca before terminal: false
+prefix ca: true
+exact cap: false
+insert ca changed: true
+exact car preserved: true
+exact cat preserved: true
+duplicate ca changed: false
+final node count: 8
+trace events: 39
