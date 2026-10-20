@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>두 토큰 문맥 연결 실습</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#24323a;background:#f7f1e5}body{max-width:980px;margin:0 auto;padding:28px;line-height:1.5}main{background:#fffaf0;border:2px solid #d6c9b4;border-radius:18px;padding:24px}h1{margin-top:0}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.control{display:grid;gap:4px}select,button{font:inherit;padding:9px 12px;border-radius:9px;border:1px solid #a89d8d;background:#fff}button{cursor:pointer;background:#db7b28;color:white;border:0}button.secondary{background:#2f8f83}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:20px}.card{padding:14px;border:1px solid #b8d8d1;border-radius:12px;background:#e8f3ef}.mono{font-family:ui-monospace,monospace;white-space:pre-wrap}.answer{margin-top:18px;padding:14px;background:#ffe0b2;border-radius:12px}.hidden{display:none}.status{min-height:1.5em;color:#59656d}
+</style>
+<style id="trie-companion-font-wrapper">@font-face{font-family:NotoCourse;src:url("../assets/noto-kr.woff2") format("woff2");font-display:swap}body{font-family:NotoCourse,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}main,section{box-sizing:border-box;max-width:100%}.trie{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere;word-break:break-word}pre{overflow-wrap:anywhere;word-break:break-word}</style></head>
+<body><main>
+<h1>두 토큰 문맥 연결</h1>
+<p>두 임베딩 행을 위치별로 연결한 뒤, 고정된 출력 행렬과 안정적인 소프트맥스를 계산해요.</p>
+<section class="controls" aria-label="문맥 입력">
+  <label class="control">첫 토큰<select id="first"><option>a</option><option>b</option><option>c</option></select></label>
+  <label class="control">둘째 토큰<select id="second"><option>a</option><option>b</option><option>c</option></select></label>
+  <button id="run">계산하기</button><button id="reveal" class="secondary" disabled>결과 공개</button><button id="reset" class="secondary">초기화</button>
+</section>
+<p id="status" class="status" role="status">문맥을 고르고 계산하기를 눌러 주세요.</p>
+<section class="grid" aria-live="polite"><div class="card"><strong>연결한 h</strong><div id="h" class="mono">아직 계산하지 않았어요.</div></div><div class="card"><strong>로짓 z</strong><div id="z" class="mono">답을 공개하면 보여요.</div></div><div class="card"><strong>확률 p</strong><div id="p" class="mono">답을 공개하면 보여요.</div></div></section>
+<section id="answer" class="answer hidden"><strong>계산 결과</strong><div id="answerText" class="mono"></div></section>
+<footer class="companion-downloads" aria-label="다운로드"><a href="source.zip" download>전체 소스 ZIP 내려받기</a></footer></main>
+<script>
+const TRACE = {"E":[[1,0],[0,1],[1,1]],"W":[[1,0,-1],[0,1,0],[0,-1,1],[1,0,0]],"TOKENS":["a","b","c"],"IDS":{"a":0,"b":1,"c":2}};
+const $ = (id) => document.getElementById(id);
+function stableSoftmax(z){const top=Math.max(...z);const weights=z.map(v=>Math.exp(v-top));const total=weights.reduce((a,b)=>a+b,0);return weights.map(v=>v/total)}
+function calculate(first,second){const ids=[TRACE.IDS[first],TRACE.IDS[second]];const h=[...TRACE.E[ids[0]],...TRACE.E[ids[1]]];const z=[0,1,2].map(j=>h.reduce((sum,v,i)=>sum+v*TRACE.W[i][j],0));const p=stableSoftmax(z);return {ids,h,z,p,prediction:p.indexOf(Math.max(...p))}}
+function fmt(values){return '['+values.map(v=>Number(v).toFixed(6)).join(', ')+']'}
+let last=null;
+function run(){last=calculate($('first').value,$('second').value);$('h').textContent=fmt(last.h);$('z').textContent='답을 공개하면 보여요.';$('p').textContent='답을 공개하면 보여요.';$('answer').classList.add('hidden');$('answerText').textContent='';$('reveal').disabled=false;$('status').textContent='계산을 저장했어요. 결과 공개를 누르면 로짓과 확률을 보여 줘요.'}
+function reveal(){if(!last)return;$('z').textContent=fmt(last.z);$('p').textContent=fmt(last.p);$('answerText').textContent='확률 합 = '+last.p.reduce((a,b)=>a+b,0).toFixed(6)+'\n예측 ID = '+last.prediction+'\n예측 토큰 = '+TRACE.TOKENS[last.prediction];$('answer').classList.remove('hidden');$('status').textContent='실제 계산 결과를 공개했어요.'}
+function reset(){last=null;$('first').value='a';$('second').value='b';$('h').textContent='아직 계산하지 않았어요.';$('z').textContent='답을 공개하면 보여요.';$('p').textContent='답을 공개하면 보여요.';$('answer').classList.add('hidden');$('reveal').disabled=true;$('status').textContent='문맥을 고르고 계산하기를 눌러 주세요.'}
+$('run').addEventListener('click',run);$('reveal').addEventListener('click',reveal);$('reset').addEventListener('click',reset);
+</script></body></html>
