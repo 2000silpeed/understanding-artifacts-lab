@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#f7f1e5"/>
+  <text x="800" y="90" text-anchor="middle" font-family="sans-serif" font-size="48" fill="#2d2924">음이 아닌 가중치의 최단 경로</text>
+  <g fill="#fffaf0" stroke="#4d8c8c" stroke-width="5">
+    <circle cx="220" cy="420" r="82"/><circle cx="650" cy="230" r="82"/><circle cx="650" cy="610" r="82"/><circle cx="1080" cy="230" r="82"/><circle cx="1080" cy="610" r="82"/>
+  </g>
+  <g font-family="sans-serif" font-size="46" fill="#2d2924" text-anchor="middle"><text x="220" y="436">A</text><text x="650" y="246">B</text><text x="650" y="626">C</text><text x="1080" y="246">D</text><text x="1080" y="626">E</text></g>
+  <g stroke="#2d2924" stroke-width="6" fill="none" marker-end="url(#arrow)">
+    <path d="M290 385 L575 255"/><path d="M290 455 L575 585"/><path d="M720 245 L1010 245"/><path d="M720 590 L1010 270"/><path d="M720 630 L1010 590"/>
+  </g>
+  <g font-family="sans-serif" font-size="34" fill="#c2573f" text-anchor="middle"><text x="435" y="302">4</text><text x="435" y="548">1</text><text x="865" y="215">1</text><text x="870" y="390">2</text><text x="875" y="630">5</text></g>
+  <text x="800" y="820" text-anchor="middle" font-family="sans-serif" font-size="36" fill="#2d2924">A → C → B → D · 비용 4 · E는 도달 불가</text>
+  <defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2d2924"/></marker></defs>
+</svg>

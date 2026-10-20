@@ -1,0 +1,7 @@
+default: path=A->C->B->D distance=4
+unreachable: found=false
+start_target: path=A distance=0
+zero_weight: path=A->B->C distance=0
+tie: path=A->B->D distance=2 parent=D:B
+transfer: path=A->C->D distance=2
+negative: rejected=negative weight rejected
