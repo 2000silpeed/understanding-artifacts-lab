@@ -1,0 +1,25 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">은닉층 하나 추가하기 순방향 계산</title>
+  <desc id="desc">입력 벡터 x가 W1과 b1을 지나 u, tanh를 지나 h, W2와 b2를 지나 z와 p가 되는 구조</desc>
+  <rect width="1920" height="1080" fill="#f7f1e5"/>
+  <text x="960" y="100" text-anchor="middle" font-family="sans-serif" font-size="58" font-weight="700" fill="#24221e">x → u → h → z → p</text>
+  <g stroke="#6b6258" stroke-width="6" fill="none" marker-end="url(#arrow)">
+    <path d="M370 480 H560"/><path d="M760 480 H950"/><path d="M1150 480 H1340"/><path d="M1540 480 H1730"/>
+  </g>
+  <g font-family="sans-serif" text-anchor="middle">
+    <rect x="150" y="340" width="220" height="280" rx="24" fill="#d8eee8" stroke="#268b7a" stroke-width="6"/>
+    <text x="260" y="415" font-size="42" fill="#24221e">입력 x</text><text x="260" y="490" font-size="34" fill="#24221e">[1, 0, 0, 1]</text><text x="260" y="550" font-size="30" fill="#268b7a">1×4</text>
+    <rect x="560" y="340" width="200" height="280" rx="24" fill="#e7f2ee" stroke="#268b7a" stroke-width="6"/>
+    <text x="660" y="415" font-size="42" fill="#24221e">합 u</text><text x="660" y="490" font-size="34" fill="#24221e">[0, 1]</text><text x="660" y="550" font-size="30" fill="#268b7a">W1+b1</text>
+    <rect x="950" y="340" width="200" height="280" rx="24" fill="#fbe4ba" stroke="#d87821" stroke-width="6"/>
+    <text x="1050" y="415" font-size="42" fill="#24221e">은닉 h</text><text x="1050" y="490" font-size="34" fill="#24221e">[0, tanh(1)]</text><text x="1050" y="550" font-size="30" fill="#d87821">tanh</text>
+    <rect x="1340" y="340" width="200" height="280" rx="24" fill="#e7f2ee" stroke="#268b7a" stroke-width="6"/>
+    <text x="1440" y="415" font-size="42" fill="#24221e">로짓 z</text><text x="1440" y="490" font-size="34" fill="#24221e">[0, tanh(1), 0]</text><text x="1440" y="550" font-size="30" fill="#268b7a">W2+b2</text>
+    <rect x="1730" y="340" width="140" height="280" rx="24" fill="#fbe4ba" stroke="#d87821" stroke-width="6"/>
+    <text x="1800" y="415" font-size="42" fill="#24221e">확률 p</text><text x="1800" y="490" font-size="30" fill="#24221e">softmax</text><text x="1800" y="550" font-size="28" fill="#d87821">합=1</text>
+  </g>
+  <g font-family="sans-serif" font-size="32" fill="#514b45">
+    <text x="240" y="800">E 조회와 연결</text><text x="610" y="800">편향 추가</text><text x="930" y="800">비선형 변환</text><text x="1300" y="800">점수 계산</text><text x="1690" y="800">안정 정규화</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="14" markerHeight="14" refX="10" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#6b6258"/></marker></defs>
+</svg>

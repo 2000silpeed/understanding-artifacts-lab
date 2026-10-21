@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>은닉층 하나 추가하기 오프라인 실험</title>
+<style>
+:root{color-scheme:light;--bg:#f7f1e5;--ink:#24221e;--teal:#268b7a;--orange:#d87821;--muted:#6b6258;--card:#fffaf0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif;line-height:1.45}main{max-width:1100px;margin:0 auto;padding:28px 20px 60px}h1{font-size:clamp(2rem,5vw,3.6rem);margin:0 0 8px}h2{font-size:1.35rem;margin-top:0}.lead{color:var(--muted);max-width:760px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card{background:var(--card);border:2px solid #ded1bd;border-radius:18px;padding:18px;box-shadow:0 5px 0 #e8dccb}.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.field{display:flex;flex-direction:column;gap:5px;font-weight:700}.field input{font:inherit;padding:10px;border:2px solid #c9bba7;border-radius:10px;width:160px;background:white}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:11px 15px;cursor:pointer;background:var(--teal);color:white}button.secondary{background:#665c52}button.warn{background:var(--orange)}button:focus-visible,input:focus-visible{outline:4px solid #f2b467;outline-offset:2px}.stage{min-height:105px;display:flex;align-items:center;justify-content:center;text-align:center;border:3px dashed var(--teal);border-radius:16px;padding:18px;font-size:1.25rem;margin-top:16px}.answer.hidden{display:none}.error{color:#a33b20;min-height:1.5em}.mono{font-family:ui-monospace,monospace;word-break:break-word}.small{font-size:.9rem;color:var(--muted)}table{border-collapse:collapse;width:100%}th,td{border-bottom:1px solid #ded1bd;text-align:left;padding:8px}.pill{display:inline-block;padding:3px 9px;border-radius:999px;background:#d8eee8;color:#145d51;font-weight:700}
+</style>
+<style id="companion-export-wrapper">@font-face{font-family:NotoCourse;src:url("../assets/noto-kr.woff2") format("woff2");font-display:swap}body{font-family:NotoCourse,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif}main,section,.card{box-sizing:border-box;max-width:100%}img,svg,table,pre{max-width:100%}pre{overflow-wrap:anywhere;word-break:break-word}.controls,.buttons{max-width:100%}</style></head>
+<body>
+<main>
+  <h1>은닉층 하나 추가하기</h1>
+  <p class="lead">임베딩을 연결한 입력을 <span class="pill">u → h → z → p</span> 순서로 실제 계산합니다. 이 실험은 외부 라이브러리 없이 동작합니다.</p>
+  <section class="card" aria-labelledby="input-title">
+    <h2 id="input-title">입력과 편향</h2>
+    <div class="controls">
+      <label class="field">문맥 <input id="contextInput" value="a,b" inputmode="text" aria-describedby="help"></label>
+      <label class="field">첫 편향 <input id="biasInput" value="0,0" inputmode="text"></label>
+    </div>
+    <p id="help" class="small">문맥은 a,b처럼 두 토큰을 쉼표로 입력합니다. 편향은 두 실수입니다.</p>
+    <p id="error" class="error" role="alert"></p>
+    <div class="buttons">
+      <button id="stepButton">다음 단계</button><button id="predictButton" class="secondary">예측 질문</button><button id="revealButton" class="warn">정답 보기</button><button id="resetButton" class="secondary">초기화</button>
+    </div>
+    <div id="stage" class="stage" aria-live="polite">초기화됨. 문맥을 입력하고 다음 단계를 눌러 보세요.</div>
+  </section>
+  <section class="grid" style="margin-top:18px">
+    <div class="card"><h2>현재 계산</h2><pre id="current" class="mono">아직 계산하지 않았습니다.</pre></div>
+    <div class="card"><h2>예측과 공개</h2><p id="question">예측 답은 아직 열리지 않았습니다.</p><pre id="answer" class="mono answer hidden"></pre></div>
+  </section>
+  <section class="card" style="margin-top:18px"><h2>고정 계약</h2><table><thead><tr><th>항목</th><th>값</th></tr></thead><tbody><tr><td>임베딩 E</td><td class="mono">[[1,0],[0,1],[1,1]]</td></tr><tr><td>W1 모양</td><td>1×4 → 1×2</td></tr><tr><td>W2 모양</td><td>1×2 → 1×3</td></tr><tr><td>가중치 성격</td><td>손으로 정한 장난감 값, 학습 결과 아님</td></tr></tbody></table></section>
+<footer class="companion-downloads" aria-label="다운로드"><a href="source.zip" download>전체 소스 ZIP 내려받기</a></footer></main>
+<script type="application/json" id="canonical-trace">{
+  "contract": {
+    "tokens": [
+      "a",
+      "b",
+      "c"
+    ],
+    "ids": {
+      "a": 0,
+      "b": 1,
+      "c": 2
+    },
+    "E": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0
+      ]
+    ],
+    "W1": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        -1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ]
+    ],
+    "B1": [
+      0.0,
+      0.0
+    ],
+    "W2": [
+      [
+        1.0,
+        0.0,
+        -1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ]
+    ],
+    "B2": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "shapes": {
+      "x": [
+        1,
+        4
+      ],
+      "u": [
+        1,
+        2
+      ],
+      "h": [
+        1,
+        2
+      ],
+      "z": [
+        1,
+        3
+      ],
+      "p": [
+        1,
+        3
+      ]
+    },
+    "provenance": "toy hand-chosen weights; not learned"
+  },
+  "main": {
+    "context_ids": [
+      0,
+      1
+    ],
+    "x": [
+      1.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "b1": [
+      0.0,
+      0.0
+    ],
+    "linear1": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": -1.0,
+            "product": -1.0
+          }
+        ],
+        "partial_sums": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "result": 0.0
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": -1.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "result": 1.0
+      }
+    ],
+    "u": [
+      0.0,
+      1.0
+    ],
+    "h": [
+      0.0,
+      0.7615941559557649
+    ],
+    "linear2": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.7615941559557649,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.7615941559557649,
+            "right": 1.0,
+            "product": 0.7615941559557649
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.7615941559557649
+        ],
+        "result": 0.7615941559557649
+      },
+      {
+        "output_id": 2,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.0,
+            "right": -1.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.7615941559557649,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      }
+    ],
+    "z": [
+      0.0,
+      0.7615941559557649,
+      0.0
+    ],
+    "p": [
+      0.24144746685807114,
+      0.5171050662838578,
+      0.24144746685807114
+    ],
+    "prediction_id": 1
+  },
+  "reverse": {
+    "context_ids": [
+      1,
+      0
+    ],
+    "x": [
+      0.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "b1": [
+      0.0,
+      0.0
+    ],
+    "linear1": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 0.0,
+            "right": -1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "result": 1.0
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 1.0,
+            "right": -1.0,
+            "product": -1.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      }
+    ],
+    "u": [
+      1.0,
+      0.0
+    ],
+    "h": [
+      0.7615941559557649,
+      0.0
+    ],
+    "linear2": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": 1.0,
+            "product": 0.7615941559557649
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.7615941559557649,
+          0.7615941559557649
+        ],
+        "result": 0.7615941559557649
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      },
+      {
+        "output_id": 2,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": -1.0,
+            "product": -0.7615941559557649
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          -0.7615941559557649,
+          -0.7615941559557649
+        ],
+        "result": -0.7615941559557649
+      }
+    ],
+    "z": [
+      0.7615941559557649,
+      0.0,
+      -0.7615941559557649
+    ],
+    "p": [
+      0.593493942510365,
+      0.27711507459119744,
+      0.12939098289843756
+    ],
+    "prediction_id": 0
+  },
+  "bias_case": {
+    "context_ids": [
+      0,
+      1
+    ],
+    "x": [
+      1.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "b1": [
+      1.0,
+      -1.0
+    ],
+    "linear1": [
+      {
+        "output_id": 0,
+        "bias": 1.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": -1.0,
+            "product": -1.0
+          }
+        ],
+        "partial_sums": [
+          2.0,
+          2.0,
+          2.0,
+          1.0
+        ],
+        "result": 1.0
+      },
+      {
+        "output_id": 1,
+        "bias": -1.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": -1.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          }
+        ],
+        "partial_sums": [
+          -1.0,
+          -1.0,
+          -1.0,
+          0.0
+        ],
+        "result": 0.0
+      }
+    ],
+    "u": [
+      1.0,
+      0.0
+    ],
+    "h": [
+      0.7615941559557649,
+      0.0
+    ],
+    "linear2": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": 1.0,
+            "product": 0.7615941559557649
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.7615941559557649,
+          0.7615941559557649
+        ],
+        "result": 0.7615941559557649
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      },
+      {
+        "output_id": 2,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.7615941559557649,
+            "right": -1.0,
+            "product": -0.7615941559557649
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          -0.7615941559557649,
+          -0.7615941559557649
+        ],
+        "result": -0.7615941559557649
+      }
+    ],
+    "z": [
+      0.7615941559557649,
+      0.0,
+      -0.7615941559557649
+    ],
+    "p": [
+      0.593493942510365,
+      0.27711507459119744,
+      0.12939098289843756
+    ],
+    "prediction_id": 0
+  },
+  "transfer": {
+    "context_ids": [
+      2,
+      0
+    ],
+    "x": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "b1": [
+      0.0,
+      0.0
+    ],
+    "linear1": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 1.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 0.0,
+            "right": -1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          1.0,
+          1.0,
+          2.0,
+          2.0
+        ],
+        "result": 2.0
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 1.0,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 1.0,
+            "right": 1.0,
+            "product": 1.0
+          },
+          {
+            "left": 1.0,
+            "right": -1.0,
+            "product": -1.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      }
+    ],
+    "u": [
+      2.0,
+      0.0
+    ],
+    "h": [
+      0.9640275800758169,
+      0.0
+    ],
+    "linear2": [
+      {
+        "output_id": 0,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.9640275800758169,
+            "right": 1.0,
+            "product": 0.9640275800758169
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.9640275800758169,
+          0.9640275800758169
+        ],
+        "result": 0.9640275800758169
+      },
+      {
+        "output_id": 1,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.9640275800758169,
+            "right": 0.0,
+            "product": 0.0
+          },
+          {
+            "left": 0.0,
+            "right": 1.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          0.0,
+          0.0
+        ],
+        "result": 0.0
+      },
+      {
+        "output_id": 2,
+        "bias": 0.0,
+        "terms": [
+          {
+            "left": 0.9640275800758169,
+            "right": -1.0,
+            "product": -0.9640275800758169
+          },
+          {
+            "left": 0.0,
+            "right": 0.0,
+            "product": 0.0
+          }
+        ],
+        "partial_sums": [
+          -0.9640275800758169,
+          -0.9640275800758169
+        ],
+        "result": -0.9640275800758169
+      }
+    ],
+    "z": [
+      0.9640275800758169,
+      0.0,
+      -0.9640275800758169
+    ],
+    "p": [
+      0.6549712302056548,
+      0.24977580393349028,
+      0.09525296586085488
+    ],
+    "prediction_id": 0
+  },
+  "shape_case": {
+    "input_shape": [
+      1,
+      4
+    ],
+    "hidden_shape": [
+      1,
+      2
+    ],
+    "output_shape": [
+      1,
+      3
+    ]
+  },
+  "edge_cases": {
+    "invalid_id": "reject",
+    "wrong_context_width": "reject",
+    "empty_context": "reject",
+    "single_context": "reject",
+    "finite_probabilities": "true"
+  },
+  "stable_softmax_sum": 1.0
+}</script>
+<script>
+const TRACE = JSON.parse(document.getElementById('canonical-trace').textContent);
+const $ = (id) => document.getElementById(id);
+let state = {stage: 0, predicted: false, result: null};
+function parseNumbers(text, expected, label) {
+  const values = String(text).split(',').map((v) => Number(v.trim()));
+  if (values.length !== expected || values.some((v) => !Number.isFinite(v))) throw new Error(`${label} 형식은 ${expected}개의 유한한 수여야 합니다.`);
+  return values;
+}
+function parseContext(text) {
+  const values = String(text).split(',').map((v) => v.trim());
+  if (values.length !== 2 || values.some((v) => !Object.hasOwn(TRACE.contract.ids, v))) throw new Error('문맥은 a,b,c 중 두 토큰이어야 합니다.');
+  return values.map((v) => TRACE.contract.ids[v]);
+}
+function linear(values, weights, bias) { return weights[0].map((_, j) => bias[j] + values.reduce((sum, value, i) => sum + value * weights[i][j], 0)); }
+function softmax(values) { const peak = Math.max(...values); const weights = values.map((v) => Math.exp(v - peak)); const total = weights.reduce((a, b) => a + b, 0); return weights.map((v) => v / total); }
+function calculate() {
+  const ids = parseContext($('contextInput').value);
+  const b1 = parseNumbers($('biasInput').value, 2, '편향');
+  const x = TRACE.contract.E[ids[0]].concat(TRACE.contract.E[ids[1]]);
+  const u = linear(x, TRACE.contract.W1, b1);
+  const h = u.map(Math.tanh);
+  const z = linear(h, TRACE.contract.W2, TRACE.contract.B2);
+  const p = softmax(z);
+  return {ids, x, b1, u, h, z, p, prediction: p.indexOf(Math.max(...p))};
+}
+function pretty(values) { return `[${values.map((v) => Number(v).toFixed(6)).join(', ')}]`; }
+function render() {
+  try {
+    state.result = calculate();
+    $('error').textContent = '';
+    const r = state.result;
+    const stages = ['입력 x', '합 u = xW1 + b1', '은닉 h = tanh(u)', '로짓 z = hW2 + b2', '확률 p = softmax(z)'];
+    $('stage').textContent = `${stages[Math.min(state.stage, stages.length - 1)]}: ${pretty([r.x, r.u, r.h, r.z, r.p][Math.min(state.stage, stages.length - 1)])}`;
+    $('current').textContent = `x=${pretty(r.x)}\nu=${pretty(r.u)}\nh=${pretty(r.h)}\nz=${pretty(r.z)}\np=${pretty(r.p)}`;
+    if (state.predicted) $('question').textContent = '예측을 마쳤습니다. 정답 보기를 눌러 계산값을 공개하세요.';
+  } catch (error) { $('error').textContent = error.message; state.result = null; }
+}
+$('stepButton').addEventListener('click', () => { state.stage = Math.min(state.stage + 1, 4); render(); });
+$('predictButton').addEventListener('click', () => { state.predicted = true; $('answer').classList.add('hidden'); $('question').textContent = '질문: 이 문맥의 확률에서 가장 큰 칸은 무엇일까요?'; render(); });
+$('revealButton').addEventListener('click', () => { if (!state.predicted) { $('error').textContent = '먼저 예측 질문을 눌러 답을 숨겨 주세요.'; return; } if (!state.result) render(); if (!state.result) return; const r = state.result; $('answer').textContent = `u=${pretty(r.u)}\nh=${pretty(r.h)}\nz=${pretty(r.z)}\np=${pretty(r.p)}\nprediction_id=${r.prediction}`; $('answer').classList.remove('hidden'); $('question').textContent = '정답이 공개되었습니다. 표시값은 소수 여섯째 자리까지입니다.'; });
+$('resetButton').addEventListener('click', () => { state = {stage: 0, predicted: false, result: null}; $('answer').classList.add('hidden'); $('question').textContent = '예측 답은 아직 열리지 않았습니다.'; $('current').textContent = '아직 계산하지 않았습니다.'; $('error').textContent = ''; $('stage').textContent = '초기화됨. 문맥을 입력하고 다음 단계를 눌러 보세요.'; });
+</script>
+</body>
+</html>
