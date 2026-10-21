@@ -1,0 +1,1 @@
+default: order=A->B->F->C->D->E cycle=false

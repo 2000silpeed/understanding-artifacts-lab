@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="760" viewBox="0 0 1600 760" role="img" aria-labelledby="title desc">
+<title id="title">Kahn 위상 정렬 기본 그래프</title>
+<desc id="desc">A와 B가 C를 선행하고 C와 D가 E를 선행하며 F는 고립된 방향 그래프</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#6b5b4b"/></marker></defs>
+<rect width="1600" height="760" rx="28" fill="#f7f1e5"/>
+<g fill="#fffaf0" stroke="#3d8b83" stroke-width="4" font-family="sans-serif" text-anchor="middle">
+  <rect x="140" y="160" width="150" height="84" rx="18"/><text x="215" y="213" font-size="34">A</text>
+  <rect x="140" y="470" width="150" height="84" rx="18"/><text x="215" y="523" font-size="34">B</text>
+  <rect x="600" y="160" width="150" height="84" rx="18"/><text x="675" y="213" font-size="34">C</text>
+  <rect x="600" y="470" width="150" height="84" rx="18"/><text x="675" y="523" font-size="34">D</text>
+  <rect x="1060" y="315" width="150" height="84" rx="18"/><text x="1135" y="368" font-size="34">E</text>
+  <rect x="1340" y="580" width="150" height="84" rx="18" stroke="#9b8f82"/><text x="1415" y="633" font-size="34">F</text>
+</g>
+<g fill="none" stroke="#6b5b4b" stroke-width="5" marker-end="url(#arrow)">
+  <path d="M290 202 C410 130 500 170 600 202"/><path d="M290 500 C420 440 500 230 600 202"/>
+  <path d="M290 500 C420 560 500 500 600 512"/><path d="M750 202 C900 230 960 300 1060 350"/>
+  <path d="M750 512 C900 480 970 400 1060 365"/>
+</g>
+<g font-family="sans-serif" font-size="28" fill="#6b5b4b"><text x="170" y="95">초기 진입차수: A=0, B=0, F=0</text><text x="1120" y="720">F는 고립 정점이라도 출력에 포함</text></g>
+</svg>

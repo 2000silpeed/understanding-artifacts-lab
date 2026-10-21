@@ -1,0 +1,1193 @@
+export const TRACE = {
+  "contract": {
+    "algorithm": "topological_sort_kahn",
+    "complexity": "O(V + E)",
+    "cycle_rule": "cycle exists when processed output length is smaller than vertex count",
+    "default_adjacency": {
+      "A": [
+        "C"
+      ],
+      "B": [
+        "C",
+        "D"
+      ],
+      "C": [
+        "E"
+      ],
+      "D": [
+        "E"
+      ],
+      "E": [],
+      "F": []
+    },
+    "dependency_meaning": "u -> v means u must be processed before v",
+    "duplicate_edges": "rejected before execution",
+    "graph_kind": "directed",
+    "instrumentation": "each event stores a full queue, indegree, output, and processed snapshot; this is separate from algorithm cost",
+    "queue_policy": "FIFO; initial zero-indegree vertices follow input order",
+    "self_loops": "accepted by validation and make a cycle",
+    "transfer_adjacency": {
+      "A": [
+        "C"
+      ],
+      "B": [
+        "C",
+        "D"
+      ],
+      "C": [
+        "E"
+      ],
+      "D": [
+        "E"
+      ],
+      "E": [
+        "B"
+      ],
+      "F": []
+    },
+    "vertices": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "zero_indegree": "indegree counts remaining incoming edges"
+  },
+  "scenarios": {
+    "default": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 2,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [
+            "A",
+            "B",
+            "F"
+          ],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 2,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "B",
+            "F"
+          ],
+          "time": 1,
+          "to": null,
+          "value": null,
+          "vertex": "A"
+        },
+        {
+          "from": "A",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 1,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "B",
+            "F"
+          ],
+          "time": 2,
+          "to": "C",
+          "value": 1,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 1,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "B"
+          ],
+          "queue": [
+            "F"
+          ],
+          "time": 3,
+          "to": null,
+          "value": null,
+          "vertex": "B"
+        },
+        {
+          "from": "B",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "B"
+          ],
+          "queue": [
+            "F"
+          ],
+          "time": 4,
+          "to": "C",
+          "value": 0,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "enqueue",
+          "output": [
+            "A",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "B"
+          ],
+          "queue": [
+            "F",
+            "C"
+          ],
+          "time": 5,
+          "to": null,
+          "value": null,
+          "vertex": "C"
+        },
+        {
+          "from": "B",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "B"
+          ],
+          "queue": [
+            "F",
+            "C"
+          ],
+          "time": 6,
+          "to": "D",
+          "value": 0,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "enqueue",
+          "output": [
+            "A",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "B"
+          ],
+          "queue": [
+            "F",
+            "C",
+            "D"
+          ],
+          "time": 7,
+          "to": null,
+          "value": null,
+          "vertex": "D"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "B",
+            "F"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F"
+          ],
+          "queue": [
+            "C",
+            "D"
+          ],
+          "time": 8,
+          "to": null,
+          "value": null,
+          "vertex": "F"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C"
+          ],
+          "queue": [
+            "D"
+          ],
+          "time": 9,
+          "to": null,
+          "value": null,
+          "vertex": "C"
+        },
+        {
+          "from": "C",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 1,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C"
+          ],
+          "queue": [
+            "D"
+          ],
+          "time": 10,
+          "to": "E",
+          "value": 1,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 1,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "queue": [],
+          "time": 11,
+          "to": null,
+          "value": null,
+          "vertex": "D"
+        },
+        {
+          "from": "D",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "queue": [],
+          "time": 12,
+          "to": "E",
+          "value": 0,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "enqueue",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D"
+          ],
+          "queue": [
+            "E"
+          ],
+          "time": 13,
+          "to": null,
+          "value": null,
+          "vertex": "E"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D",
+            "E"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D",
+            "E"
+          ],
+          "queue": [],
+          "time": 14,
+          "to": null,
+          "value": null,
+          "vertex": "E"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "done",
+          "output": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D",
+            "E"
+          ],
+          "processed": [
+            "A",
+            "B",
+            "F",
+            "C",
+            "D",
+            "E"
+          ],
+          "queue": [],
+          "time": 15,
+          "to": null,
+          "value": 0,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0,
+        "F": 0
+      },
+      "has_cycle": false,
+      "order": [
+        "A",
+        "B",
+        "F",
+        "C",
+        "D",
+        "E"
+      ],
+      "remaining": [],
+      "vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    "disconnected": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "time": 1,
+          "to": null,
+          "value": null,
+          "vertex": "A"
+        },
+        {
+          "from": "A",
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "time": 2,
+          "to": "B",
+          "value": 0,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "enqueue",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "C",
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "time": 3,
+          "to": null,
+          "value": null,
+          "vertex": "B"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "C"
+          ],
+          "processed": [
+            "A",
+            "C"
+          ],
+          "queue": [
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "time": 4,
+          "to": null,
+          "value": null,
+          "vertex": "C"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "C",
+            "D"
+          ],
+          "processed": [
+            "A",
+            "C",
+            "D"
+          ],
+          "queue": [
+            "E",
+            "F",
+            "B"
+          ],
+          "time": 5,
+          "to": null,
+          "value": null,
+          "vertex": "D"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "C",
+            "D",
+            "E"
+          ],
+          "processed": [
+            "A",
+            "C",
+            "D",
+            "E"
+          ],
+          "queue": [
+            "F",
+            "B"
+          ],
+          "time": 6,
+          "to": null,
+          "value": null,
+          "vertex": "E"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "processed": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "queue": [
+            "B"
+          ],
+          "time": 7,
+          "to": null,
+          "value": null,
+          "vertex": "F"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "queue": [],
+          "time": 8,
+          "to": null,
+          "value": null,
+          "vertex": "B"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0
+          },
+          "kind": "done",
+          "output": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "processed": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F",
+            "B"
+          ],
+          "queue": [],
+          "time": 9,
+          "to": null,
+          "value": 0,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {
+        "A": 0,
+        "B": 0,
+        "C": 0,
+        "D": 0,
+        "E": 0,
+        "F": 0
+      },
+      "has_cycle": false,
+      "order": [
+        "A",
+        "C",
+        "D",
+        "E",
+        "F",
+        "B"
+      ],
+      "remaining": [],
+      "vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    },
+    "duplicate": {
+      "accepted": false,
+      "error": "duplicate edge rejected"
+    },
+    "empty": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {},
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {},
+          "kind": "done",
+          "output": [],
+          "processed": [],
+          "queue": [],
+          "time": 1,
+          "to": null,
+          "value": 0,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {},
+      "has_cycle": false,
+      "order": [],
+      "remaining": [],
+      "vertices": []
+    },
+    "invalid_endpoint": {
+      "accepted": false,
+      "error": "invalid endpoint"
+    },
+    "self_loop": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {
+            "X": 1
+          },
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "X": 1
+          },
+          "kind": "done",
+          "output": [],
+          "processed": [],
+          "queue": [],
+          "time": 1,
+          "to": null,
+          "value": 1,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {
+        "X": 1
+      },
+      "has_cycle": true,
+      "order": [],
+      "remaining": [
+        "X"
+      ],
+      "vertices": [
+        "X"
+      ]
+    },
+    "single": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {
+            "X": 0
+          },
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [
+            "X"
+          ],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "X": 0
+          },
+          "kind": "pop",
+          "output": [
+            "X"
+          ],
+          "processed": [
+            "X"
+          ],
+          "queue": [],
+          "time": 1,
+          "to": null,
+          "value": null,
+          "vertex": "X"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "X": 0
+          },
+          "kind": "done",
+          "output": [
+            "X"
+          ],
+          "processed": [
+            "X"
+          ],
+          "queue": [],
+          "time": 2,
+          "to": null,
+          "value": 0,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {
+        "X": 0
+      },
+      "has_cycle": false,
+      "order": [
+        "X"
+      ],
+      "remaining": [],
+      "vertices": [
+        "X"
+      ]
+    },
+    "transfer": {
+      "events": [
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 2,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "init",
+          "output": [],
+          "processed": [],
+          "queue": [
+            "A",
+            "F"
+          ],
+          "time": 0,
+          "to": null,
+          "value": null,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 2,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "F"
+          ],
+          "time": 1,
+          "to": null,
+          "value": null,
+          "vertex": "A"
+        },
+        {
+          "from": "A",
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 1,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "decrement",
+          "output": [
+            "A"
+          ],
+          "processed": [
+            "A"
+          ],
+          "queue": [
+            "F"
+          ],
+          "time": 2,
+          "to": "C",
+          "value": 1,
+          "vertex": null
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 1,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "pop",
+          "output": [
+            "A",
+            "F"
+          ],
+          "processed": [
+            "A",
+            "F"
+          ],
+          "queue": [],
+          "time": 3,
+          "to": null,
+          "value": null,
+          "vertex": "F"
+        },
+        {
+          "from": null,
+          "indegree": {
+            "A": 0,
+            "B": 1,
+            "C": 1,
+            "D": 1,
+            "E": 2,
+            "F": 0
+          },
+          "kind": "done",
+          "output": [
+            "A",
+            "F"
+          ],
+          "processed": [
+            "A",
+            "F"
+          ],
+          "queue": [],
+          "time": 4,
+          "to": null,
+          "value": 4,
+          "vertex": null
+        }
+      ],
+      "final_indegree": {
+        "A": 0,
+        "B": 1,
+        "C": 1,
+        "D": 1,
+        "E": 2,
+        "F": 0
+      },
+      "has_cycle": true,
+      "order": [
+        "A",
+        "F"
+      ],
+      "remaining": [
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "vertices": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ]
+    }
+  }
+};
