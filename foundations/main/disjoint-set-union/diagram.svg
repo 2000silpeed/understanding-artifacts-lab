@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+<title id="title">서로소 집합 parent forest와 경로 압축</title>
+<desc id="desc">find 전 3에서 2를 거쳐 0으로 가는 경로와 find 후 3에서 0으로 바로 가는 경로를 비교한다</desc>
+<rect width="1600" height="920" fill="#f7f1e5"/>
+<g font-family="system-ui,sans-serif" text-anchor="middle" font-weight="700" fill="#1f2933">
+  <text x="800" y="58" font-size="34" fill="#5d6870">parent forest · root size · path compression</text>
+  <text x="400" y="112" font-size="32">find 전 · 3 → 2 → 0</text>
+  <text x="1200" y="112" font-size="32">find 후 · 3 → 0</text>
+</g>
+<g stroke="#9b9184" stroke-width="4" fill="none">
+  <line data-stage="before" data-parent="0" data-child="1" data-direction="child-to-parent" x1="270" y1="350" x2="400" y2="208"/>
+  <line data-stage="before" data-parent="0" data-child="2" data-direction="child-to-parent" x1="530" y1="350" x2="400" y2="208"/>
+  <line data-stage="before" data-parent="2" data-child="3" data-direction="child-to-parent" x1="530" y1="560" x2="530" y2="410"/>
+  <line data-stage="after" data-parent="0" data-child="1" data-direction="child-to-parent" x1="1070" y1="350" x2="1200" y2="208"/>
+  <line data-stage="after" data-parent="0" data-child="2" data-direction="child-to-parent" x1="1330" y1="350" x2="1200" y2="208"/>
+  <line data-stage="after" data-parent="0" data-child="3" data-direction="child-to-parent" x1="1200" y1="560" x2="1200" y2="208"/>
+</g>
+<g stroke="#2d6cdf" stroke-width="4">
+  <g data-stage="before" data-node="0" data-terminal="root"><circle cx="400" cy="180" r="30" fill="#f5b7c5"/><text x="400" y="190" font-size="22">0</text></g>
+  <g data-stage="before" data-node="1" data-terminal="child"><circle cx="270" cy="380" r="30" fill="#dbe7ff"/><text x="270" y="390" font-size="28">1</text></g>
+  <g data-stage="before" data-node="2" data-terminal="child"><circle cx="530" cy="380" r="30" fill="#dbe7ff"/><text x="530" y="390" font-size="28">2</text></g>
+  <g data-stage="before" data-node="3" data-terminal="path"><circle cx="530" cy="590" r="30" fill="#f5b7c5"/><text x="530" y="600" font-size="28">3</text></g>
+  <g data-stage="after" data-node="0" data-terminal="root"><circle cx="1200" cy="180" r="30" fill="#f5b7c5"/><text x="1200" y="190" font-size="22">0</text></g>
+  <g data-stage="after" data-node="1" data-terminal="child"><circle cx="1070" cy="380" r="30" fill="#dbe7ff"/><text x="1070" y="390" font-size="28">1</text></g>
+  <g data-stage="after" data-node="2" data-terminal="child"><circle cx="1330" cy="380" r="30" fill="#dbe7ff"/><text x="1330" y="390" font-size="28">2</text></g>
+  <g data-stage="after" data-node="3" data-terminal="path"><circle cx="1200" cy="590" r="30" fill="#f5b7c5"/><text x="1200" y="600" font-size="28">3</text></g>
+</g>
+<g font-family="system-ui,sans-serif" text-anchor="middle" font-size="25" font-weight="700">
+  <text x="400" y="735" fill="#5d6870">parent[3] = 2 · root size = 4</text>
+  <text x="1200" y="735" fill="#d94f70">parent[3] = 0 · root size = 4</text>
+  <text x="800" y="850" fill="#5d6870">path compression은 parent만 바꾸고 대표와 집합을 유지합니다</text>
+</g>
+</svg>

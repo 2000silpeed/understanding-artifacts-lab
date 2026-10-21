@@ -1,0 +1,12 @@
+dsu input: [0,1,2,3,4,5]
+union (0,1) changed: true
+union (2,3) changed: true
+union (1,2) changed: true
+find 3 before path: 3->2->0
+find 3 after path: 3->0
+same (0,3): true
+same (0,4): false
+duplicate union (0,3) changed: false
+final parent: [0, 0, 0, 0, 4, 5]
+final root size: 4
+trace events: 7
