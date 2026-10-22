@@ -1,0 +1,20 @@
+{
+  "source_script_sha256": "86dd871bae96934f50a5c1845cfa5ea615c9ccd11baca4d15271dd127ff317ce",
+  "original_lab_sha256": "bcf9c4bd5a702b0b81c9e8fd7b21e7b102c621b25e7fadf00494ee925eba23ee",
+  "files": {
+    "index.html": "8abd8007c68cc413e41bb8f60b52444e9625919f309baa7a0915919fb8f9a686",
+    "fenwick-source.zip": "8e01cf0d71bdd89da54c73722e6dd1bc2f3aef9faa9b06231b8e42ae15f96e82",
+    "lab.html": "bcf9c4bd5a702b0b81c9e8fd7b21e7b102c621b25e7fadf00494ee925eba23ee",
+    "README.md": "f86be1e7061e9926f077665326ff77df74cc621685b83aa1c40777b4885d7c03",
+    "examples/facts.py": "61c16399fc8ac0be875d6a9bdc7e32283dea69b0b395d11334c7a644765b8c5c",
+    "examples/run_examples.py": "538e055825ed5cf34db39e2ca4cc50a593fc1eba8e6fff1a60d7ceb7dea2821a",
+    "examples/fenwick.cpp": "83095530a9af2038b4ba0706b068cccffffacdf2ee1f562c4bc1347b8884bb7a",
+    "examples/fenwick.py": "29ef5370b4361e1e987ac3fb3a3ef2622e3a740c6579325eefa1e790fdf25524"
+  },
+  "wrapper_only_changes": [
+    "Noto Sans KR font loading",
+    "download links",
+    "mobile responsive controls/grid and horizontally scrollable trace table; exact JS preserved"
+  ],
+  "paid_cache_included": false
+}

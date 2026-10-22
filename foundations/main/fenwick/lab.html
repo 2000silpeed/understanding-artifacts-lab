@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>펜윅 트리 실습 — 값이 바뀌어도 구간 합을 빠르게</title>
+<!-- 영상 films/fenwick-20261022 의 실습 페이지. 외부 파일·네트워크 없이 이 파일 하나로 동작한다.
+     색은 영상과 같은 tokens.json paper 레시피 값(바탕 #FBF5EE, 글자 #123649, 파랑 #2952BE, 주황 #FEA500, 회색 #4F626D). -->
+<style>
+  :root { --ground:#FBF5EE; --ink:#123649; --blue:#2952BE; --orange:#FEA500; --muted:#4F626D; --bar:#E9E1D4; --cell:#F4EDE3; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.5 -apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif; }
+  main { max-width: 1060px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { margin: 0 0 4px; font-size: 30px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .grid { display: grid; grid-template-columns: 64px repeat(8, 1fr); gap: 8px; align-items: center; }
+  .rowname { color: var(--muted); font-weight: 700; text-align: right; padding-right: 6px; }
+  .idx { text-align: center; color: var(--muted); font-weight: 700; }
+  .bits { text-align: center; font-family: ui-monospace, Menlo, monospace; letter-spacing: 1px; color: var(--muted); }
+  .bits b { background: var(--ink); color: var(--ground); border-radius: 4px; padding: 0 2px; }
+  input.val { width: 100%; height: 64px; font-size: 28px; font-weight: 800; text-align: center; color: var(--ink);
+              background: var(--cell); border: 1.5px solid rgba(18,54,73,.45); border-radius: 12px; }
+  input.val.hot { background: rgba(254,165,0,.55); }
+  input.val.inq { background: rgba(41,82,190,.14); }
+  svg { width: 100%; height: auto; display: block; margin-top: 10px; }
+  .panel { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 22px; }
+  .card { background: rgba(18,54,73,.04); border-radius: 16px; padding: 14px 16px; }
+  .card h2 { font-size: 18px; margin: 0 0 10px; }
+  .card label { color: var(--muted); font-size: 14px; margin-right: 4px; }
+  .card input[type=number] { width: 64px; font-size: 16px; padding: 4px 6px; border-radius: 8px; border: 1px solid rgba(18,54,73,.35); background: #fff; color: var(--ink); }
+  button { font: inherit; font-weight: 800; border: 0; border-radius: 999px; padding: 6px 16px; cursor: pointer; margin-top: 8px; }
+  .q { background: var(--blue); color: var(--ground); } .u { background: var(--orange); color: var(--ink); } .r { background: var(--ink); color: var(--ground); }
+  .ghost { background: transparent; color: var(--muted); border: 1.5px solid rgba(79,98,109,.5); }
+  table { border-collapse: collapse; width: 100%; margin-top: 18px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid rgba(79,98,109,.25); }
+  th { color: var(--muted); font-size: 14px; }
+  td.mono { font-family: ui-monospace, Menlo, monospace; }
+  #result { font-size: 22px; font-weight: 800; margin-top: 14px; min-height: 33px; }
+  #selftest { margin-top: 26px; color: var(--muted); font-size: 14px; }
+  #selftest.pass b { color: var(--blue); } #selftest.fail b { color: #b3261e; }
+  code { background: rgba(18,54,73,.07); padding: 1px 5px; border-radius: 5px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>펜윅 트리 실습</h1>
+  <p class="sub">값 칸을 직접 고치거나 아래 버튼을 눌러, 합(파랑)은 맨 오른쪽 1을 <b>빼며 내려가고</b> 갱신(주황)은 <b>더하며 올라가는</b> 경로를 확인하세요. 처음 값은 영상과 같은 예시 값입니다.</p>
+
+  <div class="grid" id="top"></div>
+  <svg id="bars" viewBox="0 0 1000 300" aria-label="펜윅 막대"></svg>
+
+  <div class="panel">
+    <div class="card">
+      <h2>합 구하기 prefix(i)</h2>
+      <label for="qi">i</label><input type="number" id="qi" min="1" max="8" value="7"><br>
+      <button class="q" id="btnQ">1번부터 i번까지의 합</button>
+    </div>
+    <div class="card">
+      <h2>값 바꾸기 update(i, d)</h2>
+      <label for="ui">i</label><input type="number" id="ui" min="1" max="8" value="3">
+      <label for="ud">d</label><input type="number" id="ud" value="5"><br>
+      <button class="u" id="btnU">i번 값에 d 더하기</button>
+    </div>
+    <div class="card">
+      <h2>구간 합 range(l, r)</h2>
+      <label for="rl">l</label><input type="number" id="rl" min="1" max="8" value="3">
+      <label for="rr">r</label><input type="number" id="rr" min="1" max="8" value="7"><br>
+      <button class="r" id="btnR">prefix(r) − prefix(l − 1)</button>
+    </div>
+  </div>
+  <button class="ghost" id="btnReset">처음 값으로</button>
+
+  <div id="result"></div>
+  <table><thead><tr><th>단계</th><th>i</th><th>이진수</th><th>맨 오른쪽 1 (i &amp; -i)</th><th>한 일</th></tr></thead><tbody id="steps"></tbody></table>
+  <p id="selftest"></p>
+  <p class="sub" style="margin-top:18px">같은 알고리즘의 실행 예제: <code>examples/fenwick.py</code>, <code>examples/fenwick.cpp</code> (출력: <code>examples/out/python.txt</code>).</p>
+</main>
+<script>
+'use strict';
+const INIT = [3, 1, 4, 1, 5, 9, 2, 6];   // 영상과 같은 예시 값 (1번..8번)
+const N = INIT.length;
+let A = INIT.slice(), tree = [];
+let hl = { cells: {}, bars: {} };
+
+const lowbit = i => i & -i;
+const bin = (i, w = 4) => (i >>> 0).toString(2).padStart(w, '0').slice(-Math.max(w, (i >>> 0).toString(2).length));
+const binHtml = i => { const s = bin(i), r = s.lastIndexOf('1'); return [...s].map((c, k) => (k === r ? `<b>${c}</b>` : c)).join(''); };
+
+// --- the data structure (same as examples/fenwick.py) ---
+function build() { tree = new Array(N + 1).fill(0); for (let i = 1; i <= N; i++) addTree(i, A[i - 1]); }
+function addTree(i, d, path) { for (; i <= N; i += lowbit(i)) { if (path) path.push(i); tree[i] += d; } }
+function prefix(i, path) { let s = 0; for (; i > 0; i -= lowbit(i)) { if (path) path.push(i); s += tree[i]; } return s; }
+function rangeSum(l, r) { return prefix(r) - prefix(l - 1); }
+
+// --- drawing ---
+const topEl = document.getElementById('top'), svg = document.getElementById('bars');
+function renderTop() {
+  let h = '<div></div>' + Array.from({ length: N }, (_, k) => `<div class="idx">${k + 1}</div>`).join('');
+  h += '<div></div>' + Array.from({ length: N }, (_, k) => `<div class="bits">${binHtml(k + 1)}</div>`).join('');
+  h += '<div class="rowname">A</div>' + A.map((v, k) => `<input class="val ${hl.cells[k + 1] || ''}" data-i="${k + 1}" value="${v}" inputmode="numeric" aria-label="${k + 1}번 값">`).join('');
+  topEl.innerHTML = h;
+  topEl.querySelectorAll('input.val').forEach(el => el.addEventListener('change', () => {
+    const i = +el.dataset.i, v = parseInt(el.value, 10);
+    if (Number.isNaN(v)) { el.value = A[i - 1]; return; }
+    doUpdate(i, v - A[i - 1]);
+  }));
+}
+function renderBars() {
+  const W = 1000, left = 64 / 1060 * W + 8, colW = (W - left) / N, h = 52, gapY = 18;
+  let s = '';
+  for (let i = 1; i <= N; i++) {
+    const lo = i - lowbit(i) + 1, lev = Math.log2(lowbit(i)), x = left + (lo - 1) * colW + 4, w = (i - lo + 1) * colW - 8, y = 10 + lev * (h + gapY);
+    // q = prefix path (blue), u = update path (orange), m = the subtracted prefix(l − 1) of a range (grey)
+    const c = hl.bars[i] || '', fill = c === 'q' ? 'var(--blue)' : c === 'u' ? 'var(--orange)' : c === 'm' ? 'var(--muted)' : 'var(--bar)', ink = c === 'q' || c === 'm' ? 'var(--ground)' : 'var(--ink)';
+    s += `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}"/>` +
+         `<text x="${x + w / 2}" y="${y + h * 0.64}" text-anchor="middle" font-weight="800" font-size="20" fill="${ink}">t[${i}] = ${tree[i]}</text>` +
+         `<text x="${x + w / 2}" y="${y + h + 13}" text-anchor="middle" font-size="12" fill="var(--muted)">${lo}~${i}</text></g>`;
+  }
+  s += `<text x="4" y="${10 + h * 0.64}" font-size="16" font-weight="700" fill="var(--muted)">tree</text>`;
+  svg.innerHTML = s;
+}
+function render() { renderTop(); renderBars(); }
+function showSteps(rows, result) {
+  document.getElementById('steps').innerHTML = rows.map((r, k) => `<tr><td>${k + 1}</td><td>${r.i}</td><td class="mono">${binHtml(r.i)}</td><td>${lowbit(r.i)}</td><td>${r.what}</td></tr>`).join('');
+  document.getElementById('result').textContent = result;
+}
+
+// --- actions ---
+const clampIdx = v => Math.min(N, Math.max(1, parseInt(v, 10) || 1));
+function doPrefix(i) {
+  const path = [], s = prefix(i, path);
+  let acc = 0;
+  hl = { cells: Object.fromEntries(Array.from({ length: i }, (_, k) => [k + 1, 'inq'])), bars: Object.fromEntries(path.map(p => [p, 'q'])) };
+  render();
+  showSteps(path.map(p => ({ i: p, what: `t[${p}] = ${tree[p]} 더함 → ${(acc += tree[p])}, 다음 i = ${p} − ${lowbit(p)} = ${p - lowbit(p)}` })),
+    `prefix(${i}) = ${path.map(p => tree[p]).join(' + ')} = ${s}  (읽은 칸 ${path.length}개)`);
+  return { path, sum: s };
+}
+function doUpdate(i, d) {
+  const path = [], before = tree.slice();
+  A[i - 1] += d;
+  addTree(i, d, path);
+  hl = { cells: { [i]: 'hot' }, bars: Object.fromEntries(path.map(p => [p, 'u'])) };
+  render();
+  const nxt = path[path.length - 1] + lowbit(path[path.length - 1]);
+  showSteps(path.map(p => ({ i: p, what: `t[${p}]: ${before[p]} → ${tree[p]}, 다음 i = ${p} + ${lowbit(p)} = ${p + lowbit(p)}${p + lowbit(p) > N ? ' (배열 밖, 끝)' : ''}` })),
+    `update(${i}, ${d >= 0 ? '+' : ''}${d}): 고친 칸 ${path.length}개 (${path.join(' → ')} → ${nxt} 배열 밖)`);
+  return { path };
+}
+function doRange(l, r) {
+  if (l > r) [l, r] = [r, l];
+  const pr = [], pl = [], R = prefix(r, pr), L = prefix(l - 1, pl);
+  hl = { cells: Object.fromEntries(Array.from({ length: r - l + 1 }, (_, k) => [l + k, 'inq'])), bars: Object.fromEntries(pr.map(p => [p, 'q']).concat(pl.map(p => [p, 'm']))) };
+  render();
+  showSteps(pr.map(p => ({ i: p, what: `prefix(${r}) 쪽: t[${p}] = ${tree[p]} 더함` })).concat(pl.map(p => ({ i: p, what: `prefix(${l - 1}) 쪽: t[${p}] = ${tree[p]} 더함` }))),
+    `range(${l}, ${r}) = prefix(${r}) − prefix(${l - 1}) = ${R} − ${L} = ${R - L}`);
+  return { sum: R - L };
+}
+
+document.getElementById('btnQ').onclick = () => doPrefix(clampIdx(document.getElementById('qi').value));
+document.getElementById('btnU').onclick = () => doUpdate(clampIdx(document.getElementById('ui').value), parseInt(document.getElementById('ud').value, 10) || 0);
+document.getElementById('btnR').onclick = () => doRange(clampIdx(document.getElementById('rl').value), clampIdx(document.getElementById('rr').value));
+document.getElementById('btnReset').onclick = () => { A = INIT.slice(); hl = { cells: {}, bars: {} }; build(); render(); showSteps([], ''); };
+
+// --- self-test: random updates/queries against a plain array (fixed-seed LCG, same constants as the examples) ---
+function selfTest() {
+  const m = 1000, ops = 20000, mask = (1n << 64n) - 1n;
+  let x = 20261022n;
+  const next = k => { x = (x * 6364136223846793005n + 1442695040888963407n) & mask; return Number((x >> 33n) % BigInt(k)); };
+  const plain = new Array(m + 1).fill(0), t = new Array(m + 1).fill(0);
+  const add = (i, d) => { for (; i <= m; i += i & -i) t[i] += d; }, pre = i => { let s = 0; for (; i > 0; i -= i & -i) s += t[i]; return s; };
+  let checked = 0;
+  for (let k = 0; k < ops; k++) {
+    if (next(2)) { const i = next(m) + 1, d = next(201) - 100; plain[i] += d; add(i, d); }
+    else {
+      const l = next(m) + 1, r = l + next(m - l + 1);
+      let want = 0; for (let i = l; i <= r; i++) want += plain[i];
+      if (pre(r) - pre(l - 1) !== want) return { pass: false, ops, checked, at: [l, r] };
+      checked++;
+    }
+  }
+  return { pass: true, ops, checked };
+}
+
+build(); render();
+const st = selfTest(), el = document.getElementById('selftest');
+el.className = st.pass ? 'pass' : 'fail';
+el.innerHTML = `자체 검사: <b>${st.pass ? 'PASS' : 'FAIL'}</b> — 무작위 연산 ${st.ops}번(n = 1000) 중 구간 합 ${st.checked}번을 단순 배열 합과 비교.`;
+window.fenwickLab = { prefix: doPrefix, update: doUpdate, range: doRange, selfTest: st, state: () => ({ A: A.slice(), tree: tree.slice(1) }) };
+</script>
+</body>
+</html>
