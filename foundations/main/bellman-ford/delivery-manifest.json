@@ -1,0 +1,30 @@
+{
+  "slug": "bellman-ford",
+  "source_snapshot": "source-v2",
+  "video_embed": false,
+  "wrapper_only_changes": [
+    "Noto Sans KR local font loading",
+    "mobile responsive wrapper",
+    "learner download links"
+  ],
+  "files": {
+    "index.html": "9145759e1664170af155a91d447e7c05b875ccf6800b5306b1a31298200d15c6",
+    "lab.html": "58958cd2fa701f9302c9edfa4120984b5869f2904e68b3ac3cc267aba6a13745",
+    "examples/bellman_ford.py": "df568f1cd392d6c5d86050c44e5493b6e7cd468de4291404915c8186b9a1fd45",
+    "examples/bellman_ford.cpp": "0acdc91af4e04a787658f55f26097fe32d3bc9c8b92411fef219d7dc27162206",
+    "examples/run_examples.py": "6fcb7f02a0997af36d99b0b18f203d2a214c824a03860c6bbaa9c889b2964621",
+    "examples/graph.txt": "bb94bc1c321bbfd798f554bb8a4b56e73c736fc24e738fd800daa69c17261c2f",
+    "examples/graph-negative-cycle.txt": "285a523390eafb50e9f876516188a7c5384e20aef2a79a4aec8411309a562707",
+    "bellman-ford-source.zip": "8ab97f5c9ac3a9102fc962e23b3e13b3ebec6523d477c5bb90e14011a097317b"
+  },
+  "learner_zip_entries": [
+    "README.md",
+    "practice/index.html",
+    "practice/bf.js",
+    "examples/bellman_ford.py",
+    "examples/bellman_ford.cpp",
+    "examples/run_examples.py",
+    "examples/graph.txt",
+    "examples/graph-negative-cycle.txt"
+  ]
+}

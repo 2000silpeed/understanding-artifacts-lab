@@ -1,0 +1,9 @@
+# The same graph plus one edge D -> B (-8): the cycle B -> A -> C -> D -> B sums to -4 + 2 + 3 - 8 = -7
+V S A B C D
+E C D 3
+E A C 2
+E B A -4
+E S A 3
+E S B 6
+E B D 4
+E D B -8

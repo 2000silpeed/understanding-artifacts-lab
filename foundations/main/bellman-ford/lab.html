@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>벨만–포드 실습 — 한 칸씩 완화해 보기</title>
+<!-- 오프라인 실습 페이지: 외부 요청 없음. 엔진은 bf.js(examples/bellman_ford.py와 같은 기록을 내는지 test_source.py가 검사). -->
+<style>
+  :root { --ground: #FBF5EE; --ink: #123649; --accent: #2952BE; --muted: #4F626D; --neg: #B3261E; --ok: #1E6B45; --hi: #F2B630; --panel: #FFFFFF; --line: #D9D0C2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.5 Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif; }
+  header { padding: 20px 28px 4px; }
+  h1 { margin: 0; font-size: 26px; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  main { display: grid; grid-template-columns: minmax(420px, 1.2fr) minmax(340px, 1fr); gap: 20px; padding: 16px 28px 28px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  h2 { margin: 0 0 10px; font-size: 17px; }
+  svg { width: 100%; height: auto; display: block; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+  button { font: inherit; font-weight: 700; border: 1.5px solid var(--ink); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  button.primary { background: var(--ink); color: var(--ground); }
+  button:disabled { opacity: .4; cursor: default; }
+  #say { min-height: 3.2em; margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: #F4EDE3; font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: center; }
+  th:first-child, td:first-child { text-align: left; font-weight: 800; }
+  td.now { background: #DDE6FA; font-weight: 800; }
+  td.changed { color: var(--accent); font-weight: 800; }
+  textarea { width: 100%; height: 190px; font: 14px/1.45 ui-monospace, Menlo, monospace; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: #FFFDF9; color: var(--ink); }
+  .err { color: var(--neg); font-weight: 700; min-height: 1.4em; }
+  .verdict { margin-top: 10px; font-weight: 800; }
+  .verdict.bad { color: var(--neg); } .verdict.good { color: var(--ok); }
+  ol { margin: 6px 0 0; padding-left: 20px; } li { margin: 4px 0; }
+  code { font-family: ui-monospace, Menlo, monospace; }
+</style>
+</head>
+<body>
+<header>
+  <h1>벨만–포드 실습</h1>
+  <p>간선을 하나씩 완화하며 거리표가 어떻게 바뀌는지 봅니다. 영상과 같은 그래프(<code>examples/graph.txt</code>)로 시작합니다.</p>
+</header>
+<main>
+  <section>
+    <h2 id="phase">시작 전</h2>
+    <svg id="g" viewBox="0 0 640 400" role="img" aria-label="그래프"></svg>
+    <div class="controls">
+      <button id="back">◀ 한 칸 뒤로</button>
+      <button id="step" class="primary">한 칸 완화 ▶</button>
+      <button id="round">이 라운드 끝까지</button>
+      <button id="all">끝까지</button>
+      <button id="reset">처음부터</button>
+    </div>
+    <div id="say">「한 칸 완화」를 누르면 간선을 스캔 순서대로 하나씩 봅니다.</div>
+    <div id="verdict" class="verdict"></div>
+  </section>
+  <section>
+    <h2>거리표 (라운드가 끝난 뒤의 값)</h2>
+    <table id="tbl"></table>
+    <h2 style="margin-top:18px">그래프 고치기</h2>
+    <div class="controls" style="margin-top:0">
+      <button id="p-graph">영상 예제</button>
+      <button id="p-cycle">음수 사이클 예제</button>
+      <button id="p-rev">간선 순서 뒤집기</button>
+    </div>
+    <textarea id="src" spellcheck="false"></textarea>
+    <div class="controls"><button id="apply" class="primary">이 그래프로 다시 시작</button></div>
+    <div id="err" class="err"></div>
+    <h2>해 볼 것</h2>
+    <ol>
+      <li>「간선 순서 뒤집기」를 누르고 다시 돌려 보세요. 정답은 같은데, 값이 몇 라운드 만에 다 맞춰질까요?</li>
+      <li>「음수 사이클 예제」에서 확인 라운드에 줄어드는 간선을 찾아보세요.</li>
+      <li><code>E B A -4</code>를 <code>E B A -1</code>로 바꾸면 다익스트라도 맞는 답을 낼까요? (힌트: 6 − 1 = 5 &gt; 3)</li>
+      <li>S에서 갈 수 없는 정점끼리 음수 사이클을 만들어 보세요: V 줄 끝에 <code>X Y</code>를 붙이고 <code>E X Y -1</code>, <code>E Y X -1</code>을 넣어 다시 시작. 확인 라운드는 이 사이클을 잡지 못합니다 — X, Y가 ∞로 남아 완화가 일어나지 않기 때문입니다(검사는 출발점 기준).</li>
+    </ol>
+  </section>
+</main>
+<script type="text/plain" id="preset-graph"># Bellman-Ford example graph — films/bellman-ford-20261022 (the film's numbers come from running this file)
+# V: vertices in order, the first one is the source
+# E: one edge per line, in the order every round scans them: from to weight
+V S A B C D
+E C D 3
+E A C 2
+E B A -4
+E S A 3
+E S B 6
+E B D 4
+</script>
+<script type="text/plain" id="preset-cycle"># The same graph plus one edge D -> B (-8): the cycle B -> A -> C -> D -> B sums to -4 + 2 + 3 - 8 = -7
+V S A B C D
+E C D 3
+E A C 2
+E B A -4
+E S A 3
+E S B 6
+E B D 4
+E D B -8
+</script>
+<script src="bf.js"></script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const FIXED = { S: [80, 200], A: [250, 90], B: [250, 310], C: [430, 90], D: [560, 250] };
+let G, T, S, k = 0;   // graph, trace, steps, steps done
+
+const show = x => (x === null || x === Infinity ? '∞' : String(x));
+const E = c => `${G.names[c.u]}→${G.names[c.v]}`;
+
+function layout(names) {
+  if (names.every(n => FIXED[n]) && names.length <= 5) return names.map(n => FIXED[n]);
+  return names.map((_, i) => [320 + 230 * Math.cos(Math.PI + (2 * Math.PI * i) / names.length), 200 + 150 * Math.sin(Math.PI + (2 * Math.PI * i) / names.length)]);
+}
+
+/** Distances after the first k steps (check-pass steps never change them). */
+function distAt(k) {
+  const d = G.names.map((_, i) => (i === 0 ? 0 : null));
+  S.slice(0, k).forEach(s => { if (s.phase === 'round' && s.updated) d[s.v] = s.cand; });
+  return d;
+}
+
+function start(text) {
+  try { G = BF.parseGraph(text); } catch (e) { $('err').textContent = e.message; return; }
+  $('err').textContent = '';
+  $('src').value = text;
+  T = BF.trace(G.names, G.edges); S = BF.steps(T); k = 0; draw();
+}
+
+function draw() {
+  const pos = layout(G.names), d = distAt(k), cur = S[k - 1], n = G.names.length;
+  // graph
+  let svg = '<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="16" markerHeight="16" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker></defs>';
+  G.edges.forEach((e, i) => {
+    const [x1, y1] = pos[e.u], [x2, y2] = pos[e.v], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1;
+    const ox = -dy / L * 14, oy = dx / L * 14;   // bend so two-way edges do not overlap
+    const sx = x1 + dx / L * 30, sy = y1 + dy / L * 30, ex = x2 - dx / L * 34, ey = y2 - dy / L * 34;
+    const active = cur && cur.edge === i, col = active ? (cur.updated ? 'var(--accent)' : '#9AA3AD') : (e.w < 0 ? 'var(--neg)' : 'var(--ink)');
+    svg += `<path d="M${sx},${sy} Q${(sx + ex) / 2 + ox},${(sy + ey) / 2 + oy} ${ex},${ey}" fill="none" stroke="${col}" stroke-width="${active ? 5 : 2.5}" marker-end="url(#ah)"/>`;
+    svg += `<text x="${(sx + ex) / 2 + ox * 1.9}" y="${(sy + ey) / 2 + oy * 1.9 + 6}" text-anchor="middle" font-weight="800" font-size="18" fill="${e.w < 0 ? 'var(--neg)' : 'var(--ink)'}">${e.w}</text>`;
+  });
+  G.names.forEach((nm, i) => {
+    const [x, y] = pos[i], hot = cur && cur.v === i && cur.updated && cur.phase === 'round';
+    svg += `<circle cx="${x}" cy="${y}" r="28" fill="${i === 0 ? 'var(--ink)' : '#fff'}" stroke="var(--ink)" stroke-width="2.5"/>`;
+    svg += `<text x="${x}" y="${y + 7}" text-anchor="middle" font-size="22" font-weight="800" fill="${i === 0 ? 'var(--ground)' : 'var(--ink)'}">${nm}</text>`;
+    const ty = y > 260 ? y + 38 : y - 70;
+    svg += `<rect x="${x - 30}" y="${ty}" width="60" height="30" rx="15" fill="${hot ? 'var(--accent)' : '#F4EDE3'}"/>`;
+    svg += `<text x="${x}" y="${ty + 21}" text-anchor="middle" font-size="18" font-weight="800" fill="${hot ? '#fff' : 'var(--ink)'}">${show(d[i])}</text>`;
+  });
+  $('g').innerHTML = svg;
+  // phase + explanation
+  const R = n - 1;
+  $('phase').textContent = !cur ? `시작 전 · 라운드 ${R}번 + 확인 1번` : cur.phase === 'round' ? `${cur.round}라운드 / ${R} · 간선 ${cur.edge + 1}/${G.edges.length}` : `확인 라운드 · 간선 ${cur.edge + 1}/${G.edges.length}`;
+  if (!cur) $('say').textContent = '「한 칸 완화」를 누르면 간선을 스캔 순서대로 하나씩 봅니다. 출발점만 0, 나머지는 ∞.';
+  else if (cur.du === null) $('say').textContent = cur.phase === 'round' ? `${E(cur)}: ${G.names[cur.u]}가 아직 ∞라 건너뜁니다.` : `${E(cur)}: ${G.names[cur.u]}는 출발점에서 닿지 않아 ∞ — 확인 라운드도 이 간선은 보지 못합니다.`;
+  else {
+    const sum = `${cur.du} + ${cur.w < 0 ? '(' + cur.w + ')' : cur.w} = ${cur.cand}`;
+    $('say').textContent = cur.updated
+      ? (cur.phase === 'round' ? `${E(cur)}: ${sum} < ${show(cur.before)} → ${G.names[cur.v]}를 ${cur.cand}로 바꿉니다.` : `${E(cur)}: ${sum} < ${show(cur.before)} → 확인 라운드인데 또 줄어듭니다. 출발점에서 닿는 음수 사이클!`)
+      : `${E(cur)}: ${sum} ≥ ${show(cur.before)} → 그대로 둡니다.`;
+  }
+  const done = k === S.length;
+  $('verdict').className = 'verdict' + (done ? (T.negativeCycle ? ' bad' : ' good') : '');
+  // the check pass is relative to the source: a vertex it never reaches stays ∞ (∞ + w = ∞), so its cycles are not seen
+  const unreached = T.dist && T.dist.some(x => x === null);
+  $('verdict').textContent = done ? (T.negativeCycle
+    ? '확인 라운드에서 값이 또 줄었습니다 → 출발점에서 닿는 음수 사이클이 있습니다. 그 사이클을 거쳐 가는 정점은 최단 경로가 없습니다.'
+    : '확인 라운드에서 아무것도 줄지 않았습니다 → 출발점에서 닿는 음수 사이클은 없고, 이 값들이 최단 거리입니다.' + (unreached ? ' (∞로 남은 정점 쪽 사이클은 이 검사로 알 수 없습니다.)' : '')) : '';
+  // table: one column per finished round, the current round live
+  const curRound = cur ? Math.min(cur.round, R) : 0;
+  let h = '<tr><th>정점</th><th>시작</th>' + T.rounds.map(r => `<th>${r.round}R</th>`).join('') + '</tr>';
+  G.names.forEach((nm, i) => {
+    h += `<tr><td>${nm}</td><td>${i === 0 ? 0 : '∞'}</td>`;
+    T.rounds.forEach((r, j) => {
+      const finished = S.findIndex(s => s.phase === 'round' && s.round === r.round && s.edge === G.edges.length - 1) < k;
+      const live = !finished && r.round === curRound;
+      const prev = j ? T.rounds[j - 1].dist[i] : (i === 0 ? 0 : null);
+      const val = finished ? r.dist[i] : live ? d[i] : undefined;
+      const cls = live ? 'now' : finished && val !== prev ? 'changed' : '';
+      h += `<td class="${cls}">${val === undefined ? '' : show(val)}</td>`;
+    });
+    h += '</tr>';
+  });
+  $('tbl').innerHTML = h;
+  $('back').disabled = k === 0; $('step').disabled = $('round').disabled = $('all').disabled = done;
+}
+
+$('step').onclick = () => { k = Math.min(S.length, k + 1); draw(); };
+$('back').onclick = () => { k = Math.max(0, k - 1); draw(); };
+$('round').onclick = () => { const r = (S[k] || {}).round; while (k < S.length && S[k].round === r) k++; draw(); };
+$('all').onclick = () => { k = S.length; draw(); };
+$('reset').onclick = () => { k = 0; draw(); };
+$('apply').onclick = () => start($('src').value);
+$('p-graph').onclick = () => start($('preset-graph').textContent);
+$('p-cycle').onclick = () => start($('preset-cycle').textContent);
+$('p-rev').onclick = () => {
+  const lines = $('src').value.split('\n'), es = lines.filter(l => l.trim().startsWith('E')).reverse();
+  let j = 0;
+  start(lines.map(l => (l.trim().startsWith('E') ? es[j++] : l)).join('\n'));
+};
+start($('preset-graph').textContent);
+</script>
+</body>
+</html>

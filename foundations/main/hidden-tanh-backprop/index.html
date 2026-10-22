@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실습 — tanh 은닉층 가중치는 어떻게 학습될까?</title>
+<style>
+  :root { --ground:#F5F1E8; --ink:#1A2230; --muted:#5B6472; --fwd:#2F5BD3; --bwd:#C2410C; --ok:#1E7F52; --hi:#F2B630; --code:#1B2330; --codeInk:#EEF2F8; --line:#D8D1C2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.5 -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .grid { display: grid; grid-template-columns: 340px 1fr; gap: 22px; }
+  @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+  section { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  h2 { font-size: 17px; margin: 0 0 10px; }
+  label { display: grid; grid-template-columns: 92px 1fr 64px; align-items: center; gap: 8px; margin: 6px 0; font-weight: 600; }
+  label output { font-variant-numeric: tabular-nums; text-align: right; }
+  input[type=range] { width: 100%; }
+  .row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  button { font: inherit; font-weight: 700; border: 0; border-radius: 10px; padding: 8px 14px; cursor: pointer; background: var(--ink); color: #fff; }
+  button.alt { background: #E9E3D6; color: var(--ink); }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  td { padding: 4px 6px; border-bottom: 1px solid #EEE8DC; }
+  td:last-child { text-align: right; font-weight: 700; }
+  .fwd { color: var(--fwd); } .bwd { color: var(--bwd); } .ok { color: var(--ok); }
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 18px; font-weight: 700; margin: 6px 0 2px; font-variant-numeric: tabular-nums; }
+  .chain span.f { border: 2px solid var(--line); border-radius: 10px; padding: 4px 10px; text-align: center; }
+  .chain small { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+  canvas { width: 100%; height: auto; display: block; }
+  pre { background: var(--code); color: var(--codeInk); border-radius: 10px; padding: 12px 14px; overflow: auto; font: 13px/1.45 ui-monospace, Menlo, monospace; margin: 0; }
+  .note { color: var(--muted); font-size: 14px; }
+</style>
+<link rel="icon" href="data:,">
+
+<style id="companion-wrapper">
+  @font-face { font-family: "Noto Sans KR Local"; src: url("../assets/noto-kr.woff2") format("woff2"); font-display: swap; }
+  body { font-family: "Noto Sans KR Local", -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  .grid > div { min-width: 0; }
+  @media (max-width: 500px) { main { padding-left: 16px; padding-right: 16px; } section { padding-left: 14px; padding-right: 14px; } button { min-height: 44px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>tanh 은닉층 가중치는 어떻게 학습될까?</h1>
+  <p class="sub">입력 2 → tanh 은닉 2 → 출력 1, 편향 없음, 학습 예 1개. 손실 L = ½(ŷ − y)². 강조한 가중치 <b>w</b>는 입력 x₁ → 은닉 뉴런 h₁.</p>
+  <div class="grid">
+    <div>
+      <section>
+        <h2>값 바꾸기</h2>
+        <label>w (x₁→h₁)<input id="w" type="range" min="-4" max="4" step="0.05"><output id="wo"></output></label>
+        <label>x₁<input id="x1" type="range" min="-2" max="2" step="0.05"><output id="x1o"></output></label>
+        <label>v₁ (h₁→ŷ)<input id="v1" type="range" min="-2" max="2" step="0.05"><output id="v1o"></output></label>
+        <label>목표 y<input id="y" type="range" min="-1" max="1.5" step="0.05"><output id="yo"></output></label>
+        <label>학습률 η<input id="eta" type="range" min="0.05" max="1.5" step="0.05"><output id="etao"></output></label>
+        <div class="row">
+          <button id="step">한 걸음 학습</button>
+          <button id="run" class="alt">10걸음</button>
+          <button id="reset" class="alt">영상 값으로</button>
+        </div>
+        <p class="note">w를 ±3 근처로 밀어 보세요. h₁이 ±1에 붙으면 tanh 기울기 1 − h₁²가 0에 가까워져 w가 거의 움직이지 않습니다(포화).</p>
+      </section>
+      <section style="margin-top:16px">
+        <h2>w의 기울기 = 네 값의 곱</h2>
+        <div class="chain" id="chain"></div>
+        <p class="note" id="numeric"></p>
+      </section>
+    </div>
+    <div>
+      <section>
+        <h2>순전파 · 역전파</h2>
+        <table id="tab"></table>
+      </section>
+      <section style="margin-top:16px">
+        <h2>tanh와 그 기울기 (현재 z₁에서의 접선)</h2>
+        <canvas id="tanh" width="680" height="260"></canvas>
+      </section>
+      <section style="margin-top:16px">
+        <h2>손실 기록</h2>
+        <canvas id="loss" width="680" height="200"></canvas>
+      </section>
+      <section style="margin-top:16px">
+        <h2>Python · C++ 예제와 같은 출력 (영상 값일 때)</h2>
+        <pre id="trace"></pre>
+      </section>
+    </div>
+  </div>
+</main>
+<script>
+// CORE-BEGIN — tanh_backprop.py / .cpp와 같은 계산. tests가 이 블록을 node로 실행해 Python 출력과 대조한다.
+const DEFAULTS = { X: [1.0, 0.5], Y: 1.0, W: [[0.5, 0.2], [-0.3, 0.4]], V: [0.8, -0.6], ETA: 0.5, STEPS: 10, SAT_Z: 3.0, EPS: 1e-6 };
+
+function forward(P, W, v) {
+  const z = [0, 1].map(j => W[j][0] * P.X[0] + W[j][1] * P.X[1]);
+  const h = z.map(Math.tanh);
+  const y_hat = v[0] * h[0] + v[1] * h[1];
+  return { z, h, y_hat, loss: 0.5 * (y_hat - P.Y) ** 2 };
+}
+function backward(P, W, v) {
+  const f = forward(P, W, v), delta = f.y_hat - P.Y;
+  const grad_v = f.h.map(h => delta * h);
+  const slope = f.h.map(h => 1 - h * h);
+  const delta_h = [0, 1].map(j => delta * v[j] * slope[j]);
+  const grad_W = [0, 1].map(j => [0, 1].map(i => delta_h[j] * P.X[i]));
+  return { ...f, delta, grad_v, slope, delta_h, grad_W };
+}
+function step(P, W, v, g) {
+  return [W.map((r, j) => r.map((w, i) => w - P.ETA * g.grad_W[j][i])), v.map((x, j) => x - P.ETA * g.grad_v[j])];
+}
+function numericGrad(P, W, v) {
+  const Wp = W.map(r => r.slice()), Wm = W.map(r => r.slice());
+  Wp[0][0] += P.EPS; Wm[0][0] -= P.EPS;
+  return (forward(P, Wp, v).loss - forward(P, Wm, v).loss) / (2 * P.EPS);
+}
+/** w 하나의 기울기만, 영상의 코드 장면(Python) 그대로 네 줄. */
+function gradWFourLines(P, y_hat, v1, h1, x1) {
+  const delta = y_hat - P.Y;            // 오차
+  const back = delta * v1;              // 출력 가중치를 곱해 뒤로
+  const delta_h = back * (1 - h1 ** 2); // tanh 기울기를 곱하고
+  return delta_h * x1;                  // 마지막에 입력을 곱한다
+}
+const f6 = a => a.toFixed(6);
+const pad2 = k => String(k).padStart(2, ' ');
+/** The same text as `python3 tanh_backprop.py`. */
+function trace(P = DEFAULTS) {
+  const W = P.W.map(r => r.slice()), v = P.V.slice(), g = backward(P, W, v), out = [];
+  out.push('# forward', `z1 = w*x1 + W12*x2 = ${f6(g.z[0])}`, `h1 = tanh(z1) = ${f6(g.h[0])}`, `z2 = ${f6(g.z[1])}  h2 = ${f6(g.h[1])}`,
+    `y_hat = v1*h1 + v2*h2 = ${f6(g.y_hat)}`, `loss = 0.5*(y_hat - y)^2 = ${f6(g.loss)}`, '# backward', `delta = y_hat - y = ${f6(g.delta)}`,
+    `dL/dv1 = delta*h1 = ${f6(g.grad_v[0])}`, `tanh slope = 1 - h1^2 = ${f6(g.slope[0])}`, `delta_h1 = delta*v1*slope = ${f6(g.delta_h[0])}`,
+    `dL/dw = delta_h1*x1 = ${f6(g.grad_W[0][0])}`, `numeric dL/dw = ${f6(numericGrad(P, W, v))}`, `dL/dw (4 lines) = ${f6(gradWFourLines(P, g.y_hat, v[0], g.h[0], P.X[0]))}`, '# update');
+  const [W1, v1] = step(P, W, v, g), after = forward(P, W1, v1);
+  out.push(`w: ${f6(W[0][0])} -> ${f6(W1[0][0])}`, `loss: ${f6(g.loss)} -> ${f6(after.loss)}`, `y_hat: ${f6(g.y_hat)} -> ${f6(after.y_hat)}`, '# training');
+  let Wt = W.map(r => r.slice()), vt = v.slice();
+  for (let k = 0; k <= P.STEPS; k++) {
+    const gt = backward(P, Wt, vt);
+    out.push(`step ${pad2(k)}  loss ${f6(gt.loss)}  w ${f6(Wt[0][0])}  y_hat ${f6(gt.y_hat)}`);
+    [Wt, vt] = step(P, Wt, vt, gt);
+  }
+  const hs = Math.tanh(P.SAT_Z), ss = 1 - hs * hs, sg = g.delta * v[0] * ss * P.X[0];
+  out.push('# saturation', `z = ${f6(P.SAT_Z)}  h = ${f6(hs)}  slope = ${f6(ss)}`, `dL/dw at z=3 = ${f6(sg)}  (vs ${f6(g.grad_W[0][0])})`);
+  return out.join('\n');
+}
+if (typeof module !== 'undefined') module.exports = { DEFAULTS, forward, backward, step, numericGrad, gradWFourLines, trace };
+// CORE-END
+</script>
+<script>
+const $ = id => document.getElementById(id);
+const S = { W: null, v: null, P: null, hist: [] };
+const fmt = (a, n = 3) => (Math.abs(a) < 0.5 * 10 ** -n ? 0 : a).toFixed(n);
+function params() {
+  return { ...DEFAULTS, X: [+$('x1').value, DEFAULTS.X[1]], Y: +$('y').value, ETA: +$('eta').value };
+}
+function reset() {
+  $('w').value = DEFAULTS.W[0][0]; $('x1').value = DEFAULTS.X[0]; $('v1').value = DEFAULTS.V[0]; $('y').value = DEFAULTS.Y; $('eta').value = DEFAULTS.ETA;
+  S.W = DEFAULTS.W.map(r => r.slice()); S.v = DEFAULTS.V.slice(); S.hist = [];
+  render();
+}
+function fromSliders() {
+  S.W[0][0] = +$('w').value; S.v[0] = +$('v1').value; S.hist = []; render();
+}
+function learn(n) {
+  for (let k = 0; k < n; k++) {
+    const P = params(), g = backward(P, S.W, S.v);
+    [S.W, S.v] = step(P, S.W, S.v, g);
+  }
+  $('w').value = S.W[0][0]; $('v1').value = S.v[0];
+  render(true);
+}
+function render(keep) {
+  const P = params(), g = backward(P, S.W, S.v);
+  if (!keep) S.hist = [];
+  S.hist.push(g.loss);
+  ['w', 'x1', 'v1', 'y', 'eta'].forEach(k => $(k + 'o').textContent = (+$(k).value).toFixed(2));
+  $('wo').textContent = S.W[0][0].toFixed(3);
+  const rows = [
+    ['fwd', 'z₁ = w·x₁ + W₁₂·x₂', g.z[0]], ['fwd', 'h₁ = tanh(z₁)', g.h[0]], ['fwd', 'h₂ = tanh(z₂)', g.h[1]],
+    ['fwd', 'ŷ = v₁·h₁ + v₂·h₂', g.y_hat], ['', '손실 L = ½(ŷ − y)²', g.loss],
+    ['bwd', 'δ = ŷ − y', g.delta], ['bwd', 'tanh 기울기 1 − h₁²', g.slope[0]], ['bwd', 'δ₁ = δ · v₁ · (1 − h₁²)', g.delta_h[0]],
+    ['bwd', '∂L/∂w = δ₁ · x₁', g.grad_W[0][0]], ['ok', '한 걸음 뒤 w = w − η·∂L/∂w', S.W[0][0] - P.ETA * g.grad_W[0][0]],
+  ];
+  $('tab').innerHTML = rows.map(([c, k, v]) => `<tr><td class="${c}">${k}</td><td class="${c}">${fmt(v, 4)}</td></tr>`).join('');
+  const f = (lab, val, cls) => `<span class="f ${cls}">${fmt(val)}<small>${lab}</small></span>`;
+  $('chain').innerHTML = [f('오차 δ', g.delta, 'bwd'), '×', f('출력 가중치 v₁', S.v[0], ''), '×', f('tanh 기울기', g.slope[0], 'bwd'), '×', f('입력 x₁', P.X[0], 'fwd'), '=', f('∂L/∂w', g.grad_W[0][0], 'bwd')].join(' ');
+  $('numeric').textContent = `수치 미분 확인: (L(w+ε) − L(w−ε)) / 2ε = ${fmt(numericGrad(P, S.W, S.v), 6)}`;
+  drawTanh(g.z[0], g.h[0], g.slope[0]);
+  drawLoss();
+  $('trace').textContent = trace();
+}
+function drawTanh(z, h, s) {
+  const c = $('tanh'), g = c.getContext('2d'), W = c.width, H = c.height, X = u => W / 2 + u * W / 9, Y = u => H / 2 - u * H / 2.6;
+  g.clearRect(0, 0, W, H);
+  g.strokeStyle = '#D8D1C2'; g.lineWidth = 1; g.beginPath(); g.moveTo(0, Y(0)); g.lineTo(W, Y(0)); g.moveTo(X(0), 0); g.lineTo(X(0), H); g.stroke();
+  g.setLineDash([4, 4]); g.beginPath(); g.moveTo(0, Y(1)); g.lineTo(W, Y(1)); g.moveTo(0, Y(-1)); g.lineTo(W, Y(-1)); g.stroke(); g.setLineDash([]);
+  g.strokeStyle = '#1A2230'; g.lineWidth = 3; g.beginPath();
+  for (let i = 0; i <= 200; i++) { const u = -4.5 + 9 * i / 200; i ? g.lineTo(X(u), Y(Math.tanh(u))) : g.moveTo(X(u), Y(Math.tanh(u))); }
+  g.stroke();
+  g.strokeStyle = '#C2410C'; g.lineWidth = 3; g.beginPath(); g.moveTo(X(z - 1.2), Y(h - 1.2 * s)); g.lineTo(X(z + 1.2), Y(h + 1.2 * s)); g.stroke();
+  g.fillStyle = '#2F5BD3'; g.beginPath(); g.arc(X(Math.max(-4.5, Math.min(4.5, z))), Y(h), 7, 0, 7); g.fill();
+  g.fillStyle = '#1A2230'; g.font = '600 15px sans-serif';
+  g.fillText(`z₁ = ${z.toFixed(2)}, h₁ = ${h.toFixed(2)}, 기울기 = ${s.toFixed(3)}`, 12, 22);
+}
+function drawLoss() {
+  const c = $('loss'), g = c.getContext('2d'), W = c.width, H = c.height, n = Math.max(10, S.hist.length - 1), top = Math.max(...S.hist, 1e-9);
+  g.clearRect(0, 0, W, H);
+  g.strokeStyle = '#D8D1C2'; g.beginPath(); g.moveTo(30, H - 24); g.lineTo(W - 10, H - 24); g.stroke();
+  g.strokeStyle = '#1E7F52'; g.fillStyle = '#1E7F52'; g.lineWidth = 3; g.beginPath();
+  S.hist.forEach((L, k) => { const x = 30 + (W - 50) * k / n, y = H - 24 - (H - 50) * L / top; k ? g.lineTo(x, y) : g.moveTo(x, y); });
+  g.stroke();
+  S.hist.forEach((L, k) => { const x = 30 + (W - 50) * k / n, y = H - 24 - (H - 50) * L / top; g.beginPath(); g.arc(x, y, 4, 0, 7); g.fill(); });
+  g.fillStyle = '#1A2230'; g.font = '600 14px sans-serif'; g.fillText(`걸음 ${S.hist.length - 1} · 손실 ${S.hist[S.hist.length - 1].toFixed(6)}`, 34, 18);
+}
+['w', 'v1'].forEach(k => $(k).addEventListener('input', fromSliders));
+['x1', 'y', 'eta'].forEach(k => $(k).addEventListener('input', () => render()));
+$('step').onclick = () => learn(1);
+$('run').onclick = () => { for (let k = 0; k < 10; k++) learn(1); };
+$('reset').onclick = reset;
+reset();
+</script>
+<section class="companion-links" style="max-width:1080px;margin:0 auto;padding:16px 20px 28px"><h2>학습자 파일</h2><p>같은 계산을 재현하는 독립 실행 예제와 오프라인 실습 파일입니다. 이 페이지에는 영상 embed를 넣지 않았습니다.</p><p><a href="examples/tanh_backprop.py" download>Python 예제</a> · <a href="examples/tanh_backprop.cpp" download>C++17 예제</a> · <a href="hidden-tanh-backprop-source.zip" download>학습자 source ZIP</a> · <a href="lab.html">오프라인 실습 HTML</a></p></section>
+</body>
+</html>

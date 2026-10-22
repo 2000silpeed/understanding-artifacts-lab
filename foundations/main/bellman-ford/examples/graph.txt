@@ -1,0 +1,10 @@
+# Bellman-Ford example graph — films/bellman-ford-20261022 (the film's numbers come from running this file)
+# V: vertices in order, the first one is the source
+# E: one edge per line, in the order every round scans them: from to weight
+V S A B C D
+E C D 3
+E A C 2
+E B A -4
+E S A 3
+E S B 6
+E B D 4

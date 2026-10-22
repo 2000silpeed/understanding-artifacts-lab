@@ -1,0 +1,23 @@
+{
+  "slug": "hidden-tanh-backprop",
+  "source_snapshot": "source-v2",
+  "video_embed": false,
+  "wrapper_only_changes": [
+    "Noto Sans KR local font loading",
+    "mobile responsive wrapper",
+    "learner download links"
+  ],
+  "files": {
+    "index.html": "621e30b7d3aa7393ff7f85c9c54c181d919866c6f60e5957ed965a83866e71b8",
+    "lab.html": "3b7f58750a5906e7a2eee196250c6935f6ecf099c5d39f1220fdf7e9bbf2eed3",
+    "examples/tanh_backprop.py": "d6862c3faa4aaa1e9593d6b6f0bde462b342e0dcfde3e54a127b72cb8c9efa67",
+    "examples/tanh_backprop.cpp": "fbd4616bf96b43b3f570add83b8dc56dab04157fb906ebda385833106f00e013",
+    "hidden-tanh-backprop-source.zip": "27874b698a5d3e30b337a69722433c6dbc99a31fe3c5db0852d3487c68e48e4f"
+  },
+  "learner_zip_entries": [
+    "README.md",
+    "practice/index.html",
+    "examples/tanh_backprop.py",
+    "examples/tanh_backprop.cpp"
+  ]
+}
