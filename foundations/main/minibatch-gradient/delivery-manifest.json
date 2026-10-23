@@ -14,11 +14,6 @@
       "bytes": 577
     },
     {
-      "path": "delivery-manifest.json",
-      "sha256": "410aa0a4cdef62b263e3ba4c4f1cc5d6691378091f9c262fe4dee23cd37478e0",
-      "bytes": 3195
-    },
-    {
       "path": "examples/README.md",
       "sha256": "8b985c2de40903c89c82c78858b2b519b608f851c12d1fe2be2ee53b725eeb77",
       "bytes": 1766
@@ -45,8 +40,8 @@
     },
     {
       "path": "index.html",
-      "sha256": "11d00838e3b03ac00354c952198d0ac75a57de8b8199539f7aa3806db9a08eef",
-      "bytes": 12468
+      "sha256": "b181b761fc17abac76252739fb5779c427e23c686bca058443d23e2dc015b136",
+      "bytes": 12504
     },
     {
       "path": "lab.html",
@@ -105,5 +100,6 @@
     "examples/README.md",
     "examples/data/corpus.txt",
     "examples/data/config.txt"
-  ]
+  ],
+  "self_hash_policy": "This manifest intentionally excludes itself. Its full SHA256 belongs to the external publication receipt."
 }

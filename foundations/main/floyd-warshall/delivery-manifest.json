@@ -14,11 +14,6 @@
       "bytes": 3382
     },
     {
-      "path": "delivery-manifest.json",
-      "sha256": "f3cc9f56798ff870fe6497a57eef07f78259b8fa68c0298cf3a6043af58b55a1",
-      "bytes": 3521
-    },
-    {
       "path": "examples/floyd_warshall.cpp",
       "sha256": "376cb3a15fe5b66a811210bff3da8d13595914131cb66747f4558a7a294724b6",
       "bytes": 6939
@@ -116,5 +111,6 @@
     "examples/graph.txt",
     "examples/negative_cycle.txt",
     "examples/run_examples.py"
-  ]
+  ],
+  "self_hash_policy": "This manifest intentionally excludes itself. Its full SHA256 belongs to the external publication receipt."
 }
