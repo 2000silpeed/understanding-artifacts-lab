@@ -1,0 +1,9 @@
+# minibatch-gradient example settings. minibatch.py and minibatch.cpp read this same file.
+# key value...
+learning_rate 1.0
+seed 7
+walkthrough_batch 4
+walkthrough_steps 2
+curve_batches 1 4 8
+curve_epochs 6
+grad_check_eps 1e-6

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>세그먼트 트리 실습 — 값 갱신과 구간 최솟값</title>
+<!-- 외부 요청 없음: 글꼴·스크립트·스타일 모두 이 파일 안에 있다. 색은 ../tokens.local.json과 같은 값(test_source.py가 대조). -->
+<style>
+  :root {
+    --ground: #FBF5EE; --ink: #123649; --accent: #2952BE; --muted: #4F626D;
+    --inside: #1C7148; --partial: #2952BE; --outside: #6E7A82; --update: #A35A00; --answer: #B8382A;
+    --s-node: #FFFFFF; --s-inside: #DCEFE3; --s-partial: #DFE6F7; --s-outside: #ECE7DF; --s-update: #FBE2A8; --s-answer: #F7D9D3;
+    --code-bg: #123649; --code-ink: #F4EDE3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink);
+         font-family: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { font-size: 30px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  section { background: #fff; border: 2px solid #E9E1D4; border-radius: 18px; padding: 18px 20px; margin-bottom: 18px; }
+  h2 { font-size: 19px; margin: 0 0 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0; }
+  input[type=number] { width: 72px; font: inherit; padding: 6px 8px; border: 2px solid #DCD3C4; border-radius: 10px; color: var(--ink); }
+  input.cell { width: 60px; text-align: center; font-weight: 700; }
+  button { font: inherit; font-weight: 700; padding: 7px 14px; border-radius: 10px; border: 2px solid var(--ink); background: var(--ink); color: var(--ground); cursor: pointer; }
+  button.ghost { background: transparent; color: var(--ink); }
+  button:disabled { opacity: .45; cursor: default; }
+  svg { width: 100%; height: auto; display: block; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; font-size: 14px; }
+  .legend i { width: 16px; height: 16px; border-radius: 5px; border: 3px solid; display: inline-block; }
+  .answer { font-size: 22px; font-weight: 800; color: var(--answer); min-height: 30px; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  td, th { border-bottom: 1px solid #ECE7DF; padding: 5px 8px; text-align: left; }
+  th { color: var(--muted); font-weight: 700; }
+  textarea { width: 100%; min-height: 150px; font: 14px/1.5 ui-monospace, Menlo, monospace; padding: 10px; border-radius: 12px; border: 2px solid #DCD3C4; }
+  pre { background: var(--code-bg); color: var(--code-ink); padding: 12px 14px; border-radius: 12px; font: 14px/1.5 ui-monospace, Menlo, monospace; min-height: 46px; white-space: pre-wrap; }
+  .note { color: var(--muted); font-size: 14px; }
+  .kind-inside { color: var(--inside); font-weight: 700; } .kind-partial { color: var(--partial); font-weight: 700; } .kind-outside { color: var(--outside); font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <h1>세그먼트 트리 실습</h1>
+  <p class="sub">값 갱신과 구간 최솟값 질의 · 영상 예제 배열 <b>5 8 6 3 2 7 9 4</b> · 인덱스는 0부터, 구간은 양 끝 포함</p>
+
+  <section>
+    <h2>1. 배열</h2>
+    <div class="row" id="cells"></div>
+    <div class="row">
+      <label>칸 수 n <input type="number" id="n" min="1" max="16" value="8"></label>
+      <button class="ghost" id="resize">칸 수 적용</button>
+      <button class="ghost" id="reset">영상 예제로 되돌리기</button>
+      <button class="ghost" id="rebuild">이 배열로 트리 다시 만들기</button>
+    </div>
+    <p class="note">노드 안의 큰 숫자는 그 노드가 맡은 구간의 최솟값, 작은 글자는 맡은 구간 [시작, 끝]입니다.</p>
+  </section>
+
+  <section>
+    <h2>2. 트리</h2>
+    <div class="legend">
+      <span><i style="border-color:var(--inside);background:var(--s-inside)"></i>안: 통째로 포함 → 값 사용</span>
+      <span><i style="border-color:var(--partial);background:var(--s-partial)"></i>걸침 → 두 자식으로</span>
+      <span><i style="border-color:var(--outside);background:var(--s-outside)"></i>밖: 겹치지 않음 → 멈춤</span>
+      <span><i style="border-color:var(--update);background:var(--s-update)"></i>갱신 경로</span>
+    </div>
+    <svg id="tree" viewBox="0 0 1080 420" role="img" aria-label="세그먼트 트리"></svg>
+    <div class="answer" id="answer"></div>
+  </section>
+
+  <section>
+    <h2>3. 질의와 갱신</h2>
+    <div class="row">
+      <b>질의</b> l <input type="number" id="ql" value="2" min="0"> r <input type="number" id="qr" value="6" min="0">
+      <button id="query">최솟값 구하기</button>
+      <span style="width:24px"></span>
+      <b>갱신</b> i <input type="number" id="ui" value="4" min="0"> x <input type="number" id="ux" value="10">
+      <button id="update">값 바꾸기</button>
+    </div>
+    <div class="row">
+      <button class="ghost" id="prev">◀ 이전 단계</button>
+      <button class="ghost" id="next">다음 단계 ▶</button>
+      <button class="ghost" id="all">한 번에 보기</button>
+      <span class="note" id="step"></span>
+    </div>
+    <div class="row"><button class="ghost" id="demo">영상 순서대로: 질의 2 6 → 갱신 4 10 → 질의 2 6</button></div>
+    <table><thead><tr><th>#</th><th>노드</th><th>구간</th><th>판정 / 변경</th><th>돌려준 값</th></tr></thead><tbody id="log"></tbody></table>
+  </section>
+
+  <section>
+    <h2>4. 입력 파일 그대로 돌려 보기</h2>
+    <p class="note">examples/input.txt와 같은 형식입니다. 결과는 python3 segment_tree.py와 ./segment_tree(C++17)의 출력과 같아야 합니다.</p>
+    <textarea id="input">8
+5 8 6 3 2 7 9 4
+3
+query 2 6
+update 4 10
+query 2 6</textarea>
+    <div class="row"><button id="run">실행</button></div>
+    <pre id="output"></pre>
+  </section>
+</main>
+
+<script id="segtree-core">
+// 세그먼트 트리 핵심 로직 — examples/segment_tree.py와 같은 재귀 구조(노드 번호 1부터, 구간 [start, end]).
+// 화면 코드와 분리되어 있어 node에서도 그대로 실행해 검사한다(test_source.py → practice/check_core.cjs).
+(function (root) {
+  'use strict';
+  const INF = Infinity;
+
+  function build(a) {
+    const n = a.length, tree = new Array(4 * Math.max(n, 1)).fill(INF);
+    (function rec(node, start, end) {
+      if (start === end) { tree[node] = a[start]; return; }
+      const mid = Math.floor((start + end) / 2);
+      rec(2 * node, start, mid);
+      rec(2 * node + 1, mid + 1, end);
+      tree[node] = Math.min(tree[2 * node], tree[2 * node + 1]);
+    })(1, 0, n - 1);
+    return { n, tree };
+  }
+
+  // visits: 호출 순서대로 { node, start, end, kind: 'outside' | 'inside' | 'partial', ret }
+  function query(T, l, r) {
+    const visits = [];
+    function rec(node, start, end) {
+      const v = { node, start, end, kind: '', ret: null };
+      visits.push(v);
+      let ret;
+      if (r < start || end < l) { v.kind = 'outside'; ret = INF; }          // 밖: 겹치지 않음
+      else if (l <= start && end <= r) { v.kind = 'inside'; ret = T.tree[node]; } // 안: 통째로 포함
+      else {                                                                  // 걸침: 두 자식으로
+        v.kind = 'partial';
+        const mid = Math.floor((start + end) / 2);
+        ret = Math.min(rec(2 * node, start, mid), rec(2 * node + 1, mid + 1, end));
+      }
+      v.ret = ret === INF ? null : ret;
+      return ret;
+    }
+    const answer = rec(1, 0, T.n - 1);
+    return { answer, visits };
+  }
+
+  // path: 잎에서 뿌리 순서로 { node, start, end, before, after }
+  function update(T, i, x) {
+    const path = [];
+    (function rec(node, start, end) {
+      const before = T.tree[node];
+      if (start === end) T.tree[node] = x;                                    // 잎: 값을 바꾼다
+      else {
+        const mid = Math.floor((start + end) / 2);
+        if (i <= mid) rec(2 * node, start, mid); else rec(2 * node + 1, mid + 1, end);
+        T.tree[node] = Math.min(T.tree[2 * node], T.tree[2 * node + 1]);
+      }
+      path.push({ node, start, end, before, after: T.tree[node] });
+    })(1, 0, T.n - 1);
+    return { path };
+  }
+
+  // 노드 목록(번호순): { node, start, end, depth }
+  function layout(n) {
+    const out = [];
+    (function rec(node, start, end, depth) {
+      out.push({ node, start, end, depth });
+      if (start === end) return;
+      const mid = Math.floor((start + end) / 2);
+      rec(2 * node, start, mid, depth + 1);
+      rec(2 * node + 1, mid + 1, end, depth + 1);
+    })(1, 0, n - 1, 0);
+    return out.sort((p, q) => p.node - q.node);
+  }
+
+  // examples/input.txt 형식을 실행하고 질의 답을 줄 단위로 돌려준다.
+  function runText(text) {
+    const d = text.trim().split(/\s+/);
+    const n = Number(d[0]), a = d.slice(1, 1 + n).map(Number), q = Number(d[1 + n]);
+    const T = build(a), out = [];
+    let pos = 2 + n;
+    for (let k = 0; k < q; k++) {
+      const op = d[pos], u = Number(d[pos + 1]), v = Number(d[pos + 2]);
+      pos += 3;
+      if (op === 'query') out.push(String(query(T, u, v).answer));
+      else if (op === 'update') update(T, u, v);
+      else throw new Error('unknown operation: ' + op);
+    }
+    return out;
+  }
+
+  root.SegTree = { INF, build, query, update, layout, runText };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<script>
+(function () {
+  'use strict';
+  const S = window.SegTree, $ = id => document.getElementById(id);
+  const EXAMPLE = [5, 8, 6, 3, 2, 7, 9, 4];
+  let arr = EXAMPLE.slice(), T = S.build(arr), steps = [], k = 0, mode = null, ansText = '';
+
+  function cellsUI() {
+    $('cells').innerHTML = '';
+    arr.forEach((v, i) => {
+      const w = document.createElement('label');
+      w.style.cssText = 'display:flex;flex-direction:column;align-items:center;font-size:13px;color:var(--muted)';
+      w.innerHTML = '<input class="cell" type="number" value="' + v + '" data-i="' + i + '">' + i;
+      $('cells').appendChild(w);
+    });
+  }
+  function readCells() { arr = [...document.querySelectorAll('input.cell')].map(e => Number(e.value) || 0); }
+
+  function draw() {
+    const nodes = S.layout(T.n), maxDepth = Math.max(...nodes.map(d => d.depth));
+    const W = 1080, top = 30, rowH = (420 - 80) / Math.max(maxDepth, 1), nw = Math.min(110, (W - 40) / T.n - 10), nh = 54;
+    const pos = {};
+    nodes.forEach(d => { const cx = 20 + ((d.start + d.end + 1) / 2) * ((W - 40) / T.n); pos[d.node] = { x: cx, y: top + d.depth * rowH }; });
+    const shown = steps.slice(0, k), state = {};
+    shown.forEach((s, j) => { state[s.node] = { kind: s.kind || 'update', ord: j + 1, s }; });
+    const fill = { inside: 'var(--s-inside)', partial: 'var(--s-partial)', outside: 'var(--s-outside)', update: 'var(--s-update)' };
+    const line = { inside: 'var(--inside)', partial: 'var(--partial)', outside: 'var(--outside)', update: 'var(--update)' };
+    let svg = '';
+    nodes.forEach(d => { if (d.start !== d.end) [2 * d.node, 2 * d.node + 1].forEach(c => { svg += '<line x1="' + pos[d.node].x + '" y1="' + (pos[d.node].y + nh) + '" x2="' + pos[c].x + '" y2="' + pos[c].y + '" stroke="#DCD3C4" stroke-width="3"/>'; }); });
+    nodes.forEach(d => {
+      const p = pos[d.node], st = state[d.node], kind = st ? st.kind : null;
+      const val = T.tree[d.node];
+      svg += '<g><rect x="' + (p.x - nw / 2) + '" y="' + p.y + '" width="' + nw + '" height="' + nh + '" rx="12" fill="' + (kind ? fill[kind] : 'var(--s-node)') + '" stroke="' + (kind ? line[kind] : '#123649') + '" stroke-width="' + (kind ? 5 : 2) + '"/>';
+      svg += '<text x="' + p.x + '" y="' + (p.y + 34) + '" text-anchor="middle" font-size="24" font-weight="800" fill="var(--ink)">' + val + '</text>';
+      svg += '<text x="' + p.x + '" y="' + (p.y + nh + 17) + '" text-anchor="middle" font-size="13" fill="var(--muted)">[' + d.start + (d.start === d.end ? '' : ', ' + d.end) + ']</text>';
+      if (st) svg += '<circle cx="' + (p.x + nw / 2 - 4) + '" cy="' + (p.y + 4) + '" r="12" fill="' + line[kind] + '"/><text x="' + (p.x + nw / 2 - 4) + '" y="' + (p.y + 9) + '" text-anchor="middle" font-size="13" font-weight="800" fill="#fff">' + st.ord + '</text>';
+      svg += '</g>';
+    });
+    $('tree').innerHTML = svg;
+    $('step').textContent = steps.length ? '단계 ' + k + ' / ' + steps.length : '';
+    $('answer').textContent = k === steps.length ? ansText : '';
+    $('log').innerHTML = shown.map((s, j) => '<tr><td>' + (j + 1) + '</td><td>' + s.node + '</td><td>[' + s.start + ', ' + s.end + ']</td><td>' +
+      (s.kind ? '<span class="kind-' + s.kind + '">' + { inside: '안 → 값 사용', partial: '걸침 → 두 자식', outside: '밖 → 멈춤' }[s.kind] + '</span>' : '<span style="color:var(--update);font-weight:700">' + s.before + ' → ' + s.after + '</span>') +
+      '</td><td>' + (s.kind ? (s.ret === null ? '∞' : s.ret) : '') + '</td></tr>').join('');
+  }
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function doQuery(l, r) {
+    l = clamp(l, 0, T.n - 1); r = clamp(r, 0, T.n - 1); if (l > r) [l, r] = [r, l];
+    const res = S.query(T, l, r);
+    steps = res.visits; k = 0; mode = 'query';
+    ansText = '구간 [' + l + ', ' + r + ']의 최솟값 = ' + res.answer + ' · 방문 노드 ' + res.visits.length + '개, 답에 쓴 노드 ' + res.visits.filter(v => v.kind === 'inside').length + '개';
+    draw();
+  }
+  function doUpdate(i, x) {
+    i = clamp(i, 0, T.n - 1);
+    const before = arr[i];
+    const res = S.update(T, i, x); arr[i] = x; cellsUI();
+    // 화면에는 바뀌기 전 값부터 단계적으로 보여 준다: 아직 표시하지 않은 경로 노드는 before 값으로
+    steps = res.path; k = 0; mode = 'update';
+    ansText = 'a[' + i + ']: ' + before + ' → ' + x + ' · 고친 노드 ' + res.path.length + '개(잎에서 뿌리까지)';
+    drawUpdate();
+  }
+  function drawUpdate() {
+    const saved = {};
+    steps.slice(k).forEach(s => { saved[s.node] = T.tree[s.node]; T.tree[s.node] = s.before; });
+    draw();
+    Object.entries(saved).forEach(([node, v]) => { T.tree[node] = v; });
+  }
+  function redraw() { mode === 'update' ? drawUpdate() : draw(); }
+
+  $('query').onclick = () => doQuery(Number($('ql').value), Number($('qr').value));
+  $('update').onclick = () => doUpdate(Number($('ui').value), Number($('ux').value));
+  $('next').onclick = () => { if (k < steps.length) { k++; redraw(); } };
+  $('prev').onclick = () => { if (k > 0) { k--; redraw(); } };
+  $('all').onclick = () => { k = steps.length; redraw(); };
+  $('reset').onclick = () => { arr = EXAMPLE.slice(); $('n').value = 8; T = S.build(arr); steps = []; k = 0; cellsUI(); draw(); };
+  $('rebuild').onclick = () => { readCells(); T = S.build(arr); steps = []; k = 0; draw(); };
+  $('resize').onclick = () => { const n = clamp(Number($('n').value) || 1, 1, 16); arr = Array.from({ length: n }, (_, i) => arr[i] ?? 0); T = S.build(arr); steps = []; k = 0; cellsUI(); draw(); };
+  let demo = 0;
+  $('demo').onclick = () => {
+    if (demo === 0) { arr = EXAMPLE.slice(); T = S.build(arr); cellsUI(); doQuery(2, 6); }
+    else if (demo === 1) doUpdate(4, 10);
+    else doQuery(2, 6);
+    k = steps.length; redraw();
+    demo = (demo + 1) % 3;
+    $('demo').textContent = ['영상 순서대로: 질의 2 6 → 갱신 4 10 → 질의 2 6', '다음: 갱신 4 10', '다음: 다시 질의 2 6'][demo];
+  };
+  $('run').onclick = () => { try { $('output').textContent = S.runText($('input').value).join('\n'); } catch (e) { $('output').textContent = '입력 오류: ' + e.message; } };
+  cellsUI(); draw();
+})();
+</script>
+</body>
+</html>

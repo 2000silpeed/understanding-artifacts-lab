@@ -1,0 +1,116 @@
+{
+  "slug": "segment-tree",
+  "source_snapshot": "ops/daily/2026-10-23/source-snapshots/segment-tree/source",
+  "video_embed": false,
+  "wrapper_only_changes": [
+    "shared NotoCourse font wrapper",
+    "mobile overflow containment",
+    "learner download links"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "d24b81ca3e94d3aad5cc46c826623c8196108de67f2913e9b775f24792945f42",
+      "bytes": 608
+    },
+    {
+      "path": "data/trace.json",
+      "sha256": "044edcfac69a6fb170b9166275e1592806fa542021274b5250c0da3104cd0722",
+      "bytes": 7122
+    },
+    {
+      "path": "delivery-manifest.json",
+      "sha256": "985bb8391d5745f7ebef0c784ad5641a8dfd7c41e92954de1d3482e3ec317419",
+      "bytes": 3442
+    },
+    {
+      "path": "examples/expected_output.txt",
+      "sha256": "fcb9cc30b0f3e4715d032f3a0ce158e4d6bea8c618bda0f5d1f167300a087b8a",
+      "bytes": 4
+    },
+    {
+      "path": "examples/input.txt",
+      "sha256": "02396bd64a42047d1da83d5a6ba07b9526dad8de21ddff32d10e9d6447e36de4",
+      "bytes": 52
+    },
+    {
+      "path": "examples/make_data.py",
+      "sha256": "56b4751de3b3ae73c54ed9ab1367f36a1908f0ae458770c05ed2fbed1dcceafa",
+      "bytes": 7338
+    },
+    {
+      "path": "examples/random-expected.txt",
+      "sha256": "f34bde6565bde4812c2d0d01c3bce595826325571701066fd625792de2bfa075",
+      "bytes": 4971
+    },
+    {
+      "path": "examples/random-input.txt",
+      "sha256": "76ffed3245e2822aee078bc4b574239821965a0fd672f411b51fad16a18c14da",
+      "bytes": 28611
+    },
+    {
+      "path": "examples/run_examples.py",
+      "sha256": "8f9455d6c91c7d5b8769574f592a5cf0a44b38bf051f48506316e4b3f9e3292a",
+      "bytes": 6039
+    },
+    {
+      "path": "examples/segment_tree.cpp",
+      "sha256": "b3f5c3852c986a454dd16fc2375e7c8468a9ea94f7240b57d6fc960850707fa0",
+      "bytes": 2612
+    },
+    {
+      "path": "examples/segment_tree.py",
+      "sha256": "ccda1c3e59fa9a38ad7dedf2c0d3eb3ba971b96691fdcdc66ea6f66cb22e3c61",
+      "bytes": 2305
+    },
+    {
+      "path": "index.html",
+      "sha256": "285aa4d27d88f5ea35c6210ee682ed853ae8ee2aa555cd0ce8c20a508e33b0cd",
+      "bytes": 17159
+    },
+    {
+      "path": "lab.html",
+      "sha256": "2a177743e419d04ed6d7aeece4b6bbec9067e0e014d9cb007a5b3e47416cd6ea",
+      "bytes": 15741
+    },
+    {
+      "path": "practice/check_core.cjs",
+      "sha256": "3566fdc7f29c60a5a51bebd377678c91a8107b0db53d4be2085c992927cbd7e6",
+      "bytes": 2754
+    },
+    {
+      "path": "practice/index.html",
+      "sha256": "2a177743e419d04ed6d7aeece4b6bbec9067e0e014d9cb007a5b3e47416cd6ea",
+      "bytes": 15741
+    },
+    {
+      "path": "segment_tree.cpp",
+      "sha256": "b3f5c3852c986a454dd16fc2375e7c8468a9ea94f7240b57d6fc960850707fa0",
+      "bytes": 2612
+    },
+    {
+      "path": "segment_tree.py",
+      "sha256": "ccda1c3e59fa9a38ad7dedf2c0d3eb3ba971b96691fdcdc66ea6f66cb22e3c61",
+      "bytes": 2305
+    },
+    {
+      "path": "source.zip",
+      "sha256": "059cc4d1b609fcd76a34a7fc7cd436f049c51aac5e77ce38e520da6f47224acf",
+      "bytes": 26607
+    }
+  ],
+  "learner_zip_entries": [
+    "README.md",
+    "practice/index.html",
+    "practice/check_core.cjs",
+    "data/trace.json",
+    "examples/segment_tree.py",
+    "examples/segment_tree.cpp",
+    "examples/input.txt",
+    "examples/expected_output.txt",
+    "examples/random-input.txt",
+    "examples/random-expected.txt",
+    "examples/make_data.py",
+    "examples/run_examples.py"
+  ]
+}

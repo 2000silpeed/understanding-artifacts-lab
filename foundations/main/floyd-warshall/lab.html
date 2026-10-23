@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>플로이드–워셜 실습 — 경유지를 하나씩 허락하기</title>
+<style>
+  /* 색은 영상(film-tokens.json)과 같다: 종이 바탕, 먹색 글자, 주황 = 경유지 k, 초록 = 짧아진 칸, 파랑 = 지금 비교·경로 */
+  :root { --ground:#FBF5EE; --ink:#123649; --muted:#4F626D; --line:#C9BFB0; --k:#A6420A; --kSurf:#FCE3C6; --ok:#1C6E43; --okSurf:#D6EEDD;
+          --blue:#2952BE; --blueSurf:#DCE4F7; --bad:#B42318; --badSurf:#F7D9D4; --code:#13232D; --codeInk:#E6EDF2; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.55 "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif; }
+  header, main { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  header { padding-top: 28px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 28px 0 10px; }
+  .sub { color: var(--muted); margin: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  svg { width: 100%; height: auto; display: block; }
+  table.dist { border-collapse: separate; border-spacing: 6px; margin: 0 auto; font-variant-numeric: tabular-nums; }
+  table.dist th { color: var(--muted); font-weight: 700; padding: 2px 6px; }
+  table.dist td { width: 64px; height: 52px; text-align: center; font-size: 22px; font-weight: 800; border: 2px solid var(--ink); border-radius: 10px; background: #fff; }
+  td.inf { color: var(--muted); font-weight: 600; }
+  td.kline { background: var(--kSurf); }
+  td.cur { outline: 4px solid var(--blue); outline-offset: 2px; }
+  td.src { border-color: var(--k); border-width: 3px; }
+  td.changed { background: var(--okSurf); color: var(--ok); }
+  td.wrong { background: var(--badSurf); color: var(--bad); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 10px 0; }
+  button, select { font: inherit; border: 2px solid var(--ink); background: #fff; color: var(--ink); border-radius: 10px; padding: 6px 12px; cursor: pointer; }
+  button.primary { background: var(--ink); color: var(--ground); }
+  button:disabled { opacity: .45; cursor: default; }
+  .now { font-size: 18px; min-height: 3.2em; }
+  .now b.k { color: var(--k); }
+  .now .yes { color: var(--ok); font-weight: 800; }
+  .now .no { color: var(--muted); font-weight: 700; }
+  textarea { width: 100%; min-height: 190px; font: 15px/1.5 ui-monospace, "SF Mono", Menlo, monospace; border: 2px solid var(--line); border-radius: 10px; padding: 10px; background: #fff; color: var(--ink); }
+  pre.code { background: var(--code); color: var(--codeInk); border-radius: 12px; padding: 14px 16px; overflow-x: auto; font: 15px/1.6 ui-monospace, "SF Mono", Menlo, monospace; }
+  .log { margin: 0; padding-left: 22px; font-variant-numeric: tabular-nums; }
+  .log li.k { list-style: none; margin-left: -22px; font-weight: 800; color: var(--k); margin-top: 6px; }
+  .err { color: var(--bad); font-weight: 700; }
+  details { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; background: #fff; margin: 8px 0; }
+  details summary { cursor: pointer; font-weight: 700; }
+  .ans { color: var(--ok); font-weight: 800; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { max-width: 1180px; margin: 32px auto; padding: 0 24px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>플로이드–워셜 실습</h1>
+  <p class="sub">경유지 k를 A부터 하나씩 허락하며, 표의 모든 칸에 같은 질문을 던집니다: <b>i에서 k를 거쳐 j로 가면 더 짧은가?</b></p>
+</header>
+<main>
+  <div class="grid">
+    <section class="card">
+      <h2 style="margin-top:0">지도</h2>
+      <svg id="graph" viewBox="0 0 520 440" role="img" aria-label="도시와 일방통행 도로 그래프"></svg>
+      <div class="row">
+        <label>경로 보기: <select id="from"></select> → <select id="to"></select></label>
+        <span id="pathText"></span>
+      </div>
+    </section>
+    <section class="card">
+      <h2 style="margin-top:0">거리 표 <span class="note">(행 = 출발 i, 열 = 도착 j, ∞ = 아직 모름)</span></h2>
+      <table class="dist" id="table"></table>
+      <div class="now" id="now"></div>
+      <div class="row">
+        <button id="reset">처음으로</button>
+        <button id="step" class="primary">한 칸 비교</button>
+        <button id="round">이 경유지 끝까지</button>
+        <button id="all">끝까지</button>
+        <label><input type="checkbox" id="wrong"> 실수: k를 맨 안쪽에 두면?</label>
+      </div>
+      <div id="wrongText" class="note"></div>
+    </section>
+  </div>
+
+  <div class="grid">
+    <section>
+      <h2>바뀐 칸 기록</h2>
+      <div class="card"><ul class="log" id="log"></ul></div>
+    </section>
+    <section>
+      <h2>코드 (examples/floyd_warshall.py 와 같은 규칙)</h2>
+<pre class="code">for k in range(n):          # 경유지
+    for i in range(n):      # 출발
+        for j in range(n):  # 도착
+            d = via(dist, i, k, j)   # i→k + k→j (하나라도 ∞면 ∞)
+            if shorter(d, dist[i][j]):
+                dist[i][j] = d
+                nxt[i][j] = nxt[i][k]  # 첫걸음 기록</pre>
+    </section>
+  </div>
+
+  <h2>그래프 직접 바꾸기</h2>
+  <div class="grid">
+    <div>
+      <textarea id="input" spellcheck="false"></textarea>
+      <div class="row">
+        <button id="apply" class="primary">적용</button>
+        <button id="loadBase">영상 속 지도</button>
+        <button id="loadNeg">음수 사이클 예</button>
+        <span id="inputErr" class="err"></span>
+      </div>
+    </div>
+    <div class="note">
+      <p>형식: 첫 줄 <code>정점수 간선수</code>, 다음 줄마다 <code>출발 도착 거리</code>. 거리는 정수(음수 가능). <code>#</code> 뒤는 주석입니다.</p>
+      <p>음수 간선은 괜찮지만, 돌수록 짧아지는 <b>음수 사이클</b>이 있으면 최단 거리가 정의되지 않습니다. 그때는 대각선(자기 자신까지의 거리)이 0보다 작아집니다.</p>
+      <p>정점이 많을수록 칸 비교는 정점 수의 세제곱만큼(4개면 64번) 늘어납니다.</p>
+    </div>
+  </div>
+
+  <h2>연습 문제</h2>
+  <div id="exercises"></div>
+</main>
+<footer>와이스튜디오 · AI 기본기 연구실 — 플로이드–워셜. 계산 모듈 fw.js, 정답은 check.cjs가 다시 계산해 확인합니다.</footer>
+
+<script src="fw.js"></script>
+<script src="exercises.js"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const css = getComputedStyle(document.documentElement);
+  const COL = k => css.getPropertyValue('--' + k).trim();
+  let G = null, R = null, step = 0, N3 = 0;
+
+  function load(text) {
+    try {
+      G = FW.parseGraph(text);
+      R = FW.report(G, 'input');
+      $('inputErr').textContent = '';
+    } catch (e) { $('inputErr').textContent = e.message; return; }
+    $('input').value = text;
+    N3 = G.names.length ** 3;
+    step = 0;
+    ['from', 'to'].forEach((id, a) => {
+      $(id).innerHTML = G.names.map((v, i) => `<option value="${i}" ${i === (a ? G.names.length - 1 : 1) ? 'selected' : ''}>${v}</option>`).join('');
+    });
+    render();
+  }
+
+  const cellText = x => (x === null ? '∞' : String(x));
+
+  function nodePos(i, n) {
+    // 영상과 같은 배치: 4개면 A 왼쪽 위, B 오른쪽 위, C 오른쪽 아래, D 왼쪽 아래 (시계 방향)
+    const a = -3 * Math.PI / 4 + (2 * Math.PI * i) / n;
+    return [260 + 170 * Math.cos(a) * (n === 4 ? Math.SQRT2 * 0.82 : 1), 220 + 150 * Math.sin(a) * (n === 4 ? Math.SQRT2 * 0.82 : 1)];
+  }
+
+  function drawGraph(st, pathNodes) {
+    const n = G.names.length, P = G.names.map((_, i) => nodePos(i, n));
+    const onPath = new Set();
+    if (pathNodes) for (let x = 0; x + 1 < pathNodes.length; x++) onPath.add(pathNodes[x] + '>' + pathNodes[x + 1]);
+    const both = new Set(G.edges.map(e => e.u + '>' + e.v));
+    let s = `<defs>${['ink', 'blue', 'k'].map(c => `<marker id="ar-${c}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${COL(c)}"/></marker>`).join('')}</defs>`;
+    for (const e of G.edges) {
+      const [x1, y1] = P[e.u], [x2, y2] = P[e.v], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+      const bend = both.has(e.v + '>' + e.u) ? 22 : 0, nx = -uy * bend, ny = ux * bend;
+      const sx = x1 + ux * 34 + nx * 0.5, sy = y1 + uy * 34 + ny * 0.5, ex = x2 - ux * 36 + nx * 0.5, ey = y2 - uy * 36 + ny * 0.5;
+      const cx = (sx + ex) / 2 + nx, cy = (sy + ey) / 2 + ny;
+      const hot = onPath.has(G.names[e.u] + '>' + G.names[e.v]);
+      const c = hot ? 'blue' : 'ink';
+      s += `<path d="M${sx},${sy} Q${cx},${cy} ${ex},${ey}" fill="none" stroke="${COL(c)}" stroke-width="${hot ? 5 : 2.5}" marker-end="url(#ar-${c})"/>`;
+      const lx = (sx + 2 * cx + ex) / 4 + nx * 0.6, ly = (sy + 2 * cy + ey) / 4 + ny * 0.6;
+      s += `<rect x="${lx - 16}" y="${ly - 14}" width="32" height="28" rx="8" fill="${COL('ground')}" stroke="${COL(c)}" stroke-width="1.5"/><text x="${lx}" y="${ly + 6}" text-anchor="middle" font-size="17" font-weight="800" fill="${COL(c)}">${e.w}</text>`;
+    }
+    G.names.forEach((v, i) => {
+      const [x, y] = P[i], isK = st && !st.done && st.k === i;
+      s += `<circle cx="${x}" cy="${y}" r="30" fill="${isK ? COL('kSurf') : '#fff'}" stroke="${isK ? COL('k') : COL('ink')}" stroke-width="${isK ? 5 : 3}"/>`;
+      s += `<text x="${x}" y="${y + 8}" text-anchor="middle" font-size="24" font-weight="800" fill="${COL('ink')}">${v}</text>`;
+      if (isK) s += `<text x="${x}" y="${y - 40}" text-anchor="middle" font-size="15" font-weight="800" fill="${COL('k')}">경유지 k</text>`;
+    });
+    $('graph').innerHTML = s;
+  }
+
+  function render() {
+    const st = FW.stepState(G, step), n = G.names.length, wrongOn = $('wrong').checked;
+    // 지금까지 바뀐 칸
+    const changed = new Set();
+    let count = 0;
+    const log = [];
+    R.rounds.forEach((rd, k) => {
+      const items = [];
+      rd.changes.forEach(c => {
+        const i = G.names.indexOf(c.from), j = G.names.indexOf(c.to);
+        const at = k * n * n + i * n + j;
+        if (at < step || st.done) { changed.add(i + ',' + j); items.push(`<li>${c.from}→${c.to}: ${cellText(c.old)} → <b>${c.new}</b> &nbsp;(${c.from}→${rd.k} ${c.ik} + ${rd.k}→${c.to} ${c.kj})</li>`); count++; }
+      });
+      if (st.done || k <= (st.k ?? n)) log.push(`<li class="k">경유지 ${rd.k}${items.length ? '' : ' — 바뀐 칸 없음'}</li>` + items.join(''));
+    });
+    $('log').innerHTML = log.join('');
+    // 표
+    const shown = wrongOn ? R.wrongOrder.final : st.dist;
+    let h = '<tr><th></th>' + G.names.map(v => `<th>${v}</th>`).join('') + '</tr>';
+    for (let i = 0; i < n; i++) {
+      h += `<tr><th>${G.names[i]}</th>`;
+      for (let j = 0; j < n; j++) {
+        const cls = [];
+        const x = shown[i][j];
+        if (x === null) cls.push('inf');
+        if (!wrongOn && !st.done && (i === st.k || j === st.k)) cls.push('kline');
+        if (!wrongOn && changed.has(i + ',' + j)) cls.push('changed');
+        if (!wrongOn && !st.done && i === st.i && j === st.j) cls.push('cur');
+        if (!wrongOn && !st.done && ((i === st.i && j === st.k) || (i === st.k && j === st.j))) cls.push('src');
+        if (wrongOn && R.wrongOrder.diff.some(d => d.from === G.names[i] && d.to === G.names[j])) cls.push('wrong');
+        h += `<td class="${cls.join(' ')}">${cellText(x)}</td>`;
+      }
+      h += '</tr>';
+    }
+    $('table').innerHTML = h;
+    // 지금 비교
+    const N = G.names;
+    if (wrongOn) {
+      $('now').innerHTML = 'k를 맨 안쪽에 둔 결과입니다. 빨간 칸이 정답과 다릅니다.';
+    } else if (st.done) {
+      $('now').innerHTML = `끝. 비교 ${N3}번, 바뀐 칸 ${count}개. ` + (R.negativeCycle.length ? `<span class="err">대각선이 0보다 작은 정점: ${R.negativeCycle.join(', ')} → 음수 사이클</span>` : '음수 사이클 없음.');
+    } else {
+      const sum = st.cand === null ? '∞' : st.cand;
+      $('now').innerHTML = `경유지 <b class="k">${N[st.k]}</b> · ${N[st.i]}→${N[st.j]}: 지금 ${cellText(st.cur)} vs ${N[st.i]}→${N[st.k]} ${cellText(st.ik)} + ${N[st.k]}→${N[st.j]} ${cellText(st.kj)} = ${sum} → ` +
+        (st.better ? '<span class="yes">더 짧다, 바꾼다</span>' : '<span class="no">그대로</span>') + ` <span class="note">(${step + 1} / ${N3})</span>`;
+    }
+    $('wrongText').textContent = wrongOn ? (R.wrongOrder.diff.length ? '다른 칸: ' + R.wrongOrder.diff.map(d => `${d.from}→${d.to} 정답 ${cellText(d.right)}, 실수 ${cellText(d.wrong)}`).join(' / ') : (R.negativeCycle.length ? '음수 사이클이 있으면 비교하지 않습니다.' : '이 그래프에서는 다른 칸이 없습니다.')) : '';
+    ['step', 'round', 'all'].forEach(id => ($(id).disabled = st.done || wrongOn));
+    // 경로
+    const a = +$('from').value, b = +$('to').value;
+    let pathNodes = null;
+    if (R.negativeCycle.length) $('pathText').textContent = '음수 사이클이 있어 최단 경로가 정의되지 않음';
+    else if (a === b) $('pathText').textContent = '같은 도시 (거리 0)';
+    else {
+      const p = R.paths[N[a] + N[b]];
+      pathNodes = p && p.nodes;
+      $('pathText').innerHTML = p ? `<b>${p.nodes.join(' → ')}</b> (거리 ${p.dist})` : '길 없음';
+    }
+    drawGraph(wrongOn ? null : st, pathNodes);
+  }
+
+  $('step').onclick = () => { step = Math.min(N3, step + 1); render(); };
+  $('round').onclick = () => { const n = G.names.length, st = FW.stepState(G, step); step = st.done ? N3 : (st.k + 1) * n * n; render(); };
+  $('all').onclick = () => { step = N3; render(); };
+  $('reset').onclick = () => { step = 0; render(); };
+  $('wrong').onchange = render;
+  $('from').onchange = render;
+  $('to').onchange = render;
+  $('apply').onclick = () => load($('input').value);
+  $('loadBase').onclick = () => load(FW_EXERCISES.BASE);
+  $('loadNeg').onclick = () => load(FW_EXERCISES.NEGATIVE);
+
+  $('exercises').innerHTML = FW_EXERCISES.exercises.map((e, x) =>
+    `<details><summary>${x + 1}. ${e.q}</summary><p>정답: <span class="ans">${e.answer}</span></p>${e.note ? `<p class="note">${e.note}</p>` : ''}<button data-ex="${x}">이 그래프로 직접 돌려 보기</button></details>`).join('');
+  document.querySelectorAll('[data-ex]').forEach(b => (b.onclick = () => { load(FW_EXERCISES.exercises[+b.dataset.ex].graph); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+
+  load(FW_EXERCISES.BASE);
+})();
+</script>
+</body>
+</html>

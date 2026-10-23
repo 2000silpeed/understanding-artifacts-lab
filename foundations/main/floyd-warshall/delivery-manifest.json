@@ -1,0 +1,120 @@
+{
+  "slug": "floyd-warshall",
+  "source_snapshot": "ops/daily/2026-10-23/source-snapshots/floyd-warshall/source",
+  "video_embed": false,
+  "wrapper_only_changes": [
+    "shared NotoCourse font wrapper",
+    "mobile overflow containment",
+    "learner download links"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "17c8df9bfbf604e34bb19a58f0fe1624cff44ff24b3afa3cec9f76e03ec2aff0",
+      "bytes": 3382
+    },
+    {
+      "path": "delivery-manifest.json",
+      "sha256": "f3cc9f56798ff870fe6497a57eef07f78259b8fa68c0298cf3a6043af58b55a1",
+      "bytes": 3521
+    },
+    {
+      "path": "examples/floyd_warshall.cpp",
+      "sha256": "376cb3a15fe5b66a811210bff3da8d13595914131cb66747f4558a7a294724b6",
+      "bytes": 6939
+    },
+    {
+      "path": "examples/floyd_warshall.py",
+      "sha256": "ab9ed382d3b5c41b76366667f1b86337c447e80535c9c4b113849d9a7d2614a6",
+      "bytes": 8714
+    },
+    {
+      "path": "examples/graph.txt",
+      "sha256": "686a5c1ba3fd4e1d4845cf43724a0a5fb479c1d4a8f32fa741b6f75e1bd8982a",
+      "bytes": 186
+    },
+    {
+      "path": "examples/negative_cycle.txt",
+      "sha256": "5cd32d4e2a52262a8dfc738d3fbaccc5e14e321dd18c76063bacc8b7a70f23dc",
+      "bytes": 108
+    },
+    {
+      "path": "examples/run_examples.py",
+      "sha256": "b0062946dddfb7e6429a045b3ae799a75b106e975881129fa05b93473ae217c3",
+      "bytes": 6366
+    },
+    {
+      "path": "exercises.js",
+      "sha256": "9c76e6bb0cfee96cf1eb5ce25acb5b0c182ae466d7cfb748f1dd6f55f57a01c8",
+      "bytes": 3408
+    },
+    {
+      "path": "floyd_warshall.cpp",
+      "sha256": "376cb3a15fe5b66a811210bff3da8d13595914131cb66747f4558a7a294724b6",
+      "bytes": 6939
+    },
+    {
+      "path": "floyd_warshall.py",
+      "sha256": "ab9ed382d3b5c41b76366667f1b86337c447e80535c9c4b113849d9a7d2614a6",
+      "bytes": 8714
+    },
+    {
+      "path": "fw.js",
+      "sha256": "fa9f2b805ce170ffda082bab22f0ba86871acd55cc0bb94ff59af7494e930c68",
+      "bytes": 5783
+    },
+    {
+      "path": "index.html",
+      "sha256": "3894414b65bc5751e3c06a51e82c2c9e6595bfeed795e1a965619274b326f06d",
+      "bytes": 16498
+    },
+    {
+      "path": "lab.html",
+      "sha256": "2dc62d8ebef9e9e8b9756830724e289f4d94003d49f5ce14da81ee0d1d0ad5f3",
+      "bytes": 14970
+    },
+    {
+      "path": "practice/check.cjs",
+      "sha256": "d8c195fd8bbfcee4efcdcf201b60080a4f284b5bdcd6ec59ba96bc64afa32de2",
+      "bytes": 1129
+    },
+    {
+      "path": "practice/exercises.js",
+      "sha256": "9c76e6bb0cfee96cf1eb5ce25acb5b0c182ae466d7cfb748f1dd6f55f57a01c8",
+      "bytes": 3408
+    },
+    {
+      "path": "practice/fw.js",
+      "sha256": "fa9f2b805ce170ffda082bab22f0ba86871acd55cc0bb94ff59af7494e930c68",
+      "bytes": 5783
+    },
+    {
+      "path": "practice/index.html",
+      "sha256": "2dc62d8ebef9e9e8b9756830724e289f4d94003d49f5ce14da81ee0d1d0ad5f3",
+      "bytes": 14970
+    },
+    {
+      "path": "practice/smoke.cjs",
+      "sha256": "579203db8c9410db3f5eb067570f6fe74225723679c34fe9f258e00cff63dc35",
+      "bytes": 2930
+    },
+    {
+      "path": "source.zip",
+      "sha256": "42216add9a3697b04857c4f021eaa4991287c590ba9475bf8dd6e174bd8a62ce",
+      "bytes": 23665
+    }
+  ],
+  "learner_zip_entries": [
+    "README.md",
+    "practice/index.html",
+    "practice/fw.js",
+    "practice/exercises.js",
+    "practice/check.cjs",
+    "practice/smoke.cjs",
+    "examples/floyd_warshall.py",
+    "examples/floyd_warshall.cpp",
+    "examples/graph.txt",
+    "examples/negative_cycle.txt",
+    "examples/run_examples.py"
+  ]
+}

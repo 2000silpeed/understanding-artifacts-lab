@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>미니배치 학습 실습 — 작은 언어 모델</title>
+<style>
+  :root { --paper: #FBF5EE; --ink: #123649; --accent: #2952BE; --muted: #4F626D; --line: #DCD3C4; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 36px 0 8px; border-top: 2px solid var(--line); padding-top: 18px; }
+  p.note { color: var(--muted); margin: 4px 0 12px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+  label { display: flex; flex-direction: column; font-size: 13px; color: var(--muted); gap: 4px; }
+  input, select, textarea, button { font: inherit; color: var(--ink); }
+  input, select { width: 110px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  textarea { width: 280px; height: 190px; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  button { padding: 8px 16px; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; }
+  button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  table { border-collapse: collapse; margin: 8px 0; font-variant-numeric: tabular-nums; }
+  th, td { border: 1px solid var(--line); padding: 4px 10px; text-align: right; }
+  th { background: #F4EDE3; font-weight: 700; }
+  td.word, th.word { text-align: left; }
+  td.neg { color: var(--accent); font-weight: 700; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; background: #E9E1D4; margin-right: 6px; }
+  canvas { background: #fff; border: 1px solid var(--line); border-radius: 12px; max-width: 100%; }
+  .err { color: #B3261E; font-weight: 700; }
+  code { background: #F4EDE3; padding: 1px 5px; border-radius: 4px; }
+</style>
+<link rel="icon" href="data:,">
+<style id="companion-wrapper">
+  @font-face { font-family: "NotoCourse"; src: url("../assets/noto-kr.woff2") format("woff2"); font-display: swap; }
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body { font-family: "NotoCourse", system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  main, .row, label { min-width: 0; }
+  @media (max-width: 640px) {
+    main { padding: 20px 12px 42px; }
+    .row { gap: 10px; }
+    textarea { width: min(100%, 520px); }
+    table { display: block; max-width: 100%; overflow-x: auto; }
+    canvas { width: 100%; height: auto; }
+    button { min-height: 44px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>미니배치 학습 실습</h1>
+  <p class="note">점수표 W(앞 단어 줄 × 다음 단어 칸) 하나가 전부인 작은 언어 모델입니다. 예제 B개의 손실과 기울기(p − 정답)를 평균해서
+    <code>W ← W − 학습률 × 평균 기울기</code>로 한 걸음씩 갑니다. 계산은 <code>minibatch.js</code>가 하며, 기본값은
+    영상과 <code>examples/minibatch.py</code>·<code>minibatch.cpp</code> 실행 결과와 같은 숫자를 냅니다(<code>node lab/check.cjs</code>로 확인).</p>
+
+  <div class="row">
+    <label>학습 문장 (한 줄에 한 문장, 단어는 띄어쓰기)
+<textarea id="corpus">고양이가 잔다
+고양이가 잔다
+고양이가 먹는다
+고양이가 잔다
+강아지가 먹는다
+강아지가 먹는다
+강아지가 잔다
+강아지가 먹는다</textarea></label>
+    <div>
+      <div class="row">
+        <label>배치 크기 B <input id="batch" type="number" min="1" value="4"></label>
+        <label>학습률 <input id="lr" type="number" step="0.1" value="1.0"></label>
+        <label>시드 <input id="seed" type="number" value="7"></label>
+        <label>에포크 <input id="epochs" type="number" min="1" value="6"></label>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button id="run">실행</button>
+        <button id="reset" class="ghost">기본값으로</button>
+      </div>
+      <p id="status" class="note"></p>
+    </div>
+  </div>
+
+  <h2>1. 배치 한 개 들여다보기</h2>
+  <div class="row"><label>걸음 <select id="stepSel"></select></label></div>
+  <div id="stepView"></div>
+
+  <h2>2. 점수표 W와 확률</h2>
+  <div id="wView"></div>
+
+  <h2>3. 배치 크기에 따른 학습 곡선</h2>
+  <p class="note">가로축은 지금까지 본 예제 수, 세로축은 데이터 전체의 평균 손실입니다. 같은 예제 수를 배치 1, B, 전체(한 번에 모두)로 학습합니다. 점선은 이 데이터에서 가능한 최저 손실입니다.</p>
+  <canvas id="chart" width="1000" height="420"></canvas>
+  <div id="curveView"></div>
+
+  <h2>4. 왜 더하지 않고 평균인가</h2>
+  <div id="sumView"></div>
+</main>
+<script src="minibatch.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const DEFAULT = { corpus: $('corpus').value, batch: 4, lr: 1.0, seed: 7, epochs: 6 };
+  const f = (x, nd = 4) => (Math.abs(x) < 0.5 * Math.pow(10, -nd) ? '0' : x.toFixed(nd));
+  const cell = (x, nd) => `<td class="${x < 0 ? 'neg' : ''}">${f(x, nd)}</td>`;
+  let R = null;
+
+  function matrix(vocab, M, nd = 4, onlyRows = null) {
+    const rows = vocab.map((w, i) => i).filter(i => !onlyRows || onlyRows.includes(i));
+    return `<table><tr><th class="word">앞 단어 \\ 다음</th>${vocab.map(w => `<th>${w}</th>`).join('')}</tr>` +
+      rows.map(i => `<tr><td class="word">${vocab[i]}</td>${M[i].map(x => cell(x, nd)).join('')}</tr>`).join('') + '</table>';
+  }
+
+  function run() {
+    const B = Math.max(1, parseInt($('batch').value, 10) || 1), lr = parseFloat($('lr').value), seed = parseInt($('seed').value, 10) || 0, epochs = Math.max(1, parseInt($('epochs').value, 10) || 1);
+    const { vocab, pairs } = MB.parseCorpus($('corpus').value);
+    if (pairs.length < 1 || vocab.length < 2) { $('status').innerHTML = '<span class="err">두 단어 이상인 문장이 필요합니다.</span>'; return; }
+    const N = pairs.length, steps = Math.ceil(N / B);
+    const batches = [...new Set([1, Math.min(B, N), N])];
+    R = MB.run($('corpus').value, { learning_rate: lr, seed, walkthrough_batch: Math.min(B, N), walkthrough_steps: steps, curve_batches: batches, curve_epochs: epochs, grad_check_eps: 1e-6 });
+    $('status').textContent = `단어 ${vocab.length}개 · 예제(앞 단어 → 다음 단어) ${N}개 · 배치 ${Math.min(B, N)} → 에포크당 ${steps}걸음`;
+    $('stepSel').innerHTML = R.walkthrough.steps.map(s => `<option value="${s.step - 1}">${s.step}번째 걸음</option>`).join('');
+    showStep(0); showCurves(); showSum();
+  }
+
+  function showStep(k) {
+    const v = R.vocab, s = R.walkthrough.steps[k];
+    const rowsUsed = [...new Set(s.examples.map(e => e.prev))];
+    $('stepView').innerHTML =
+      `<table><tr><th>#</th><th class="word">예제</th>${v.map(w => `<th>p(${w})</th>`).join('')}<th>손실 −log p(정답)</th>${v.map(w => `<th>기울기 ${w}</th>`).join('')}</tr>` +
+      s.examples.map(e => `<tr><td>${e.index}</td><td class="word">${v[e.prev]} → <b>${v[e.next]}</b></td>${e.probs.map(x => cell(x)).join('')}<td>${f(e.loss)}</td>${e.grad.map(x => cell(x)).join('')}</tr>`).join('') +
+      '</table>' +
+      `<p><span class="pill">평균 손실 ${f(s.meanLoss)}</span><span class="pill">걸음 뒤 이 배치 손실 ${f(s.batchLossAfter)}</span><span class="pill">전체 손실 ${f(s.fullLossBefore)} → ${f(s.fullLossAfter)}</span></p>` +
+      `<p class="note">평균 기울기 = 같은 칸끼리 더해서 ÷ ${s.examples.length} (예제가 있는 줄만 바뀝니다)</p>` + matrix(v, s.meanGrad, 4, rowsUsed);
+    showW(k);
+  }
+
+  function showW(k) {
+    const v = R.vocab, s = R.walkthrough.steps[k];
+    $('wView').innerHTML = `<p class="note">${s.step}번째 걸음 뒤의 점수표 W (학습률 ${R.walkthrough.learningRate})</p>` + matrix(v, s.Wafter) +
+      '<p class="note">각 줄의 소프트맥스 = 앞 단어 다음에 올 단어의 확률</p>' + matrix(v, s.probsAfter);
+  }
+
+  function showCurves() {
+    const c = $('chart'), g = c.getContext('2d'), W = c.width, H = c.height, pad = { l: 60, r: 150, t: 20, b: 44 };
+    g.clearRect(0, 0, W, H);
+    const keys = Object.keys(R.curves), xMax = Math.max(...keys.map(k => R.curves[k].examplesSeen.at(-1)));
+    const ys = keys.flatMap(k => R.curves[k].fullLoss).concat([R.bestPossibleLoss]);
+    const yMin = Math.min(...ys) * 0.95, yMax = Math.max(...ys) * 1.02;
+    const X = x => pad.l + (x / xMax) * (W - pad.l - pad.r), Y = y => pad.t + (1 - (y - yMin) / (yMax - yMin)) * (H - pad.t - pad.b);
+    g.strokeStyle = '#999'; g.lineWidth = 1; g.beginPath(); g.moveTo(pad.l, pad.t); g.lineTo(pad.l, H - pad.b); g.lineTo(W - pad.r, H - pad.b); g.stroke();
+    g.fillStyle = '#4F626D'; g.font = '13px system-ui';
+    for (let i = 0; i <= 4; i++) { const y = yMin + (i / 4) * (yMax - yMin); g.fillText(y.toFixed(2), 8, Y(y) + 4); }
+    g.fillText('본 예제 수', W - pad.r - 70, H - 10); g.fillText('0', pad.l - 4, H - pad.b + 18); g.fillText(String(xMax), W - pad.r - 12, H - pad.b + 18);
+    g.setLineDash([6, 6]); g.beginPath(); g.moveTo(pad.l, Y(R.bestPossibleLoss)); g.lineTo(W - pad.r, Y(R.bestPossibleLoss)); g.stroke(); g.setLineDash([]);
+    const colors = ['#9AA5AB', '#2952BE', '#123649'];
+    keys.sort((a, b) => a - b).forEach((k, i) => {
+      const cv = R.curves[k], col = colors[i % colors.length];
+      g.strokeStyle = col; g.lineWidth = k === '1' ? 1.5 : 3; g.beginPath();
+      cv.examplesSeen.forEach((x, j) => (j ? g.lineTo(X(x), Y(cv.fullLoss[j])) : g.moveTo(X(x), Y(cv.fullLoss[j])))); g.stroke();
+      g.fillStyle = col; g.font = 'bold 14px system-ui'; g.fillText(`배치 ${k}: ${f(cv.fullLoss.at(-1), 3)}`, W - pad.r + 10, pad.t + 20 + i * 24);
+    });
+    $('curveView').innerHTML = `<table><tr><th>배치</th><th>걸음 수</th><th>마지막 전체 손실</th><th>손실이 오른 걸음 수</th></tr>` +
+      keys.map(k => { const L = R.curves[k].fullLoss; return `<tr><td>${k}</td><td>${R.curves[k].updates}</td><td>${f(L.at(-1))}</td><td>${L.slice(1).filter((x, i) => x > L[i]).length}</td></tr>`; }).join('') +
+      `</table><p class="note">가능한 최저 손실: ${f(R.bestPossibleLoss)}</p>`;
+  }
+
+  function showSum() {
+    const m = R.meanVsSum;
+    $('sumView').innerHTML = `<p class="note">0에서 시작해 배치의 첫 걸음에서 점수가 가장 크게 바뀐 양(학습률 ${m.learningRate}).</p>` +
+      `<table><tr><th>배치</th><th>평균</th><th>합</th></tr>` + R.stepScale.map(s => `<tr><td>${s.batch}</td><td>${f(s.meanMaxStep)}</td><td>${f(s.sumMaxStep)}</td></tr>`).join('') + '</table>' +
+      `<p class="note">합은 배치 크기에 비례해 커져서, 배치를 바꿀 때마다 학습률을 다시 맞춰야 합니다. 평균은 데이터 전체의 평균 기울기를 추정하므로 배치 크기와 상관없이 같은 눈금입니다.
+       전체 ${m.batch}개 한 걸음 뒤 전체 손실: 평균 ${f(m.mean.fullLossAfter)}, 합 ${f(m.sum.fullLossAfter)} (이 작은 문제에서는 학습률 1이 작아서, 8배 큰 걸음인 합이 오히려 더 내려갑니다 — 합이 '틀렸다'가 아니라 걸음 크기가 배치에 묶인다는 뜻입니다).</p>`;
+  }
+
+  $('run').onclick = run;
+  $('reset').onclick = () => { $('corpus').value = DEFAULT.corpus; $('batch').value = DEFAULT.batch; $('lr').value = DEFAULT.lr; $('seed').value = DEFAULT.seed; $('epochs').value = DEFAULT.epochs; run(); };
+  $('stepSel').onchange = e => showStep(Number(e.target.value));
+  run();
+})();
+</script>
+<section class="companion-links" style="max-width:1080px;margin:0 auto;padding:10px 12px 28px"><h2>학습자 파일</h2><p>원본 실습의 배치·학습률·시드·에포크 조작과 Python/C++17 예제를 함께 제공합니다. 영상 embed는 포함하지 않습니다.</p><p><a href="examples/minibatch.py" download>Python 예제</a> · <a href="examples/minibatch.cpp" download>C++17 예제</a> · <a href="examples/data/corpus.txt" download>corpus fixture</a> · <a href="examples/data/config.txt" download>config fixture</a> · <a href="source.zip" download>학습자 source ZIP</a> · <a href="lab.html">원본 실습 HTML</a></p></section>
+</body>
+</html>

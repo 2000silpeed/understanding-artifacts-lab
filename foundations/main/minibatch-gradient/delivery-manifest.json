@@ -1,0 +1,109 @@
+{
+  "slug": "minibatch-gradient",
+  "source_snapshot": "ops/daily/2026-10-23/source-snapshots/minibatch-gradient/source",
+  "video_embed": false,
+  "wrapper_only_changes": [
+    "shared NotoCourse font wrapper",
+    "mobile overflow containment",
+    "learner download links"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "f03863f3b5587b5c3151f15750ccd47cc9e9f169d934a31a977d14ac56f73091",
+      "bytes": 577
+    },
+    {
+      "path": "delivery-manifest.json",
+      "sha256": "410aa0a4cdef62b263e3ba4c4f1cc5d6691378091f9c262fe4dee23cd37478e0",
+      "bytes": 3195
+    },
+    {
+      "path": "examples/README.md",
+      "sha256": "8b985c2de40903c89c82c78858b2b519b608f851c12d1fe2be2ee53b725eeb77",
+      "bytes": 1766
+    },
+    {
+      "path": "examples/data/config.txt",
+      "sha256": "49006a6992560bef45ae97689160c92bd0a9d1b436ccbe09f00c1b5208202f37",
+      "bytes": 226
+    },
+    {
+      "path": "examples/data/corpus.txt",
+      "sha256": "94a30d8144e58ed512bf37187787a43ef1071a08012a7c286399339227214d3f",
+      "bytes": 172
+    },
+    {
+      "path": "examples/minibatch.cpp",
+      "sha256": "68e7cb5df38c1607e684a5376981205daeb74f4ea9e1e62af9dcb137f440df0f",
+      "bytes": 11785
+    },
+    {
+      "path": "examples/minibatch.py",
+      "sha256": "2ce8dc563550a798da281d52e2866c7a456efe7c0292f75365d72080a7b51cd1",
+      "bytes": 11011
+    },
+    {
+      "path": "index.html",
+      "sha256": "11d00838e3b03ac00354c952198d0ac75a57de8b8199539f7aa3806db9a08eef",
+      "bytes": 12468
+    },
+    {
+      "path": "lab.html",
+      "sha256": "3e3f1678b3cb9a950c224bfacf7bbbb1bb21affc209713cca193d022b5be5a1a",
+      "bytes": 11141
+    },
+    {
+      "path": "minibatch.cpp",
+      "sha256": "68e7cb5df38c1607e684a5376981205daeb74f4ea9e1e62af9dcb137f440df0f",
+      "bytes": 11785
+    },
+    {
+      "path": "minibatch.js",
+      "sha256": "8ed3960d83c39822cfdd047505433c2046940d7f0c4230aa2935ef2ae12ca37f",
+      "bytes": 6189
+    },
+    {
+      "path": "minibatch.py",
+      "sha256": "2ce8dc563550a798da281d52e2866c7a456efe7c0292f75365d72080a7b51cd1",
+      "bytes": 11011
+    },
+    {
+      "path": "practice/check.cjs",
+      "sha256": "9a18e02cb167afba98da915553e98bd71f436d0ca0d006b7695e08b77d250fb6",
+      "bytes": 2306
+    },
+    {
+      "path": "practice/index.html",
+      "sha256": "3e3f1678b3cb9a950c224bfacf7bbbb1bb21affc209713cca193d022b5be5a1a",
+      "bytes": 11141
+    },
+    {
+      "path": "practice/minibatch.js",
+      "sha256": "8ed3960d83c39822cfdd047505433c2046940d7f0c4230aa2935ef2ae12ca37f",
+      "bytes": 6189
+    },
+    {
+      "path": "practice/screenshot.cjs",
+      "sha256": "5b7d0234a870f7359f98c3af53bf057edd4daf92f83ae498b914fcb222cbf55d",
+      "bytes": 1653
+    },
+    {
+      "path": "source.zip",
+      "sha256": "6124a70afff29af8ad9adcb6d961386a82bf87e05345aa220b2f21ec84502eaf",
+      "bytes": 19358
+    }
+  ],
+  "learner_zip_entries": [
+    "README.md",
+    "practice/index.html",
+    "practice/minibatch.js",
+    "practice/check.cjs",
+    "practice/screenshot.cjs",
+    "examples/minibatch.py",
+    "examples/minibatch.cpp",
+    "examples/README.md",
+    "examples/data/corpus.txt",
+    "examples/data/config.txt"
+  ]
+}
