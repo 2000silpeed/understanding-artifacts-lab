@@ -1,0 +1,22 @@
+{
+  "schema": "PUBLIC_COMPANION_ASSETS_V1",
+  "slug": "sparse-table",
+  "files": {
+    "README.txt": "e0292c354b3088f7e398a519de6efe6081828015378505c34e3a82db9e998c2e",
+    "app.js": "7f05569753e3ad156a3f520d95e01414f9cada156821988fe788d6bb04e714d6",
+    "assets/Pretendard-LICENSE.txt": "d31ddd9f2bed32fd7e302a205cf2380ba0de6529152d239ef99cfb6f261bfc04",
+    "assets/PretendardVariable.woff2": "9599f12fd42fc0bce1cd50b47a0c022e108d7aa64dd0d1bb0ed44f3282d900b4",
+    "examples/input.txt": "117f9196be297c2b0f5e9af268a116192007d533232aa4ca793c2128610fcd39",
+    "examples/practice.txt": "314257d228de59abda8524abcacd688a12383ba7afcf92a5725133468ce36ac2",
+    "examples/random-input.txt": "2a17541d90c3ea80a2d1b2d170a73c3b50303312f59346bca7abc8a41bb807c6",
+    "examples/sparse_table.cpp": "d6fa1ac5022bc0772cf841c3e0da13037a8dc3f2cb20a3d03986b0162dac57fa",
+    "examples/sparse_table.py": "11b36bdd861bb649750e503a03d72cdc2ee46cf723bc5eb9a41f723ed0aa9faa",
+    "index.html": "01e240b5bff6d527dd725f1d4372385902a87971d24185c05c6a64562993270f",
+    "lesson.md": "564fc0858a9ae7e38c1f32585ad3d96fa221d8b11ef5faab8f4fc5cd7c023db3",
+    "source.zip": "dcdb6ab13f92f1569b85ecd0836c0007b46b196bcb8ee41fbd8fd027d7ebaaee",
+    "style.css": "10c2d39522d5f4cef8ce620fa91885bda13c2e6cdb0bfa4f8b637a2c21db7ab8",
+    "trace.json": "6876944bbbce20f5744b7770ebaa89593ec957507d6be4656d2c5a40c530aa39"
+  },
+  "source_modified": false,
+  "video_publication": "NOT_CLAIMED"
+}
