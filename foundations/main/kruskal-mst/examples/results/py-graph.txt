@@ -1,0 +1,12 @@
+sorted: E-F:1 B-E:2 B-F:3 A-D:4 C-F:5 B-C:6 D-E:7 A-B:8 A-E:9
+step 1: E-F w=1 find(E)=E find(F)=F take total=1
+step 2: B-E w=2 find(B)=B find(E)=E take total=3
+step 3: B-F w=3 find(B)=E find(F)=E skip cycle
+step 4: A-D w=4 find(A)=A find(D)=D take total=7
+step 5: C-F w=5 find(C)=C find(F)=E take total=12
+step 6: B-C w=6 find(B)=E find(C)=E skip cycle
+step 7: D-E w=7 find(D)=A find(E)=E take total=19
+mst: E-F B-E A-D C-F D-E
+total: 19
+edges: 5/5 checked: 7/9
+connected: yes

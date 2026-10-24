@@ -1,0 +1,1124 @@
+{
+ "source": "examples/make_trace.py ← examples/kruskal.py on examples/graph.txt",
+ "graph": {
+  "file": "examples/graph.txt",
+  "vertices": [
+   "A",
+   "B",
+   "C",
+   "D",
+   "E",
+   "F"
+  ],
+  "edges": [
+   {
+    "u": "A",
+    "v": "B",
+    "w": 8,
+    "id": "A-B"
+   },
+   {
+    "u": "B",
+    "v": "C",
+    "w": 6,
+    "id": "B-C"
+   },
+   {
+    "u": "A",
+    "v": "D",
+    "w": 4,
+    "id": "A-D"
+   },
+   {
+    "u": "D",
+    "v": "E",
+    "w": 7,
+    "id": "D-E"
+   },
+   {
+    "u": "E",
+    "v": "F",
+    "w": 1,
+    "id": "E-F"
+   },
+   {
+    "u": "B",
+    "v": "E",
+    "w": 2,
+    "id": "B-E"
+   },
+   {
+    "u": "C",
+    "v": "F",
+    "w": 5,
+    "id": "C-F"
+   },
+   {
+    "u": "B",
+    "v": "F",
+    "w": 3,
+    "id": "B-F"
+   },
+   {
+    "u": "A",
+    "v": "E",
+    "w": 9,
+    "id": "A-E"
+   }
+  ]
+ },
+ "n": 6,
+ "m": 9,
+ "allEdgesTotal": 45,
+ "sorted": [
+  {
+   "u": "E",
+   "v": "F",
+   "w": 1,
+   "id": "E-F"
+  },
+  {
+   "u": "B",
+   "v": "E",
+   "w": 2,
+   "id": "B-E"
+  },
+  {
+   "u": "B",
+   "v": "F",
+   "w": 3,
+   "id": "B-F"
+  },
+  {
+   "u": "A",
+   "v": "D",
+   "w": 4,
+   "id": "A-D"
+  },
+  {
+   "u": "C",
+   "v": "F",
+   "w": 5,
+   "id": "C-F"
+  },
+  {
+   "u": "B",
+   "v": "C",
+   "w": 6,
+   "id": "B-C"
+  },
+  {
+   "u": "D",
+   "v": "E",
+   "w": 7,
+   "id": "D-E"
+  },
+  {
+   "u": "A",
+   "v": "B",
+   "w": 8,
+   "id": "A-B"
+  },
+  {
+   "u": "A",
+   "v": "E",
+   "w": 9,
+   "id": "A-E"
+  }
+ ],
+ "steps": [
+  {
+   "k": 1,
+   "u": "E",
+   "v": "F",
+   "w": 1,
+   "id": "E-F",
+   "findU": "E",
+   "findV": "F",
+   "take": true,
+   "total": 1,
+   "treeEdges": 1,
+   "groupsBefore": [
+    [
+     "A"
+    ],
+    [
+     "B"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ],
+    [
+     "E"
+    ],
+    [
+     "F"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A"
+    ],
+    [
+     "B"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ],
+    [
+     "E",
+     "F"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "B",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": {
+    "side": [
+     "E"
+    ],
+    "crossing": [
+     {
+      "u": "E",
+      "v": "F",
+      "w": 1,
+      "id": "E-F"
+     },
+     {
+      "u": "B",
+      "v": "E",
+      "w": 2,
+      "id": "B-E"
+     },
+     {
+      "u": "D",
+      "v": "E",
+      "w": 7,
+      "id": "D-E"
+     },
+     {
+      "u": "A",
+      "v": "E",
+      "w": 9,
+      "id": "A-E"
+     }
+    ]
+   }
+  },
+  {
+   "k": 2,
+   "u": "B",
+   "v": "E",
+   "w": 2,
+   "id": "B-E",
+   "findU": "B",
+   "findV": "E",
+   "take": true,
+   "total": 3,
+   "treeEdges": 2,
+   "groupsBefore": [
+    [
+     "A"
+    ],
+    [
+     "B"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ],
+    [
+     "E",
+     "F"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "E",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": {
+    "side": [
+     "B"
+    ],
+    "crossing": [
+     {
+      "u": "B",
+      "v": "E",
+      "w": 2,
+      "id": "B-E"
+     },
+     {
+      "u": "B",
+      "v": "F",
+      "w": 3,
+      "id": "B-F"
+     },
+     {
+      "u": "B",
+      "v": "C",
+      "w": 6,
+      "id": "B-C"
+     },
+     {
+      "u": "A",
+      "v": "B",
+      "w": 8,
+      "id": "A-B"
+     }
+    ]
+   }
+  },
+  {
+   "k": 3,
+   "u": "B",
+   "v": "F",
+   "w": 3,
+   "id": "B-F",
+   "findU": "E",
+   "findV": "E",
+   "take": false,
+   "total": 3,
+   "treeEdges": 2,
+   "groupsBefore": [
+    [
+     "A"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "E",
+    "C": "C",
+    "D": "D",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": null
+  },
+  {
+   "k": 4,
+   "u": "A",
+   "v": "D",
+   "w": 4,
+   "id": "A-D",
+   "findU": "A",
+   "findV": "D",
+   "take": true,
+   "total": 7,
+   "treeEdges": 3,
+   "groupsBefore": [
+    [
+     "A"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ],
+    [
+     "D"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "E",
+    "C": "C",
+    "D": "A",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": {
+    "side": [
+     "A"
+    ],
+    "crossing": [
+     {
+      "u": "A",
+      "v": "D",
+      "w": 4,
+      "id": "A-D"
+     },
+     {
+      "u": "A",
+      "v": "B",
+      "w": 8,
+      "id": "A-B"
+     },
+     {
+      "u": "A",
+      "v": "E",
+      "w": 9,
+      "id": "A-E"
+     }
+    ]
+   }
+  },
+  {
+   "k": 5,
+   "u": "C",
+   "v": "F",
+   "w": 5,
+   "id": "C-F",
+   "findU": "C",
+   "findV": "E",
+   "take": true,
+   "total": 12,
+   "treeEdges": 4,
+   "groupsBefore": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "E",
+     "F"
+    ],
+    [
+     "C"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "C",
+     "E",
+     "F"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "E",
+    "C": "E",
+    "D": "A",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": {
+    "side": [
+     "C"
+    ],
+    "crossing": [
+     {
+      "u": "C",
+      "v": "F",
+      "w": 5,
+      "id": "C-F"
+     },
+     {
+      "u": "B",
+      "v": "C",
+      "w": 6,
+      "id": "B-C"
+     }
+    ]
+   }
+  },
+  {
+   "k": 6,
+   "u": "B",
+   "v": "C",
+   "w": 6,
+   "id": "B-C",
+   "findU": "E",
+   "findV": "E",
+   "take": false,
+   "total": 12,
+   "treeEdges": 4,
+   "groupsBefore": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "C",
+     "E",
+     "F"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "C",
+     "E",
+     "F"
+    ]
+   ],
+   "parentAfter": {
+    "A": "A",
+    "B": "E",
+    "C": "E",
+    "D": "A",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": null
+  },
+  {
+   "k": 7,
+   "u": "D",
+   "v": "E",
+   "w": 7,
+   "id": "D-E",
+   "findU": "A",
+   "findV": "E",
+   "take": true,
+   "total": 19,
+   "treeEdges": 5,
+   "groupsBefore": [
+    [
+     "A",
+     "D"
+    ],
+    [
+     "B",
+     "C",
+     "E",
+     "F"
+    ]
+   ],
+   "groupsAfter": [
+    [
+     "A",
+     "B",
+     "C",
+     "D",
+     "E",
+     "F"
+    ]
+   ],
+   "parentAfter": {
+    "A": "E",
+    "B": "E",
+    "C": "E",
+    "D": "A",
+    "E": "E",
+    "F": "E"
+   },
+   "cut": {
+    "side": [
+     "A",
+     "D"
+    ],
+    "crossing": [
+     {
+      "u": "D",
+      "v": "E",
+      "w": 7,
+      "id": "D-E"
+     },
+     {
+      "u": "A",
+      "v": "B",
+      "w": 8,
+      "id": "A-B"
+     },
+     {
+      "u": "A",
+      "v": "E",
+      "w": 9,
+      "id": "A-E"
+     }
+    ]
+   }
+  }
+ ],
+ "result": {
+  "mst": [
+   {
+    "u": "E",
+    "v": "F",
+    "w": 1,
+    "id": "E-F"
+   },
+   {
+    "u": "B",
+    "v": "E",
+    "w": 2,
+    "id": "B-E"
+   },
+   {
+    "u": "A",
+    "v": "D",
+    "w": 4,
+    "id": "A-D"
+   },
+   {
+    "u": "C",
+    "v": "F",
+    "w": 5,
+    "id": "C-F"
+   },
+   {
+    "u": "D",
+    "v": "E",
+    "w": 7,
+    "id": "D-E"
+   }
+  ],
+  "total": 19,
+  "checked": 7,
+  "edges": 5,
+  "unchecked": [
+   {
+    "u": "A",
+    "v": "B",
+    "w": 8,
+    "id": "A-B"
+   },
+   {
+    "u": "A",
+    "v": "E",
+    "w": 9,
+    "id": "A-E"
+   }
+  ],
+  "components": 1
+ },
+ "naive": {
+  "rule": "skip an edge when both ends are already visited",
+  "steps": [
+   {
+    "k": 1,
+    "u": "E",
+    "v": "F",
+    "w": 1,
+    "id": "E-F",
+    "take": true
+   },
+   {
+    "k": 2,
+    "u": "B",
+    "v": "E",
+    "w": 2,
+    "id": "B-E",
+    "take": true
+   },
+   {
+    "k": 3,
+    "u": "B",
+    "v": "F",
+    "w": 3,
+    "id": "B-F",
+    "take": false
+   },
+   {
+    "k": 4,
+    "u": "A",
+    "v": "D",
+    "w": 4,
+    "id": "A-D",
+    "take": true
+   },
+   {
+    "k": 5,
+    "u": "C",
+    "v": "F",
+    "w": 5,
+    "id": "C-F",
+    "take": true
+   },
+   {
+    "k": 6,
+    "u": "B",
+    "v": "C",
+    "w": 6,
+    "id": "B-C",
+    "take": false
+   },
+   {
+    "k": 7,
+    "u": "D",
+    "v": "E",
+    "w": 7,
+    "id": "D-E",
+    "take": false
+   },
+   {
+    "k": 8,
+    "u": "A",
+    "v": "B",
+    "w": 8,
+    "id": "A-B",
+    "take": false
+   },
+   {
+    "k": 9,
+    "u": "A",
+    "v": "E",
+    "w": 9,
+    "id": "A-E",
+    "take": false
+   }
+  ],
+  "tree": [
+   {
+    "u": "E",
+    "v": "F",
+    "w": 1,
+    "id": "E-F"
+   },
+   {
+    "u": "B",
+    "v": "E",
+    "w": 2,
+    "id": "B-E"
+   },
+   {
+    "u": "A",
+    "v": "D",
+    "w": 4,
+    "id": "A-D"
+   },
+   {
+    "u": "C",
+    "v": "F",
+    "w": 5,
+    "id": "C-F"
+   }
+  ],
+  "total": 12,
+  "edges": 4,
+  "groups": [
+   [
+    "A",
+    "D"
+   ],
+   [
+    "B",
+    "C",
+    "E",
+    "F"
+   ]
+  ],
+  "firstWrongSkip": {
+   "u": "D",
+   "v": "E",
+   "w": 7,
+   "id": "D-E"
+  }
+ },
+ "brute": {
+  "spanningTrees": 55,
+  "minTotal": 19,
+  "minCount": 1,
+  "maxTotal": 35,
+  "prim": 19,
+  "exampleTree": {
+   "edges": [
+    {
+     "u": "A",
+     "v": "B",
+     "w": 8,
+     "id": "A-B"
+    },
+    {
+     "u": "B",
+     "v": "C",
+     "w": 6,
+     "id": "B-C"
+    },
+    {
+     "u": "A",
+     "v": "D",
+     "w": 4,
+     "id": "A-D"
+    },
+    {
+     "u": "D",
+     "v": "E",
+     "w": 7,
+     "id": "D-E"
+    },
+    {
+     "u": "E",
+     "v": "F",
+     "w": 1,
+     "id": "E-F"
+    }
+   ],
+   "total": 26,
+   "note": "first spanning tree in input-order enumeration"
+  },
+  "worstTree": {
+   "edges": [
+    {
+     "u": "A",
+     "v": "B",
+     "w": 8,
+     "id": "A-B"
+    },
+    {
+     "u": "B",
+     "v": "C",
+     "w": 6,
+     "id": "B-C"
+    },
+    {
+     "u": "D",
+     "v": "E",
+     "w": 7,
+     "id": "D-E"
+    },
+    {
+     "u": "C",
+     "v": "F",
+     "w": 5,
+     "id": "C-F"
+    },
+    {
+     "u": "A",
+     "v": "E",
+     "w": 9,
+     "id": "A-E"
+    }
+   ],
+   "total": 35
+  },
+  "histogram": [
+   {
+    "total": 19,
+    "trees": 1
+   },
+   {
+    "total": 20,
+    "trees": 3
+   },
+   {
+    "total": 21,
+    "trees": 5
+   },
+   {
+    "total": 22,
+    "trees": 5
+   },
+   {
+    "total": 23,
+    "trees": 5
+   },
+   {
+    "total": 24,
+    "trees": 6
+   },
+   {
+    "total": 25,
+    "trees": 7
+   },
+   {
+    "total": 26,
+    "trees": 5
+   },
+   {
+    "total": 27,
+    "trees": 4
+   },
+   {
+    "total": 28,
+    "trees": 4
+   },
+   {
+    "total": 29,
+    "trees": 2
+   },
+   {
+    "total": 30,
+    "trees": 3
+   },
+   {
+    "total": 31,
+    "trees": 1
+   },
+   {
+    "total": 32,
+    "trees": 2
+   },
+   {
+    "total": 33,
+    "trees": 1
+   },
+   {
+    "total": 34,
+    "trees": 0
+   },
+   {
+    "total": 35,
+    "trees": 1
+   }
+  ]
+ },
+ "compress": {
+  "v": "D",
+  "path": [
+   "D",
+   "A",
+   "E"
+  ],
+  "root": "E",
+  "before": {
+   "A": "E",
+   "B": "E",
+   "C": "E",
+   "D": "A",
+   "E": "E",
+   "F": "E"
+  },
+  "after": {
+   "A": "E",
+   "B": "E",
+   "C": "E",
+   "D": "E",
+   "E": "E",
+   "F": "E"
+  },
+  "note": "find() on the deepest vertex of the final union-find state (examples/kruskal.py UnionFind.find)"
+ },
+ "code": {
+  "find": {
+   "file": "examples/kruskal.py",
+   "name": "UnionFind.find",
+   "span": [
+    34,
+    42
+   ],
+   "omitted": [],
+   "rows": [
+    [
+     34,
+     "def find(self, v):"
+    ],
+    [
+     35,
+     "    root = v"
+    ],
+    [
+     36,
+     "    while self.parent[root] != root:      # 대표까지 따라 올라간다"
+    ],
+    [
+     37,
+     "        root = self.parent[root]"
+    ],
+    [
+     38,
+     "    while v != root:                      # 지나온 정점은 대표를 바로 가리키게(경로 압축)"
+    ],
+    [
+     39,
+     "        nxt = self.parent[v]"
+    ],
+    [
+     40,
+     "        self.parent[v] = root"
+    ],
+    [
+     41,
+     "        v = nxt"
+    ],
+    [
+     42,
+     "    return root"
+    ]
+   ]
+  },
+  "union": {
+   "file": "examples/kruskal.py",
+   "name": "UnionFind.union",
+   "span": [
+    44,
+    52
+   ],
+   "omitted": [],
+   "rows": [
+    [
+     44,
+     "def union(self, a, b):"
+    ],
+    [
+     45,
+     "    ra, rb = self.find(a), self.find(b)"
+    ],
+    [
+     46,
+     "    if ra == rb:"
+    ],
+    [
+     47,
+     "        return False                      # 같은 덩어리: 이으면 사이클"
+    ],
+    [
+     48,
+     "    if self.size[ra] < self.size[rb]:"
+    ],
+    [
+     49,
+     "        ra, rb = rb, ra"
+    ],
+    [
+     50,
+     "    self.parent[rb] = ra                  # 작은 덩어리를 큰 덩어리 아래에"
+    ],
+    [
+     51,
+     "    self.size[ra] += self.size[rb]"
+    ],
+    [
+     52,
+     "    return True"
+    ]
+   ]
+  },
+  "kruskal": {
+   "file": "examples/kruskal.py",
+   "name": "kruskal",
+   "span": [
+    55,
+    71
+   ],
+   "omitted": [
+    56,
+    68,
+    69,
+    70
+   ],
+   "rows": [
+    [
+     55,
+     "def kruskal(names, edges, log=None):"
+    ],
+    [
+     57,
+     "    uf = UnionFind(names)"
+    ],
+    [
+     58,
+     "    tree, total, checked = [], 0, 0"
+    ],
+    [
+     59,
+     "    for u, v, w in sorted(edges, key=lambda e: e[2]):   # 비용 순서(같으면 입력 순서)"
+    ],
+    [
+     60,
+     "        if len(tree) == len(names) - 1:"
+    ],
+    [
+     61,
+     "            break                                       # 간선 n-1개면 끝"
+    ],
+    [
+     62,
+     "        checked += 1"
+    ],
+    [
+     63,
+     "        ru, rv = uf.find(u), uf.find(v)                 # 두 끝의 대표"
+    ],
+    [
+     64,
+     "        take = uf.union(u, v)                           # 대표가 다르면 잇는다"
+    ],
+    [
+     65,
+     "        if take:"
+    ],
+    [
+     66,
+     "            tree.append((u, v, w))"
+    ],
+    [
+     67,
+     "            total += w"
+    ],
+    [
+     71,
+     "    return tree, total, checked"
+    ]
+   ]
+  }
+ }
+}

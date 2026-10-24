@@ -1,0 +1,11 @@
+naive rule: skip an edge when both ends are already visited
+step 1: E-F w=1 take
+step 2: B-E w=2 take
+step 3: B-F w=3 skip both-visited
+step 4: A-D w=4 take
+step 5: C-F w=5 take
+step 6: B-C w=6 skip both-visited
+step 7: D-E w=7 skip both-visited
+step 8: A-B w=8 skip both-visited
+step 9: A-E w=9 skip both-visited
+edges: 4/5 total: 12 components: 2

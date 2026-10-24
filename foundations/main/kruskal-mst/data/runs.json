@@ -1,0 +1,67 @@
+{
+ "source": "examples/run_examples.py (real stdout, Python 3 and C++17)",
+ "input": [
+  "# 크루스칼 예제: 마을 6곳(A–F), 케이블을 놓을 수 있는 자리 9곳. 숫자는 그 자리의 비용(예시 값).",
+  "# 첫 줄: 정점 이름. 그다음 줄마다: 정점 정점 비용",
+  "A B C D E F",
+  "A B 8",
+  "B C 6",
+  "A D 4",
+  "D E 7",
+  "E F 1",
+  "B E 2",
+  "C F 5",
+  "B F 3",
+  "A E 9"
+ ],
+ "python": {
+  "cmd": "python3 kruskal.py graph.txt",
+  "stdout": [
+   "sorted: E-F:1 B-E:2 B-F:3 A-D:4 C-F:5 B-C:6 D-E:7 A-B:8 A-E:9",
+   "step 1: E-F w=1 find(E)=E find(F)=F take total=1",
+   "step 2: B-E w=2 find(B)=B find(E)=E take total=3",
+   "step 3: B-F w=3 find(B)=E find(F)=E skip cycle",
+   "step 4: A-D w=4 find(A)=A find(D)=D take total=7",
+   "step 5: C-F w=5 find(C)=C find(F)=E take total=12",
+   "step 6: B-C w=6 find(B)=E find(C)=E skip cycle",
+   "step 7: D-E w=7 find(D)=A find(E)=E take total=19",
+   "mst: E-F B-E A-D C-F D-E",
+   "total: 19",
+   "edges: 5/5 checked: 7/9",
+   "connected: yes"
+  ]
+ },
+ "cpp": {
+  "cmd": "./kruskal graph.txt",
+  "stdout": [
+   "sorted: E-F:1 B-E:2 B-F:3 A-D:4 C-F:5 B-C:6 D-E:7 A-B:8 A-E:9",
+   "step 1: E-F w=1 find(E)=E find(F)=F take total=1",
+   "step 2: B-E w=2 find(B)=B find(E)=E take total=3",
+   "step 3: B-F w=3 find(B)=E find(F)=E skip cycle",
+   "step 4: A-D w=4 find(A)=A find(D)=D take total=7",
+   "step 5: C-F w=5 find(C)=C find(F)=E take total=12",
+   "step 6: B-C w=6 find(B)=E find(C)=E skip cycle",
+   "step 7: D-E w=7 find(D)=A find(E)=E take total=19",
+   "mst: E-F B-E A-D C-F D-E",
+   "total: 19",
+   "edges: 5/5 checked: 7/9",
+   "connected: yes"
+  ]
+ },
+ "naive": {
+  "cmd": "python3 kruskal.py graph.txt --naive",
+  "stdout": [
+   "naive rule: skip an edge when both ends are already visited",
+   "step 1: E-F w=1 take",
+   "step 2: B-E w=2 take",
+   "step 3: B-F w=3 skip both-visited",
+   "step 4: A-D w=4 take",
+   "step 5: C-F w=5 take",
+   "step 6: B-C w=6 skip both-visited",
+   "step 7: D-E w=7 skip both-visited",
+   "step 8: A-B w=8 skip both-visited",
+   "step 9: A-E w=9 skip both-visited",
+   "edges: 4/5 total: 12 components: 2"
+  ]
+ }
+}
