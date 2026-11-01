@@ -1,0 +1,10 @@
+{
+  "about": "실험 설정. 두 실험은 모델·학습률·걸음 수·초기화 시드가 같고, 훈련 문장 수만 다르다.",
+  "model": {"context": 8, "embed": 16, "hidden": 128},
+  "train": {"lr": 0.0003, "steps": 3000, "eval_every": 10},
+  "init_seed": 7,
+  "runs": [
+    {"id": "small", "train": "train_small.txt", "val": "val.txt", "test": "test.txt", "label": "훈련 32문장"},
+    {"id": "large", "train": "train_large.txt", "val": "val.txt", "test": "test.txt", "label": "훈련 512문장"}
+  ]
+}

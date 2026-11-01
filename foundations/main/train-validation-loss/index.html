@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>훈련 손실과 검증 손실 · 직접 해보기</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <p class="eyebrow">AI 기본기 연구실 · 직접 해보기</p>
+    <h1>훈련 손실과 검증 손실</h1>
+    <p class="lede">모델이 규칙을 배우는지, 훈련 문장을 외우는지 손실 기록으로 직접 판별해 봅니다.</p>
+    <div class="goal" aria-labelledby="goal-title">
+      <strong id="goal-title">오늘의 목표</strong>
+      <span>훈련 손실과 검증 손실의 방향을 읽고, 과적합이 시작된 순간을 찾아 설명하기</span>
+    </div>
+    <p class="first-action"><span class="step-badge">첫 행동</span> 아래 <b>손실 계산기</b>에서 슬라이더를 움직인 뒤, 그래프에서 파란 검증 곡선이 가장 낮은 걸음을 찾아보세요.</p>
+  </header>
+
+  <nav class="jump" aria-label="실습 순서">
+    <a href="#loss">1 손실 계산</a><a href="#curves">2 곡선 읽기</a><a href="#diagnose">3 판정하기</a><a href="#download">4 더 해보기</a>
+  </nav>
+
+  <section id="loss" class="card">
+    <div class="section-heading"><span class="section-number">1</span><div><h2>정답 확률이 낮으면 손실이 커집니다</h2><p>정답 글자에 준 확률 <code>p</code>를 움직여 <code>−ln(p)</code>가 어떻게 변하는지 확인하세요.</p></div></div>
+    <div class="control-line"><label for="probability">정답 글자에 준 확률 <output id="probability-value">0.500</output></label><input id="probability" type="range" min="0.001" max="1" step="0.001" value="0.5"></div>
+    <p class="big-result"><span id="loss-probability">p = 0.500</span><span aria-hidden="true"> → </span><strong>손실 <span id="loss-value">0.69</span></strong></p>
+    <p class="hint">p = 1이면 손실은 0입니다. p가 0에 가까울수록 틀린 확신의 대가가 커집니다.</p>
+  </section>
+
+  <section id="curves" class="card">
+    <div class="section-heading"><span class="section-number">2</span><div><h2>두 곡선을 읽고 멈출 때를 골라 보세요</h2><p>파란 선은 검증 손실입니다. 슬라이더를 움직여 같은 걸음에서 두 값을 함께 비교하세요.</p></div></div>
+    <div class="experiment-switch" role="group" aria-label="훈련 데이터 크기 선택">
+      <button id="experiment-small" class="choice is-selected" type="button" aria-pressed="true">작은 데이터 · 32문장</button>
+      <button id="experiment-large" class="choice" type="button" aria-pressed="false">많은 데이터 · 512문장</button>
+    </div>
+    <div class="chart-wrap"><canvas id="loss-chart" width="1200" height="520" aria-label="훈련 손실과 검증 손실 그래프"></canvas></div>
+    <div class="control-line chart-control"><label for="step">현재 걸음 <output id="step-value">550걸음</output></label><input id="step" type="range" min="0" max="3000" step="10" value="550"></div>
+    <div class="metric-grid" aria-live="polite"><div><span>훈련 손실</span><strong id="train-value">0.26</strong></div><div><span>검증 손실</span><strong id="validation-value">0.50</strong></div><div><span>차이</span><strong id="gap-value">0.24</strong></div></div>
+    <p class="hint">점선은 이론상 바닥입니다. 작은 데이터에서는 훈련 손실만 더 내려가고 검증 손실은 다시 오르는 구간이 보입니다.</p>
+    <div class="action-row"><button id="stop-here" type="button" class="primary">이 걸음에서 멈춰 보기</button><button id="undo-step" type="button" class="secondary" disabled>직전 위치로 되돌리기</button><button id="reset-experiment" type="button" class="text-button">실험 초기화</button></div>
+    <p id="stop-feedback" class="feedback" aria-live="polite"></p>
+  </section>
+
+  <section id="diagnose" class="card">
+    <div class="section-heading"><span class="section-number">3</span><div><h2>배우는 중일까요, 외우는 중일까요?</h2><p>각 구간의 <b>훈련 손실</b>과 <b>검증 손실</b>이 함께 어떻게 움직였는지 먼저 읽고 판정하세요.</p></div></div>
+    <div id="quiz-list" class="quiz-list"></div>
+    <div id="quiz-status" class="completion" aria-live="polite">0개 판정 완료 · 세 구간을 모두 판정해 보세요.</div>
+    <button id="reset-quiz" type="button" class="secondary">판정 다시 시작</button>
+  </section>
+
+  <section class="card">
+    <div class="section-heading"><span class="section-number">4</span><div><h2>작은 데이터가 무엇을 외웠는지 확인</h2><p>같은 시작말 뒤의 다음 말을 비교하면, 훈련 문장 비율을 외운 흔적이 보입니다.</p></div></div>
+    <div class="table-scroll"><table id="probe-table"><caption class="sr-only">강아지가 다음에 나오는 말의 모델 확률</caption><thead><tr><th>다음 말</th><th>훈련 횟수</th><th>32문장 모델</th><th>512문장 모델</th><th>진짜 분포</th></tr></thead><tbody></tbody></table></div>
+    <p class="hint">진짜 분포는 네 가지 다음 말이 각각 25%입니다. 작은 데이터 모델은 본 횟수에 끌려가고, 많은 데이터 모델은 25% 근처에 모입니다.</p>
+  </section>
+
+  <section id="download" class="card download-card">
+    <div class="section-heading"><span class="section-number">5</span><div><h2>읽을 자료와 실행 파일</h2><p>수업 내용을 다시 읽거나, 복사본에서 실제 Python 실험을 실행할 수 있습니다.</p></div></div>
+    <div class="download-grid">
+      <a class="download-link" href="lesson.md"><strong>수업 노트 읽기</strong><span>목표·실험 장치·결과·한계</span></a>
+      <a class="download-link" href="source.zip" download><strong>실습 소스 ZIP 받기</strong><span>원본 코드·fixture·기록 포함</span></a>
+      <a class="download-link" href="README.txt"><strong>실행 환경 보기</strong><span>Python·numpy·실행 명령</span></a>
+    </div>
+    <details><summary>정답을 확인하는 방법</summary><p>판정 버튼을 누르면 기록의 두 끝값과 함께 왜 그런 판정인지 표시됩니다. 틀려도 자료는 바뀌지 않으므로 다른 버튼을 눌러 다시 생각할 수 있습니다.</p></details>
+  </section>
+
+  <footer><p>수치는 이 실험의 저장된 결과 기록에서 읽었습니다. 다른 시드·기기·설정에서는 마지막 자리가 달라질 수 있습니다.</p><p><a href="source.zip" download>소스 ZIP 다운로드</a> · <a href="lesson.md">전체 수업 노트</a></p></footer>
+</main>
+<script src="app-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

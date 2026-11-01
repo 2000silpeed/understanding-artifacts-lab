@@ -1,0 +1,236 @@
+{
+ "vocab": 46,
+ "chance_loss": 3.8286,
+ "numpy": "2.0.2",
+ "probe_who": "강아지가",
+ "runs": {
+  "small": {
+   "id": "small",
+   "label": "훈련 32문장",
+   "n_train_sentences": 32,
+   "n_val_sentences": 128,
+   "n_train_targets": 721,
+   "n_val_targets": 2878,
+   "n_params": 23182,
+   "floor_val": 0.3083,
+   "floor_train": 0.3076,
+   "start": {
+    "step": 0,
+    "train": 4.0562,
+    "val": 4.0354
+   },
+   "best": {
+    "step": 550,
+    "train": 0.2602,
+    "val": 0.5045
+   },
+   "final": {
+    "step": 3000,
+    "train": 0.2028,
+    "val": 0.7469
+   },
+   "min_train": {
+    "step": 3000,
+    "train": 0.2028,
+    "val": 0.7469
+   },
+   "gap_best": 0.2443,
+   "gap_final": 0.5441,
+   "val_rise_after_best": 0.2424,
+   "ppl": {
+    "best_val": 1.66,
+    "final_val": 2.11,
+    "final_train": 1.22,
+    "floor_val": 1.36
+   },
+   "test": {
+    "best": 0.4849,
+    "final": 0.7069,
+    "floor": 0.3065,
+    "n_sentences": 128
+   },
+   "probe": {
+    "who_rule": "첫 실험의 훈련 세트에서 '언제' 분포가 균등에서 가장 먼 '누가' 단어 (총변동거리)",
+    "who": "강아지가",
+    "prefix": "강아지가 ",
+    "true_p": 0.25,
+    "train_count_with_who": 8,
+    "train_counts": {
+     "아침에": 3,
+     "점심에": 4,
+     "저녁에": 0,
+     "밤에": 1
+    },
+    "unseen_after_who": [
+     "저녁에"
+    ],
+    "best": {
+     "아침에": 0.3648,
+     "점심에": 0.4821,
+     "저녁에": 0.0105,
+     "밤에": 0.118
+    },
+    "final": {
+     "아침에": 0.3747,
+     "점심에": 0.4994,
+     "저녁에": 0.0004,
+     "밤에": 0.1248
+    },
+    "val_with_unseen_pair": 8,
+    "val_with_unseen_pair_loss": {
+     "best": 0.7013,
+     "final": 1.0911
+    },
+    "val_sentences_worse": 121,
+    "val_rise_median": 0.2018
+   },
+   "generation": {
+    "best": {
+     "n": 200,
+     "seed": 11,
+     "copies_of_train": 32,
+     "copies_expected_if_true": 6.25,
+     "grammatical": 95,
+     "new_grammatical": 63,
+     "distinct": 173,
+     "first5": [
+      "강아지가 점심에 숲에서 당근을 나눴다.",
+      "다람쥐가 점심에 강가에서 사과를 나눴다.",
+      "다람눴가원아침  숲에서 당근을 나눴다.",
+      "다람이가 밤사가숲서서 과근을 나눴다.",
+      "강아지가 점심에 숲에서 당근을 나눴다었"
+     ]
+    },
+    "final": {
+     "n": 200,
+     "seed": 11,
+     "copies_of_train": 77,
+     "copies_expected_if_true": 6.25,
+     "grammatical": 197,
+     "new_grammatical": 120,
+     "distinct": 84,
+     "first5": [
+      "강아지가 점심에 숲에서 당근을 먹었다.",
+      "다람쥐가 점심에 강가에서 생선을 나눴다.",
+      "다람쥐가 아침에 강가에서 사과를 먹었다.",
+      "토끼가 밤에 강가에서 도토리를 숨겼다.",
+      "강아지가 점심에 숲에서 생선을 나숲다."
+     ]
+    }
+   }
+  },
+  "large": {
+   "id": "large",
+   "label": "훈련 512문장",
+   "n_train_sentences": 512,
+   "n_val_sentences": 128,
+   "n_train_targets": 11509,
+   "n_val_targets": 2878,
+   "n_params": 23182,
+   "floor_val": 0.3083,
+   "floor_train": 0.3084,
+   "start": {
+    "step": 0,
+    "train": 4.0478,
+    "val": 4.0354
+   },
+   "best": {
+    "step": 3000,
+    "train": 0.3056,
+    "val": 0.3235
+   },
+   "final": {
+    "step": 3000,
+    "train": 0.3056,
+    "val": 0.3235
+   },
+   "min_train": {
+    "step": 3000,
+    "train": 0.3056,
+    "val": 0.3235
+   },
+   "gap_best": 0.0179,
+   "gap_final": 0.0179,
+   "val_rise_after_best": 0.0,
+   "ppl": {
+    "best_val": 1.38,
+    "final_val": 1.38,
+    "final_train": 1.36,
+    "floor_val": 1.36
+   },
+   "test": {
+    "best": 0.3148,
+    "final": 0.3148,
+    "floor": 0.3065,
+    "n_sentences": 128
+   },
+   "probe": {
+    "who_rule": "첫 실험의 훈련 세트에서 '언제' 분포가 균등에서 가장 먼 '누가' 단어 (총변동거리)",
+    "who": "강아지가",
+    "prefix": "강아지가 ",
+    "true_p": 0.25,
+    "train_count_with_who": 135,
+    "train_counts": {
+     "아침에": 33,
+     "점심에": 31,
+     "저녁에": 35,
+     "밤에": 36
+    },
+    "unseen_after_who": [],
+    "best": {
+     "아침에": 0.2444,
+     "점심에": 0.2294,
+     "저녁에": 0.259,
+     "밤에": 0.2665
+    },
+    "final": {
+     "아침에": 0.2444,
+     "점심에": 0.2294,
+     "저녁에": 0.259,
+     "밤에": 0.2665
+    },
+    "val_with_unseen_pair": 0,
+    "val_with_unseen_pair_loss": {
+     "best": null,
+     "final": null
+    },
+    "val_sentences_worse": 0,
+    "val_rise_median": 0.0
+   },
+   "generation": {
+    "best": {
+     "n": 200,
+     "seed": 11,
+     "copies_of_train": 112,
+     "copies_expected_if_true": 100.0,
+     "grammatical": 196,
+     "new_grammatical": 84,
+     "distinct": 180,
+     "first5": [
+      "강아지가 점심에 마당에서 당근을 찾았다.",
+      "고양이가 점심에 강가에서 당근을 나눴다.",
+      "고양이가 저녁에 마당에서 당근을 숨겼다.",
+      "강아지가 아침에 강가에서 도토리를 나눴다.",
+      "다람쥐가 밤에 마당에서 도토리를 먹었다."
+     ]
+    },
+    "final": {
+     "n": 200,
+     "seed": 11,
+     "copies_of_train": 112,
+     "copies_expected_if_true": 100.0,
+     "grammatical": 196,
+     "new_grammatical": 84,
+     "distinct": 180,
+     "first5": [
+      "강아지가 점심에 마당에서 당근을 찾았다.",
+      "고양이가 점심에 강가에서 당근을 나눴다.",
+      "고양이가 저녁에 마당에서 당근을 숨겼다.",
+      "강아지가 아침에 강가에서 도토리를 나눴다.",
+      "다람쥐가 밤에 마당에서 도토리를 먹었다."
+     ]
+    }
+   }
+  }
+ }
+}

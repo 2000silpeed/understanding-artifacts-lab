@@ -1,0 +1,871 @@
+{
+  "about": "내레이션 원문(text, 자막·화면 원문), TTS 입력(tts, 숫자를 한글 읽기로), 화면 문구(screen). 모든 숫자는 claims로 실제 실행 결과에 묶인다. src: summary:<경로>(results/summary.json), config:<경로>(fixtures/config.json), count:<파일>(fixtures 줄 수), math:<식>, literal(정의상 값). 검사: python -B src/script_check.py",
+  "title": "훈련 손실과 검증 손실",
+  "subtitle": "작은 언어 모델의 과적합",
+  "series": "AI 기본기",
+  "voice_direction": "차분한 강의 톤, 합니다체. 숫자는 또박또박, 숫자 앞뒤로 짧은 쉼. 과장 없이.",
+  "scenes": [
+    {
+      "id": "hook",
+      "recipe": "cerulean",
+      "verb": "reveal",
+      "screen": [
+        "훈련 손실과 검증 손실",
+        "훈련 손실 · 모델이 배우는 문장",
+        "검증 손실 · 같은 규칙, 배우지 않은 문장 · 갱신에 쓰지 않음",
+        "상황 · 이번 강의의 작은 글자 모델을 훈련하는 중 → 판단: 지금 멈출까, 더 훈련할까?",
+        "훈련 ↓ 검증 ↑ → 과적합 신호 (원인 확정 아님)",
+        "문법으로 만든 문장 · 작은 글자 단위 모델 실험"
+      ],
+      "lines": [
+        {
+          "id": "hook-1",
+          "text": "훈련 손실은 모델이 배우는 문장에서 잰 손실이고, 검증 손실은 같은 규칙으로 만들었지만 배우지 않은 문장에서 잰 손실입니다.",
+          "tts": "훈련 손실은 모델이 배우는 문장에서 잰 손실이고, 검증 손실은 같은 규칙으로 만들었지만 배우지 않은 문장에서 잰 손실입니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-2",
+          "text": "검증 문장은 점수를 재는 데만 쓰고, 모델의 가중치를 고치는 데는 쓰지 않습니다.",
+          "tts": "검증 문장은 점수를 재는 데만 쓰고, 모델의 가중치를 고치는 데는 쓰지 않습니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-3",
+          "text": "예를 들어 이번 강의에서 훈련할 작은 글자 단위 모델이 훈련 문장을 거듭 학습하고 있다고 해 봅시다. 이때 판단할 문제는 지금 멈출지, 더 훈련할지입니다. 훈련 손실만으로는 이 판단을 할 수 없어서 검증 손실을 함께 봅니다.",
+          "tts": "예를 들어 이번 강의에서 훈련할 작은 글자 단위 모델이 훈련 문장을 거듭 학습하고 있다고 해 봅시다. 이때 판단할 문제는 지금 멈출지, 더 훈련할지입니다. 훈련 손실만으로는 이 판단을 할 수 없어서 검증 손실을 함께 봅니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-4",
+          "text": "문제는 훈련 손실은 계속 내려가는데 검증 손실이 오르기 시작할 때입니다. 모델이 훈련 문장에만 맞춰지고 처음 보는 문장은 덜 맞힌다는, 과적합을 의심할 신호입니다.",
+          "tts": "문제는 훈련 손실은 계속 내려가는데 검증 손실이 오르기 시작할 때입니다. 모델이 훈련 문장에만 맞춰지고 처음 보는 문장은 덜 맞힌다는, 과적합을 의심할 신호입니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-5",
+          "text": "다만 이것은 신호일 뿐, 검증 손실만으로 원인이 확정되지는 않습니다.",
+          "tts": "다만 이것은 신호일 뿐, 검증 손실만으로 원인이 확정되지는 않습니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-6",
+          "text": "오늘은 '강아지가 아침에 공원에서 사과를 먹었다' 같은, 문법으로 만든 문장으로 글자 단위의 작은 언어 모델을 직접 훈련해서 이 차이를 숫자로 확인합니다. 실제 서비스의 성능을 재는 실험은 아닙니다.",
+          "tts": "오늘은, 강아지가 아침에 공원에서 사과를 먹었다, 같은, 문법으로 만든 문장으로 글자 단위의 작은 언어 모델을 직접 훈련해서 이 차이를 숫자로 확인합니다. 실제 서비스의 성능을 재는 실험은 아닙니다.",
+          "claims": []
+        },
+        {
+          "id": "hook-7",
+          "text": "먼저 손실이 무엇인지부터 보겠습니다.",
+          "tts": "먼저 손실이 무엇인지부터 보겠습니다.",
+          "claims": []
+        }
+      ]
+    },
+    {
+      "id": "loss",
+      "recipe": "paper",
+      "verb": "compare",
+      "screen": [
+        "손실 = −ln(정답 확률)",
+        "확률 1 → 손실 0",
+        "확률 2분의 1 → 손실 0.69",
+        "확률 4분의 1 → 손실 1.39"
+      ],
+      "lines": [
+        {
+          "id": "loss-1",
+          "text": "언어 모델은 다음 글자를 맞히는 기계입니다.",
+          "tts": "언어 모델은 다음 글자를 맞히는 기계입니다.",
+          "claims": []
+        },
+        {
+          "id": "loss-2",
+          "text": "정답 글자에 높은 확률을 줄수록 손실이 작아집니다.",
+          "tts": "정답 글자에 높은 확률을 줄수록 손실이 작아집니다.",
+          "claims": []
+        },
+        {
+          "id": "loss-3",
+          "text": "손실은 정답 확률에 로그를 씌우고 마이너스를 붙인 값입니다.",
+          "tts": "손실은 정답 확률에 로그를 씌우고 마이너스를 붙인 값입니다.",
+          "claims": []
+        },
+        {
+          "id": "loss-4",
+          "text": "확률이 1이면 손실은 0, 2분의 1이면 0.69, 4분의 1이면 1.39입니다.",
+          "tts": "확률이 일이면 손실은 영, 이분의 일이면 영 점 육 구, 사분의 일이면 일 점 삼 구입니다.",
+          "claims": [
+            {
+              "show": "1",
+              "read": "sino",
+              "say": "일",
+              "src": "literal"
+            },
+            {
+              "show": "0",
+              "read": "decimal",
+              "say": "영",
+              "src": "math:-log(1)",
+              "fmt": "round0"
+            },
+            {
+              "show": "2분의 1",
+              "read": "frac",
+              "say": "이분의 일",
+              "src": "literal"
+            },
+            {
+              "show": "0.69",
+              "read": "decimal",
+              "say": "영 점 육 구",
+              "src": "math:-log(1/2)",
+              "fmt": "2f"
+            },
+            {
+              "show": "4분의 1",
+              "read": "frac",
+              "say": "사분의 일",
+              "src": "literal"
+            },
+            {
+              "show": "1.39",
+              "read": "decimal",
+              "say": "일 점 삼 구",
+              "src": "math:-log(1/4)",
+              "fmt": "2f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "recipe": "cerulean",
+      "verb": "split",
+      "screen": [
+        "누가 · 언제 · 어디서 · 무엇을 · 했다",
+        "강아지가 아침에 공원에서 사과를 먹었다.",
+        "가능한 문장 1,024개",
+        "훈련 32",
+        "검증 128"
+      ],
+      "lines": [
+        {
+          "id": "data-1",
+          "text": "실험용 문장은 다섯 칸으로 만듭니다. 누가, 언제, 어디서, 무엇을, 했다.",
+          "tts": "실험용 문장은 다섯 칸으로 만듭니다. 누가, 언제, 어디서, 무엇을, 했다.",
+          "claims": []
+        },
+        {
+          "id": "data-2",
+          "text": "칸마다 단어 네 개 중 하나를 고르니, 만들 수 있는 문장은 1,024개입니다.",
+          "tts": "칸마다 단어 네 개 중 하나를 고르니, 만들 수 있는 문장은 천이십사 개입니다.",
+          "claims": [
+            {
+              "show": "1,024",
+              "read": "sino",
+              "say": "천이십사",
+              "src": "count:all.txt",
+              "fmt": "comma"
+            }
+          ]
+        },
+        {
+          "id": "data-3",
+          "text": "이 중 32개로 훈련하고, 훈련에 없는 128개로 검증합니다.",
+          "tts": "이 중 서른두 개로 훈련하고, 훈련에 없는 백이십팔 개로 검증합니다.",
+          "claims": [
+            {
+              "show": "32",
+              "read": "native",
+              "say": "서른두",
+              "src": "summary:runs.small.n_train_sentences",
+              "fmt": "int"
+            },
+            {
+              "show": "128",
+              "read": "sino",
+              "say": "백이십팔",
+              "src": "summary:runs.small.n_val_sentences",
+              "fmt": "int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "floor",
+      "recipe": "paper",
+      "verb": "contain",
+      "screen": [
+        "넷 중 하나",
+        "이론상 바닥 0.31"
+      ],
+      "lines": [
+        {
+          "id": "floor-1",
+          "text": "각 칸의 첫 글자는 넷 중 하나라서, 아무리 잘 맞혀도 손실이 남습니다.",
+          "tts": "각 칸의 첫 글자는 넷 중 하나라서, 아무리 잘 맞혀도 손실이 남습니다.",
+          "claims": []
+        },
+        {
+          "id": "floor-2",
+          "text": "그 바닥이 글자당 0.31입니다. 처음 보는 문장에서는 어떤 모델도 평균적으로 이보다 낮을 수 없습니다.",
+          "tts": "그 바닥이 글자당 영 점 삼 일입니다. 처음 보는 문장에서는 어떤 모델도 평균적으로 이보다 낮을 수 없습니다.",
+          "claims": [
+            {
+              "show": "0.31",
+              "read": "decimal",
+              "say": "영 점 삼 일",
+              "src": [
+                "summary:runs.small.floor_val",
+                "summary:runs.small.test.floor"
+              ],
+              "fmt": "2f"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "model",
+      "recipe": "cerulean",
+      "verb": "transform",
+      "screen": [
+        "앞의 8글자 → 신경망 → 다음 글자",
+        "매개변수 약 2만 3천 개",
+        "3,000걸음",
+        "10걸음마다 측정"
+      ],
+      "lines": [
+        {
+          "id": "model-1",
+          "text": "모델은 앞의 8글자를 보고 다음 글자를 고르는 작은 신경망입니다.",
+          "tts": "모델은 앞의 여덟 글자를 보고 다음 글자를 고르는 작은 신경망입니다.",
+          "claims": [
+            {
+              "show": "8",
+              "read": "native",
+              "say": "여덟",
+              "src": "config:model.context",
+              "fmt": "int"
+            }
+          ]
+        },
+        {
+          "id": "model-2",
+          "text": "매개변수는 약 2만 3천 개입니다.",
+          "tts": "매개변수는 약 이만 삼천 개입니다.",
+          "claims": [
+            {
+              "show": "2만 3천",
+              "read": "man",
+              "say": "이만 삼천",
+              "src": "summary:runs.small.n_params",
+              "fmt": "man_cheon"
+            }
+          ]
+        },
+        {
+          "id": "model-3",
+          "text": "32문장으로 3,000걸음 훈련하면서, 10걸음마다 두 손실을 잽니다.",
+          "tts": "서른두 문장으로 삼천 걸음 훈련하면서, 열 걸음마다 두 손실을 잽니다.",
+          "claims": [
+            {
+              "show": "32",
+              "read": "native",
+              "say": "서른두",
+              "src": "summary:runs.small.n_train_sentences",
+              "fmt": "int"
+            },
+            {
+              "show": "3,000",
+              "read": "sino",
+              "say": "삼천",
+              "src": "config:train.steps",
+              "fmt": "comma"
+            },
+            {
+              "show": "10",
+              "read": "native",
+              "say": "열",
+              "src": "config:train.eval_every",
+              "fmt": "int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curves",
+      "recipe": "paper",
+      "verb": "compare",
+      "screen": [
+        "훈련 손실",
+        "검증 손실",
+        "바닥 0.31",
+        "550걸음 · 0.50",
+        "3,000걸음",
+        "0.20",
+        "0.75",
+        "외웠다"
+      ],
+      "lines": [
+        {
+          "id": "curves-1",
+          "text": "처음엔 두 손실 모두 4 근처에서 함께 떨어집니다.",
+          "tts": "처음엔 두 손실 모두 사 근처에서 함께 떨어집니다.",
+          "claims": [
+            {
+              "show": "4",
+              "read": "decimal",
+              "say": "사",
+              "src": [
+                "summary:runs.small.start.train",
+                "summary:runs.small.start.val"
+              ],
+              "fmt": "round0"
+            }
+          ]
+        },
+        {
+          "id": "curves-2",
+          "text": "검증 손실은 550걸음에서 0.50으로 가장 낮습니다.",
+          "tts": "검증 손실은 오백오십 걸음에서 영 점 오 영으로 가장 낮습니다.",
+          "claims": [
+            {
+              "show": "550",
+              "read": "sino",
+              "say": "오백오십",
+              "src": "summary:runs.small.best.step",
+              "fmt": "int"
+            },
+            {
+              "show": "0.50",
+              "read": "decimal",
+              "say": "영 점 오 영",
+              "src": "summary:runs.small.best.val",
+              "fmt": "2f"
+            }
+          ]
+        },
+        {
+          "id": "curves-3",
+          "text": "그 뒤로 훈련 손실은 계속 내려가는데, 검증 손실은 다시 올라갑니다.",
+          "tts": "그 뒤로 훈련 손실은 계속 내려가는데, 검증 손실은 다시 올라갑니다.",
+          "claims": [],
+          "checks": [
+            "train_falls_after_best",
+            "val_rises_after_best"
+          ]
+        },
+        {
+          "id": "curves-4",
+          "text": "3,000걸음에서 훈련 손실은 0.20, 검증 손실은 0.75입니다.",
+          "tts": "삼천 걸음에서 훈련 손실은 영 점 이 영, 검증 손실은 영 점 칠 오입니다.",
+          "claims": [
+            {
+              "show": "3,000",
+              "read": "sino",
+              "say": "삼천",
+              "src": "summary:runs.small.final.step",
+              "fmt": "comma"
+            },
+            {
+              "show": "0.20",
+              "read": "decimal",
+              "say": "영 점 이 영",
+              "src": "summary:runs.small.final.train",
+              "fmt": "2f"
+            },
+            {
+              "show": "0.75",
+              "read": "decimal",
+              "say": "영 점 칠 오",
+              "src": "summary:runs.small.final.val",
+              "fmt": "2f"
+            }
+          ]
+        },
+        {
+          "id": "curves-5",
+          "text": "훈련 손실이 바닥 0.31보다 낮아졌습니다. 규칙보다 훈련 문장을 더 잘 맞힌다는 것, 외웠다는 뜻입니다.",
+          "tts": "훈련 손실이 바닥 영 점 삼 일보다 낮아졌습니다. 규칙보다 훈련 문장을 더 잘 맞힌다는 것, 외웠다는 뜻입니다.",
+          "claims": [
+            {
+              "show": "0.31",
+              "read": "decimal",
+              "say": "영 점 삼 일",
+              "src": [
+                "summary:runs.small.floor_train",
+                "summary:runs.small.floor_val"
+              ],
+              "fmt": "2f"
+            }
+          ],
+          "checks": [
+            "train_below_train_floor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "recipe": "cerulean",
+      "verb": "compare",
+      "screen_claims": [
+        {
+          "show": "0",
+          "src": "summary:runs.small.probe.train_counts.저녁에",
+          "fmt": "int"
+        }
+      ],
+      "screen": [
+        "'강아지가' 다음 말",
+        "훈련에서 본 횟수",
+        "모델이 준 확률",
+        "진짜 확률 25%",
+        "아침 3 · 점심 4 · 저녁 0 · 밤 1",
+        "37% · 50% · 0.04% · 12%",
+        "검증 '강아지가 저녁에' 8문장 0.70 → 1.09",
+        "200개 중 77개가 훈련 문장 그대로"
+      ],
+      "lines": [
+        {
+          "id": "why-1",
+          "text": "무엇을 외웠을까요? 훈련 32문장 중 '강아지가'로 시작하는 문장은 8개뿐입니다.",
+          "tts": "무엇을 외웠을까요? 훈련 서른두 문장 중 강아지가로 시작하는 문장은 여덟 개뿐입니다.",
+          "claims": [
+            {
+              "show": "32",
+              "read": "native",
+              "say": "서른두",
+              "src": "summary:runs.small.n_train_sentences",
+              "fmt": "int"
+            },
+            {
+              "show": "강아지가",
+              "read": "text",
+              "say": "강아지가",
+              "src": "summary:runs.small.probe.who",
+              "fmt": "str"
+            },
+            {
+              "show": "8",
+              "read": "native",
+              "say": "여덟",
+              "src": "summary:runs.small.probe.train_count_with_who",
+              "fmt": "int"
+            }
+          ]
+        },
+        {
+          "id": "why-2",
+          "text": "그다음 말은 아침 3번, 점심 4번, 밤 1번이었고, 저녁은 한 번도 없었습니다.",
+          "tts": "그다음 말은 아침 세 번, 점심 네 번, 밤 한 번이었고, 저녁은 한 번도 없었습니다.",
+          "claims": [
+            {
+              "show": "3",
+              "read": "native",
+              "say": "세",
+              "src": "summary:runs.small.probe.train_counts.아침에",
+              "fmt": "int"
+            },
+            {
+              "show": "4",
+              "read": "native",
+              "say": "네",
+              "src": "summary:runs.small.probe.train_counts.점심에",
+              "fmt": "int"
+            },
+            {
+              "show": "1",
+              "read": "native",
+              "say": "한",
+              "src": "summary:runs.small.probe.train_counts.밤에",
+              "fmt": "int"
+            },
+            {
+              "show": "저녁",
+              "read": "text",
+              "say": "저녁",
+              "src": "summary:runs.small.probe.unseen_after_who.0",
+              "fmt": "drop_last"
+            }
+          ]
+        },
+        {
+          "id": "why-3",
+          "text": "끝까지 훈련한 모델은 이 우연을 그대로 믿습니다. 아침 37%, 점심 50%, 밤 12%, 저녁은 0.04%.",
+          "tts": "끝까지 훈련한 모델은 이 우연을 그대로 믿습니다. 아침 삼십칠 퍼센트, 점심 오십 퍼센트, 밤 십이 퍼센트, 저녁은 영 점 영 사 퍼센트.",
+          "claims": [
+            {
+              "show": "37%",
+              "read": "pct",
+              "say": "삼십칠 퍼센트",
+              "src": "summary:runs.small.probe.final.아침에",
+              "fmt": "pct0"
+            },
+            {
+              "show": "50%",
+              "read": "pct",
+              "say": "오십 퍼센트",
+              "src": "summary:runs.small.probe.final.점심에",
+              "fmt": "pct0"
+            },
+            {
+              "show": "12%",
+              "read": "pct",
+              "say": "십이 퍼센트",
+              "src": "summary:runs.small.probe.final.밤에",
+              "fmt": "pct0"
+            },
+            {
+              "show": "0.04%",
+              "read": "pct",
+              "say": "영 점 영 사 퍼센트",
+              "src": "summary:runs.small.probe.final.저녁에",
+              "fmt": "pct2"
+            }
+          ]
+        },
+        {
+          "id": "why-4",
+          "text": "진짜 확률은 넷 다 25%입니다.",
+          "tts": "진짜 확률은 넷 다 이십오 퍼센트입니다.",
+          "claims": [
+            {
+              "show": "25%",
+              "read": "pct",
+              "say": "이십오 퍼센트",
+              "src": "summary:runs.small.probe.true_p",
+              "fmt": "pct0"
+            }
+          ]
+        },
+        {
+          "id": "why-5",
+          "text": "그래서 검증 문장 중 '강아지가 저녁에'로 시작하는 8개는, 손실이 0.70에서 1.09로 커졌습니다.",
+          "tts": "그래서 검증 문장 중 강아지가 저녁에로 시작하는 여덟 개는, 손실이 영 점 칠 영에서 일 점 영 구로 커졌습니다.",
+          "claims": [
+            {
+              "show": "8",
+              "read": "native",
+              "say": "여덟",
+              "src": "summary:runs.small.probe.val_with_unseen_pair",
+              "fmt": "int"
+            },
+            {
+              "show": "0.70",
+              "read": "decimal",
+              "say": "영 점 칠 영",
+              "src": "summary:runs.small.probe.val_with_unseen_pair_loss.best",
+              "fmt": "2f"
+            },
+            {
+              "show": "1.09",
+              "read": "decimal",
+              "say": "일 점 영 구",
+              "src": "summary:runs.small.probe.val_with_unseen_pair_loss.final",
+              "fmt": "2f"
+            }
+          ]
+        },
+        {
+          "id": "why-6",
+          "text": "새 문장 200개를 만들게 하자, 77개가 훈련 문장을 그대로 베꼈습니다. 규칙대로라면 6개 남짓입니다.",
+          "tts": "새 문장 이백 개를 만들게 하자, 일흔일곱 개가 훈련 문장을 그대로 베꼈습니다. 규칙대로라면 여섯 개 남짓입니다.",
+          "claims": [
+            {
+              "show": "200",
+              "read": "sino",
+              "say": "이백",
+              "src": "summary:runs.small.generation.final.n",
+              "fmt": "int"
+            },
+            {
+              "show": "77",
+              "read": "native",
+              "say": "일흔일곱",
+              "src": "summary:runs.small.generation.final.copies_of_train",
+              "fmt": "int"
+            },
+            {
+              "show": "6",
+              "read": "native",
+              "say": "여섯",
+              "src": "summary:runs.small.generation.final.copies_expected_if_true",
+              "fmt": "floor0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "early",
+      "recipe": "paper",
+      "verb": "select",
+      "screen_claims": [
+        {
+          "show": "3,000",
+          "src": "summary:runs.small.final.step",
+          "fmt": "comma"
+        }
+      ],
+      "screen": [
+        "첫 번째 처방 · 조기 종료",
+        "550걸음에서 멈춤",
+        "시험 문장 128개",
+        "550걸음 0.48",
+        "3,000걸음 0.71",
+        "문법에 맞는 문장 95 / 200"
+      ],
+      "lines": [
+        {
+          "id": "early-1",
+          "text": "첫 번째 처방은 조기 종료입니다. 검증 손실이 가장 낮던 550걸음에서 멈춥니다.",
+          "tts": "첫 번째 처방은 조기 종료입니다. 검증 손실이 가장 낮던 오백오십 걸음에서 멈춥니다.",
+          "claims": [
+            {
+              "show": "550",
+              "read": "sino",
+              "say": "오백오십",
+              "src": "summary:runs.small.best.step",
+              "fmt": "int"
+            }
+          ]
+        },
+        {
+          "id": "early-2",
+          "text": "멈출 시점을 검증으로 골랐으니, 성적은 한 번도 쓰지 않은 시험 문장 128개로 따로 잽니다.",
+          "tts": "멈출 시점을 검증으로 골랐으니, 성적은 한 번도 쓰지 않은 시험 문장 백이십팔 개로 따로 잽니다.",
+          "claims": [
+            {
+              "show": "128",
+              "read": "sino",
+              "say": "백이십팔",
+              "src": "summary:runs.small.test.n_sentences",
+              "fmt": "int"
+            }
+          ]
+        },
+        {
+          "id": "early-3",
+          "text": "550걸음 모델은 0.48, 끝까지 간 모델은 0.71입니다.",
+          "tts": "오백오십 걸음 모델은 영 점 사 팔, 끝까지 간 모델은 영 점 칠 일입니다.",
+          "claims": [
+            {
+              "show": "550",
+              "read": "sino",
+              "say": "오백오십",
+              "src": "summary:runs.small.best.step",
+              "fmt": "int"
+            },
+            {
+              "show": "0.48",
+              "read": "decimal",
+              "say": "영 점 사 팔",
+              "src": "summary:runs.small.test.best",
+              "fmt": "2f"
+            },
+            {
+              "show": "0.71",
+              "read": "decimal",
+              "say": "영 점 칠 일",
+              "src": "summary:runs.small.test.final",
+              "fmt": "2f"
+            }
+          ]
+        },
+        {
+          "id": "early-4",
+          "text": "다만 550걸음 모델은 아직 덜 배워서, 만든 문장 200개 중 95개만 문법에 맞았습니다. 조기 종료는 응급처치입니다.",
+          "tts": "다만 오백오십 걸음 모델은 아직 덜 배워서, 만든 문장 이백 개 중 아흔다섯 개만 문법에 맞았습니다. 조기 종료는 응급처치입니다.",
+          "claims": [
+            {
+              "show": "550",
+              "read": "sino",
+              "say": "오백오십",
+              "src": "summary:runs.small.best.step",
+              "fmt": "int"
+            },
+            {
+              "show": "200",
+              "read": "sino",
+              "say": "이백",
+              "src": "summary:runs.small.generation.best.n",
+              "fmt": "int"
+            },
+            {
+              "show": "95",
+              "read": "native",
+              "say": "아흔다섯",
+              "src": "summary:runs.small.generation.best.grammatical",
+              "fmt": "int"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "more",
+      "recipe": "cerulean",
+      "verb": "compare",
+      "screen": [
+        "근본 처방 · 데이터",
+        "훈련 512문장",
+        "검증 0.32",
+        "바닥 0.31",
+        "차이 0.02",
+        "'강아지가' 다음 23%~27%"
+      ],
+      "lines": [
+        {
+          "id": "more-1",
+          "text": "근본 처방은 데이터입니다. 같은 모델을 512문장으로 다시 훈련했습니다.",
+          "tts": "근본 처방은 데이터입니다. 같은 모델을 오백십이 문장으로 다시 훈련했습니다.",
+          "claims": [
+            {
+              "show": "512",
+              "read": "sino",
+              "say": "오백십이",
+              "src": "summary:runs.large.n_train_sentences",
+              "fmt": "int"
+            }
+          ]
+        },
+        {
+          "id": "more-2",
+          "text": "3,000걸음 뒤 검증 손실은 0.32, 바닥 0.31에 거의 붙었고, 훈련 손실과의 차이는 0.02입니다.",
+          "tts": "삼천 걸음 뒤 검증 손실은 영 점 삼 이, 바닥 영 점 삼 일에 거의 붙었고, 훈련 손실과의 차이는 영 점 영 이입니다.",
+          "claims": [
+            {
+              "show": "3,000",
+              "read": "sino",
+              "say": "삼천",
+              "src": "summary:runs.large.final.step",
+              "fmt": "comma"
+            },
+            {
+              "show": "0.32",
+              "read": "decimal",
+              "say": "영 점 삼 이",
+              "src": "summary:runs.large.final.val",
+              "fmt": "2f"
+            },
+            {
+              "show": "0.31",
+              "read": "decimal",
+              "say": "영 점 삼 일",
+              "src": "summary:runs.large.floor_val",
+              "fmt": "2f"
+            },
+            {
+              "show": "0.02",
+              "read": "decimal",
+              "say": "영 점 영 이",
+              "src": "summary:runs.large.gap_final",
+              "fmt": "2f"
+            }
+          ]
+        },
+        {
+          "id": "more-3",
+          "text": "'강아지가' 다음 확률도 23%에서 27% 사이, 진짜 25%에 가까워졌습니다.",
+          "tts": "강아지가 다음 확률도 이십삼 퍼센트에서 이십칠 퍼센트 사이, 진짜 이십오 퍼센트에 가까워졌습니다.",
+          "claims": [
+            {
+              "show": "강아지가",
+              "read": "text",
+              "say": "강아지가",
+              "src": "summary:runs.large.probe.who",
+              "fmt": "str"
+            },
+            {
+              "show": "23%",
+              "read": "pct",
+              "say": "이십삼 퍼센트",
+              "src": "min:summary:runs.large.probe.final",
+              "fmt": "pct0"
+            },
+            {
+              "show": "27%",
+              "read": "pct",
+              "say": "이십칠 퍼센트",
+              "src": "max:summary:runs.large.probe.final",
+              "fmt": "pct0"
+            },
+            {
+              "show": "25%",
+              "read": "pct",
+              "say": "이십오 퍼센트",
+              "src": "summary:runs.large.probe.true_p",
+              "fmt": "pct0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "recap",
+      "recipe": "paper",
+      "verb": "compare",
+      "screen": [
+        "두 손실을 함께 본다",
+        "둘 다 ↓ → 배우는 중",
+        "훈련 ↓ 검증 ↑ → 외우는 중",
+        "멈추거나, 데이터를 늘린다"
+      ],
+      "lines": [
+        {
+          "id": "recap-1",
+          "text": "정리합니다. 두 손실은 항상 함께 보세요.",
+          "tts": "정리합니다. 두 손실은 항상 함께 보세요.",
+          "claims": []
+        },
+        {
+          "id": "recap-2",
+          "text": "둘 다 내려가면 배우는 중입니다.",
+          "tts": "둘 다 내려가면 배우는 중입니다.",
+          "claims": []
+        },
+        {
+          "id": "recap-3",
+          "text": "훈련 손실만 내려가고 검증 손실이 오르면, 외우기 시작한 겁니다.",
+          "tts": "훈련 손실만 내려가고 검증 손실이 오르면, 외우기 시작한 겁니다.",
+          "claims": []
+        },
+        {
+          "id": "recap-4",
+          "text": "그때는 멈추거나, 데이터를 늘리세요.",
+          "tts": "그때는 멈추거나, 데이터를 늘리세요.",
+          "claims": []
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "recipe": "cerulean",
+      "verb": "reveal",
+      "screen": [
+        "처음 보는 문제를 잘 푸는 모델",
+        "AI 기본기 · 훈련 손실과 검증 손실"
+      ],
+      "lines": [
+        {
+          "id": "outro-1",
+          "text": "훈련 손실은 연습 문제 점수, 검증 손실은 처음 보는 문제 점수입니다.",
+          "tts": "훈련 손실은 연습 문제 점수, 검증 손실은 처음 보는 문제 점수입니다.",
+          "claims": []
+        },
+        {
+          "id": "outro-2",
+          "text": "우리가 원하는 건, 처음 보는 문제를 잘 푸는 모델입니다.",
+          "tts": "우리가 원하는 건, 처음 보는 문제를 잘 푸는 모델입니다.",
+          "claims": []
+        }
+      ]
+    }
+  ]
+}

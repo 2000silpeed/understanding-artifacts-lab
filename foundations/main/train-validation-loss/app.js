@@ -1,0 +1,32 @@
+'use strict';
+const DATA=window.TRAIN_VALIDATION_DATA;
+const $=id=>document.getElementById(id);
+const f2=v=>Number(v).toFixed(2);
+const pct=v=>(v<.01?(v*100).toFixed(2):(v*100).toFixed(0))+'%';
+
+const probability=$('probability');
+function updateLoss(){const v=Number(probability.value);$('probability-value').textContent=v.toFixed(3);$('loss-probability').textContent='p = '+v.toFixed(3);$('loss-value').textContent=f2(-Math.log(v));}
+probability.addEventListener('input',updateLoss);updateLoss();
+
+let run='small',step=550,previousStep=null;
+const canvas=$('loss-chart'),ctx=canvas.getContext('2d');
+const box={x:72,y:26,w:1085,h:430};
+const x=s=>box.x+s/3000*box.w,y=v=>box.y+box.h-(Math.min(v,1)/1)*box.h;
+function draw(){const r=DATA.runs[run];ctx.clearRect(0,0,canvas.width,canvas.height);ctx.font='16px PretendardLocal, sans-serif';ctx.fillStyle='#52636c';ctx.strokeStyle='#dcd3c4';ctx.lineWidth=1;[0,.25,.5,.75,1].forEach(v=>{ctx.beginPath();ctx.moveTo(box.x,y(v));ctx.lineTo(box.x+box.w,y(v));ctx.stroke();ctx.fillText(v.toFixed(2),14,y(v)+5)});[0,1000,2000,3000].forEach(s=>ctx.fillText(s.toLocaleString('ko-KR'),x(s)-16,box.y+box.h+24));ctx.save();ctx.beginPath();ctx.rect(box.x,box.y,box.w,box.h);ctx.clip();ctx.setLineDash([10,8]);ctx.strokeStyle='#52636c';ctx.beginPath();ctx.moveTo(box.x,y(r.floor_val));ctx.lineTo(box.x+box.w,y(r.floor_val));ctx.stroke();ctx.setLineDash([]);for(const [key,color,width] of [['train','#123649',2],['val','#2952be',4]]){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();r.log.forEach((q,i)=>i?ctx.lineTo(x(q.step),y(q[key])):ctx.moveTo(x(q.step),y(q[key])));ctx.stroke()}ctx.restore();ctx.strokeStyle='#f2a900';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x(step),box.y);ctx.lineTo(x(step),box.y+box.h);ctx.stroke();const q=r.log.find(v=>v.step===step);$('step-value').textContent=step.toLocaleString('ko-KR')+'걸음';$('train-value').textContent=f2(q.train);$('validation-value').textContent=f2(q.val);$('gap-value').textContent=f2(q.val-q.train)}
+function setStep(next){const value=Math.max(0,Math.min(3000,Number(next)));if(value!==step)previousStep=step;step=value;$('step').value=String(step);$('undo-step').disabled=previousStep===null; $('stop-feedback').textContent='';draw()}
+$('step').addEventListener('input',e=>setStep(e.target.value));
+function setRun(next){run=next;$('experiment-small').classList.toggle('is-selected',run==='small');$('experiment-large').classList.toggle('is-selected',run==='large');$('experiment-small').setAttribute('aria-pressed',String(run==='small'));$('experiment-large').setAttribute('aria-pressed',String(run==='large'));$('stop-feedback').textContent='';draw()}
+$('experiment-small').onclick=()=>setRun('small');$('experiment-large').onclick=()=>setRun('large');
+$('undo-step').onclick=()=>{if(previousStep!==null){const old=previousStep;previousStep=null;setStep(old);previousStep=null;$('undo-step').disabled=true}};
+$('reset-experiment').onclick=()=>{run='small';step=550;previousStep=null;$('step').value='550';$('experiment-small').click();$('stop-feedback').textContent='실험을 처음 상태로 되돌렸습니다. 550걸음에서 다시 관찰해 보세요.';$('undo-step').disabled=true;draw()};
+$('stop-here').onclick=()=>{const r=DATA.runs[run],q=r.log.find(v=>v.step===step),best=r.log.reduce((a,b)=>b.val<a.val?b:a);const atBest=step===best.step;$('stop-feedback').className='feedback '+(atBest?'good':'');$('stop-feedback').textContent=atBest?'좋아요. 이 기록에서 검증 손실이 가장 낮은 '+best.step.toLocaleString('ko-KR')+'걸음입니다.':'이 기록의 최저점은 '+best.step.toLocaleString('ko-KR')+'걸음('+f2(best.val)+')입니다. 지금은 '+f2(q.val)+'로, 최저점보다 '+f2(q.val-best.val)+' 높습니다.'};
+$('step').value='550';draw();
+
+const SEG=[['small',100,500,'처음 함께 내려가는 구간'],['small',600,3000,'훈련은 계속 내려가지만 검증은 다시 오르는 구간'],['large',600,3000,'많은 데이터에서 두 손실이 함께 안정되는 구간']];
+const quizAnswers={};const quizList=$('quiz-list');
+function makeQuiz([key,a,b,label],index){const r=DATA.runs[key],start=r.log.find(v=>v.step===a),end=r.log.find(v=>v.step===b);const truth=end.train<start.train&&end.val>start.val?'외우는 중':end.train<start.train&&end.val<=start.val?'배우는 중':'기타';const item=document.createElement('article');item.className='quiz-item';item.innerHTML='<h3>'+(index+1)+'. '+label+'</h3><p class="trend">훈련 '+f2(start.train)+' → '+f2(end.train)+' · 검증 '+f2(start.val)+' → '+f2(end.val)+'</p><div class="quiz-actions" role="group" aria-label="'+label+' 판정"><button type="button" data-choice="배우는 중">배우는 중</button><button type="button" data-choice="외우는 중">외우는 중</button></div><p class="quiz-feedback feedback" aria-live="polite"></p>';const feedback=item.querySelector('.quiz-feedback');item.querySelectorAll('button').forEach(button=>button.onclick=()=>{item.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));const right=button.dataset.choice===truth;quizAnswers[index]=right;if(right){feedback.className='quiz-feedback feedback good';feedback.textContent='맞아요. '+(truth==='배우는 중'?'두 손실이 함께 내려갑니다.':'훈련 손실은 '+f2(start.train-end.train)+' 내려갔지만 검증 손실은 '+f2(end.val-start.val)+' 올랐습니다. 과적합 신호입니다.')}else{feedback.className='quiz-feedback feedback bad';feedback.textContent='아직 아니에요. 기록을 다시 보세요: 훈련은 '+(end.train<start.train?'내려가고':'내려가지 않고')+', 검증은 '+(end.val>start.val?'올라갑니다.':'내려갑니다.');}updateQuizStatus()});return item}
+function updateQuizStatus(){const done=Object.keys(quizAnswers).length,correct=Object.values(quizAnswers).filter(Boolean).length;if(done===SEG.length&&correct===SEG.length){$('quiz-status').textContent='세 구간을 모두 정확히 판정했습니다. 이제 작은 데이터의 두 번째 구간에서 과적합이 시작된 이유를 말해 보세요.';$('quiz-status').className='completion good'}else $('quiz-status').textContent=done+'개 판정 완료 · '+correct+'개 정답 · 세 구간을 모두 판정해 보세요.'}
+SEG.forEach((s,i)=>quizList.append(makeQuiz(s,i)));updateQuizStatus();
+$('reset-quiz').onclick=()=>{for(const k of Object.keys(quizAnswers))delete quizAnswers[k];quizList.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));quizList.querySelectorAll('.quiz-feedback').forEach(e=>{e.className='quiz-feedback feedback';e.textContent=''});updateQuizStatus()};
+
+const S=DATA.runs.small.probe,L=DATA.runs.large.probe;const probeBody=document.querySelector('#probe-table tbody');Object.keys(S.final).forEach(word=>{const tr=document.createElement('tr');tr.innerHTML='<td data-label="다음 말">'+word+'</td><td data-label="훈련 횟수">'+S.train_counts[word]+'</td><td data-label="32문장 모델">'+pct(S.final[word])+'</td><td data-label="512문장 모델">'+pct(L.final[word])+'</td><td data-label="진짜 분포">'+pct(S.true_p)+'</td>';probeBody.append(tr)});
