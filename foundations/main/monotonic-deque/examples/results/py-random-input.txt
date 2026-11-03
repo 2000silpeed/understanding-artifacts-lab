@@ -1,0 +1,5 @@
+n 500 k 7
+answers 494 values, first 5: -3 7 7 7 7, largest 9
+deque push 500 pop-front 56 pop-back 442 compare 852 max-length 5
+naive compare 2964
+check naive == deque: yes

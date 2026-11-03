@@ -1,0 +1,3 @@
+# the use case: one day of per-second server latencies (ms), "the slowest response in the last 5 minutes" every second
+k 300
+gen latency 86400 20261103

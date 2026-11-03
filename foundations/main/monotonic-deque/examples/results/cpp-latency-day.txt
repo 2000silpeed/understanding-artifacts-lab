@@ -1,0 +1,5 @@
+n 86400 k 300 (gen latency 86400 20261103)
+answers 86101 values, first 5: 349 349 349 349 349, largest 461
+deque push 86400 pop-front 221 pop-back 86173 compare 171672 max-length 14
+naive compare 25744199
+check naive == deque: yes
