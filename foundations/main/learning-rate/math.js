@@ -1,0 +1,1 @@
+(function(root){function step(z,q,rate){const p=1/(1+Math.exp(-z));const grad=p-q;const move=-rate*grad;const next=z+move;const np=1/(1+Math.exp(-next));return {p,grad,move,next,loss:-(q*Math.log(p)+(1-q)*Math.log(1-p)),nextLoss:-(q*Math.log(np)+(1-q)*Math.log(1-np))};}if(typeof module!=="undefined")module.exports={step};root.LearningMath={step};})(globalThis);

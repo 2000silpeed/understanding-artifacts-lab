@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect width="1920" height="1080" fill="#FBF5EE"/>
+<text x="115.2" y="152.0" font-family="Pretendard" font-size="44" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">같은 정원, 첫 이틀: 프림(위) vs 크루스칼(아래)</text>
+<text x="115.2" y="209.6" font-family="Pretendard" font-size="36" font-weight="500" fill="#4F626D" text-anchor="start" xml:space="preserve">파란 관 = 묻은 관 · 물 닿은 화단 수</text>
+<circle cx="202.3" cy="461.1" r="28.2" fill="#E9E1D4"/>
+<circle cx="357.1" cy="370.1" r="28.2" fill="#E9E1D4"/>
+<line x1="202.3" y1="461.1" x2="357.1" y2="370.1" stroke="#E9E1D4" stroke-width="34.943999999999996" stroke-linecap="round"/>
+<line x1="202.3" y1="461.1" x2="357.1" y2="542.9" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="370.1" x2="357.1" y2="542.9" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="370.1" x2="518.4" y2="454.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="542.9" x2="589.4" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="542.9" x2="518.4" y2="454.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="518.4" y1="454.2" x2="718.4" y2="370.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="518.4" y1="454.2" x2="589.4" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="718.4" y1="370.1" x2="589.4" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="718.4" y1="370.1" x2="789.4" y2="506.5" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="589.4" y1="570.2" x2="789.4" y2="506.5" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="202.3" y1="461.1" x2="357.1" y2="370.1" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<circle cx="202.3" cy="461.1" r="8.6" fill="#2952BE" stroke="#2952BE" stroke-width="1.44"/>
+<text x="202.3" y="486.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">탱크</text>
+<circle cx="357.1" cy="370.1" r="8.6" fill="#2952BE" stroke="#2952BE" stroke-width="1.44"/>
+<text x="357.1" y="356.2" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">장미</text>
+<circle cx="357.1" cy="542.9" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="357.1" y="568.3" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">국화</text>
+<circle cx="518.4" cy="454.2" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="518.4" y="440.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">수국</text>
+<circle cx="589.4" cy="570.2" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="589.4" y="595.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">백합</text>
+<circle cx="718.4" cy="370.1" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="718.4" y="356.2" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">튤립</text>
+<circle cx="789.4" cy="506.5" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="789.4" y="531.9" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">동백</text>
+<text x="115.2" y="324.0" font-family="Pretendard" font-size="26" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">프림 1일차 · 물 닿은 화단 1곳</text>
+<line x1="202.3" y1="828.3" x2="357.1" y2="737.3" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="202.3" y1="828.3" x2="357.1" y2="910.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="737.3" x2="357.1" y2="910.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="737.3" x2="518.4" y2="821.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="910.1" x2="589.4" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="357.1" y1="910.1" x2="518.4" y2="821.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="518.4" y1="821.4" x2="718.4" y2="737.3" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="518.4" y1="821.4" x2="589.4" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="718.4" y1="737.3" x2="589.4" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="718.4" y1="737.3" x2="789.4" y2="873.7" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="589.4" y1="937.4" x2="789.4" y2="873.7" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<circle cx="202.3" cy="828.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="202.3" y="853.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">탱크</text>
+<circle cx="357.1" cy="737.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="357.1" y="723.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">장미</text>
+<circle cx="357.1" cy="910.1" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="357.1" y="935.5" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">국화</text>
+<circle cx="518.4" cy="821.4" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="518.4" y="807.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">수국</text>
+<circle cx="589.4" cy="937.4" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="589.4" y="962.8" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">백합</text>
+<circle cx="718.4" cy="737.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="718.4" y="723.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">튤립</text>
+<circle cx="789.4" cy="873.7" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="789.4" y="899.1" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">동백</text>
+<text x="115.2" y="691.2" font-family="Pretendard" font-size="26" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">크루스칼 1일차 · 물 닿은 화단 0곳</text>
+<circle cx="1085.5" cy="461.1" r="28.2" fill="#E9E1D4"/>
+<circle cx="1240.3" cy="370.1" r="28.2" fill="#E9E1D4"/>
+<circle cx="1240.3" cy="542.9" r="28.2" fill="#E9E1D4"/>
+<line x1="1085.5" y1="461.1" x2="1240.3" y2="370.1" stroke="#E9E1D4" stroke-width="34.943999999999996" stroke-linecap="round"/>
+<line x1="1240.3" y1="370.1" x2="1240.3" y2="542.9" stroke="#E9E1D4" stroke-width="34.943999999999996" stroke-linecap="round"/>
+<line x1="1085.5" y1="461.1" x2="1240.3" y2="542.9" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="370.1" x2="1401.6" y2="454.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="542.9" x2="1472.6" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="542.9" x2="1401.6" y2="454.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1401.6" y1="454.2" x2="1601.6" y2="370.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1401.6" y1="454.2" x2="1472.6" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1601.6" y1="370.1" x2="1472.6" y2="570.2" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1601.6" y1="370.1" x2="1672.6" y2="506.5" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1472.6" y1="570.2" x2="1672.6" y2="506.5" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1085.5" y1="461.1" x2="1240.3" y2="370.1" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<line x1="1240.3" y1="370.1" x2="1240.3" y2="542.9" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<circle cx="1085.5" cy="461.1" r="8.6" fill="#2952BE" stroke="#2952BE" stroke-width="1.44"/>
+<text x="1085.5" y="486.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">탱크</text>
+<circle cx="1240.3" cy="370.1" r="8.6" fill="#2952BE" stroke="#2952BE" stroke-width="1.44"/>
+<text x="1240.3" y="356.2" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">장미</text>
+<circle cx="1240.3" cy="542.9" r="8.6" fill="#2952BE" stroke="#2952BE" stroke-width="1.44"/>
+<text x="1240.3" y="568.3" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">국화</text>
+<circle cx="1401.6" cy="454.2" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1401.6" y="440.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">수국</text>
+<circle cx="1472.6" cy="570.2" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1472.6" y="595.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">백합</text>
+<circle cx="1601.6" cy="370.1" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1601.6" y="356.2" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">튤립</text>
+<circle cx="1672.6" cy="506.5" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1672.6" y="531.9" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">동백</text>
+<text x="998.4" y="324.0" font-family="Pretendard" font-size="26" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">프림 2일차 · 물 닿은 화단 2곳</text>
+<line x1="1085.5" y1="828.3" x2="1240.3" y2="737.3" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1085.5" y1="828.3" x2="1240.3" y2="910.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="737.3" x2="1240.3" y2="910.1" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="737.3" x2="1401.6" y2="821.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="910.1" x2="1472.6" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1240.3" y1="910.1" x2="1401.6" y2="821.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1401.6" y1="821.4" x2="1472.6" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1601.6" y1="737.3" x2="1472.6" y2="937.4" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1601.6" y1="737.3" x2="1672.6" y2="873.7" stroke="#4F626D" stroke-width="1.44" stroke-linecap="round" stroke-dasharray="5 5"/>
+<line x1="1401.6" y1="821.4" x2="1601.6" y2="737.3" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<line x1="1472.6" y1="937.4" x2="1672.6" y2="873.7" stroke="#2952BE" stroke-width="5.184" stroke-linecap="round"/>
+<circle cx="1085.5" cy="828.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1085.5" y="853.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">탱크</text>
+<circle cx="1240.3" cy="737.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1240.3" y="723.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">장미</text>
+<circle cx="1240.3" cy="910.1" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1240.3" y="935.5" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">국화</text>
+<circle cx="1401.6" cy="821.4" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1401.6" y="807.6" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">수국</text>
+<circle cx="1472.6" cy="937.4" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1472.6" y="962.8" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">백합</text>
+<circle cx="1601.6" cy="737.3" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1601.6" y="723.4" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">튤립</text>
+<circle cx="1672.6" cy="873.7" r="8.6" fill="#FBF5EE" stroke="#123649" stroke-width="1.44"/>
+<text x="1672.6" y="899.1" font-family="Pretendard" font-size="14.399999999999999" font-weight="700" fill="#123649" text-anchor="middle" xml:space="preserve">동백</text>
+<text x="998.4" y="691.2" font-family="Pretendard" font-size="26" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">크루스칼 2일차 · 물 닿은 화단 0곳</text>
+</svg>

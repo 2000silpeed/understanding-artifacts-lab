@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect width="1920" height="1080" fill="#FBF5EE"/>
+<text x="115.2" y="152.0" font-family="Pretendard" font-size="44" font-weight="800" fill="#123649" text-anchor="start" xml:space="preserve">실제 코드: examples/prim.py  prim()</text>
+<text x="115.2" y="209.6" font-family="Pretendard" font-size="36" font-weight="500" fill="#4F626D" text-anchor="start" xml:space="preserve">실행: python3 prim.py garden.txt = ./prim garden.txt (같은 바이트)</text>
+<text x="115.2" y="345.0" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 50  def prim(names, edges, start=0):</text>
+<text x="115.2" y="372.3" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 51      &quot;&quot;&quot;Lazy Prim with a binary heap. Returns the full event log the film draws from.&quot;&quot;&quot;</text>
+<text x="115.2" y="399.6" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 52      n = len(names)</text>
+<text x="115.2" y="426.9" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 53      adj = adjacency(n, edges)</text>
+<text x="115.2" y="454.2" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 54      in_tree = [False] * n</text>
+<text x="115.2" y="481.5" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 55      heap, seq = [], 0</text>
+<text x="115.2" y="508.8" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 56      events, taken = [], []</text>
+<text x="115.2" y="536.1" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 57  </text>
+<text x="115.2" y="563.4" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 58      def add(x):</text>
+<text x="115.2" y="590.7" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 59          nonlocal seq</text>
+<text x="115.2" y="618.0" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 60          in_tree[x] = True</text>
+<text x="115.2" y="645.3" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 61          pushed = []</text>
+<text x="115.2" y="672.6" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 62          for y, w in adj[x]:</text>
+<text x="115.2" y="699.9" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 63              if not in_tree[y]:           # an edge back into the tree is never a candidate</text>
+<text x="115.2" y="727.2" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 64                  heapq.heappush(heap, (w, seq, x, y))</text>
+<text x="115.2" y="754.5" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 65                  pushed.append((w, seq, x, y))</text>
+<text x="115.2" y="781.8" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 66                  seq += 1</text>
+<text x="115.2" y="809.1" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 67          return pushed</text>
+<text x="115.2" y="836.4" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 68  </text>
+<text x="115.2" y="863.7" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 69      pushed = add(start)</text>
+<text x="115.2" y="891.0" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 70      events.append({&#x27;kind&#x27;: &#x27;start&#x27;, &#x27;v&#x27;: start, &#x27;pushed&#x27;: pushed, &#x27;heapAfter&#x27;: sorted(heap)})</text>
+<text x="115.2" y="918.3" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 71      while heap and len(taken) &lt; n - 1:</text>
+<text x="115.2" y="945.6" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 72          before = sorted(heap)</text>
+<text x="115.2" y="972.9" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 73          w, s, x, y = heapq.heappop(heap)</text>
+<text x="115.2" y="1000.2" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 74          if in_tree[y]:                   # both ends already in the tree: would close a cycle</text>
+<text x="115.2" y="1027.5" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 75              events.append({&#x27;kind&#x27;: &#x27;skip&#x27;, &#x27;edge&#x27;: (x, y, w), &#x27;seq&#x27;: s, &#x27;heapBefore&#x27;: before, &#x27;heapAfter&#x27;: sorted(heap)})</text>
+<text x="115.2" y="1054.8" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 76              continue</text>
+<text x="115.2" y="1082.1" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 77          taken.append((x, y, w))</text>
+<text x="115.2" y="1109.4" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 78          pushed = add(y)</text>
+<text x="115.2" y="1136.7" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 79          events.append({&#x27;kind&#x27;: &#x27;take&#x27;, &#x27;edge&#x27;: (x, y, w), &#x27;seq&#x27;: s, &#x27;heapBefore&#x27;: before,</text>
+<text x="115.2" y="1164.0" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 80                         &#x27;pushed&#x27;: pushed, &#x27;heapAfter&#x27;: sorted(heap), &#x27;tree&#x27;: sum(in_tree)})</text>
+<text x="115.2" y="1191.3" font-family="Pretendard" font-size="21" font-weight="500" fill="#123649" text-anchor="start" xml:space="preserve"> 81      return {&#x27;start&#x27;: start, &#x27;events&#x27;: events, &#x27;taken&#x27;: taken, &#x27;total&#x27;: sum(w for _, _, w in taken),</text>
+<text x="1190.4" y="345.0" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">시작 탱크</text>
+<text x="1190.4" y="386.6" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 탱크-장미 4 | 트리 2/7</text>
+<text x="1190.4" y="428.2" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 장미-국화 5 | 트리 3/7</text>
+<text x="1190.4" y="469.8" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 국화-수국 6 | 트리 4/7</text>
+<text x="1190.4" y="511.4" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 수국-튤립 3 | 트리 5/7</text>
+<text x="1190.4" y="553.0" font-family="Pretendard" font-size="26" font-weight="600" fill="#C23B22" text-anchor="start" xml:space="preserve">버림 탱크-국화 7 | 두 끝이 이미 트리 안</text>
+<text x="1190.4" y="594.6" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 국화-백합 8 | 트리 6/7</text>
+<text x="1190.4" y="636.2" font-family="Pretendard" font-size="26" font-weight="600" fill="#123649" text-anchor="start" xml:space="preserve">고름 백합-동백 1 | 트리 7/7</text>
+<text x="1190.4" y="677.8" font-family="Pretendard" font-size="26" font-weight="600" fill="#2952BE" text-anchor="start" xml:space="preserve">합계 27 | 간선 6개 | 연결됨</text>
+</svg>

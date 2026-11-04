@@ -1,0 +1,171 @@
+{
+ "ok": true,
+ "failed": [],
+ "checks": 30,
+ "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+ "cxxFlags": [
+  "-std=c++17",
+  "-O2",
+  "-Wall",
+  "-Wextra",
+  "-pedantic",
+  "-Werror"
+ ],
+ "python": "3.14.7",
+ "runs": {
+  "garden-lazy": {
+   "cmd": "prim.py|prim garden.txt",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-naive": {
+   "cmd": "prim.py|prim garden.txt --naive",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 30 | 간선 6개 | 연결됨"
+  },
+  "garden-dense": {
+   "cmd": "prim.py|prim garden.txt --dense",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "tie-lazy": {
+   "cmd": "prim.py|prim tie.txt",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 3개 | 연결됨"
+  },
+  "tie-naive": {
+   "cmd": "prim.py|prim tie.txt --naive",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 3개 | 연결됨"
+  },
+  "tie-dense": {
+   "cmd": "prim.py|prim tie.txt --dense",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 3개 | 연결됨"
+  },
+  "disconnected-lazy": {
+   "cmd": "prim.py|prim disconnected.txt",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 2개 | 연결 안 됨 (트리 3/5)"
+  },
+  "disconnected-naive": {
+   "cmd": "prim.py|prim disconnected.txt --naive",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 2개 | 연결 안 됨 (트리 3/5)"
+  },
+  "disconnected-dense": {
+   "cmd": "prim.py|prim disconnected.txt --dense",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 6 | 간선 2개 | 연결 안 됨 (트리 3/5)"
+  },
+  "garden-start-장미": {
+   "cmd": "prim.py|prim garden.txt --start 장미",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-start-국화": {
+   "cmd": "prim.py|prim garden.txt --start 국화",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-start-수국": {
+   "cmd": "prim.py|prim garden.txt --start 수국",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-start-백합": {
+   "cmd": "prim.py|prim garden.txt --start 백합",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-start-튤립": {
+   "cmd": "prim.py|prim garden.txt --start 튤립",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  },
+  "garden-start-동백": {
+   "cmd": "prim.py|prim garden.txt --start 동백",
+   "exitPy": 0,
+   "exitCpp": 0,
+   "sameBytes": true,
+   "lastLine": "합계 27 | 간선 6개 | 연결됨"
+  }
+ },
+ "independent": {
+  "garden": {
+   "graph": "examples/garden.txt",
+   "vertices": 7,
+   "edges": 11,
+   "componentOfFirst": 7,
+   "spanningTrees": 144,
+   "minTotal": 27,
+   "minTrees": 1,
+   "maxTotal": 57,
+   "kruskalTotal": 27
+  },
+  "tie": {
+   "graph": "examples/tie.txt",
+   "vertices": 4,
+   "edges": 5,
+   "componentOfFirst": 4,
+   "spanningTrees": 8,
+   "minTotal": 6,
+   "minTrees": 4,
+   "maxTotal": 8,
+   "kruskalTotal": 6
+  },
+  "disconnected": {
+   "graph": "examples/disconnected.txt",
+   "vertices": 5,
+   "edges": 4,
+   "componentOfFirst": 3,
+   "spanningTrees": 3,
+   "minTotal": 6,
+   "minTrees": 1,
+   "maxTotal": 9,
+   "kruskalTotal": 7
+  }
+ },
+ "garden": {
+  "spanningTrees": 144,
+  "min": 27,
+  "minTrees": 1
+ },
+ "random": {
+  "seed": 20261103,
+  "graphs": 300,
+  "connected": 262,
+  "mismatches": [],
+  "cppGraphs": 60,
+  "cppMismatches": []
+ },
+ "note": "Temporary C++ build and random-graph files lived in a system temp folder and were deleted."
+}

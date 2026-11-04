@@ -1,0 +1,1379 @@
+{
+ "source": "examples/make_trace.py: prim.py + independent.py on examples/garden.txt, stdout from examples/results/",
+ "graph": {
+  "file": "examples/garden.txt",
+  "names": [
+   "탱크",
+   "장미",
+   "국화",
+   "수국",
+   "백합",
+   "튤립",
+   "동백"
+  ],
+  "start": "탱크",
+  "beds": 6,
+  "edges": [
+   {
+    "id": 0,
+    "a": "탱크",
+    "b": "장미",
+    "w": 4
+   },
+   {
+    "id": 1,
+    "a": "탱크",
+    "b": "국화",
+    "w": 7
+   },
+   {
+    "id": 2,
+    "a": "장미",
+    "b": "국화",
+    "w": 5
+   },
+   {
+    "id": 3,
+    "a": "장미",
+    "b": "수국",
+    "w": 9
+   },
+   {
+    "id": 4,
+    "a": "국화",
+    "b": "백합",
+    "w": 8
+   },
+   {
+    "id": 5,
+    "a": "국화",
+    "b": "수국",
+    "w": 6
+   },
+   {
+    "id": 6,
+    "a": "수국",
+    "b": "튤립",
+    "w": 3
+   },
+   {
+    "id": 7,
+    "a": "수국",
+    "b": "백합",
+    "w": 10
+   },
+   {
+    "id": 8,
+    "a": "튤립",
+    "b": "백합",
+    "w": 11
+   },
+   {
+    "id": 9,
+    "a": "튤립",
+    "b": "동백",
+    "w": 12
+   },
+   {
+    "id": 10,
+    "a": "백합",
+    "b": "동백",
+    "w": 1
+   }
+  ],
+  "distinctCosts": true
+ },
+ "prim": {
+  "steps": [
+   {
+    "kind": "take",
+    "edge": {
+     "a": "탱크",
+     "b": "장미",
+     "w": 4
+    },
+    "candidatesBefore": [
+     {
+      "w": 4,
+      "seq": 0,
+      "a": "탱크",
+      "b": "장미",
+      "stale": false
+     },
+     {
+      "w": 7,
+      "seq": 1,
+      "a": "탱크",
+      "b": "국화",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크"
+    ],
+    "cut": [
+     {
+      "w": 4,
+      "a": "탱크",
+      "b": "장미"
+     },
+     {
+      "w": 7,
+      "a": "탱크",
+      "b": "국화"
+     }
+    ],
+    "pushed": [
+     {
+      "a": "장미",
+      "b": "국화",
+      "w": 5
+     },
+     {
+      "a": "장미",
+      "b": "수국",
+      "w": 9
+     }
+    ],
+    "treeAfter": [
+     "탱크",
+     "장미"
+    ],
+    "bedsWatered": 1,
+    "fromLastAdded": true
+   },
+   {
+    "kind": "take",
+    "edge": {
+     "a": "장미",
+     "b": "국화",
+     "w": 5
+    },
+    "candidatesBefore": [
+     {
+      "w": 5,
+      "seq": 2,
+      "a": "장미",
+      "b": "국화",
+      "stale": false
+     },
+     {
+      "w": 7,
+      "seq": 1,
+      "a": "탱크",
+      "b": "국화",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미"
+    ],
+    "cut": [
+     {
+      "w": 5,
+      "a": "장미",
+      "b": "국화"
+     },
+     {
+      "w": 7,
+      "a": "탱크",
+      "b": "국화"
+     },
+     {
+      "w": 9,
+      "a": "장미",
+      "b": "수국"
+     }
+    ],
+    "pushed": [
+     {
+      "a": "국화",
+      "b": "백합",
+      "w": 8
+     },
+     {
+      "a": "국화",
+      "b": "수국",
+      "w": 6
+     }
+    ],
+    "treeAfter": [
+     "탱크",
+     "장미",
+     "국화"
+    ],
+    "bedsWatered": 2,
+    "fromLastAdded": true
+   },
+   {
+    "kind": "take",
+    "edge": {
+     "a": "국화",
+     "b": "수국",
+     "w": 6
+    },
+    "candidatesBefore": [
+     {
+      "w": 6,
+      "seq": 5,
+      "a": "국화",
+      "b": "수국",
+      "stale": false
+     },
+     {
+      "w": 7,
+      "seq": 1,
+      "a": "탱크",
+      "b": "국화",
+      "stale": true
+     },
+     {
+      "w": 8,
+      "seq": 4,
+      "a": "국화",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미",
+     "국화"
+    ],
+    "cut": [
+     {
+      "w": 6,
+      "a": "국화",
+      "b": "수국"
+     },
+     {
+      "w": 8,
+      "a": "국화",
+      "b": "백합"
+     },
+     {
+      "w": 9,
+      "a": "장미",
+      "b": "수국"
+     }
+    ],
+    "pushed": [
+     {
+      "a": "수국",
+      "b": "튤립",
+      "w": 3
+     },
+     {
+      "a": "수국",
+      "b": "백합",
+      "w": 10
+     }
+    ],
+    "treeAfter": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국"
+    ],
+    "bedsWatered": 3,
+    "fromLastAdded": true
+   },
+   {
+    "kind": "take",
+    "edge": {
+     "a": "수국",
+     "b": "튤립",
+     "w": 3
+    },
+    "candidatesBefore": [
+     {
+      "w": 3,
+      "seq": 6,
+      "a": "수국",
+      "b": "튤립",
+      "stale": false
+     },
+     {
+      "w": 7,
+      "seq": 1,
+      "a": "탱크",
+      "b": "국화",
+      "stale": true
+     },
+     {
+      "w": 8,
+      "seq": 4,
+      "a": "국화",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": true
+     },
+     {
+      "w": 10,
+      "seq": 7,
+      "a": "수국",
+      "b": "백합",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국"
+    ],
+    "cut": [
+     {
+      "w": 3,
+      "a": "수국",
+      "b": "튤립"
+     },
+     {
+      "w": 8,
+      "a": "국화",
+      "b": "백합"
+     },
+     {
+      "w": 10,
+      "a": "수국",
+      "b": "백합"
+     }
+    ],
+    "pushed": [
+     {
+      "a": "튤립",
+      "b": "백합",
+      "w": 11
+     },
+     {
+      "a": "튤립",
+      "b": "동백",
+      "w": 12
+     }
+    ],
+    "treeAfter": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립"
+    ],
+    "bedsWatered": 4,
+    "fromLastAdded": true
+   },
+   {
+    "kind": "skip",
+    "edge": {
+     "a": "탱크",
+     "b": "국화",
+     "w": 7
+    },
+    "candidatesBefore": [
+     {
+      "w": 7,
+      "seq": 1,
+      "a": "탱크",
+      "b": "국화",
+      "stale": true
+     },
+     {
+      "w": 8,
+      "seq": 4,
+      "a": "국화",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": true
+     },
+     {
+      "w": 10,
+      "seq": 7,
+      "a": "수국",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 11,
+      "seq": 8,
+      "a": "튤립",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 12,
+      "seq": 9,
+      "a": "튤립",
+      "b": "동백",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립"
+    ],
+    "reason": "both ends already in tree"
+   },
+   {
+    "kind": "take",
+    "edge": {
+     "a": "국화",
+     "b": "백합",
+     "w": 8
+    },
+    "candidatesBefore": [
+     {
+      "w": 8,
+      "seq": 4,
+      "a": "국화",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": true
+     },
+     {
+      "w": 10,
+      "seq": 7,
+      "a": "수국",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 11,
+      "seq": 8,
+      "a": "튤립",
+      "b": "백합",
+      "stale": false
+     },
+     {
+      "w": 12,
+      "seq": 9,
+      "a": "튤립",
+      "b": "동백",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립"
+    ],
+    "cut": [
+     {
+      "w": 8,
+      "a": "국화",
+      "b": "백합"
+     },
+     {
+      "w": 10,
+      "a": "수국",
+      "b": "백합"
+     },
+     {
+      "w": 11,
+      "a": "튤립",
+      "b": "백합"
+     },
+     {
+      "w": 12,
+      "a": "튤립",
+      "b": "동백"
+     }
+    ],
+    "pushed": [
+     {
+      "a": "백합",
+      "b": "동백",
+      "w": 1
+     }
+    ],
+    "treeAfter": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립",
+     "백합"
+    ],
+    "bedsWatered": 5,
+    "fromLastAdded": false
+   },
+   {
+    "kind": "take",
+    "edge": {
+     "a": "백합",
+     "b": "동백",
+     "w": 1
+    },
+    "candidatesBefore": [
+     {
+      "w": 1,
+      "seq": 10,
+      "a": "백합",
+      "b": "동백",
+      "stale": false
+     },
+     {
+      "w": 9,
+      "seq": 3,
+      "a": "장미",
+      "b": "수국",
+      "stale": true
+     },
+     {
+      "w": 10,
+      "seq": 7,
+      "a": "수국",
+      "b": "백합",
+      "stale": true
+     },
+     {
+      "w": 11,
+      "seq": 8,
+      "a": "튤립",
+      "b": "백합",
+      "stale": true
+     },
+     {
+      "w": 12,
+      "seq": 9,
+      "a": "튤립",
+      "b": "동백",
+      "stale": false
+     }
+    ],
+    "treeBefore": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립",
+     "백합"
+    ],
+    "cut": [
+     {
+      "w": 1,
+      "a": "백합",
+      "b": "동백"
+     },
+     {
+      "w": 12,
+      "a": "튤립",
+      "b": "동백"
+     }
+    ],
+    "pushed": [],
+    "treeAfter": [
+     "탱크",
+     "장미",
+     "국화",
+     "수국",
+     "튤립",
+     "백합",
+     "동백"
+    ],
+    "bedsWatered": 6,
+    "fromLastAdded": true
+   }
+  ],
+  "takeOrder": [
+   {
+    "a": "탱크",
+    "b": "장미",
+    "w": 4
+   },
+   {
+    "a": "장미",
+    "b": "국화",
+    "w": 5
+   },
+   {
+    "a": "국화",
+    "b": "수국",
+    "w": 6
+   },
+   {
+    "a": "수국",
+    "b": "튤립",
+    "w": 3
+   },
+   {
+    "a": "국화",
+    "b": "백합",
+    "w": 8
+   },
+   {
+    "a": "백합",
+    "b": "동백",
+    "w": 1
+   }
+  ],
+  "skipCount": 1,
+  "skipped": [
+   {
+    "a": "탱크",
+    "b": "국화",
+    "w": 7
+   }
+  ],
+  "total": 27,
+  "treeEdges": 6,
+  "connected": true,
+  "heapLeftAtStop": [
+   {
+    "w": 9,
+    "seq": 3,
+    "a": "장미",
+    "b": "수국",
+    "stale": true
+   },
+   {
+    "w": 10,
+    "seq": 7,
+    "a": "수국",
+    "b": "백합",
+    "stale": true
+   },
+   {
+    "w": 11,
+    "seq": 8,
+    "a": "튤립",
+    "b": "백합",
+    "stale": true
+   },
+   {
+    "w": 12,
+    "seq": 9,
+    "a": "튤립",
+    "b": "동백",
+    "stale": true
+   }
+  ],
+  "maxCandidates": 6,
+  "notFromLastAdded": [
+   5
+  ]
+ },
+ "naive": {
+  "taken": [
+   {
+    "a": "탱크",
+    "b": "장미",
+    "w": 4
+   },
+   {
+    "a": "장미",
+    "b": "국화",
+    "w": 5
+   },
+   {
+    "a": "국화",
+    "b": "수국",
+    "w": 6
+   },
+   {
+    "a": "수국",
+    "b": "튤립",
+    "w": 3
+   },
+   {
+    "a": "튤립",
+    "b": "백합",
+    "w": 11
+   },
+   {
+    "a": "백합",
+    "b": "동백",
+    "w": 1
+   }
+  ],
+  "total": 30,
+  "connected": true,
+  "divergeStep": 5,
+  "lastAdded": "튤립",
+  "lastAddedOptions": [
+   {
+    "w": 11,
+    "to": "백합"
+   },
+   {
+    "w": 12,
+    "to": "동백"
+   }
+  ],
+  "missed": {
+   "a": "국화",
+   "b": "백합",
+   "w": 8
+  },
+  "extra": 3
+ },
+ "kruskal": {
+  "log": [
+   {
+    "a": "백합",
+    "b": "동백",
+    "w": 1,
+    "take": true,
+    "tankBedsAfter": 0,
+    "pieces": 6
+   },
+   {
+    "a": "수국",
+    "b": "튤립",
+    "w": 3,
+    "take": true,
+    "tankBedsAfter": 0,
+    "pieces": 5
+   },
+   {
+    "a": "탱크",
+    "b": "장미",
+    "w": 4,
+    "take": true,
+    "tankBedsAfter": 1,
+    "pieces": 4
+   },
+   {
+    "a": "장미",
+    "b": "국화",
+    "w": 5,
+    "take": true,
+    "tankBedsAfter": 2,
+    "pieces": 3
+   },
+   {
+    "a": "국화",
+    "b": "수국",
+    "w": 6,
+    "take": true,
+    "tankBedsAfter": 4,
+    "pieces": 2
+   },
+   {
+    "a": "탱크",
+    "b": "국화",
+    "w": 7,
+    "take": false,
+    "tankBedsAfter": 4,
+    "pieces": 2
+   },
+   {
+    "a": "국화",
+    "b": "백합",
+    "w": 8,
+    "take": true,
+    "tankBedsAfter": 6,
+    "pieces": 1
+   },
+   {
+    "a": "장미",
+    "b": "수국",
+    "w": 9,
+    "take": false,
+    "tankBedsAfter": 6,
+    "pieces": 1
+   },
+   {
+    "a": "수국",
+    "b": "백합",
+    "w": 10,
+    "take": false,
+    "tankBedsAfter": 6,
+    "pieces": 1
+   },
+   {
+    "a": "튤립",
+    "b": "백합",
+    "w": 11,
+    "take": false,
+    "tankBedsAfter": 6,
+    "pieces": 1
+   },
+   {
+    "a": "튤립",
+    "b": "동백",
+    "w": 12,
+    "take": false,
+    "tankBedsAfter": 6,
+    "pieces": 1
+   }
+  ],
+  "total": 27,
+  "sameTree": true
+ },
+ "brute": {
+  "spanningTrees": 144,
+  "min": 27,
+  "minTrees": 1,
+  "max": 57
+ },
+ "starts": {
+  "탱크": {
+   "order": [
+    "탱크",
+    "장미",
+    "국화",
+    "수국",
+    "튤립",
+    "백합",
+    "동백"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 1
+  },
+  "장미": {
+   "order": [
+    "장미",
+    "탱크",
+    "국화",
+    "수국",
+    "튤립",
+    "백합",
+    "동백"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 1
+  },
+  "국화": {
+   "order": [
+    "국화",
+    "장미",
+    "탱크",
+    "수국",
+    "튤립",
+    "백합",
+    "동백"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 1
+  },
+  "수국": {
+   "order": [
+    "수국",
+    "튤립",
+    "국화",
+    "장미",
+    "탱크",
+    "백합",
+    "동백"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 1
+  },
+  "백합": {
+   "order": [
+    "백합",
+    "동백",
+    "국화",
+    "장미",
+    "탱크",
+    "수국",
+    "튤립"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 0
+  },
+  "튤립": {
+   "order": [
+    "튤립",
+    "수국",
+    "국화",
+    "장미",
+    "탱크",
+    "백합",
+    "동백"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 1
+  },
+  "동백": {
+   "order": [
+    "동백",
+    "백합",
+    "국화",
+    "장미",
+    "탱크",
+    "수국",
+    "튤립"
+   ],
+   "total": 27,
+   "edges": [
+    [
+     "국화",
+     "백합",
+     8
+    ],
+    [
+     "국화",
+     "수국",
+     6
+    ],
+    [
+     "국화",
+     "장미",
+     5
+    ],
+    [
+     "동백",
+     "백합",
+     1
+    ],
+    [
+     "수국",
+     "튤립",
+     3
+    ],
+    [
+     "장미",
+     "탱크",
+     4
+    ]
+   ],
+   "skips": 0
+  }
+ },
+ "dense": {
+  "total": 27,
+  "sameOrder": true
+ },
+ "fixtures": {
+  "tie": {
+   "graph": "examples/tie.txt",
+   "vertices": 4,
+   "edges": 5,
+   "componentOfFirst": 4,
+   "spanningTrees": 8,
+   "minTotal": 6,
+   "minTrees": 4,
+   "maxTotal": 8,
+   "kruskalTotal": 6
+  },
+  "disconnected": {
+   "graph": "examples/disconnected.txt",
+   "vertices": 5,
+   "edges": 4,
+   "componentOfFirst": 3,
+   "spanningTrees": 3,
+   "minTotal": 6,
+   "minTrees": 1,
+   "maxTotal": 9,
+   "kruskalTotal": 7
+  }
+ },
+ "runs": {
+  "garden-lazy": [
+   "시작 탱크",
+   "고름 탱크-장미 4 | 트리 2/7",
+   "고름 장미-국화 5 | 트리 3/7",
+   "고름 국화-수국 6 | 트리 4/7",
+   "고름 수국-튤립 3 | 트리 5/7",
+   "버림 탱크-국화 7 | 두 끝이 이미 트리 안",
+   "고름 국화-백합 8 | 트리 6/7",
+   "고름 백합-동백 1 | 트리 7/7",
+   "합계 27 | 간선 6개 | 연결됨"
+  ],
+  "garden-naive": [
+   "시작 탱크 (실수: 방금 붙인 정점만 봄)",
+   "고름 탱크-장미 4 | 트리 2/7",
+   "고름 장미-국화 5 | 트리 3/7",
+   "고름 국화-수국 6 | 트리 4/7",
+   "고름 수국-튤립 3 | 트리 5/7",
+   "고름 튤립-백합 11 | 트리 6/7",
+   "고름 백합-동백 1 | 트리 7/7",
+   "합계 30 | 간선 6개 | 연결됨"
+  ],
+  "garden-dense": [
+   "시작 탱크 (배열 버전)",
+   "고름 탱크-장미 4 | 트리 2/7",
+   "고름 장미-국화 5 | 트리 3/7",
+   "고름 국화-수국 6 | 트리 4/7",
+   "고름 수국-튤립 3 | 트리 5/7",
+   "고름 국화-백합 8 | 트리 6/7",
+   "고름 백합-동백 1 | 트리 7/7",
+   "합계 27 | 간선 6개 | 연결됨"
+  ],
+  "garden-start-동백": [
+   "시작 동백",
+   "고름 동백-백합 1 | 트리 2/7",
+   "고름 백합-국화 8 | 트리 3/7",
+   "고름 국화-장미 5 | 트리 4/7",
+   "고름 장미-탱크 4 | 트리 5/7",
+   "고름 국화-수국 6 | 트리 6/7",
+   "고름 수국-튤립 3 | 트리 7/7",
+   "합계 27 | 간선 6개 | 연결됨"
+  ],
+  "tie-lazy": [
+   "시작 P",
+   "고름 P-Q 2 | 트리 2/4",
+   "고름 Q-R 1 | 트리 3/4",
+   "버림 P-R 2 | 두 끝이 이미 트리 안",
+   "고름 Q-S 3 | 트리 4/4",
+   "합계 6 | 간선 3개 | 연결됨"
+  ],
+  "disconnected-lazy": [
+   "시작 P",
+   "고름 P-Q 4 | 트리 2/5",
+   "고름 Q-R 2 | 트리 3/5",
+   "버림 P-R 5 | 두 끝이 이미 트리 안",
+   "합계 6 | 간선 2개 | 연결 안 됨 (트리 3/5)"
+  ]
+ },
+ "code": [
+  {
+   "line": 50,
+   "text": "def prim(names, edges, start=0):"
+  },
+  {
+   "line": 51,
+   "text": "    \"\"\"Lazy Prim with a binary heap. Returns the full event log the film draws from.\"\"\""
+  },
+  {
+   "line": 52,
+   "text": "    n = len(names)"
+  },
+  {
+   "line": 53,
+   "text": "    adj = adjacency(n, edges)"
+  },
+  {
+   "line": 54,
+   "text": "    in_tree = [False] * n"
+  },
+  {
+   "line": 55,
+   "text": "    heap, seq = [], 0"
+  },
+  {
+   "line": 56,
+   "text": "    events, taken = [], []"
+  },
+  {
+   "line": 57,
+   "text": ""
+  },
+  {
+   "line": 58,
+   "text": "    def add(x):"
+  },
+  {
+   "line": 59,
+   "text": "        nonlocal seq"
+  },
+  {
+   "line": 60,
+   "text": "        in_tree[x] = True"
+  },
+  {
+   "line": 61,
+   "text": "        pushed = []"
+  },
+  {
+   "line": 62,
+   "text": "        for y, w in adj[x]:"
+  },
+  {
+   "line": 63,
+   "text": "            if not in_tree[y]:           # an edge back into the tree is never a candidate"
+  },
+  {
+   "line": 64,
+   "text": "                heapq.heappush(heap, (w, seq, x, y))"
+  },
+  {
+   "line": 65,
+   "text": "                pushed.append((w, seq, x, y))"
+  },
+  {
+   "line": 66,
+   "text": "                seq += 1"
+  },
+  {
+   "line": 67,
+   "text": "        return pushed"
+  },
+  {
+   "line": 68,
+   "text": ""
+  },
+  {
+   "line": 69,
+   "text": "    pushed = add(start)"
+  },
+  {
+   "line": 70,
+   "text": "    events.append({'kind': 'start', 'v': start, 'pushed': pushed, 'heapAfter': sorted(heap)})"
+  },
+  {
+   "line": 71,
+   "text": "    while heap and len(taken) < n - 1:"
+  },
+  {
+   "line": 72,
+   "text": "        before = sorted(heap)"
+  },
+  {
+   "line": 73,
+   "text": "        w, s, x, y = heapq.heappop(heap)"
+  },
+  {
+   "line": 74,
+   "text": "        if in_tree[y]:                   # both ends already in the tree: would close a cycle"
+  },
+  {
+   "line": 75,
+   "text": "            events.append({'kind': 'skip', 'edge': (x, y, w), 'seq': s, 'heapBefore': before, 'heapAfter': sorted(heap)})"
+  },
+  {
+   "line": 76,
+   "text": "            continue"
+  },
+  {
+   "line": 77,
+   "text": "        taken.append((x, y, w))"
+  },
+  {
+   "line": 78,
+   "text": "        pushed = add(y)"
+  },
+  {
+   "line": 79,
+   "text": "        events.append({'kind': 'take', 'edge': (x, y, w), 'seq': s, 'heapBefore': before,"
+  },
+  {
+   "line": 80,
+   "text": "                       'pushed': pushed, 'heapAfter': sorted(heap), 'tree': sum(in_tree)})"
+  },
+  {
+   "line": 81,
+   "text": "    return {'start': start, 'events': events, 'taken': taken, 'total': sum(w for _, _, w in taken),"
+  }
+ ]
+}
