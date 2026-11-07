@@ -2,12 +2,15 @@ name: artifact-quality
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   technical-not-human-efficacy:
-    runs-on: ubuntu-latest
+    # Playwright 1.58.2 supports Ubuntu 24.04; avoid ubuntu-latest OS upgrades.
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
