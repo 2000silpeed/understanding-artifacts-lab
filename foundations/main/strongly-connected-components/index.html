@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>강한 연결 요소 · 따라 해 보는 연습</title><link rel="icon" href="data:,">
+<style>
+@font-face{font-family:LabKorean;src:url('assets/noto-kr.woff2') format('woff2');font-display:swap}body,button,select{font-family:LabKorean,system-ui,sans-serif!important}select{min-height:44px;padding:6px;border:1px solid #9db3d4;border-radius:8px}
+:root{--ink:#172033;--muted:#5d6b80;--paper:#f7f9fc;--card:#fff;--line:#dbe3ee;--blue:#2563eb;--blue-soft:#e8f0ff;--green:#087f5b;--green-soft:#e6f7f0;--red:#b42318;--red-soft:#fff0ee;--gold:#9a6700;--shadow:0 12px 30px #1c355711}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.55}button,a{font:inherit}button{cursor:pointer}.wrap{max-width:1080px;margin:auto;padding:24px 18px 60px}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.05em;font-size:.82rem}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:stretch;margin-bottom:20px}.hero-copy,.goal,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.hero-copy{padding:26px}.hero h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:8px 0 14px;letter-spacing:-.06em}.hero p{margin:0;color:var(--muted);font-size:1.06rem}.goal{padding:22px;background:linear-gradient(135deg,#15233d,#244c91);color:#fff;border-color:#244c91}.goal h2{margin:0 0 8px;font-size:1.15rem}.goal p{margin:0 0 16px;color:#e4edff}.first-action{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#14264a;padding:10px 14px;border-radius:10px;font-weight:800}.layout{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);gap:20px;align-items:start}.card{padding:20px}.card h2,.card h3{margin:0 0 10px;line-height:1.2}.visual{position:sticky;top:16px}.graph-box{background:#f5f8ff;border:1px solid #d6e2fb;border-radius:14px;padding:10px;margin:12px 0 14px}.graph-box svg{display:block;width:100%;height:auto;min-height:240px}.graph-box .edge{fill:none;stroke:#9db3d4;stroke-width:2;marker-end:url(#arrow)}.graph-box .node{fill:#fff;stroke:#54719d;stroke-width:2}.graph-box .node.active{fill:#dbeafe;stroke:#2563eb;stroke-width:3}.graph-box .node.answer{fill:#d1fae5;stroke:#087f5b}.graph-box text{font-size:13px;font-weight:800;fill:#172033;text-anchor:middle;dominant-baseline:middle}.legend{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.83rem}.dot{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:-1px;margin-right:4px;border:1px solid #54719d}.dot.blue{background:#dbeafe}.dot.green{background:#d1fae5;border-color:#087f5b}.progress-line{height:9px;background:#e8edf5;border-radius:999px;overflow:hidden;margin:8px 0 16px}.progress-line span{display:block;height:100%;width:25%;background:var(--blue);transition:width .2s}.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.88rem}.question{font-size:1.22rem;font-weight:800;margin:14px 0}.choices{display:grid;gap:10px}.choice{width:100%;text-align:left;padding:13px 14px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);transition:.15s}.choice:hover,.choice:focus-visible{border-color:var(--blue);background:var(--blue-soft)}.choice[aria-pressed=true]{border-color:var(--blue);background:var(--blue-soft)}.choice:disabled{cursor:default;opacity:1}.choice.correct{border-color:var(--green);background:var(--green-soft)}.choice.wrong{border-color:var(--red);background:var(--red-soft)}.choice .tag{display:block;font-size:.78rem;color:var(--muted);font-weight:600;margin-top:2px}.feedback{margin-top:15px;border-left:4px solid var(--blue);background:#f5f8ff;border-radius:0 10px 10px 0;padding:13px 14px}.feedback.good{border-left-color:var(--green);background:var(--green-soft)}.feedback.bad{border-left-color:var(--red);background:var(--red-soft)}.feedback strong{display:block;margin-bottom:3px}.sr-status{min-height:1.5em;color:var(--muted);font-size:.9rem}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.actions button,.download{border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:#fff;color:var(--ink);font-weight:750}.actions .primary{background:var(--blue);border-color:var(--blue);color:#fff}.actions button:disabled{opacity:.45;cursor:not-allowed}.actions button:focus-visible,.download:focus-visible{outline:3px solid #f6b73c;outline-offset:2px}.notes{margin-top:20px}.notes summary{cursor:pointer;font-weight:800;padding:4px 0}.notes p{color:var(--muted);margin:8px 0}.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px}.fact{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fbfcfe}.fact b{display:block;font-size:1.2rem}.fact small{color:var(--muted)}.downloads{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.download{display:inline-block;text-decoration:none}.finish{padding:18px;border-radius:14px;background:linear-gradient(135deg,#edfdf6,#f3f8ff);border:1px solid #cde9dd}.finish h3{margin:0 0 6px}.tiny{font-size:.82rem;color:var(--muted)}.boundary{font-size:.84rem;color:#6f4d00;background:#fff8e6;border:1px solid #f1d796;border-radius:10px;padding:10px;margin-top:13px}
+@media(max-width:760px){.wrap{padding:14px 12px 40px}.hero,.layout{grid-template-columns:1fr}.hero-copy{padding:21px}.hero h1{font-size:2.35rem}.goal{padding:18px}.layout{display:flex;flex-direction:column}.visual{display:contents;position:static}.graph-panel{order:0}.practice{order:1}.visual>.boundary,.visual>.notes,.visual>h3,.visual>p.tiny:not(#visualNote),.visual>label,.visual>#reachability,.visual>.downloads{order:2}.card{padding:16px}.graph-box svg{min-height:220px}.facts{grid-template-columns:repeat(2,1fr)}.actions button,.download{flex:1 1 auto;min-height:44px}.question{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+  <section class="hero-copy" aria-labelledby="title"><div class="eyebrow">알고리즘 · 짧은 복습</div><h1 id="title">강한 연결 요소</h1><p>방향 그래프에서 <strong>서로 오갈 수 있는 정점</strong>을 한 묶음으로 찾는 연습입니다.</p><div class="facts" aria-label="원본 예제 요약"><div class="fact"><b>8</b><small>정점</small></div><div class="fact"><b>11</b><small>간선</small></div><div class="fact"><b>4</b><small>묶음</small></div><div class="fact"><b>O(V+E)</b><small>두 DFS</small></div></div></section>
+  <aside class="goal" aria-label="오늘의 목표"><h2>오늘 할 일</h2><p>문제를 하나씩 고르고, 답을 확인하면서 “왜 같은 묶음인가?”를 말할 수 있게 됩니다.</p><div class="first-action">아래 첫 문제에서 선택하세요 ↓</div></aside>
+</header>
+<section class="layout">
+  <section class="card practice" aria-labelledby="practice-title">
+    <div class="meta"><span id="progressLabel">문제 1 / 4</span><span id="phaseLabel">선택 전</span></div>
+    <div class="progress-line" aria-label="진행률"><span id="progressBar"></span></div>
+    <h2 id="practice-title">선택 → 이유 확인 → 다음 문제</h2>
+    <p class="tiny">답을 고르기 전에는 정답을 숨깁니다. 틀려도 괜찮아요. 같은 화면에서 기준과 이유를 확인할 수 있습니다.</p>
+    <div id="question" class="question"></div>
+    <div id="choices" class="choices" role="group" aria-label="답 선택"></div>
+    <div id="feedback" class="feedback" hidden aria-live="polite"></div>
+    <div id="srStatus" class="sr-status" aria-live="polite"></div>
+    <div class="actions">
+      <button id="backBtn" type="button">← 이전</button>
+      <button id="retryBtn" type="button">↻ 이 문제 다시</button>
+      <button id="resetBtn" type="button">처음부터</button>
+      <button id="nextBtn" class="primary" type="button" disabled>다음 문제 →</button>
+      <button id="finishBtn" class="primary" type="button" disabled>완주하기</button>
+    </div>
+    <div id="finish" class="finish" hidden role="status"><h3>연습을 마쳤습니다.</h3><p>강한 연결 요소의 기준은 “A에서 B로도, B에서 A로도 갈 수 있는가?”입니다. 원본 그래프의 결과와 Python/C++ 실행 결과를 아래에서 다시 확인해 보세요.</p><button id="restartBtn" type="button" class="actions">다시 연습하기</button></div>
+  </section>
+  <aside class="card visual" aria-labelledby="visual-title">
+    <div class="graph-panel">
+      <h2 id="visual-title">지금 보고 있는 그래프</h2>
+      <p id="visualNote" class="tiny">예시 서비스 호출 그래프입니다. 파란 점은 현재 질문과 연결된 묶음입니다.</p>
+      <div class="graph-box">
+        <svg viewBox="0 0 500 290" role="img" aria-labelledby="graphTitle graphDesc"><title id="graphTitle">서비스 호출 방향 그래프</title><desc id="graphDesc">주문, 결제, 포인트가 순환하고 회원과 인증도 서로 연결된 8정점 11간선 예시입니다.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9db3d4"/></marker></defs>
+        <g id="graphEdges"></g><g id="graphNodes"></g>
+        </svg>
+      </div>
+      <div class="legend"><span><i class="dot blue"></i>현재 묶음</span><span><i class="dot green"></i>정답과 연결</span><span>→ 호출 방향</span></div>
+    </div>
+    <div class="boundary"><strong>원본과의 약속:</strong> 묶음 ID는 구현의 발견 순서라서 다른 알고리즘이나 실행 순서에서는 달라질 수 있습니다. 이 페이지는 이름과 분할을 기준으로 설명합니다.</div>
+    <details class="notes"><summary>용어를 한 번 더 보기</summary><p><strong>강한 연결 요소</strong>는 두 정점 사이를 양쪽 방향으로 오갈 수 있는 최대 묶음입니다. 묶음을 점 하나로 줄이면 사이클이 없는 응축 그래프가 됩니다.</p><p><strong>Kosaraju</strong>는 원래 그래프에서 끝난 순서를 기록하고, 간선을 뒤집은 그래프에서 그 역순으로 DFS를 한 번 더 합니다. 두 번의 DFS와 간선 뒤집기는 O(V+E)입니다.</p></details>
+    <h3>서로 오갈 수 있을까요?</h3>
+    <p class="tiny">출발·도착 서비스를 바꾸면 실제 간선을 따라 양방향 경로를 다시 찾습니다.</p>
+    <label>출발 <select id="fromNode"></select></label> <label>도착 <select id="toNode"></select></label>
+    <p id="reachability" role="status" aria-live="polite"></p>
+    <div class="downloads" aria-label="원본 및 코드 다운로드"><a class="download" href="downloads/scc-code.zip" download>코드·입력 ZIP 다운로드</a><a class="download" href="lesson.html">수업 노트 읽기</a><a class="download" href="source/scenario.md" download>수업 원문 받기</a><a class="download" href="source/examples/output/services.json" download>실행 결과 JSON</a></div>
+  </aside>
+</section>
+<footer class="tiny" style="margin-top:22px">서비스 이름과 호출 관계는 설명을 위한 고정 예제입니다. 같은 묶음을 찾는 기준을 익힌 뒤, 코드를 내려받아 간선을 바꿔 보세요. 예제 그래프의 결과를 실제 서비스의 배포 권고로 해석하지 마세요.</footer>
+</main>
+<script>
+(function(){
+'use strict';
+const groups={1:['검색','추천'],2:['주문','포인트','결제'],3:['알림'],4:['회원','인증']};
+// Same 11 directed edges as the downloaded canonical fixture; endpoints are computed from actual node geometry.
+const edges=[['주문','결제'],['주문','회원'],['결제','포인트'],['결제','알림'],['포인트','주문'],['회원','인증'],['인증','회원'],['알림','회원'],['검색','추천'],['추천','검색'],['추천','주문']];
+const positions={'검색':[60,45],'추천':[200,45],'주문':[60,145],'결제':[200,145],'포인트':[135,245],'알림':[335,145],'회원':[440,215],'인증':[440,55]};
+const svgNS='http://www.w3.org/2000/svg';
+for(const [from,to] of edges){const a=positions[from],b=positions[to],dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy),ux=dx/len,uy=dy/len,reverse=edges.some(e=>e[0]===to&&e[1]===from),bend=reverse?17:0;const p=document.createElementNS(svgNS,'path');p.setAttribute('class','edge');p.dataset.from=from;p.dataset.to=to;p.setAttribute('d',`M${a[0]+ux*28} ${a[1]+uy*28} Q${(a[0]+b[0])/2-uy*bend} ${(a[1]+b[1])/2+ux*bend} ${b[0]-ux*34} ${b[1]-uy*34}`);document.getElementById('graphEdges').appendChild(p);}
+for(const [name,[x,y]] of Object.entries(positions)){const g=document.createElementNS(svgNS,'g');g.dataset.node=name;const c=document.createElementNS(svgNS,'circle');c.setAttribute('class','node');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',26);const t=document.createElementNS(svgNS,'text');t.setAttribute('x',x);t.setAttribute('y',y);t.textContent=name;g.append(c,t);document.getElementById('graphNodes').appendChild(g);}
+const questions=[
+ {q:'강한 연결 요소를 가르는 기준은 무엇일까요?', choices:[['한 방향으로만 갈 수 있으면 같은 묶음','화살표가 하나라도 있으면 함께 묶습니다.'],['A에서 B로도, B에서 A로도 갈 수 있으면 같은 묶음','양쪽 방향 도달 가능성이 기준입니다.'],['정점 이름이 비슷하면 같은 묶음','이름이나 위치는 기준이 아닙니다.']], answer:1, why:'서로 도달 가능해야 합니다. 한쪽으로만 갈 수 있는 알림 → 회원은 같은 묶음이 아닙니다.', nodes:['회원','인증']},
+ {q:'원본 그래프에서 1단계 DFS가 기록하는 것은 무엇인가요?', choices:[['정점을 발견한 순서','처음 만난 순서만으로는 2단계의 출발 순서를 정할 수 없습니다.'],['정점이 끝난 순서','더 갈 곳이 없어 되돌아오는 순간을 기록합니다.'],['배포 순서','배포 순서는 묶음을 찾은 뒤 응축 그래프를 거꾸로 읽어 얻습니다.']], answer:1, why:'끝난 순서는 DFS가 더 갈 곳이 없어 되돌아갈 때의 순서입니다. 이 순서를 2단계에서 역순으로 사용합니다.', nodes:['포인트','검색']},
+ {q:'서비스 예제에서 주문·결제·포인트가 속한 묶음은 무엇인가요?', choices:[['묶음 1: 검색·추천','검색·추천은 서로 오가는 별도 묶음입니다.'],['묶음 2: 주문·포인트·결제','세 서비스 사이를 따라 양쪽으로 돌아올 수 있습니다.'],['묶음 4: 회원·인증','회원·인증도 별도 순환 묶음입니다.']], answer:1, why:'고정 예제의 묶음 2는 {주문, 포인트, 결제}입니다. 실제 ID는 발견 순서에 의존할 수 있으므로 이름과 분할을 함께 보세요.', nodes:['주문','결제','포인트']},
+ {q:'응축 그래프의 간선이 “호출받는 쪽 먼저” 배포 순서를 요구한다면?', choices:[['1 → 2 → 3 → 4','이것은 호출하는 쪽부터의 위상 순서입니다.'],['4 → 3 → 2 → 1','원본 대본과 실행 결과가 제시한 역순 배포입니다.'],['정해진 순서가 없다','응축 그래프는 사이클이 없어서 순서를 정할 수 있습니다.']], answer:1, why:'호출하는 쪽 먼저의 위상 순서는 1, 2, 3, 4이고, 호출받는 쪽 먼저라면 4, 3, 2, 1로 거꾸로 읽습니다.', nodes:['회원','인증','알림','주문','결제','포인트','검색','추천']}
+];
+let current=0, answered=false, selected=-1, finished=false;
+const $=id=>document.getElementById(id);
+function componentForNodes(nodes){for(const [id,ns] of Object.entries(groups)) if(nodes.some(n=>ns.includes(n))) return ns; return [];}
+function renderGraph(){document.querySelectorAll('[data-node] .node').forEach(n=>{n.classList.remove('active','answer');const name=n.parentElement.dataset.node;if(answered&&componentForNodes(questions[current].nodes).includes(name))n.classList.add('active');if(answered&&questions[current].answer===1&&questions[current].nodes.includes(name))n.classList.add('answer')});}
+function render(){const item=questions[current];$('progressLabel').textContent=`문제 ${current+1} / ${questions.length}`;$('phaseLabel').textContent=answered?'결과 확인':'선택 전';$('progressBar').style.width=`${((current+(answered?1:0))/questions.length)*100}%`;$('question').textContent=item.q;const box=$('choices');box.innerHTML='';item.choices.forEach((choice,i)=>{const b=document.createElement('button');b.type='button';b.className='choice';b.setAttribute('aria-pressed',String(selected===i));b.dataset.choice=String(i);b.innerHTML=`${choice[0]}<span class="tag">${choice[1]}</span>`;b.addEventListener('click',()=>choose(i));if(answered){b.disabled=true;if(i===item.answer)b.classList.add('correct');if(i===selected&&i!==item.answer)b.classList.add('wrong')}box.appendChild(b)});const fb=$('feedback');if(answered){fb.hidden=false;fb.className='feedback '+(selected===item.answer?'good':'bad');fb.innerHTML=`<strong>${selected===item.answer?'정답이에요.':'아직 아니에요. 정답은 “'+item.choices[item.answer][0]+'”입니다.'}</strong><span>${item.why}</span>`}else{fb.hidden=true;fb.innerHTML=''}$('backBtn').disabled=current===0;$('retryBtn').disabled=!answered;$('resetBtn').disabled=finished;$('nextBtn').disabled=!answered||current===questions.length-1;$('finishBtn').disabled=!answered||current!==questions.length-1;$('finish').hidden=!finished;if(finished){$('backBtn').disabled=true;$('retryBtn').disabled=true;$('nextBtn').disabled=true;$('finishBtn').disabled=true}$('srStatus').textContent=answered?(selected===item.answer?'정답을 확인했습니다.':'선택한 답과 정답의 차이를 확인하세요.'):'답을 하나 골라 주세요.';renderGraph()}
+function choose(i){if(answered||finished)return;selected=i;answered=true;render();const f=$('feedback');f.setAttribute('tabindex','-1');f.focus()}
+$('backBtn').addEventListener('click',()=>{if(current>0){current--;answered=false;selected=-1;finished=false;render();$('question').focus?.()}});
+$('retryBtn').addEventListener('click',()=>{answered=false;selected=-1;finished=false;render();document.querySelector('.choice')?.focus()});
+$('resetBtn').addEventListener('click',()=>{current=0;answered=false;selected=-1;finished=false;render();document.querySelector('.choice')?.focus()});
+$('nextBtn').addEventListener('click',()=>{if(answered&&current<questions.length-1){current++;answered=false;selected=-1;render();document.querySelector('.choice')?.focus()}});
+$('finishBtn').addEventListener('click',()=>{if(answered&&current===questions.length-1){finished=true;render();$('finish').scrollIntoView({block:'nearest'});$('srStatus').textContent='모든 문제를 완료했습니다.'}});
+$('restartBtn').addEventListener('click',()=>{current=0;answered=false;selected=-1;finished=false;render();document.querySelector('.choice')?.focus()});
+function pathBetween(a,b){const queue=[[a]],seen=new Set([a]);for(let i=0;i<queue.length;i++){const p=queue[i],n=p[p.length-1];if(n===b)return p;for(const [u,v] of edges)if(u===n&&!seen.has(v)){seen.add(v);queue.push([...p,v]);}}return null;}
+function query(){const a=$('fromNode').value,b=$('toNode').value,ab=pathBetween(a,b),ba=pathBetween(b,a);$('reachability').textContent=`${a} → ${b}: ${ab?ab.join(' → '):'경로 없음'} / ${b} → ${a}: ${ba?ba.join(' → '):'경로 없음'}. ${ab&&ba?'서로 오갈 수 있어 같은 강한 연결 요소예요.':'한쪽이라도 돌아올 수 없으므로 다른 강한 연결 요소예요.'}`;}
+for(const id of ['fromNode','toNode']){for(const name of Object.keys(positions)){const o=document.createElement('option');o.value=name;o.textContent=name;$(id).appendChild(o);}$(id).addEventListener('change',query);}
+$('fromNode').value='주문';$('toNode').value='회원';query();
+window.SCCPractice={questions,groups,edges,positions,pathBetween,state:()=>({current,answered,selected,finished}),reset:()=>{$('resetBtn').click()},choose,finish:()=>$('finishBtn').click()};
+render();
+})();
+</script>
+</body>
+</html>
