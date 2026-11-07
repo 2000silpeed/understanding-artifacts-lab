@@ -1,0 +1,20 @@
+keys 7 nodes 7 (keys)
+step 1 insert 10 | path - | balanced | height 1
+step 2 insert 30 | path 10 | balanced | height 2
+step 3 insert 70 | path 10 30 | unbalanced 10 bf -2 | RR left(10) | height 2
+step 4 insert 60 | path 30 70 | balanced | height 3
+step 5 insert 40 | path 30 70 60 | unbalanced 70 bf +2 | LL right(70) | height 3
+step 6 insert 50 | path 30 60 40 | unbalanced 30 bf -2 | RL right(60) left(30) | height 3
+step 7 insert 20 | path 40 30 10 | unbalanced 30 bf +2 | LR left(10) right(30) | height 3
+preorder 40 20 10 30 60 50 70
+inorder 10 20 30 40 50 60 70
+avl height 3 | max for 7 nodes 4
+rotations LL 1 RR 1 LR 1 RL 1
+avl levels 1 2 4
+plain height 6
+search 50 found | visits avl 3 plain 6 | path 40 60 50
+search 35 missing | visits avl 3 plain 5 | path 40 20 30
+average visits over 7 keys | avl 2.43 | plain 3.43
+check inorder sorted: yes
+check avl heights and balance: yes
+check height <= max height: yes

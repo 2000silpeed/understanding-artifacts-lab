@@ -1,0 +1,13 @@
+keys 3000 nodes 2268 (gen random 3000 seed 20261107 max 5000)
+avl height 14 | max for 2268 nodes 15
+rotations LL 266 RR 259 LR 258 RL 264
+avl levels 1 2 4 8 16 32 64 128 255 485 677 487 108 1
+plain height 26
+search 1 missing | visits avl 12 plain 12 | path 3046 1238 729 315 201 72 34 19 10 7 6 4
+search 2500 found | visits avl 10 plain 13 | path 3046 1238 2130 2551 2346 2442 2505 2479 2494 2500
+search 4242 missing | visits avl 10 plain 16 | path 3046 4168 4611 4379 4250 4212 4222 4239 4240 4241
+search 5000 missing | visits avl 10 plain 9 | path 3046 4168 4611 4754 4903 4947 4981 4991 4998 4999
+average visits over 2268 keys | avl 10.43 | plain 12.73
+check inorder sorted: yes
+check avl heights and balance: yes
+check height <= max height: yes

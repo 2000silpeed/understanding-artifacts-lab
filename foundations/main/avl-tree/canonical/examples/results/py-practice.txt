@@ -1,0 +1,20 @@
+keys 7 nodes 6 (keys)
+step 1 insert 55 | path - | balanced | height 1
+step 2 insert 35 | path 55 | balanced | height 2
+step 3 insert 65 | path 55 | balanced | height 2
+step 4 insert 25 | path 55 35 | balanced | height 3
+step 5 insert 15 | path 55 35 25 | unbalanced 35 bf +2 | LL right(35) | height 3
+step 6 insert 45 | path 55 25 35 | unbalanced 55 bf +2 | LR left(25) right(55) | height 3
+step 7 insert 25 | path 35 25 | already in tree | height 3
+preorder 35 25 15 55 45 65
+inorder 15 25 35 45 55 65
+avl height 3 | max for 6 nodes 3
+rotations LL 1 RR 0 LR 1 RL 0
+avl levels 1 2 3
+plain height 4
+search 45 found | visits avl 3 plain 3 | path 35 55 45
+search 50 missing | visits avl 3 plain 3 | path 35 55 45
+average visits over 6 keys | avl 2.33 | plain 2.50
+check inorder sorted: yes
+check avl heights and balance: yes
+check height <= max height: yes

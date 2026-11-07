@@ -1,0 +1,12 @@
+keys 10000 nodes 10000 (gen sequential 10000 first 1)
+avl height 14 | max for 10000 nodes 18
+rotations LL 0 RR 9986 LR 0 RL 0
+avl levels 1 2 4 8 16 32 64 128 256 512 1024 2048 4096 1809
+plain height 10000
+search 10000 found | visits avl 14 plain 10000 | path 4096 6144 8192 9216 9728 9856 9920 9952 9984 9992 9996 9998 9999 10000
+search 1 found | visits avl 13 plain 1 | path 4096 2048 1024 512 256 128 64 32 16 8 4 2 1
+search 5000 found | visits avl 10 plain 5000 | path 4096 6144 5120 4608 4864 4992 5056 5024 5008 5000
+average visits over 10000 keys | avl 12.36 | plain 5000.50
+check inorder sorted: yes
+check avl heights and balance: yes
+check height <= max height: yes
