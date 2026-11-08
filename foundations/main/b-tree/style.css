@@ -1,0 +1,123 @@
+@font-face {
+  font-family: "Noto KR Local";
+  src: url("noto-kr.woff2") format("woff2");
+  font-display: swap;
+}
+:root {
+  --ink: #172235;
+  --muted: #5c687a;
+  --line: #dfe5ed;
+  --paper: #ffffff;
+  --wash: #f5f8fc;
+  --blue: #185adb;
+  --blue-dark: #0d3f9e;
+  --blue-soft: #eaf1ff;
+  --mint: #e9f8f3;
+  --mint-ink: #0a7155;
+  --amber: #fff6df;
+  --amber-ink: #9b6300;
+  --danger: #a33a46;
+  font-family: "Noto KR Local", "Noto Sans KR", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--wash);
+}
+* { box-sizing: border-box; }
+html { overflow-x: hidden; }
+body { margin: 0; min-width: 0; overflow-x: hidden; background: var(--wash); line-height: 1.65; }
+button, a { font: inherit; }
+a { color: var(--blue-dark); }
+.site-header, main, footer { width: min(100% - 32px, 1100px); margin-inline: auto; }
+.site-header { padding: 54px 0 28px; }
+.eyebrow, .section-kicker { color: var(--blue); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { max-width: 760px; margin-bottom: 12px; font-size: clamp(2rem, 5vw, 3.65rem); line-height: 1.15; letter-spacing: -.04em; }
+h2 { margin-bottom: 8px; font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.3; }
+h3 { margin-bottom: 5px; font-size: clamp(1.05rem, 2.5vw, 1.35rem); }
+.lede { max-width: 720px; color: var(--muted); font-size: 1.08rem; }
+.header-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
+.text-link, .download-link { font-weight: 750; text-decoration: none; }
+.download-link { padding: 9px 15px; border-radius: 999px; color: #fff; background: var(--blue); }
+main { display: grid; gap: 18px; padding-bottom: 34px; }
+.goal-card, .practice-card, .search-card, .source-card { min-width: 0; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: 0 12px 30px rgba(29, 58, 100, .06); }
+.goal-card { display: flex; justify-content: space-between; gap: 24px; padding: 24px 26px; background: linear-gradient(135deg, #fff, #edf4ff); }
+.goal-card p, .source-card p, .search-card > p { color: var(--muted); }
+.goal-step { flex: 0 0 auto; align-self: flex-start; padding: 8px 13px; border: 1px solid #cbdcff; border-radius: 12px; color: var(--blue-dark); background: #f5f8ff; font-weight: 800; white-space: nowrap; }
+.goal-step .muted { color: var(--muted); font-weight: 600; }
+.practice-card { padding: 26px; }
+.practice-meta, .question-row, .source-card, .controls, footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.fixture-pill, .key-token { border-radius: 14px; color: var(--blue-dark); background: var(--blue-soft); }
+.fixture-pill { padding: 7px 12px; font-size: .86rem; font-weight: 700; white-space: nowrap; }
+.sequence { margin: 22px 0 18px; padding: 13px 15px; border-radius: 12px; background: #f8fafc; }
+.sequence-label, .panel-label { display: block; margin-bottom: 8px; color: var(--muted); font-size: .83rem; font-weight: 800; }
+.sequence-keys { display: flex; flex-wrap: wrap; gap: 7px; }
+.sequence-keys span { min-width: 33px; padding: 3px 8px; border: 1px solid #dbe2eb; border-radius: 8px; text-align: center; background: #fff; font-weight: 750; }
+.sequence-keys span.active { border-color: var(--blue); color: #fff; background: var(--blue); }
+.sequence-keys span.done { color: var(--muted); background: #eef2f6; }
+.tree-panel { min-width: 0; padding: 18px; border: 1px solid #d9e3f0; border-radius: 15px; background: #fbfdff; }
+.state-label { display: inline-block; margin-left: 8px; padding: 2px 7px; border-radius: 999px; color: var(--blue-dark); background: var(--blue-soft); font-size: .75rem; }
+.tree-view { min-height: 145px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 12px 4px; }
+.tree-level { display: flex; justify-content: center; gap: 18px; min-width: 0; }
+.tree-node-wrap { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.tree-node { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; min-width: 54px; max-width: 100%; padding: 7px 9px; border: 2px solid #75a1ed; border-radius: 10px; color: var(--blue-dark); background: #edf4ff; font-weight: 800; }
+.tree-node span { padding-inline: 3px; }
+.tree-node span + span { border-left: 1px solid #a8c3f4; }
+.tree-children { display: flex; justify-content: center; gap: 14px; width: 100%; padding-top: 28px; position: relative; }
+.tree-children::before { content: ""; position: absolute; top: 11px; left: 50%; width: 1px; height: 17px; background: #a9b8cc; }
+.tree-child { position: relative; min-width: 0; }
+.tree-child::before { content: ""; position: absolute; top: -17px; left: 50%; width: 1px; height: 17px; background: #a9b8cc; }
+.question-row { margin-top: 20px; align-items: flex-start; }
+.hint { margin-bottom: 0; color: var(--muted); font-size: .92rem; }
+.key-token { min-width: 86px; padding: 9px 13px; text-align: center; }
+.key-token span { display: block; color: var(--muted); font-size: .74rem; }
+.key-token strong { display: block; font-size: 1.65rem; line-height: 1.2; }
+.choices { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 20px 0 14px; padding: 0; border: 0; }
+.choices legend { margin-bottom: 9px; color: var(--muted); font-size: .85rem; font-weight: 800; }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; }
+.choice label { display: block; height: 100%; padding: 12px 10px; border: 1px solid var(--line); border-radius: 12px; text-align: center; background: #fff; cursor: pointer; font-weight: 750; }
+.choice input:focus-visible + label { outline: 3px solid #a8c3f4; outline-offset: 2px; }
+.choice input:checked + label { border-color: var(--blue); color: var(--blue-dark); background: var(--blue-soft); }
+.feedback { min-height: 45px; padding: 10px 13px; border-radius: 12px; color: var(--muted); background: #f8fafc; }
+.feedback.correct { color: var(--mint-ink); background: var(--mint); }
+.feedback.wrong { color: var(--danger); background: #fff0f1; }
+.controls { justify-content: flex-end; flex-wrap: wrap; margin-top: 16px; }
+button { min-height: 42px; padding: 8px 14px; border: 1px solid transparent; border-radius: 10px; cursor: pointer; font-weight: 800; }
+button:disabled { cursor: not-allowed; opacity: .45; }
+button.primary { color: #fff; background: var(--blue); }
+button.primary:hover:not(:disabled) { background: var(--blue-dark); }
+button.secondary { border-color: var(--line); color: var(--ink); background: #fff; }
+.completion { margin: 18px 0 0; padding: 12px 14px; border-radius: 12px; color: var(--mint-ink); background: var(--mint); font-weight: 750; }
+.search-card, .source-card { padding: 24px 26px; }
+.search-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.search-item { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: #fbfdff; }
+.search-item h3 { margin-bottom: 9px; }
+.search-item p { margin-bottom: 5px; color: var(--muted); font-size: .9rem; }
+.search-item strong { color: var(--ink); }
+.source-card { align-items: flex-end; }
+.source-card p { margin-bottom: 0; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+code { padding: 2px 5px; border-radius: 5px; background: #eef2f6; font-size: .88em; }
+footer { padding: 20px 0 42px; color: var(--muted); font-size: .85rem; }
+footer a { font-weight: 750; }
+[hidden] { display: none !important; }
+@media (max-width: 700px) {
+  .site-header, main, footer { width: min(100% - 22px, 1100px); }
+  .site-header { padding-top: 32px; }
+  .goal-card, .practice-card, .search-card, .source-card { border-radius: 15px; }
+  .goal-card, .practice-card, .search-card, .source-card { padding: 18px; }
+  .goal-card, .practice-meta, .question-row, .source-card { display: block; }
+  .goal-step { display: inline-block; margin-top: 10px; }
+  .fixture-pill { display: inline-block; margin-top: 8px; }
+  .tree-panel { padding: 12px 7px; }
+  .tree-level { gap: 7px; }
+  .tree-children { gap: 5px; padding-top: 25px; }
+  .tree-node { min-width: 44px; padding: 5px 5px; font-size: .84rem; }
+  .question-row { margin-top: 16px; }
+  .key-token { display: inline-block; margin-top: 12px; }
+  .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .controls { justify-content: stretch; }
+  .controls button { flex: 1 1 42%; }
+  .search-results { grid-template-columns: 1fr; }
+  .source-card .text-link { display: inline-block; margin-top: 14px; }
+  footer { align-items: flex-start; }
+}

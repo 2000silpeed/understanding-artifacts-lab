@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B 트리 실습 — 여러 키를 한 노드에 담기</title>
+  <meta name="description" content="캐노니컬 B 트리 삽입 trace를 따라가며 분할과 승격을 예측하는 로컬 실습입니다.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="eyebrow">AI 기본기 · 로컬 학습 동반자</div>
+    <h1>B 트리: 넘치면 가운데 키를 올려요</h1>
+    <p class="lede">한 노드에 여러 키를 정렬해 담고, 가득 차면 가운데 키를 부모로 올려 노드를 나눕니다.</p>
+    <div class="header-actions">
+      <a class="text-link" href="lesson.html">수업 노트 읽기</a>
+      <a class="download-link" href="btree-learner.zip" download>학습 자료 ZIP 다운로드</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="goal-card" aria-labelledby="goal-title">
+      <div>
+        <span class="section-kicker">오늘의 목표</span>
+        <h2 id="goal-title">삽입 순서를 따라가며 분할을 예측해 보세요</h2>
+        <p>먼저 현재 트리와 들어올 키를 보고 선택하세요. 선택 후 <strong>정답 확인</strong>을 누르면 실제 캐노니컬 trace와 비교해 이유를 보여 줍니다.</p>
+      </div>
+      <div class="goal-step" aria-label="진행 상황"><span id="stepNumber">1</span><span class="muted">/ 9 단계</span></div>
+    </section>
+
+    <section class="practice-card" aria-labelledby="practice-title">
+      <div class="practice-meta">
+        <div>
+          <span class="section-kicker">삽입 trace</span>
+          <h2 id="practice-title">현재 트리에서 다음 키를 넣습니다</h2>
+        </div>
+        <div class="fixture-pill">차수 5 · 노드당 최대 4개</div>
+      </div>
+      <div class="sequence" aria-label="원래 삽입 순서">
+        <span class="sequence-label">원래 삽입 순서</span>
+        <div id="sequenceKeys" class="sequence-keys"></div>
+      </div>
+      <div class="tree-panel">
+        <div class="panel-label">현재 트리 <span id="treeStateLabel" class="state-label">시작</span></div>
+        <div id="treeView" class="tree-view" aria-live="polite"></div>
+      </div>
+      <div class="question-row">
+        <div>
+          <span class="section-kicker">다음 행동</span>
+          <h3><span id="currentKey">30</span>을 넣으면 어떻게 될까요?</h3>
+          <p id="questionHint" class="hint">키가 잎에 자리 잡는지, 넘치면 어떤 키가 올라가는지 골라 보세요.</p>
+        </div>
+        <div class="key-token" aria-label="이번에 삽입할 키"><span>삽입할 키</span><strong id="keyToken">30</strong></div>
+      </div>
+      <fieldset id="choices" class="choices">
+        <legend>예측 선택지</legend>
+      </fieldset>
+      <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+      <div class="controls">
+        <button id="previousButton" type="button" class="secondary">이전</button>
+        <button id="resetButton" type="button" class="secondary">처음으로</button>
+        <button id="revealButton" type="button" class="primary">정답 확인</button>
+        <button id="nextButton" type="button" class="primary" disabled>다음 단계</button>
+      </div>
+      <p id="completion" class="completion" hidden>모든 삽입 단계를 마쳤습니다. 최종 트리의 탐색 trace도 아래에서 확인해 보세요.</p>
+    </section>
+
+    <section class="search-card" aria-labelledby="search-title">
+      <div class="section-kicker">탐색 trace</div>
+      <h2 id="search-title">완성된 트리에서 찾아보기</h2>
+      <p>수업의 두 검색 예시입니다. 노드 안에서 비교한 순서와 내려간 경로를 그대로 확인합니다.</p>
+      <div id="searchResults" class="search-results"></div>
+    </section>
+
+    <section class="source-card" aria-labelledby="source-title">
+      <div>
+        <div class="section-kicker">원본과 실행</div>
+        <h2 id="source-title">캐노니컬 자료를 함께 보존했습니다</h2>
+        <p>트리 상태, 삽입 순서, 탐색 경로는 authored <code>data/film-data.json</code>에서 읽었습니다. Python·C++ 예제와 실습 checker는 다운로드 ZIP에서 그대로 실행할 수 있습니다.</p>
+      </div>
+      <a class="text-link" href="lesson.html">읽기 문서로 이동 →</a>
+    </section>
+  </main>
+
+  <footer><span>B-tree companion · local-only staged artifact</span><a href="btree-learner.zip" download>소스 ZIP</a></footer>
+  <script src="app.js"></script>
+</body>
+</html>
