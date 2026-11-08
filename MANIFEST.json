@@ -3,8 +3,8 @@
   "files": [
     {
       "path": ".github/workflows/artifact-quality.yml",
-      "bytes": 1956,
-      "sha256": "c01ea0b447b1e932b61d0f58992eb92ace62c72da2c40ad003b16a6231ed7277"
+      "bytes": 2072,
+      "sha256": "60026a085e359c6c2223ca58b4df85442db4ed30fd33125a343d8f09db3d53c5"
     },
     {
       "path": ".gitignore",
