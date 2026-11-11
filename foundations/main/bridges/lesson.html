@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>수업 노트 | 단절선</title>
+  <style>
+    @font-face{font-family:PretendardLocal;src:url('./Pretendard.woff2') format('woff2');font-display:swap}
+    :root{--ink:#18283a;--muted:#5f7284;--paper:#f5f8fb;--panel:#fff;--line:#d4e0e9;--blue:#0d426f;--teal:#087f86}*{box-sizing:border-box}html{background:var(--paper);color:var(--ink);font-family:PretendardLocal,system-ui,sans-serif;line-height:1.72;overflow-x:hidden}body{margin:0;overflow-x:hidden}.wrap{width:min(900px,calc(100% - 2rem));margin:0 auto}header{padding:2.3rem 0 1.3rem;background:linear-gradient(135deg,#e7f2fb,#f7fbfd)}main{padding:1.4rem 0 3rem}h1{line-height:1.2;font-size:clamp(1.9rem,4vw,3rem);margin:.2rem 0 .7rem}h2{color:var(--blue);margin:2rem 0 .5rem;line-height:1.3}h3{margin:1.2rem 0 .3rem;color:#17627e}p{margin:.6rem 0}a{color:var(--blue);font-weight:800}.eyebrow{color:var(--teal);font-weight:800;letter-spacing:.04em;margin:0}.lead{font-size:1.08rem}.note{border-left:4px solid #c78618;background:#fff8e9;padding:.7rem 1rem;border-radius:.2rem;margin:1rem 0}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}pre{background:#172635;color:#e7f1f6;border-radius:.7rem;padding:1rem;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;display:block;overflow-x:auto}th,td{text-align:left;vertical-align:top;padding:.55rem .6rem;border-bottom:1px solid var(--line);min-width:8rem}th{background:#edf5f9;color:var(--blue)}ul{padding-left:1.4rem}li{margin:.3rem 0}.back{display:inline-block;margin-top:.5rem}.source-label{color:var(--muted);font-size:.92rem}.footer{border-top:1px solid var(--line);color:var(--muted);padding:1rem 0 2rem;font-size:.9rem}
+  </style>
+</head>
+<body>
+<header><div class="wrap"><p class="eyebrow">AI 기본기 · 알고리즘 실습 노트</p><h1>단절선: 간선을 끊으면 연결이 나뉘는 곳 찾기</h1><p class="lead">이 문서는 승인된 <code>scenario.md</code>와 실행 fixture를 학습자가 읽기 쉬운 문서 흐름으로 옮긴 보조 노트입니다. 계산과 예제 입력은 원본을 바꾸지 않았습니다.</p><a class="back" href="index.html">← 실습으로 돌아가기</a></div></header>
+<main class="wrap">
+  <h2>1. 핵심 개념</h2>
+  <p><strong>단절선(bridge)</strong>은 지웠을 때 연결 요소의 수가 늘어나는 간선입니다. 사이클 위의 간선은 다른 길로 돌아갈 수 있으므로 단절선이 아닙니다.</p>
+  <p>빠른 방법은 깊이 우선 탐색(DFS)을 한 번 하면서 각 정점에 방문 번호 <code>tin</code>과 <code>low</code>를 적는 것입니다. 트리 간선 <code>u → v</code>에 대해 <code>low[v] &gt; tin[u]</code>이면 v 아래에서 u 또는 그 위로 돌아갈 길이 없으므로 그 간선이 단절선입니다. 시간은 <code>O(V+E)</code>입니다.</p>
+  <div class="note"><strong>다중 간선 주의:</strong> 부모 정점으로 가는 간선을 모두 건너뛰면 안 됩니다. 정점이 아니라 들어온 <em>간선 번호 하나</em>만 건너뛰어야 기숙사–식당의 두 케이블을 올바르게 처리합니다.</div>
+
+  <h2>2. 캠퍼스 네트워크 예제</h2>
+  <p>캠퍼스에는 건물 9개와 무방향 케이블 11가닥이 있습니다. 기숙사와 식당 사이만 케이블이 두 가닥입니다. DFS는 본관에서 시작하고, 인접 목록은 fixture의 간선 줄 순서를 따릅니다.</p>
+  <table><thead><tr><th>끊기는 케이블</th><th>갈라지는 크기</th><th>판정 이유</th></tr></thead><tbody>
+    <tr><td>연구동–서버실</td><td>8 | 1</td><td><code>4 &gt; 3</code>, 단절선</td></tr>
+    <tr><td>창고–기숙사</td><td>7 | 2</td><td><code>8 &gt; 6</code>, 단절선</td></tr>
+    <tr><td>본관–공장</td><td>4 | 5</td><td><code>5 &gt; 1</code>, 단절선</td></tr>
+  </tbody></table>
+  <p>단절선 세 개를 지우면 네 덩어리가 됩니다. 반면 기숙사–식당은 두 가닥 중 한 가닥이 남아 연결됩니다.</p>
+
+  <h2>3. DFS 방문 순서와 low</h2>
+  <p>실행 fixture에서 방문 번호는 다음과 같습니다. <code>low</code>는 아래 서브트리에서 역방향 간선을 한 번 타고 올라갈 수 있는 가장 이른 번호입니다.</p>
+  <table><thead><tr><th>정점</th><th>tin</th><th>low</th></tr></thead><tbody>
+    <tr><td>본관</td><td>1</td><td>1</td></tr><tr><td>별관</td><td>2</td><td>1</td></tr><tr><td>연구동</td><td>3</td><td>1</td></tr><tr><td>서버실</td><td>4</td><td>4</td></tr><tr><td>공장</td><td>5</td><td>5</td></tr><tr><td>창고</td><td>6</td><td>5</td></tr><tr><td>물류</td><td>7</td><td>5</td></tr><tr><td>기숙사</td><td>8</td><td>8</td></tr><tr><td>식당</td><td>9</td><td>8</td></tr>
+  </tbody></table>
+  <h3>실제 판정 예</h3>
+  <ul><li>연구동 → 서버실: <code>low[서버실] = 4</code>, <code>tin[연구동] = 3</code>이므로 단절선입니다.</li><li>공장 → 창고: <code>5 &gt; 5</code>가 거짓입니다. 같을 때는 단절선이 아닙니다.</li><li>기숙사 → 식당: 두 번째 케이블로 기숙사에 돌아가 <code>low[식당] = 8</code>이 됩니다.</li></ul>
+
+  <h2>4. 단순한 방법과 한 번의 DFS</h2>
+  <p>간선을 하나씩 지우고 BFS로 연결 여부를 확인하는 단순한 방법도 답은 맞습니다. 하지만 이 예제에서는 11번 탐색하며 인접 목록 223칸을 읽습니다. DFS 한 번은 22칸만 읽습니다.</p>
+  <table><thead><tr><th>방법</th><th>탐색/읽은 양</th><th>결과</th></tr></thead><tbody><tr><td>간선마다 지우고 BFS</td><td>11회 · 223칸</td><td>단절선 3개</td></tr><tr><td>DFS + low</td><td>1회 · 22칸</td><td>단절선 3개</td></tr></tbody></table>
+
+  <h2>5. 코드로 다시 실행하기</h2>
+  <p>학습자 ZIP에는 원본 Python/C++ 예제와 캠퍼스 fixture, 빈칸 실습 및 체크 스크립트가 들어 있습니다. 다음 명령은 승인된 기본 입력을 그대로 실행합니다.</p>
+  <pre>python3 code/python/bridges.py code/fixtures/campus.graph
+g++ -std=c++17 -O2 -Wall -Wextra -Werror code/cpp/bridges.cpp -o /tmp/bridges
+/tmp/bridges code/fixtures/campus.graph
+python3 practice/check.py practice/solution_bridges.py</pre>
+  <p>두 언어의 기본 fixture stdout은 22줄이며, 이번 단계에서 바이트 단위로 비교합니다. 실습 파일의 빈칸은 세 곳입니다.</p>
+  <ol><li><code>came_in_by</code>: 들어온 간선 하나를 건너뛰기</li><li><code>lower_by_back</code>: 역방향 간선의 도착 번호로 low 낮추기</li><li><code>is_bridge</code>: <code>low[v] &gt; tin[u]</code>인지 비교하기</li></ol>
+
+  <h2>6. 원본과 범위</h2>
+  <p class="source-label">이 노트는 원본 파일을 대체하지 않습니다.</p>
+  <ul><li>읽기·장면 계획: <code>canonical/scenario.md</code>, <code>canonical/README.md</code></li><li>실행 데이터: <code>canonical/data/film-data.json</code></li><li>실제 예제: <code>canonical/code/python/bridges.py</code>, <code>canonical/code/cpp/bridges.cpp</code></li><li>입력: <code>canonical/code/fixtures/campus.graph</code></li><li>학습자 실습: <code>canonical/practice/</code></li></ul>
+  <p>이 실습 페이지는 영상과 같은 캠퍼스 그래프와 실행 결과를 사용합니다. 다운로드 ZIP에는 원본 예제와 실습 파일을 그대로 담았습니다.</p>
+  <p><a class="back" href="index.html">← 단절선 실습으로 돌아가기</a></p>
+</main>
+<footer class="footer"><div class="wrap">수업 노트 · 예제 코드는 다운로드 ZIP에 있습니다</div></footer>
+</body>
+</html>
