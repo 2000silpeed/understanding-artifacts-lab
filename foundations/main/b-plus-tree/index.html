@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="B+ 트리 리프 링크와 range_count를 직접 예측하고 확인하는 한국어 실습">
+  <title>B+ 트리 실습 — 리프 링크로 범위 세기</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <div class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">자료구조 · B+ 트리</p>
+        <h1>리프 링크로 범위 안 키 개수 세기</h1>
+        <p class="lede">트리에서 시작 리프까지 한 번 내려간 뒤, 오른쪽 링크만 따라가며 범위를 세어 봅니다.</p>
+      </div>
+      <span class="badge">로컬 학습 자료</span>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="card goal" aria-labelledby="goal-title">
+        <h2 id="goal-title">오늘의 목표와 첫 행동</h2>
+        <p><strong>목표:</strong> <code>range_count(tree, lo, hi)</code>가 왜 결과 개수와 읽은 리프 수를 함께 만들 수 있는지 설명할 수 있습니다.</p>
+        <ul class="goal-list">
+          <li>화면에 남아 있는 범위 <strong>[lo, hi]</strong>를 보고 먼저 결과를 예상합니다.</li>
+          <li>선택하면 실제 리프 이동과 정답·오답 이유를 바로 확인합니다.</li>
+          <li>확인한 뒤 <strong>다음 과제</strong>로 이동합니다. 답을 보지 않고 넘길 수는 없습니다.</li>
+        </ul>
+      </section>
+
+      <div id="app" aria-live="off"></div>
+    </main>
+
+    <footer class="card note" aria-labelledby="footer-title">
+      <h2 id="footer-title">원본과 더 해 보기</h2>
+      <p>아래 파일은 이 실습이 사용한 원본 예제·연습 파일의 복사본입니다. 브라우저 화면의 설명은 읽기 쉬운 문장으로 제공하고, 실행 가능한 코드는 별도 다운로드로 보존했습니다.</p>
+      <ul class="downloads">
+        <li><a href="downloads/bplus-examples.zip" download>예제·과제·채점기 ZIP</a></li>
+        <li><a href="downloads/code/python/bplustree.py" download>Python B+ 트리</a></li>
+        <li><a href="downloads/code/cpp/bplustree.cpp" download>C++17 B+ 트리</a></li>
+        <li><a href="downloads/practice/exercise_range_count.py" download>range_count 연습 파일</a></li>
+      </ul>
+      <p class="status" id="font-status" role="status">한글 글꼴을 확인하는 중…</p>
+    </footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
