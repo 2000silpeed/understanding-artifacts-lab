@@ -1,0 +1,2125 @@
+{
+  "title": "알고리즘 15 · 단절점",
+  "definition": "정점을 하나 지웠을 때 연결이 나뉘면 그 정점은 단절점입니다.",
+  "rules": {
+    "nonRoot": "비루트 u: 자식 v 하나라도 low[v] >= disc[u]이면 u는 단절점입니다.",
+    "root": "루트: DFS 트리의 자식이 둘 이상이면 단절점입니다.",
+    "bridge": "다리: 자식 v에 대해 low[v] > disc[u]일 때 u-v가 다리입니다.",
+    "edgeIdentity": "겹친 간선은 정점이 아니라 간선 번호로 부모 간선을 건너뜁니다."
+  },
+  "fixtures": [
+    {
+      "name": "network",
+      "n": 8,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "disc": [
+        0,
+        3,
+        1,
+        4,
+        5,
+        2,
+        6,
+        7
+      ],
+      "low": [
+        0,
+        3,
+        0,
+        3,
+        3,
+        0,
+        6,
+        3
+      ],
+      "points": [
+        1,
+        4,
+        5
+      ],
+      "bridges": [
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "removal": {
+        "0": [
+          [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "1": [
+          [
+            0,
+            2,
+            5
+          ],
+          [
+            3,
+            4,
+            6,
+            7
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2,
+            4,
+            5,
+            6,
+            7
+          ]
+        ],
+        "4": [
+          [
+            0,
+            1,
+            2,
+            3,
+            5,
+            7
+          ],
+          [
+            6
+          ]
+        ],
+        "5": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            3,
+            4,
+            6,
+            7
+          ]
+        ],
+        "6": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            7
+          ]
+        ],
+        "7": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          3,
+          1,
+          4,
+          5,
+          2,
+          6,
+          7
+        ],
+        "low": [
+          0,
+          3,
+          0,
+          3,
+          3,
+          0,
+          6,
+          3
+        ],
+        "parent": [
+          -1,
+          5,
+          0,
+          1,
+          3,
+          2,
+          4,
+          4
+        ],
+        "order": [
+          0,
+          2,
+          5,
+          1,
+          3,
+          4,
+          6,
+          7
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 2,
+            "edge": 0
+          },
+          {
+            "from": 2,
+            "to": 5,
+            "edge": 1
+          },
+          {
+            "from": 5,
+            "to": 1,
+            "edge": 3
+          },
+          {
+            "from": 1,
+            "to": 3,
+            "edge": 7
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "edge": 6
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "edge": 8
+          },
+          {
+            "from": 4,
+            "to": 7,
+            "edge": 5
+          }
+        ],
+        "back": [
+          {
+            "from": 5,
+            "to": 0,
+            "edge": 2
+          },
+          {
+            "from": 7,
+            "to": 1,
+            "edge": 4
+          }
+        ],
+        "finish": [
+          {
+            "v": 6,
+            "low": 6
+          },
+          {
+            "v": 7,
+            "low": 3
+          },
+          {
+            "v": 4,
+            "low": 3
+          },
+          {
+            "v": 3,
+            "low": 3
+          },
+          {
+            "v": 1,
+            "low": 3
+          },
+          {
+            "v": 5,
+            "low": 0
+          },
+          {
+            "v": 2,
+            "low": 0
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [
+          {
+            "parent": 4,
+            "child": 6,
+            "lowChild": 6,
+            "discParent": 5,
+            "cut": true
+          },
+          {
+            "parent": 4,
+            "child": 7,
+            "lowChild": 3,
+            "discParent": 5,
+            "cut": false
+          },
+          {
+            "parent": 3,
+            "child": 4,
+            "lowChild": 3,
+            "discParent": 4,
+            "cut": false
+          },
+          {
+            "parent": 1,
+            "child": 3,
+            "lowChild": 3,
+            "discParent": 3,
+            "cut": true
+          },
+          {
+            "parent": 5,
+            "child": 1,
+            "lowChild": 3,
+            "discParent": 2,
+            "cut": true
+          },
+          {
+            "parent": 2,
+            "child": 5,
+            "lowChild": 0,
+            "discParent": 1,
+            "cut": false
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          }
+        ],
+        "points": [
+          1,
+          4,
+          5
+        ]
+      },
+      "expected": {
+        "points": [
+          1,
+          4,
+          5
+        ],
+        "bridges": [
+          [
+            1,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "name": "star",
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "low": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "points": [
+        0
+      ],
+      "bridges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "removal": {
+        "0": [
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        "1": [
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1,
+            3
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "low": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "parent": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 0,
+            "to": 2,
+            "edge": 1
+          },
+          {
+            "from": 0,
+            "to": 3,
+            "edge": 2
+          }
+        ],
+        "back": [],
+        "finish": [
+          {
+            "v": 1,
+            "low": 1
+          },
+          {
+            "v": 2,
+            "low": 2
+          },
+          {
+            "v": 3,
+            "low": 3
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [],
+        "roots": [
+          {
+            "root": 0,
+            "children": 3
+          }
+        ],
+        "points": [
+          0
+        ]
+      },
+      "expected": {
+        "points": [
+          0
+        ],
+        "bridges": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "cycle",
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "low": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "points": [],
+      "bridges": [],
+      "removal": {
+        "0": [
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "1": [
+          [
+            0,
+            2,
+            3,
+            4
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1,
+            3,
+            4
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2,
+            4
+          ]
+        ],
+        "4": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "low": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parent": [
+          -1,
+          0,
+          1,
+          2,
+          3
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "edge": 1
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "edge": 2
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "edge": 3
+          }
+        ],
+        "back": [
+          {
+            "from": 4,
+            "to": 0,
+            "edge": 4
+          }
+        ],
+        "finish": [
+          {
+            "v": 4,
+            "low": 0
+          },
+          {
+            "v": 3,
+            "low": 0
+          },
+          {
+            "v": 2,
+            "low": 0
+          },
+          {
+            "v": 1,
+            "low": 0
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [
+          {
+            "parent": 3,
+            "child": 4,
+            "lowChild": 0,
+            "discParent": 3,
+            "cut": false
+          },
+          {
+            "parent": 2,
+            "child": 3,
+            "lowChild": 0,
+            "discParent": 2,
+            "cut": false
+          },
+          {
+            "parent": 1,
+            "child": 2,
+            "lowChild": 0,
+            "discParent": 1,
+            "cut": false
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          }
+        ],
+        "points": []
+      },
+      "expected": {
+        "points": [],
+        "bridges": []
+      }
+    },
+    {
+      "name": "path",
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "low": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "points": [
+        1,
+        2
+      ],
+      "bridges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "removal": {
+        "0": [
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        "1": [
+          [
+            0
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1
+          ],
+          [
+            3
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "low": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "parent": [
+          -1,
+          0,
+          1,
+          2
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "edge": 1
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "edge": 2
+          }
+        ],
+        "back": [],
+        "finish": [
+          {
+            "v": 3,
+            "low": 3
+          },
+          {
+            "v": 2,
+            "low": 2
+          },
+          {
+            "v": 1,
+            "low": 1
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [
+          {
+            "parent": 2,
+            "child": 3,
+            "lowChild": 3,
+            "discParent": 2,
+            "cut": true
+          },
+          {
+            "parent": 1,
+            "child": 2,
+            "lowChild": 2,
+            "discParent": 1,
+            "cut": true
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          }
+        ],
+        "points": [
+          1,
+          2
+        ]
+      },
+      "expected": {
+        "points": [
+          1,
+          2
+        ],
+        "bridges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bowtie",
+      "n": 5,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "low": [
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "points": [
+        2
+      ],
+      "bridges": [],
+      "removal": {
+        "0": [
+          [
+            1,
+            2,
+            3,
+            4
+          ]
+        ],
+        "1": [
+          [
+            0,
+            2,
+            3,
+            4
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2,
+            4
+          ]
+        ],
+        "4": [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "low": [
+          0,
+          0,
+          0,
+          2,
+          2
+        ],
+        "parent": [
+          -1,
+          0,
+          1,
+          2,
+          3
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "edge": 1
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "edge": 3
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "edge": 4
+          }
+        ],
+        "back": [
+          {
+            "from": 2,
+            "to": 0,
+            "edge": 2
+          },
+          {
+            "from": 4,
+            "to": 2,
+            "edge": 5
+          }
+        ],
+        "finish": [
+          {
+            "v": 4,
+            "low": 2
+          },
+          {
+            "v": 3,
+            "low": 2
+          },
+          {
+            "v": 2,
+            "low": 0
+          },
+          {
+            "v": 1,
+            "low": 0
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [
+          {
+            "parent": 3,
+            "child": 4,
+            "lowChild": 2,
+            "discParent": 3,
+            "cut": false
+          },
+          {
+            "parent": 2,
+            "child": 3,
+            "lowChild": 2,
+            "discParent": 2,
+            "cut": true
+          },
+          {
+            "parent": 1,
+            "child": 2,
+            "lowChild": 0,
+            "discParent": 1,
+            "cut": false
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          }
+        ],
+        "points": [
+          2
+        ]
+      },
+      "expected": {
+        "points": [
+          2
+        ],
+        "bridges": []
+      }
+    },
+    {
+      "name": "disconnected",
+      "n": 7,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          3
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "low": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3,
+        6
+      ],
+      "points": [
+        1
+      ],
+      "bridges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "removal": {
+        "0": [
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            4,
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "1": [
+          [
+            0
+          ],
+          [
+            2
+          ],
+          [
+            3,
+            4,
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1
+          ],
+          [
+            3,
+            4,
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "3": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "4": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            6
+          ]
+        ],
+        "5": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            6
+          ]
+        ],
+        "6": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            3,
+            4,
+            5
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "low": [
+          0,
+          1,
+          2,
+          3,
+          3,
+          3,
+          6
+        ],
+        "parent": [
+          -1,
+          0,
+          1,
+          -1,
+          3,
+          4,
+          -1
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "edge": 1
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "edge": 2
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "edge": 3
+          }
+        ],
+        "back": [
+          {
+            "from": 5,
+            "to": 3,
+            "edge": 4
+          }
+        ],
+        "finish": [
+          {
+            "v": 2,
+            "low": 2
+          },
+          {
+            "v": 1,
+            "low": 1
+          },
+          {
+            "v": 0,
+            "low": 0
+          },
+          {
+            "v": 5,
+            "low": 3
+          },
+          {
+            "v": 4,
+            "low": 3
+          },
+          {
+            "v": 3,
+            "low": 3
+          },
+          {
+            "v": 6,
+            "low": 6
+          }
+        ],
+        "checks": [
+          {
+            "parent": 1,
+            "child": 2,
+            "lowChild": 2,
+            "discParent": 1,
+            "cut": true
+          },
+          {
+            "parent": 4,
+            "child": 5,
+            "lowChild": 3,
+            "discParent": 4,
+            "cut": false
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          },
+          {
+            "root": 3,
+            "children": 1
+          },
+          {
+            "root": 6,
+            "children": 0
+          }
+        ],
+        "points": [
+          1
+        ]
+      },
+      "expected": {
+        "points": [
+          1
+        ],
+        "bridges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "name": "multi_edge",
+      "n": 3,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "disc": [
+        0,
+        1,
+        2
+      ],
+      "low": [
+        0,
+        0,
+        2
+      ],
+      "points": [
+        1
+      ],
+      "bridges": [
+        [
+          1,
+          2
+        ]
+      ],
+      "removal": {
+        "0": [
+          [
+            1,
+            2
+          ]
+        ],
+        "1": [
+          [
+            0
+          ],
+          [
+            2
+          ]
+        ],
+        "2": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "trace": {
+        "disc": [
+          0,
+          1,
+          2
+        ],
+        "low": [
+          0,
+          0,
+          2
+        ],
+        "parent": [
+          -1,
+          0,
+          1
+        ],
+        "order": [
+          0,
+          1,
+          2
+        ],
+        "tree": [
+          {
+            "from": 0,
+            "to": 1,
+            "edge": 0
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "edge": 2
+          }
+        ],
+        "back": [
+          {
+            "from": 1,
+            "to": 0,
+            "edge": 1
+          }
+        ],
+        "finish": [
+          {
+            "v": 2,
+            "low": 2
+          },
+          {
+            "v": 1,
+            "low": 0
+          },
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [
+          {
+            "parent": 1,
+            "child": 2,
+            "lowChild": 2,
+            "discParent": 1,
+            "cut": true
+          }
+        ],
+        "roots": [
+          {
+            "root": 0,
+            "children": 1
+          }
+        ],
+        "points": [
+          1
+        ]
+      },
+      "expected": {
+        "points": [
+          1
+        ],
+        "bridges": [
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "name": "single",
+      "n": 1,
+      "edges": [],
+      "disc": [
+        0
+      ],
+      "low": [
+        0
+      ],
+      "points": [],
+      "bridges": [],
+      "removal": {
+        "0": []
+      },
+      "trace": {
+        "disc": [
+          0
+        ],
+        "low": [
+          0
+        ],
+        "parent": [
+          -1
+        ],
+        "order": [
+          0
+        ],
+        "tree": [],
+        "back": [],
+        "finish": [
+          {
+            "v": 0,
+            "low": 0
+          }
+        ],
+        "checks": [],
+        "roots": [
+          {
+            "root": 0,
+            "children": 0
+          }
+        ],
+        "points": []
+      },
+      "expected": {
+        "points": [],
+        "bridges": []
+      }
+    }
+  ],
+  "filmData": {
+    "$doc": "Generated by code/export_film_data.py from real runs of code/articulation.py on code/fixtures/network.txt. Do not edit by hand.",
+    "graph": {
+      "n": 8,
+      "m": 9,
+      "edges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "fixture": "code/fixtures/network.txt"
+    },
+    "trace": {
+      "disc": [
+        0,
+        3,
+        1,
+        4,
+        5,
+        2,
+        6,
+        7
+      ],
+      "low": [
+        0,
+        3,
+        0,
+        3,
+        3,
+        0,
+        6,
+        3
+      ],
+      "parent": [
+        -1,
+        5,
+        0,
+        1,
+        3,
+        2,
+        4,
+        4
+      ],
+      "order": [
+        0,
+        2,
+        5,
+        1,
+        3,
+        4,
+        6,
+        7
+      ],
+      "tree": [
+        {
+          "from": 0,
+          "to": 2,
+          "edge": 0
+        },
+        {
+          "from": 2,
+          "to": 5,
+          "edge": 1
+        },
+        {
+          "from": 5,
+          "to": 1,
+          "edge": 3
+        },
+        {
+          "from": 1,
+          "to": 3,
+          "edge": 7
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "edge": 6
+        },
+        {
+          "from": 4,
+          "to": 6,
+          "edge": 8
+        },
+        {
+          "from": 4,
+          "to": 7,
+          "edge": 5
+        }
+      ],
+      "back": [
+        {
+          "from": 5,
+          "to": 0,
+          "edge": 2
+        },
+        {
+          "from": 7,
+          "to": 1,
+          "edge": 4
+        }
+      ],
+      "finish": [
+        {
+          "v": 6,
+          "low": 6
+        },
+        {
+          "v": 7,
+          "low": 3
+        },
+        {
+          "v": 4,
+          "low": 3
+        },
+        {
+          "v": 3,
+          "low": 3
+        },
+        {
+          "v": 1,
+          "low": 3
+        },
+        {
+          "v": 5,
+          "low": 0
+        },
+        {
+          "v": 2,
+          "low": 0
+        },
+        {
+          "v": 0,
+          "low": 0
+        }
+      ],
+      "checks": [
+        {
+          "parent": 4,
+          "child": 6,
+          "lowChild": 6,
+          "discParent": 5,
+          "cut": true
+        },
+        {
+          "parent": 4,
+          "child": 7,
+          "lowChild": 3,
+          "discParent": 5,
+          "cut": false
+        },
+        {
+          "parent": 3,
+          "child": 4,
+          "lowChild": 3,
+          "discParent": 4,
+          "cut": false
+        },
+        {
+          "parent": 1,
+          "child": 3,
+          "lowChild": 3,
+          "discParent": 3,
+          "cut": true
+        },
+        {
+          "parent": 5,
+          "child": 1,
+          "lowChild": 3,
+          "discParent": 2,
+          "cut": true
+        },
+        {
+          "parent": 2,
+          "child": 5,
+          "lowChild": 0,
+          "discParent": 1,
+          "cut": false
+        }
+      ],
+      "roots": [
+        {
+          "root": 0,
+          "children": 1
+        }
+      ],
+      "points": [
+        1,
+        4,
+        5
+      ]
+    },
+    "result": {
+      "points": [
+        1,
+        4,
+        5
+      ],
+      "disc": [
+        0,
+        3,
+        1,
+        4,
+        5,
+        2,
+        6,
+        7
+      ],
+      "low": [
+        0,
+        3,
+        0,
+        3,
+        3,
+        0,
+        6,
+        3
+      ],
+      "stdout": "graph: n=8 m=9\ndisc: 0 3 1 4 5 2 6 7\nlow:  0 3 0 3 3 0 6 3\narticulation points: [1, 4, 5]"
+    },
+    "removal": {
+      "0": [
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      ],
+      "1": [
+        [
+          0,
+          2,
+          5
+        ],
+        [
+          3,
+          4,
+          6,
+          7
+        ]
+      ],
+      "2": [
+        [
+          0,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      ],
+      "3": [
+        [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7
+        ]
+      ],
+      "4": [
+        [
+          0,
+          1,
+          2,
+          3,
+          5,
+          7
+        ],
+        [
+          6
+        ]
+      ],
+      "5": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3,
+          4,
+          6,
+          7
+        ]
+      ],
+      "6": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7
+        ]
+      ],
+      "7": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    },
+    "star": {
+      "n": 4,
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "roots": [
+        {
+          "root": 0,
+          "children": 3
+        }
+      ],
+      "points": [
+        0
+      ],
+      "fixture": "code/fixtures/star.txt"
+    },
+    "cost": {
+      "network": {
+        "n": 8,
+        "m": 9,
+        "brute": 144,
+        "dfs": 18,
+        "brutePoints": [
+          1,
+          4,
+          5
+        ]
+      },
+      "path1000": {
+        "n": 1000,
+        "m": 999,
+        "brute": 1998000,
+        "dfs": 1998,
+        "points": 998
+      },
+      "unit": "인접 간선 확인 횟수 (count_components / tarjan_checks가 센 값)"
+    },
+    "code": {
+      "python": [
+        "def articulation_points(n, edges):",
+        "    adj = build_adj(n, edges)              # adj[u] = [(이웃 v, 간선 번호 e), ...]",
+        "    disc, low = [-1] * n, [0] * n",
+        "    cut, timer = set(), 0",
+        "",
+        "    def dfs(u, parent_edge):",
+        "        nonlocal timer",
+        "        disc[u] = low[u] = timer           # 방문 번호",
+        "        timer += 1",
+        "        children = 0",
+        "        for v, e in adj[u]:",
+        "            if e == parent_edge:           # 방금 타고 온 간선은 건너뛴다",
+        "                continue",
+        "            if disc[v] != -1:              # 이미 방문: 뒤로 가는 간선",
+        "                low[u] = min(low[u], disc[v])",
+        "            else:                          # 트리 간선: 자식으로 내려간다",
+        "                children += 1",
+        "                dfs(v, e)",
+        "                low[u] = min(low[u], low[v])",
+        "                if parent_edge != -1 and low[v] >= disc[u]:",
+        "                    cut.add(u)             # 자식이 u 위로 못 올라감",
+        "        if parent_edge == -1 and children >= 2:",
+        "            cut.add(u)                     # 루트: 자식이 둘 이상",
+        "",
+        "    for s in range(n):",
+        "        if disc[s] == -1:",
+        "            dfs(s, -1)",
+        "    return sorted(cut)"
+      ],
+      "pythonNoComments": [
+        "def articulation_points(n, edges):",
+        "    adj = build_adj(n, edges)",
+        "    disc, low = [-1] * n, [0] * n",
+        "    cut, timer = set(), 0",
+        "",
+        "    def dfs(u, parent_edge):",
+        "        nonlocal timer",
+        "        disc[u] = low[u] = timer",
+        "        timer += 1",
+        "        children = 0",
+        "        for v, e in adj[u]:",
+        "            if e == parent_edge:",
+        "                continue",
+        "            if disc[v] != -1:",
+        "                low[u] = min(low[u], disc[v])",
+        "            else:",
+        "                children += 1",
+        "                dfs(v, e)",
+        "                low[u] = min(low[u], low[v])",
+        "                if parent_edge != -1 and low[v] >= disc[u]:",
+        "                    cut.add(u)",
+        "        if parent_edge == -1 and children >= 2:",
+        "            cut.add(u)",
+        "",
+        "    for s in range(n):",
+        "        if disc[s] == -1:",
+        "            dfs(s, -1)",
+        "    return sorted(cut)"
+      ],
+      "dfsRange": [
+        5,
+        23
+      ],
+      "ruleLine": 19,
+      "rootLine": 21,
+      "source": "code/articulation.py (# [screen:begin] … # [screen:end])"
+    }
+  }
+}

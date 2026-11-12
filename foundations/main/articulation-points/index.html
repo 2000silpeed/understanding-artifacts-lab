@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="알고리즘 15 단절점 실습 companion">
+  <title>알고리즘 15 · 단절점 실습</title>
+  <style>
+    :root { color-scheme: light; --ink:#17212b; --muted:#5e6b76; --line:#d9e0e6; --paper:#f7f9fb; --card:#fff; --accent:#0d6b6f; --accent-soft:#e5f3f2; --warn:#9a5a00; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif; line-height:1.6; }
+    main { width:min(1080px, calc(100% - 32px)); margin:0 auto; padding:32px 0 60px; }
+    header { padding:8px 0 24px; border-bottom:1px solid var(--line); }
+    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.06em; font-size:.83rem; }
+    h1 { margin:.2rem 0 .5rem; line-height:1.2; font-size:clamp(1.8rem, 4vw, 3rem); }
+    h2 { margin:0 0 .7rem; font-size:1.2rem; }
+    p { margin:.4rem 0; }
+    .lede { max-width:760px; color:var(--muted); }
+    .grid { display:grid; grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr); gap:18px; margin-top:22px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:0 5px 18px rgba(33,52,67,.05); }
+    .formula { display:grid; gap:8px; margin:14px 0; }
+    .rule { background:var(--accent-soft); border-left:4px solid var(--accent); padding:10px 12px; border-radius:8px; }
+    .muted { color:var(--muted); font-size:.92rem; }
+    .controls { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:end; }
+    label { display:grid; gap:5px; font-weight:700; font-size:.92rem; }
+    select, button { font:inherit; }
+    select { width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:9px; background:white; color:var(--ink); }
+    button { border:1px solid var(--accent); border-radius:9px; padding:9px 13px; cursor:pointer; color:var(--accent); background:white; font-weight:800; }
+    button:hover { background:var(--accent-soft); }
+    button.primary { background:var(--accent); color:#fff; }
+    button.secondary { border-color:var(--line); color:var(--ink); }
+    button:disabled { opacity:.5; cursor:not-allowed; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 10px; }
+    .status, .feedback { min-height:30px; padding:8px 11px; border-radius:8px; background:#f2f5f7; color:var(--muted); }
+    .feedback.good { color:#146b3a; background:#e7f6ed; }
+    .feedback.retry { color:#8b3c31; background:#fff0ed; }
+    .feedback.neutral { color:#37515c; background:#eef5f6; }
+    .error { color:#8b3c31; background:#fff0ed; }
+    .edge-list { display:flex; flex-wrap:wrap; gap:7px; margin-top:10px; }
+    .edge { display:inline-block; background:#eef2f4; border:1px solid #dde5e9; border-radius:999px; padding:3px 9px; font-variant-numeric:tabular-nums; }
+    .answer-box { margin-top:12px; padding:13px; border:1px dashed var(--line); border-radius:10px; min-height:52px; }
+    .answer-box strong { color:var(--accent); }
+    .reading { margin-top:18px; }
+    .reading ul { margin:.4rem 0 0; padding-left:1.2rem; }
+    .download { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; padding:14px 16px; border:1px solid #b8d9d7; border-radius:12px; background:#f0fbfa; }
+    .download a { display:inline-block; white-space:nowrap; text-decoration:none; }
+    code { padding:.12em .32em; background:#f0f2f4; border-radius:4px; }
+    footer { margin-top:25px; color:var(--muted); font-size:.86rem; }
+    @media (max-width: 760px) {
+      main { width:min(100% - 22px, 680px); padding-top:20px; }
+      .grid, .controls { grid-template-columns:1fr; }
+      .card { padding:16px; border-radius:13px; }
+      .download { align-items:flex-start; flex-direction:column; }
+      .actions button { flex:1 1 42%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">AI FOUNDATIONS · ALGORITHM 15</div>
+      <h1>단절점: 지우기 전에 예측하기</h1>
+      <p class="lede">정점을 하나 지웠을 때 그래프가 몇 덩어리로 나뉘는지 먼저 예측해 보세요. 그다음 <b>설명 보기</b>에서 같은 DFS의 <code>disc</code>·<code>low</code>와 제거 결과를 확인합니다.</p>
+    </header>
+
+    <section class="grid" aria-label="개념과 실습">
+      <article class="card">
+        <h2>핵심 규칙</h2>
+        <p>단절점은 정의로는 “그 정점을 제거했을 때 연결 요소가 늘어나는 정점”입니다.</p>
+        <div class="formula">
+          <div class="rule">비루트 <b>u</b>: 자식 <b>v</b>에 대해 <code>low[v] ≥ disc[u]</code>이면 <b>u</b>를 표시합니다.</div>
+          <div class="rule">루트: DFS 트리 자식이 <b>2개 이상</b>일 때만 표시합니다.</div>
+          <div class="rule">다리: <code>low[v] &gt; disc[u]</code> — 단절점과 등호가 다릅니다.</div>
+        </div>
+        <p class="muted">주의: 병렬 간선은 정점 번호가 아니라 간선 번호로 부모 간선을 건너뛰어야 합니다. 아래 데이터에는 이 함정을 포함한 fixture가 있습니다.</p>
+        <div class="reading">
+          <h2>이번 실습의 순서</h2>
+          <ul>
+            <li>fixture와 정점을 고릅니다.</li>
+            <li>“단절점이다 / 아니다”를 먼저 예측합니다.</li>
+            <li>설명 보기에서 제거 후 그룹, disc·low, 다리를 확인합니다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="practice-title">
+        <h2 id="practice-title">결정적 실습</h2>
+        <div class="controls">
+          <label>그래프 fixture<select id="fixture" aria-label="그래프 fixture"></select></label>
+          <label>검사할 정점<select id="vertex" aria-label="검사할 정점"></select></label>
+        </div>
+        <p id="graph-summary" class="muted" aria-live="polite"></p>
+        <div><b>간선</b><div id="edges" class="edge-list" aria-label="그래프 간선"></div></div>
+        <div class="actions" aria-label="예측 선택">
+          <button id="predict-yes" type="button">단절점이다</button>
+          <button id="predict-no" type="button">단절점이 아니다</button>
+        </div>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div class="actions">
+          <button id="explain" class="primary" type="button">설명 보기</button>
+          <button id="reset" class="secondary" type="button">초기화</button>
+        </div>
+        <div id="status" class="status" aria-live="polite">데이터를 불러오는 중…</div>
+        <div class="answer-box"><b>disc · low</b><div id="disc-low">정점을 예측한 뒤 설명 보기를 누르면 나타납니다.</div></div>
+        <div class="answer-box"><b>제거 결과</b><div id="removal">정답은 아직 숨겨져 있습니다.</div></div>
+        <div class="answer-box"><b>판정</b><div id="answer"></div></div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h2>실행 기록과 코드</h2>
+      <p class="muted">비용 숫자는 새로 측정해 만든 값이 아니라, 원본 <code>film-data.json</code>의 실행 기록을 그대로 표시합니다.</p>
+      <p id="complexity" class="muted"></p>
+      <div class="download">
+        <div><b>정확한 실행 예제 ZIP</b><br><span class="muted">Python·C++·8개 fixture·실습 파일을 원본 바이트로 포함합니다.</span></div>
+        <a id="source-link" class="primary" href="source/articulation-points-15-source.zip" download>소스 ZIP 다운로드</a>
+      </div>
+    </section>
+
+    <footer>로컬 정적 companion · 원본 소스/영상/배포를 수정하지 않음 · 학습 효과는 측정하지 않음</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
